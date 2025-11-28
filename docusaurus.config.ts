@@ -32,7 +32,7 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'ko',
-    locales: ['ko'],
+    locales: ['ko', 'en'],
   },
 
   presets: [
@@ -48,6 +48,7 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
+          routeBasePath: 'posts',
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -75,7 +76,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Way Tech Blog',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -87,7 +88,7 @@ const config: Config = {
           position: 'left',
           label: 'Tutorial',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/posts', label: 'Posts', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -128,8 +129,8 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Posts',
+              to: '/posts',
             },
             {
               label: 'GitHub',
