@@ -1,0 +1,9 @@
+way:
+  name: Way
+  title: Android Developer
+  url: http://code-bross.github.io/
+  image_url: https://github.com/code-bross/portfolio/blob/develop/assets/sakun_2.png?raw=true
+  page: true
+  socials:
+    linkedin: z3r0ad
+    github: code-bross
