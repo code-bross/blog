@@ -1,11 +1,11 @@
 ---
 slug: mdx-blog-post
-title: 국내 MTS에 version catalog 도입하기
+title: 국내 MTS에 Version Catalog 도입하기
 authors: [way]
 tags: [android,toml,version-catalog,gradle,mts]
 ---
 
-국내 MTS 프로젝트에 합류하면서 마주한 기존 환경은 처음 기대했던 것보다 조금 복잡했습니다.
+국내 MTS 프로젝트에 합류하면서 마주한 기존 환경은 처음 기대했던 것보다 조금 복잡했습니다.<br/>
 여러 모듈에서 각기 다른 라이브러리 버전을 사용하고 있어, 우선 이들을 일관되게 관리하는 방법을 고민하게 되었습니다.
 
 프로젝트 구조는 대략 다음과 같았습니다.
@@ -19,7 +19,7 @@ tags: [android,toml,version-catalog,gradle,mts]
 |----formdeCore
 ```
 
-Gradle의 [Version Catalog](https://developer.android.com/build/migrate-to-catalogs?hl=ko)를 도입해 모듈 간 라이브러리 버전을 중앙에서 관리하도록 변경했습니다.
+Gradle의 [Version Catalog](https://developer.android.com/build/migrate-to-catalogs?hl=ko)를 도입해 모듈 간 라이브러리 버전을 중앙에서 관리하도록 변경했습니다.<br/>
 구체적으로는 `gradle/libs.versions.toml` 파일을 만들고, 각 모듈의 `build.gradle.kts`에서 해당 카탈로그를 참조하도록 했습니다.
 
 예시로 사용한 `libs.versions.toml`은 다음과 같습니다.
@@ -75,5 +75,5 @@ android {
 }
 ```
 
-이와 같이 Version Catalog를 적용하면, 라이브러리 버전 관리가 일관화되어 업데이트나 충돌 해결이 훨씬 수월해집니다.
+이와 같이 Version Catalog를 적용하면, 라이브러리 버전 관리가 일관화되어 업데이트나 충돌 해결이 훨씬 수월해집니다.<br/>
 또한, 새로운 라이브러리를 추가할 때도 중앙 파일만 수정하면 되므로 유지보수가 간편해집니다.
