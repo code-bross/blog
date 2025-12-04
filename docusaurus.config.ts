@@ -43,6 +43,10 @@ const config: Config = {
           trackingID: 'GTM-KRLQFWFB',
           anonymizeIP: true,
         },
+         googleAnalytics: {
+          trackingID: 'G-8ZXX6PQ6KP',
+          anonymizeIP: true,
+        },
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
