@@ -1,0 +1,127 @@
+---
+slug: mts-gradle-convention-plugin
+title: 국내 MTS에 Gradle Convention Plugin 도입하기
+authors: [way]
+tags: [android,gradle-convention-plugin,mts]
+---
+
+Multi Module을 적용하면서, 각 모듈의 `build.gradle.kts` 파일에 중복되는 설정들이 많아졌습니다.<br/>
+이를 해결하기 위해 Gradle Convention Plugin을 도입하여 공통 설정을 중앙에서 관리하기로 했습니다.<br/>
+기존 build.gradle.kts 파일들은 다음과 같은 구조를 가지고 있었습니다.
+
+```gradle
+//A module
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = "com.example.module-a"
+    compileSdk = libs.versions.compile.sdk.get().toInt()
+    dependencies {
+        implementation(libs.bundles.kotlin)
+    }
+}
+
+//B module
+
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = "com.example.module-b"
+    compileSdk = libs.versions.compile.sdk.get().toInt()
+    dependencies {
+        implementation(libs.bundles.kotlin)
+    }
+}
+
+```
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnhsZ2I0Yjd5ZWM4bGNmbGR3cmNlejcwMzgyN2MzbzE2NHlmN2h5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GERw43KIyCqh5nDNlM/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+위와 같이 중복되는 설정들을 Gradle Convention Plugin으로 분리하여 관리하면, 각 모듈의 `build.gradle.kts` 파일이 훨씬 간결해집니다.<br/>
+다음은 Convention Plugin을 적용한 후의 예시입니다.
+
+#### build-logic/convention/build.gradle.kts
+```kotlin
+
+plugins {
+    `kotlin-dsl`
+    `kotlin-dsl-precompiled-script-plugins`
+}
+
+group = "com.sample.buildlogic"
+
+dependencies {
+    compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.gradle.plugin.ktlint.compose)
+    compileOnly(libs.gradle.plugin.detekt)
+    compileOnly(libs.gradle.plugin.ksp)
+}
+
+gradlePlugin {
+    plugins {
+        register("sample.android.library") {
+            id = "sample.android.library"
+            implementationClass = "AndroidLibrarySampleConventionPlugin"
+        }
+    }
+}
+```
+
+#### build-logic/src/main/kotlin/AndroidLibrarySampleConventionPlugin.kt
+```kotlin
+> {
+    override fun apply(target: Project) {
+        with(target) {
+            with(pluginManager) {
+                apply("com.android.library")
+                apply("kotlin-android")
+                apply("koreainvestment.kotlinx.serialization")
+            }
+            extensions.getByType<VersionCatalogsExtension>().named("libs").apply {
+                extensions.configure<LibraryExtension> {
+                    configureKotlinAndroid(this)
+                    defaultConfig.targetSdk =
+                        findVersion("target-sdk").get().requiredVersion.toInt()
+                    configureFlavors(this)
+                    defaultConfig.vectorDrawables.useSupportLibrary = true
+                }
+            }
+        }
+    }
+}
+```
+
+```gradle
+// build-logic/convention/build.gradle.kts
+
+//A module
+plugins {
+    id("sample.android.library")
+}
+
+android {
+    namespace = "com.example.module-a"
+}
+
+//B module
+
+plugins {
+    id("sample.android.library")
+}
+
+android {
+    namespace = "com.example.module-b"
+}
+```
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHJ3OXNybjRlMm1jcGoxbTAxbjJ5NmtlNHZwZ2w0aXJlenNuZ252ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5YecPtoB4DZzPPr8ak/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
