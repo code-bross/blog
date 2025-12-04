@@ -82,12 +82,6 @@ const config: Config = {
         src: 'img/logo.svg',
       },
       items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Tutorial',
-        },
         {to: '/posts', label: 'Posts', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',
@@ -139,7 +133,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Way, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
