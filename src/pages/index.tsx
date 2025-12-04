@@ -27,8 +27,8 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title}`}
+      description="국내 MTS 프로젝트에서 겪은 개발 경험과 팁을 공유하는 블로그입니다.">
       <HomepageHeader />
       <main>
         {/* <HomepageFeatures /> */}
