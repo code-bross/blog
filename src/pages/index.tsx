@@ -31,7 +31,7 @@ export default function Home(): ReactNode {
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+        {/* <HomepageFeatures /> */}
         <section className={styles.postsSection}>
           <div className="container">
             <h2>최신글</h2>
