@@ -131,10 +131,6 @@ const config: Config = {
               label: 'Posts',
               to: '/posts',
             },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
           ],
         },
       ],
