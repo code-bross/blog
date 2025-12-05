@@ -14,12 +14,13 @@ tags: [android,multi-module,mts,한국투자증권,한투]
 대략적인 프로젝트 구조는 대략 다음과 같습니다.
 
 ```text
-|----app
-|----3rd_party_library_1
-|----3rd_party_library_2
-|----3rd_party_library_3
-|----3rd_party_library_4
-|----formdeCore
+.
+├── app
+├── 3rd_party_library_1
+├── 3rd_party_library_2
+├── 3rd_party_library_3
+├── 3rd_party_library_4
+└── formdeCore
 ```
 <div style={{textAlign: 'center', margin: '1.5rem 0'}}>
   <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzZ6YjJlN2J2Y3R6cHU4enV3N2RuODJweGZqemU2Zm53OWdyZmY5MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Nx85vtTY70T3W/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
@@ -29,57 +30,59 @@ tags: [android,multi-module,mts,한국투자증권,한투]
 
 Multi Module 구조로 전환하면서, 모듈의 상단 명칭을 core, library, features, plugins, resources 등으로 구분하여 관리하기로 했습니다.<br/>
 구체적인 디렉토리 구조는 다음과 같습니다.
+
 ```text
-|----app
-|----core
-|----|---- analytics
-|----|---- asset-file
-|----|---- autorization
-|----|---- common
-|----|---- database
-|----|---- datastore
-|----|---- encrypt
-|----|---- network
-|----|---- on-foreground-service
-|----|---- push
-|----|---- remote-file
-|----|---- state-viewmodel
-|----|---- testing
-|----|---- ui
-|----|---- ui-xml
-|----features
-|----|---- common
-|----|----|---- ui
-|----|----|---- logic
-|----|---- community
-|----|----|---- ui
-|----|----|---- logic
-|----|---- developer
-|----|----|---- ui
-|----|----|---- logic
-|----|---- event
-|----|----|---- ui
-|----|----|---- logic
-|----|---- menu
-|----|----|---- ui
-|----|----|---- logic
-|----|---- my-assets
-|----|----|---- ui
-|----|----|---- logic
-|----|---- product-type
-|----|----|---- ui
-|----|----|---- logic
-|----library
-|----|---- formdeCore
-|----|---- 3rd_party_library_1
-|----|---- 3rd_party_library_2
-|----|---- 3rd_party_library_3
-|----|---- 3rd_party_library_4
-|----plugins
-|----|---- annotation
-|----|---- lint
-|----|---- symobl-processor
-|----resources
+.
+├── app/
+├── core/
+│   ├── analytics/
+│   ├── asset-file/
+│   ├── autorization/
+│   ├── common/
+│   ├── database/
+│   ├── datastore/
+│   ├── encrypt/
+│   ├── network/
+│   ├── on-foreground-service/
+│   ├── push/
+│   ├── remote-file/
+│   ├── state-viewmodel/
+│   ├── testing/
+│   ├── ui/
+│   └── ui-xml/
+├── features/
+│   ├── common/
+│   │   ├── ui/
+│   │   └── logic/
+│   ├── community/
+│   │   ├── ui/
+│   │   └── logic/
+│   ├── developer/
+│   │   ├── ui/
+│   │   └── logic/
+│   ├── event/
+│   │   ├── ui/
+│   │   └── logic/
+│   ├── menu/
+│   │   ├── ui/
+│   │   └── logic/
+│   ├── my-assets/
+│   │   ├── ui/
+│   │   └── logic/
+│   └── product-type/
+│       ├── ui/
+│       └── logic/
+├── library/
+│   ├── formdeCore/
+│   ├── 3rd_party_library_1/
+│   ├── 3rd_party_library_2/
+│   ├── 3rd_party_library_3/
+│   └── 3rd_party_library_4/
+├── plugins/
+│   ├── annotation/
+│   ├── lint/
+│   └── symobl-processor/
+└── resources/
 ```
 
 #### app
