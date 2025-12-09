@@ -4,6 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import { Analytics } from '@site/src/components/Analytics';
 import RecentPosts from '@site/src/components/RecentPosts';
 import Heading from '@theme/Heading';
 
@@ -31,6 +32,7 @@ export default function Home(): ReactNode {
       description="국내 MTS 프로젝트에서 겪은 개발 경험과 팁을 공유하는 블로그입니다.">
       <HomepageHeader />
       <main>
+        <Analytics/>
         {/* <HomepageFeatures /> */}
         <section className={styles.postsSection}>
           <div className="container">
