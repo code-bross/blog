@@ -1,0 +1,68 @@
+---
+slug: kotlin-toolchain-013
+title: Kotlin Toolchain 0.13 — 새 KMP 프로젝트는 kotlin new로 시작하기
+authors: [way]
+tags: [android, kotlin, kmp, kotlin-toolchain]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+JetBrains가 Kotlin Toolchain 0.13을 공개하면서, 신규 Kotlin Multiplatform(KMP) 프로젝트의 출발점으로 이 툴체인을 공식 추천하기 시작했습니다.<br/>
+Gradle 설정 파일을 손으로 짜는 대신 `kotlin` CLI 하나로 환경을 맞추는 방식이 어떤 모습인지 정리해 보겠습니다.
+
+### Kotlin Toolchain이 뭔가요
+
+Kotlin Toolchain은 JVM·Android·iOS·멀티플랫폼·서버 앱을 하나의 CLI 진입점으로 만들고, 빌드하고, 테스트하고, 배포하는 도구입니다.<br/>
+JDK나 Android SDK 같은 필수 도구들을 선언적 설정에 맞춰 자동으로 내려받아 주기 때문에, "새 노트북에서 KMP 프로젝트 처음 열었더니 SDK가 없어서 동기화 실패" 같은 온보딩 마찰이 크게 줄어듭니다.<br/>
+이번 0.13부터는 신규 KMP 프로젝트에 이 툴체인을 쓰는 것이 JetBrains의 권장 경로가 됐습니다.
+
+### kotlin new: 대화형 프로젝트 생성
+
+0.13의 핵심은 `kotlin new` 명령입니다. 웹의 KMP Wizard처럼 앱 유형을 고르고 타깃 플랫폼을 선택하면 프로젝트가 생성됩니다.<br/>
+기존 `kotlin init`도 같은 흐름으로 맞췄는데, 차이는 `kotlin init`이 현재 디렉터리에 바로 파일을 만든다는 점입니다.
+
+```bash
+# 새 프로젝트 생성 (대화형)
+kotlin new
+
+# 이미 설치돼 있다면 업데이트
+kotlin update
+```
+
+### Android 개발자 관점에서 반가운 부분
+
+- **Android SDK 자동 프로비저닝이 IDE까지 확장**: 이전에는 `kotlin build`/`kotlin run` 때만 SDK가 자동 설치돼서, 빌드 전에 IDE로 먼저 열면 SDK 누락 오류가 났습니다. 이제 프로젝트 import 시점에도 누락된 SDK 컴포넌트를 자동으로 받아 줍니다.
+- **namespace/applicationId 검증 강화**: `com.example.app` 같은 샘플 ID로 실수로 배포 빌드를 만드는 실수를 막아 줍니다.
+- **다운로드 진행 표시**: JDK, Android SDK, iOS 런타임, 컴파일러 다운로드가 CLI에 진행 바로 표시됩니다.
+
+### Swift Package Manager 의존성 지원
+
+Apple 타깃에서 SPM 패키지를 선언적으로 가져올 수 있게 됐습니다. 설정 파일에 저장소와 버전을 적으면 됩니다.
+
+```kotlin
+dependencies:
+  - swiftPackage:
+      repository: "https://github.com/firebase/firebase-ios-sdk.git"
+      version: "12.17.0"
+      products: ["FirebaseCore", "FirebaseFirestore", "FirebaseAnalytics"]
+```
+
+가져온 Objective-C API는 `swiftPMImport` 접두사로 네임스페이스가 붙어, Kotlin 코드에서 명시적으로 구분됩니다. 로컬 SPM 패키지는 `localSwiftPackage` 키로 연결할 수 있습니다.
+
+### 빌드 속도: Kotlin/Native 컴파일러 캐시
+
+Kotlin/Native 재빌드가 빨라집니다. 컴파일된 네이티브 의존성을 빌드 간, 심지어 프로젝트 간에 캐시로 재사용하고, 프로젝트 코드는 파일 단위 캐시로 링크 시 바뀐 부분만 다시 컴파일합니다.<br/>
+기존 `settings.kotlin.compileIncrementally` 설정을 그대로 쓰고, `.klib` 컴파일 자체는 전체로 수행됩니다.
+
+### 그 외
+
+- **IDE 동기화 상태를 에디터에서 확인**할 수 있게 됐습니다.
+- 멀티플랫폼 라이브러리 배포 시 Compose Resources와 SwiftPM 의존성 메타데이터가 아티팩트와 함께 게시되고, 서드파티 멀티플랫폼 라이브러리의 Compose Resources도 해석됩니다.
+- AI 에이전트 연동도 강화됐습니다. Compose Hot Reload MCP 서버와 Kotlin용 에이전트 스킬(`npx skills add kotlin/kotlin-agent-skills`)이 제공됩니다.
+- IDE 기능은 IntelliJ IDEA 2026.2.3 또는 Android Studio Rabbit 1(2026.2.1) 이상에서 최신 Kotlin Toolchain 플러그인과 함께 쓸 수 있습니다.
+
+### 마치며
+
+기존 Gradle 기반 프로젝트를 당장 마이그레이션하라는 얘기는 아닙니다. JetBrains도 로드맵에서 Gradle 프로젝트의 공백을 먼저 메우는 데 집중하겠다고 밝혔습니다.<br/>
+다만 새로 KMP를 시작한다면 `kotlin new` 한 번으로 Android·iOS 환경을 한 번에 맞추는 경험은 꽤 매력적입니다. 다음에 사이드 프로젝트로 KMP를 만질 일이 있으면 이 경로로 시작해 볼 생각입니다.
+
+> 출처: [Start Your Next KMP App With Kotlin Toolchain 0.13 — The Kotlin Blog](https://blog.jetbrains.com/kotlin/2026/10/start-your-next-kmp-app-with-kotlin-toolchain-0-13/)
