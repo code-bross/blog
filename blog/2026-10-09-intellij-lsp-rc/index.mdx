@@ -1,0 +1,60 @@
+---
+slug: intellij-lsp-rc
+title: IntelliJ의 Kotlin 인텔리전스가 VS Code로 왔다 — Java and Kotlin 확장 RC 공개
+authors: [way]
+tags: [android, kotlin, tooling, intellij, lsp]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 6일, JetBrains가 `Java and Kotlin by IntelliJ IDEA` 확장의 Release Candidate를 공개했습니다. 프리뷰를 시작한 지 약 두 달 만이고, 정식 1.0이 임박했다는 신호입니다.
+
+### 핵심 요약
+
+- IntelliJ IDEA가 가진 Java/Kotlin 코드 이해 능력을 LSP(Language Server Protocol) 서버 형태로 뽑아내, VS Code와 Cursor 같은 외부 에디터에서 쓸 수 있게 한 확장입니다.
+- 이번 RC는 마지막 EAP 빌드입니다. 이후 정식 버전이 나오면 신규 사용자는 30일 체험 후 IntelliJ IDEA Ultimate 구독이 필요합니다.
+- 마켓플레이스 누적 다운로드는 2만 건을 넘겼고, JetBrains 내부에서도 IntelliJ 기반 IDE를 만드는 대형 저장소에 직접 적용해 검증했다고 합니다.
+
+### 무엇이 달라졌는지
+
+프리뷰 단계에서는 완성도와 안정성을 다듬는 업데이트가 이어졌고, RC에서는 “에디터 밖 워크플로까지 IntelliJ의 이해도를 가져간다”는 방향이 더 또렷해졌습니다.
+
+제 기준으로 실무에 닿는 부분만 추리면 이렇습니다.
+
+- **핵심 코딩 지원**: 스마트 자동완성, 코드 내비게이션, 인스펙션, 퀵픽스, 정적 분석 같은 기본기가 LSP를 통해 제공됩니다.
+- **한 단계 위 기능**: 프로젝트 전역 리팩터링, DAP 기반 디버깅, Maven/Gradle/Bazel 프로젝트 모델 이해, 내장 테스트 러너, Spring 도구 연동까지 포함됩니다.
+- **에이전트 연동**: Cursor에 설치하면 Cursor Agent가 같은 언어 서버를 활용해 의미 기반 검색, 이동, 분석을 수행합니다. 텍스트 검색만으로 코드를 뒤지는 것보다 빠르고 결정적인 결과를 기대할 수 있는 구조입니다.
+
+원문에서 강조하는 것도 결국 “다른 에디터에 IntelliJ 기능을 복제”하는 게 아니라, 개발자와 도구가 어디서 일하든 JVM 코드 이해도를 재사용하게 만드는 쪽에 가깝습니다.
+
+### 실무 영향 / 주의점
+
+Android 개발자 입장에서 이 확장이 당장 Android Studio를 대체하진 않습니다. 에뮬레이터, 프로파일러, Compose 프리뷰, AGP 특화 도구처럼 Android Studio 안에 깊게 붙은 기능은 여전히 Studio 쪽이 본진입니다.
+
+대신 이런 상황에서 꽤 유용합니다.
+
+- 평소 Cursor나 VS Code로 AI 에이전트와 함께 코드를 만지는데, Kotlin/Java 이해도가 아쉬웠던 경우
+- 멀티모듈 Gradle 프로젝트에서 “정의로 이동”이나 “사용처 찾기”가 부정확해 에이전트가 엉뚱한 파일을 고치는 일이 잦았던 경우
+- 백엔드(Spring) + Android를 오가며 한 에디터에서 작업하고 싶은 경우
+
+다만 라이선스는 미리 봐두는 게 좋습니다. RC는 EAP 조건으로 30일간 라이선스 없이 쓸 수 있고, 정식 이후에는 체험 기간이 끝나면 Ultimate 구독이 필요하다고 안내돼 있습니다. 팀에서 이미 Ultimate을 쓰고 있다면 추가 비용이 없지만, 무료 에디터 + 무료 확장 조합으로 생각했다면 정식 이후 정책을 확인해야 합니다.
+
+또 하나, RC는 어디까지나 정식 직전 단계입니다. 사내 핵심 저장소에 바로 붙이기보다, 사이드 프로젝트나 작은 모듈에서 리팩터링 정확도와 인덱싱 속도를 먼저 체감해 보는 쪽이 안전합니다.
+
+### 내 코드에서 이렇게 써볼 생각입니다
+
+저는 Cursor에서 에이전트에게 모듈 간 이동이 많은 작업을 시킬 때를 노려보고 있습니다. 예를 들어 피처 모듈의 공개 API를 바꾸는 작업은, 에이전트가 호출부를 정확히 찾아내지 못하면 컴파일이 깨진 상태로 남기 쉽습니다.
+
+```text
+1) VS Code / Cursor에 Java and Kotlin by IntelliJ IDEA (RC) 설치
+2) 한투 앱의 작은 Gradle 모듈부터 열어 인덱싱이 끝날 때까지 대기
+3) 에이전트에게 요청: "이 인터페이스의 구현체와 호출부를 모두 찾아서 시그니처 변경 영향 범위를 먼저 보고해줘"
+4) 결과를 Android Studio의 Find Usages와 대조해 정확도 확인
+```
+
+이 대조를 몇 번 해보면, 에이전트에게 리팩터링을 어디까지 맡길 수 있는지 감이 잡힙니다. 언어 서버가 프로젝트 모델을 제대로 쥐고 있으면, 에이전트의 첫 패치가 훨씬 덜 헤맵니다.
+
+### 마치며
+
+Kotlin Toolchain이 CLI 쪽에서 프로젝트 시작 경험을 다듬고 있다면, 이 확장은 에디터 쪽에서 “IntelliJ의 뇌”를 밖으로 꺼내는 시도입니다. Android Studio가 본진인 건 변하지 않지만, AI 에이전트와 함께 일하는 비중이 늘어날수록 정확한 언어 서버의 가치는 더 커질 거라고 봅니다.
+
+> 출처: [Java and Kotlin by IntelliJ IDEA: The LSP-Based Extension Reaches Release Candidate — The JetBrains Blog](https://blog.jetbrains.com/idea/2026/10/java-and-kotlin-by-intellij-idea-the-lsp-based-extension-reaches-release-candidate/)

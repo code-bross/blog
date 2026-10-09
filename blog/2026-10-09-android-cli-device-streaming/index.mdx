@@ -1,0 +1,97 @@
+---
+slug: android-cli-device-streaming
+title: Android CLI에 실기기 스트리밍이 붙었다 — 에이전트가 원격 단말에서 직접 확인하는 흐름
+authors: [way]
+tags: [android, android-cli, ai-agent, testing]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 2일, Android Developers Blog를 통해 Android CLI 업데이트가 공개됐습니다. 핵심은 두 가지입니다. 원격 실기기에 붙는 Device Streaming을 CLI에서 쓸 수 있게 됐고, 에이전트용 Android skills가 20개를 넘어섰습니다.
+
+### 핵심 요약
+
+- Android CLI는 특정 AI 모델에 묶이지 않고, 다양한 코딩 에이전트와 함께 프로젝트 생성, 빌드, 테스트, 에뮬레이터 실행을 돕는 커맨드라인 도구입니다.
+- 이제 CLI를 통해 Android Device Streaming에 접속하면, 손에 없는 실기기라도 원격으로 앱을 올리고 로그와 트레이스를 수집하고 스크린샷까지 찍을 수 있습니다.
+- Android skills는 `SKILL.md` 형태의 구조화된 지침 모음입니다. 모델의 학습 시점에 기대지 않고, 공식 가이드 기준으로 에이전트에게 맥락을 주입하는 방식입니다.
+
+### 무엇이 달라졌는지
+
+#### 1) Device Streaming을 에이전트가 직접 쓴다
+
+실기기에서만 재현되는 하드웨어/OS 이슈는 에뮬레이터로 놓치기 쉽지만, 필요한 단말이 항상 책상 위에 있는 것도 아닙니다. 이번 업데이트로 에이전트가 보안이 적용된 ADB over SSL 연결을 통해 원격 단말을 마치 USB로 연결한 것처럼 다룰 수 있게 됐습니다.
+
+가능한 작업은 대략 이렇습니다.
+
+- 원격 단말 깨우기, 빌드 배포
+- 로그/트레이스 수집
+- 헤드리스 스크린샷 캡처
+- 터미널 안에서 기기 목록을 보고 어떤 단말을 쓸지 선택
+
+즉, “코드를 고쳤으니 실제 단말에서 눌러보고 결과를 가져와” 같은 흐름을 사람이 중간에 끼지 않고도 시도할 수 있는 기반이 생긴 셈입니다.
+
+#### 2) Android skills가 실무형으로 늘어났다
+
+공식 skills 저장소에는 이제 20개가 넘는 스킬이 있고, 성격도 꽤 실무적입니다. 원문에서 소개한 예시를 제 말로 줄이면 다음과 같습니다.
+
+- 제출 전 Play 정책 준수 점검(매니페스트, 권한, 타깃 SDK, 개인정보 고지)
+- Credential Manager 기반 복원 로그인(Restore Credentials) 구현
+- 암시적 인텐트 탈취 같은 인텐트 보안 점검
+- 프로파일러로 프레임 드롭 원인을 찾고 PerfettoSQL로 트레이스 질의
+- 구형 Camera1/Camera2 코드를 CameraX로 이전
+- Leanback 기반 TV 화면을 Compose for TV로 전환
+- Media3 재생 상태와 Cast 수신기 동기화
+- 테스트 전략(단위 테스트, Compose UI 테스트, 스크린샷 테스트) 세팅
+- R8 설정 감사
+
+이번 글에서는 Wear OS용 Compose Material 3 스킬이 스포트라이트로 소개됐습니다. 둥근 화면, 회전 입력, 저전력, `TransformingLazyColumn`, `AppScaffold`/`ScreenScaffold` 같은 Wear 특유의 패턴을 에이전트가 놓치지 않게 잡아주는 스킬인데, FotMob 팀이 기존 Wear 앱의 리스트 여러 개를 이 패턴으로 옮기면서 레거시 래퍼와 회전/포커스 보일러플레이트를 걷어냈다는 사례도 함께 실렸습니다.
+
+#### 3) 스킬 관리가 CLI에 붙었다
+
+스킬은 프로젝트마다, 또 에이전트마다 디렉터리가 달라서 관리가 번거로울 수 있는데, 흐름은 비교적 단순하게 정리돼 있습니다.
+
+```bash
+# Android CLI 설치 후 android-cli 스킬 세팅
+android init
+
+# 공식 스킬 목록 확인
+android skills list
+
+# 필요한 스킬만 프로젝트에 추가 (예: Wear Compose M3)
+android skills add wear-compose-m3 --project=.
+
+# 나중에 일괄 업데이트
+android skills update --all
+```
+
+중요한 건 이 스킬들이 특정 환경 전용이 아니라는 점입니다. Android Studio, 다른 코드 에디터, 서드파티 에이전트 환경에서도 같은 스킬을 재사용하는 방향으로 설계됐다고 합니다.
+
+### 실무 영향 / 주의점
+
+금융 앱처럼 단말 파편화와 보안 정책이 중요한 환경에서는, 에이전트가 실기기 결과를 직접 확인하는 흐름이 매력적입니다. 다만 바로 운영 파이프라인에 넣기 전에 확인할 것도 있습니다.
+
+- **권한과 보안 연결**: 원격 단말 접속은 ADB over SSL 기반이라지만, 사내 네트워크 정책과 단말 접근 통제 범위 안에서 써야 합니다. 어떤 프로젝트를 링크하고, 어떤 로그가 외부로 나가는지 먼저 정리가 필요합니다.
+- **스킬은 정답지가 아니라 맥락이다**: 스킬이 있어도 최종 판단은 코드 리뷰와 테스트가 해야 합니다. 특히 Play 정책, 권한, 인텐트 보안처럼 심사/보안과 닿은 영역은 스킬 결과를 그대로 믿지 말고 체크리스트로 한 번 더 확인하는 게 좋습니다.
+- **비용이 드는 반복 실행 주의**: “단말에서 확인해봐”를 에이전트 루프에 넣으면, 사람이 할 때보다 훨씬 자주 실행하게 됩니다. 테스트 단말 시간, 네트워크, CI 분(minute)을 먹는 구조인지 먼저 작은 작업으로 측정해 보길 권합니다.
+
+장점도 분명합니다. 지금까지는 에이전트가 코드만 보고 추측했다면, 이제는 실행 결과(로그, 스크린샷, 트레이스)를 근거로 다음 패치를 제안하는 루프를 만들 수 있습니다. UI 회귀나 단말별 렌더링 차이를 잡는 데 특히 도움이 될 만합니다.
+
+### 내 코드에서 이렇게 써볼 생각입니다
+
+저는 거창하게 시작하기보다, 스킬 한 개 + 단말 한 대로 작은 실험부터 해볼 생각입니다.
+
+```bash
+# 1) 지금 프로젝트에 테스트 전략 스킬을 붙여 현재 테스트 구성을 점검
+android skills add testing-strategy --project=.
+
+# 2) 에이전트에게 요청하는 프롬프트 예시
+# "이 모듈의 Compose UI 테스트가 비어 있는 화면을 찾아서,
+#  Device Streaming 단말에서 스크린샷까지 확인한 뒤 결과를 보고해줘"
+```
+
+스크린샷 테스트가 약한 화면부터 에이전트에게 맡겨보면, 사람이 놓친 레이아웃 깨짐을 얼마나 잡아내는지, 반대로 오탐이 얼마나 나오는지 금방 감이 옵니다. 그 다음에 R8 감사나 CameraX 이전처럼 범위가 넓은 스킬로 확장해도 늦지 않습니다.
+
+### 마치며
+
+이번 업데이트의 방향은 “에이전트가 코드를 더 잘 쓰는 것”에서 “에이전트가 실행 결과까지 확인하며 일하는 것”으로 한 발 나간 느낌입니다. Android 개발자라면 CLI와 skills를 한 번쯤 직접 만져보면서, 내 프로젝트에서 자동으로 확인할 수 있는 일이 무엇인지 목록을 만들어보는 것만으로도 가치가 있을 것 같습니다.
+
+> 출처: [Device Streaming and Android skills - available in Android CLI — Android Developers Blog](https://android-developers.googleblog.com/2026/10/android-cli-device-streaming-and-skills.html)
