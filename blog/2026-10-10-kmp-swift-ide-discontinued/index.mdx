@@ -1,0 +1,75 @@
+---
+slug: kmp-swift-ide-discontinued
+title: KMP 플러그인의 Swift IDE 지원 종료 — 2026.3부터 Swift 작업은 Xcode로 나눠야 한다
+authors: [way]
+tags: [android, kotlin, kmp, kotlin-multiplatform, tooling]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 5일, JetBrains가 Kotlin Multiplatform(KMP) 플러그인에서 제공하던 Swift 언어 IDE 기능을 앞으로 중단한다고 알렸습니다. 적용 시점은 IntelliJ IDEA 2026.3과 Android Studio Rabbit 2 | 2026.2.2부터입니다.
+
+### 핵심 요약
+
+- 없어지는 것은 Swift 파일을 같은 IDE 안에서 편집하고, 문법 강조를 받고, Swift와 Kotlin 사이를 오가며 이동하던 기능입니다.
+- iOS 앱을 실행하는 일과 iOS에서 Kotlin 코드를 디버깅하는 일은 계속 지원됩니다.
+- Kotlin/Native 쪽 기능도 그대로입니다. Swift로 내보내는 Swift Export나, Swift 패키지를 Kotlin 프로젝트로 가져오는 흐름은 이번 결정과 별개입니다.
+- 예전 버전의 IDE와 플러그인에서는 기존 Swift 기능을 계속 쓸 수 있지만, 거기에 새 업데이트가 붙지는 않습니다.
+
+쉽게 말하면, 도구가 하나로 합쳐지던 방향에서 다시 각자 잘하는 쪽으로 역할을 나누는 선택입니다.
+
+### 무엇이 달라졌는지
+
+그동안 KMP 플러그인 안에서는 Kotlin 코드와 Swift 코드를 한 창에서 보는 경험이 가능했습니다. 이제 그 경계가 다시 IDE 밖으로 나갑니다. SwiftUI 화면이나 iOS 전용 코드는 Xcode에서, 공유 로직과 Compose Multiplatform 코드는 IntelliJ나 Android Studio에서 보는 흐름이 기본이 됩니다.
+
+JetBrains가 밝힌 배경을 제 말로 줄이면 이렇습니다. 원래 이 Swift 지원은 과거 AppCode 시절의 기술을 바탕으로 만들어졌고, 이후 여러 제품을 거치며 KMP 플러그인까지 이어졌습니다. 그런데 실제 사용은 꾸준히 줄었고, KMP를 쓰는 iOS 개발자 상당수는 Swift 작업만큼은 Xcode를 선호했다고 합니다. 반대로 플러그인 안에서 일하는 팀은 Kotlin과 Compose Multiplatform 비중이 점점 커졌습니다. Swift와 Xcode, IntelliJ 플랫폼이 계속 바뀌는 상황에서 이 연결을 유지하는 비용이 실제 쓰임에 비해 컸다는 판단입니다.
+
+대체 기능을 새로 만들 계획은 현재로서는 없다고도 했습니다. 앞으로는 Kotlin 도구 자체와 iOS 개발자를 위한 KMP 경험을 다듬는 데 힘을 쏟겠다는 방향입니다.
+
+### 실무 영향 / 주의점
+
+Android만 만드는 팀이라면 체감 변화는 거의 없습니다. 영향은 KMP로 iOS까지 같이 보는 팀에서 생깁니다.
+
+- **Swift 파일을 Android Studio에서 고치던 습관이 있다면 작업 동선을 나눠야 합니다.** 특히 `iosApp` 쪽 SwiftUI 진입점, 권한이나 딥링크처럼 iOS에 붙은 얇은 층을 누가 어느 IDE에서 고칠지 팀 안에서 정해두는 게 좋습니다.
+- **구버전에 머무는 선택은 임시 방편입니다.** Swift 이동 기능이 꼭 필요해서 IntelliJ IDEA 2026.3 이전에 머무를 수는 있지만, 그 사이 Kotlin 플러그인과 Android Studio의 다른 개선을 못 받게 됩니다. 보안과 빌드 도구 호환까지 같이 보면 오래 버티는 전략은 아닙니다.
+- **공유 경계를 더 얇게 가져갈 이유가 생겼습니다.** Swift 쪽에 로직이 많이 남아 있으면 IDE를 오갈 때마다 맥락이 끊깁니다. 반대로 Swift를 화면 진입과 플랫폼 연결 정도로 얇게 두고, 상태와 규칙을 Kotlin에 두면 이번 변화의 마찰이 작아집니다.
+
+저는 이 소식을 KMP 자체가 약해졌다는 신호로 보지는 않습니다. 오히려 JetBrains가 잘 쓰이지 않는 통합을 걷어내고, 실제로 많이 쓰이는 Kotlin 쪽 경험에 집중하겠다는 쪽에 가깝습니다.
+
+### 내 코드에서는 이렇게 나눠볼 생각입니다
+
+새로 KMP를 시작한다면 처음부터 Swift 층을 얇게 잡는 구성이 안전해 보입니다. 예를 들면 iOS 진입점은 Compose 화면을 감싸는 역할만 하고, 나머지는 공유 모듈이 맡는 식입니다.
+
+```swift
+// iosApp: Swift는 진입점만 담당하고, 화면과 상태는 공유 모듈에 둔다
+import SwiftUI
+import Shared
+
+struct ContentView: View {
+    var body: some View {
+        ComposeView()
+            .ignoresSafeArea()
+    }
+}
+
+struct ComposeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainViewControllerKt.MainViewController()
+    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+```
+
+```kotlin
+// shared: iOS와 Android가 같이 쓰는 화면 진입점
+fun MainViewController() = ComposeUIViewController {
+    App()
+}
+```
+
+이렇게 두면 Swift를 수정할 일이 생겨도 Xcode에서 보는 범위가 작고, 대부분의 변경은 Kotlin 쪽에서 끝납니다. 이미 Swift에 로직이 많이 들어가 있는 프로젝트라면, 한 번에 옮기기보다 새로 만드는 화면부터 이 경계를 적용해 보는 것도 방법입니다.
+
+### 마치며
+
+KMP를 쓰는 팀이라면 IDE를 올리기 전에 한 번만 점검해 보면 좋겠습니다. Swift 파일을 지금 어느 도구에서 고치고 있는지, 그 흐름이 새 버전에서도 이어지는지 확인하는 것만으로 업그레이드 뒤의 혼란을 줄일 수 있습니다.
+
+> 출처: [Discontinuing Swift Language IDE Support in the Kotlin Multiplatform Plugin — The Kotlin Blog](https://blog.jetbrains.com/kotlin/2026/10/discontinuing-swift-language-ide-support-in-the-kotlin-multiplatform-plugin/)
