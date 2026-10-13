@@ -1,0 +1,93 @@
+---
+slug: kotlin-companion-blocks
+title: Kotlin 2.5.0에 companion 블록이 온다 — companion object와 무엇이 다른가
+authors: [way]
+tags: [kotlin, companion, language, android]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+Kotlin 2.5.0부터 `companion object`와 문법은 거의 같지만 컴파일 방식이 근본적으로 다른 **companion 블록**과 **companion 확장(companion extension)**이 실험 기능으로 들어옵니다. `TAG` 하나, `newInstance()` 하나 찍을 때마다 따라다니던 `Companion` 싱글턴의 세금을 드디어 덜 수 있게 된 셈입니다. JetBrains의 발표 글 "The Companions to Come"(2026-09-30)을 실무 관점에서 정리합니다.
+
+### 핵심 요약
+
+- Kotlin 2.5.0-Beta1부터 실험 기능으로 companion 블록과 companion 확장을 사용할 수 있습니다. 컴파일러 플래그 `-Xcompanion-blocks` (블록만) 또는 `-Xcompanion-blocks-and-extensions` (둘 다)를 넘겨야 합니다.
+- 블록은 `companion object`에서 `object` 키워드를 뺀 형태입니다. JVM에서는 진짜 static 멤버로 컴파일됩니다.
+- companion 확장은 `companion fun Vector.unit(angle: Double)`처럼, 내가 만든 클래스가 아니어도 "클래스 멤버처럼" 선언할 수 있는 새 문법입니다. Java 클래스에도 쓸 수 있고, 원래 companion object가 없어도 됩니다.
+- 기존 companion object는 그대로 지원되고 강제 마이그레이션은 없습니다. 인터페이스를 구현해야 하는 companion은 여전히 object만 가능합니다.
+
+### 무엇이 달라졌는지
+
+#### companion 블록: 진짜 static으로 컴파일
+
+```kotlin
+data class Vector(val x: Double, val y: Double) {
+    companion {
+        val ZERO = Vector(0.0, 0.0)
+    }
+}
+
+// 사용은 똑같이
+val v = Vector.ZERO
+```
+
+companion object는 "실제 객체"라서 장점(인터페이스 구현, 값으로 전달 가능)이 있지만, 단점도 그 실체에서 옵니다. 자바에서 호출하면 `Vector.Companion.getZERO()` 식의 이름이 튀어나오고, 리플렉션·바이트코드 크기에도 발자국이 남습니다. companion 블록은 컴파일 전략을 다른 플랫폼의 static 멤버처럼 바꿔서, JVM에서는 순수 static 멤버가 됩니다. 겉보기엔 `object` 한 단어 차이인데 바이트코드 관점에서는 다른 세상입니다.
+
+#### companion 확장: 내가 안 만든 클래스에도 "static 함수" 추가
+
+```kotlin
+companion fun Vector.unit(angle: Double) = Vector(cos(angle), sin(angle))
+```
+
+이게 이번 기능 중 가장 파급력이 큰 부분입니다. companion 확장은 **클래스를 내가 통제하든 말든, Kotlin이든 Java든, companion object가 원래 있든 없든** 선언할 수 있습니다. 라이브러리에서 내려준 클래스에 팩토리 함수를 붙이고 싶을 때, 유틸 오브젝트를 따로 만들지 않고도 `SomeClass.myFactory()` 형태로 붙일 수 있게 됩니다.
+
+#### KMP와의 연결: expect/actual까지
+
+companion 블록 멤버는 KMP에서 expect로 선언하고, Java 클래스의 static 멤버로 actualize할 수 있습니다. 멀티플랫폼 라이브러리에서 플랫폼 네이티브 static API를 companion 멤버로 감싸던 패턴이 언어 차원에서 정식으로 지원되는 셈입니다.
+
+### 실무 영향 / 주의점
+
+- **지금 당장 쓸 일은 아닙니다**: 실험 기능이고, 특히 companion 확장을 쓴 라이브러리는 pre-release 바이너리가 되어 안정화될 때까지 의존성으로 소비할 수 없습니다. companion 블록은 이 제한이 없지만, 소비하는 쪽도 플래그를 켜야 합니다. 즉, 사내 공통 모듈에 실험 문법을 넣으면 그 모듈을 쓰는 모든 프로젝트에 플래그가 전염됩니다.
+- **마이그레이션은 강제가 아닙니다**: JetBrains가 명시적으로 밝혔습니다. companion object는 Kotlin의 온전한 일부로 계속 보장됩니다. 새 코드에서 단순 상수·팩토리는 블록을 선호하는 방향이 되겠지만, 서두를 이유가 없습니다.
+- **interface 구현 companion은 object 유지**: companion이 인터페이스를 구현해야 하면(예: 콜백 인터페이스 구현) companion object가 유일한 선택지입니다. 블록은 객체가 아니라서 안 됩니다.
+- **옮기려면 재컴파일이 필수**: `object` 키워드를 지우는 게 대부분 충분하지만, 프로젝트와 의존하는 코드 전체를 다시 컴파일해야 합니다. R8/ProGuard 규칙에서 `Companion`을 참조하던 룰이 있다면 같이 점검해야 합니다. 생태계 툴링(정적 분석, 일부 플러그인)이 아직 블록을 못 알아볼 수 있다는 점도 발표에서 언급됐습니다.
+- **Android 관점의 관전 포인트**: Activity/Fragment의 `newInstance`, `TAG` 상수, `CREATOR` 같은 상용구에서 바이트코드가 깔끔해집니다. 효과는 작지만 앱 전체에 흩어진 상용구라 누적되면 의미가 있습니다. 다만 DEX 메서드 수나 APK 크기에서 드라마틱한 변화는 기대하지 않는 게 좋습니다.
+
+### 내 코드에서 이렇게 확인할 생각입니다
+
+실험 플래그를 켜는 방법은 이렇습니다. 아직은 테스트 모듈에서만 건드려 볼 예정입니다.
+
+```kotlin
+// app/build.gradle.kts (Kotlin DSL)
+kotlin {
+    compilerOptions {
+        // companion 블록만 허용
+        freeCompilerArgs.add("-Xcompanion-blocks")
+        // 블록 + 확장을 모두 허용
+        // freeCompilerArgs.add("-Xcompanion-blocks-and-extensions")
+    }
+}
+```
+
+```kotlin
+// 실험해 볼 후보 1: Fragment 팩토리
+class DetailFragment : Fragment() {
+    companion {
+        private const val ARG_ID = "arg_id"
+        fun newInstance(id: String) = DetailFragment().apply {
+            arguments = bundleOf(ARG_ID to id)
+        }
+    }
+}
+
+// 실험해 볼 후보 2: 인터페이스 구현이 필요하면 object 유지
+class AnalyticsTracker {
+    companion object : EventSink {  // 블록으로는 안 됨
+        override fun sink(event: Event) { /* ... */ }
+    }
+}
+```
+
+### 출처
+
+- [The Companions to Come — Kotlin Blog (JetBrains, 2026-09-30)](https://blog.jetbrains.com/kotlin/2026/09/the-companions-to-come/) — companion 블록·확장의 실험 도입, 컴파일러 플래그, companion object 공존 정책
+- KEEP-0449 — 전체 설계 제안서 (위 글에서 링크)
