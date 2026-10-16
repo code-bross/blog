@@ -1,0 +1,71 @@
+---
+slug: kotlin-toolchain-013
+title: Kotlin Toolchain 0.13 — kotlin new 명령과 Android SDK 자동 설정으로 KMP 시작이 쉬워진다
+authors: [way]
+tags: [kotlin, android, kmp, toolchain, cli]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+Kotlin Toolchain **0.13**이 나왔습니다. 이제 JetBrains는 대부분의 신규 Kotlin Multiplatform 프로젝트에 Kotlin Toolchain 사용을 공식 권장합니다. 새 프로젝트 생성 명령 `kotlin new`, IDE 임포트 시 Android SDK 자동 프로비저닝 등 "처음 시작"의 마찰을 줄이는 변화가 핵심입니다. Kotlin 블로그의 발표 글 "Start Your Next KMP App With Kotlin Toolchain 0.13"(2026년 10월)을 실무 관점에서 정리합니다.
+
+### 핵심 요약
+
+- `kotlin new` 명령이 새로 생겼습니다. Kotlin Multiplatform Wizard와 비슷한 대화형 플로우로 애플리케이션 타입과 타깃 플랫폼을 고르면 프로젝트가 만들어집니다. 기존 `kotlin init`은 유지되지만, 이제 현재 디렉터리에 바로 파일을 생성하는 동작으로 바뀌었습니다.
+- **Android 개선:** 이전에는 `kotlin build`·`kotlin run`을 실행할 때만 Android SDK가 자동 설치됐고, IDE에서 프로젝트를 먼저 열면 SDK 누락으로 설정 오류가 났습니다. 0.13부터는 CLI와 IDE 동작이 통일돼 **프로젝트 임포트 시점에 부족한 Android SDK 컴포넌트를 자동으로 설치**합니다.
+- namespace·applicationId 검증을 강화했습니다. `com.example.app` 같은 샘플 ID가 그대로 앱·라이브러리 빌드에 실려 배포되는 실수를 막아줍니다.
+- IDE 에디터 안에서 싱크 상태를 볼 수 있게 됐고, Apple 플랫폼용 Swift Package Manager 의존성을 지원합니다(`swiftPackage` 선언, `swiftPMImport` 접두사로 import).
+- 멀티플랫폼 라이브러리 배포 시 Compose Resources와 SwiftPM 의존성 메타데이터가 함께 발행되고, 서드파티 라이브러리에서도 Compose Resources를 가져올 수 있습니다.
+- Kotlin/Native 컴파일 캐시(KTC-5422)로 네이티브 의존성 빌드가 빨라졌습니다. 빌드·프로젝트를 가로질러 캐시를 재사용하고, 프로젝트 코드는 파일 단위 캐시로 바뀐 부분만 다시 컴파일합니다.
+- 업데이트는 터미널에서 `kotlin update` 한 줄이면 됩니다. 최신 기능을 IDE에서 쓰려면 IntelliJ IDEA 2026.2.3 또는 Android Studio Rabbit 1 | 2026.2.1 이상 + Kotlin Toolchain 플러그인이 필요합니다.
+
+### 무엇이 달라졌는지
+
+#### Android 개발자가 체감하는 변화 두 가지
+
+첫째, IDE 임포트 시 SDK 자동 설치입니다. 팀에 새 멤버가 들어와서 레포를 처음 열었을 때 "SDK가 없어요"로 시작하던 온보딩이 조용해집니다. 빌드 전에 SDK 매니저를 손으로 여는 단계가 하나 줄어듭니다.
+
+둘째, 샘플 applicationId 검증입니다. 데모로 만들던 프로젝트가 어느 날 그대로 스토어에 올라가는 사고는 생각보다 흔합니다. 이제 `com.example.app` 같은 플레이스홀더가 빌드 산출물에 실리면 검증을 걸어 잡아줍니다. 릴리스 체크리스트에 "applicationId 확인"을 손으로 적어두던 팀이라면, 그 한 줄을 도구가 대신해줍니다.
+
+#### CLI 다운로드 진행률 표시
+
+TUI에 다운로드 진행률 바가 생겼습니다. JDK·Android SDK 컴포넌트·iOS 런타임·컴파일러를 받을 때 "멈춘 건지 받는 건지"를 구분할 수 있게 됐습니다. CI 로그에서도 진행 상황을 읽기 쉬워집니다.
+
+#### 에이전트 친화 설계
+
+발표 글에서 강조한 대목이 하나 더 있습니다. 자동 환경 설정, 선언적 구성, 명확한 에러 메시지가 AI 에이전트에게도 이상적인 기반이라고 합니다. Hot Reload MCP 서버와 Kotlin 에이전트 스킬(`npx skills add kotlin/kotlin-agent-skills`)도 제공됩니다. 앞으로는 Kotlin Toolchain이 스킬을 직접 내장할 계획이라고 합니다. 에이전트에게 KMP 프로젝트를 맡기는 팀이라면 한 번 살펴볼 만한 지점입니다.
+
+### 실무 영향/주의점
+
+- **"신규 프로젝트에 권장"이지 "기존 프로젝트 마이그레이션 권장"이 아닙니다.** JetBrains도 명시했듯, 기존 Gradle 프로젝트의 마이그레이션은 아직 공백이 있고 피드백을 모으는 단계입니다. 운영 중인 앱을 당장 옮길 필요는 없습니다.
+- SwiftPM 지원은 Apple 플랫폼 모듈(`kmp/lib`, `ios/app` 등)에서만 의미가 있습니다. Android 전용 프로젝트라면 이번 릴리스의 체감은 SDK 자동 설치와 검증 강화가 전부입니다.
+- 네이티브 컴파일 캐시는 `settings.kotlin.compileIncrementally` 설정을 사용하고, 디버그 바이너리(비최적화) 대상에서 동작합니다. `.klib` 컴파일은 여전히 전체 빌드입니다.
+
+### 내 코드 예시
+
+```yaml
+# Apple 플랫폼 모듈에서 SwiftPM 의존성 선언 (Kotlin Toolchain 0.13~)
+product: ios/app
+
+dependencies:
+  - swiftPackage:
+      repository: "https://github.com/firebase/firebase-ios-sdk.git"
+      version: "12.17.0"
+      products: [ "FirebaseCore", "FirebaseFirestore", "FirebaseAnalytics" ]
+```
+
+```kotlin
+// app/src/app.kt — 가져온 Objective-C API 사용
+import swiftPMImport.app.FIRAnalytics
+import swiftPMImport.app.FIRApp
+
+fun initAnalytics() {
+    FIRApp.configure()
+    FIRAnalytics.logEventWithName("app_open", parameters = null)
+}
+```
+
+iOS 쪽에서 Firebase를 쓰는 KMP 프로젝트라면, 이제 CocoaPods 없이 선언적 설정 한 줄로 iOS 네이티브 SDK를 끌어올 수 있습니다. Android 쪽 실무 팁 하나 더: 새 KMP 모듈을 만들 때 `kotlin new`로 뼈대를 뽑고, 첫 빌드 전에 `applicationId`가 샘플 값인지 확인하는 습관을 들이면 위에서 말한 검증과 겹겹이 방어가 됩니다.
+
+### 출처
+
+- [Start Your Next KMP App With Kotlin Toolchain 0.13 — Kotlin Blog (JetBrains, 2026년 10월)](https://blog.jetbrains.com/kotlin/2026/10/start-your-next-kmp-app-with-kotlin-toolchain-0-13/) — `kotlin new` 명령, IDE 임포트 시 Android SDK 자동 프로비저닝, namespace/applicationId 검증, SwiftPM 지원, 네이티브 컴파일 캐시, 로드맵
