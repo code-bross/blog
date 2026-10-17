@@ -1,0 +1,90 @@
+---
+slug: statein-viewmodel
+title: "init { load() }을 지우는 법 — stateIn으로 ViewModel UI 상태를 선언적으로"
+authors: [way]
+tags: [android, kotlin, flow, viewmodel, compose]
+---
+
+안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+
+ViewModel을 열면 거의 항상 이 패턴이 나옵니다: `private val _uiState = MutableStateFlow(UiState())`, `init`에서 `load()` 호출, 데이터가 오면 `.update { it.copy(...) }`. 틀린 코드가 아닙니다. 그런데 화면이 커질수록 이 수동 동기화 코드가 어딘가에선 반드시 어긋나기 시작합니다. 10월 16일 ProAndroidDev에 올라온 글 "The Power of stateIn in ViewModel"(chanzmao)이 이 문제를 명령(command)과 상태(state)의 구분으로 풀어냅니다.
+
+### 핵심 요약
+
+- `init { load() }` + 수동 `_uiState.update` 패턴은 "상태가 어떻게 도출되는지"가 아니라 "언제 복사했는지"를 코드에 남깁니다. 입력이 하나만 있을 땐 괜찮지만, 검색어·필터·새로고침처럼 입력이 늘어나면 동기화 누락이 생깁니다.
+- 핵심 원칙은 하나입니다: **MutableStateFlow는 수정 가능한 '입력'에만, 파생 상태는 Flow 연산자로 표현하고 stateIn으로 StateFlow로 노출**합니다.
+- stateIn 자체는 데이터를 가져오지 않습니다. 상류 Flow가 뱉은 값을 공유·유지할 뿐이며, `SharingStarted.WhileSubscribed(5_000)` 같은 공유 전략은 화면 생명주기에 맞춰 선택해야 합니다.
+
+### 명령인가, 상태인가
+
+글쓴이가 제시하는 구분이 깔끔합니다.
+
+- 명령(commands): 무슨 일이 일어나야 하는지 — "제출해라", "삭제해라", "새로고침해라". 사용자의 명시적 동작에 대한 반응입니다.
+- 상태(state): 지금 무엇이 사실인지 — "보이는 목록은 items와 query로부터 도출된다". 관계가 코드에 선언됩니다.
+
+문제는 명령으로 상태를 동기화하려고 할 때 생깁니다. 레포지토리가 이미 `val items: Flow<List<Item>>`을 들고 있는데도 ViewModel이 collect 해서 `_uiState`에 복사하고, 쿼리가 바뀌면 또 복사하고… "보이는 목록을 다시 계산해야 하는 모든 장소"를 사람이 기억해야 하는 구조입니다.
+
+### stateIn으로 바뀌는 코드
+
+입력은 그대로 두되, 파생 UI 상태는 연산자로 표현합니다.
+
+```kotlin
+class PortfolioViewModel(repository: HoldingRepository) : ViewModel() {
+
+    // 입력: 사용자가 바꾸는 검색어 — MutableStateFlow가 맞다
+    private val query = MutableStateFlow("")
+
+    // 파생 상태: 레포지토리 데이터 + 검색어로 도출 — map/combine이 관계다
+    val uiState: StateFlow<PortfolioUiState> =
+        combine(repository.holdings, query) { holdings, query ->
+            PortfolioUiState(
+                holdings = holdings.filter { it.matches(query) },
+                query = query,
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = PortfolioUiState(),
+        )
+
+    fun onQueryChanged(query: String) {
+        this.query.value = query // UI 액션은 입력만 바꾼다
+    }
+}
+```
+
+사라진 것들을 세어보세요: 수동 `_uiState`, `init` 블록, 복사용 `load()`, 레포지토리와 UI 모델 사이의 수동 동기화. UI 액션(`onQueryChanged`)은 `uiState`를 직접 건드리지 않고 입력만 바꿉니다. 양쪽 입력 중 하나라도 바뀌면 파생 상태가 자동으로 갱신됩니다.
+
+### 공유 전략은 생명주기 보고 고르기
+
+`WhileSubscribed(5_000)`는 첫 구독자가 생기면 상류를 수집하고, 마지막 구독자가 사라진 지 5초 후에 수집이 멈춥니다. 타임아웃은 화면 회전 같은 짧은 구독 공백에서 상류 스트림이 끊겼다 다시 붙는 걸 막아줍니다.
+
+단, 글쓴이가 경고하는 함정이 있습니다: **수집이 멈췄다가 재개된다고 네트워크 요청이 반드시 다시 나가는 건 아닙니다.** 그건 상류 Flow가 어떻게 구현됐느냐에 달렸습니다(레포지토리의 캐시·공유 전략이 실제 동작을 결정합니다). 공유 전략은 관성처럼 쓰는 관용구가 아니라 원하는 생명주기 동작을 보고 선택해야 합니다.
+
+### 실무 영향 / 주의점
+
+- **LaunchedEffect(Unit) { viewModel.load() }로 화면에 들어갈 때마다 다시 로드하는 패턴**은 "명령으로 상태를 동기화"하는 전형적인 예입니다. 그 데이터가 이미 레포지토리의 Flow로 존재한다면 stateIn 파생으로 바꾸는 게 낫습니다.
+- **명시적 명령이 정당한 경우도 있습니다.** 폼 제출·삭제·사용자가 누른 새로고침처럼 "이벤트"에 대한 반응은 명령으로 두세요. 모든 걸 Flow로 감싸지 마십시오. 글이 말하는 대로, "파생 상태를 동기화하기 위한 명령"만 제거하는 겁니다.
+- **테스트가 쉬워집니다.** 파생 로직은 순수 함수(`map`/`combine` 변환)라 ViewModel 전체를 띄우지 않고도 검증할 수 있습니다.
+- **SharingStarted 선택은 코드 리뷰 포인트로** 남겨두세요. `WhileSubscribed` vs `Eagerly`의 차이는 상류 비용(소켓·폴링·가격 스트리밍)을 누가 내는가와 직결됩니다.
+
+### 내 코드에서는 이렇게 적용할 생각입니다
+
+가격 스트리밍처럼 상류가 비싼 Flow라면 파생 전에 레포지토리 단에서 공유를 정리하고, ViewModel은 순수하게 "어떻게 도출하는지"만 남깁니다.
+
+```kotlin
+// Repository: 비싼 상류를 여기서 공유 — ViewModel은 몰라도 된다
+val holdings: Flow<List<Holding>> = priceSocket.stream()
+    .map(::toHoldings)
+    .shareIn(
+        scope = externalScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        replay = 1,
+    )
+```
+
+그리고 ViewModel은 `combine(holdings, query)` 하나로 "검색어에 맞는 보유종목"이라는 관계를 선언합니다. 소켓 구독 시점, 구독 종료 시점 같은 생명주기 판단은 공유 전략 선언 한 곳에서만 일어납니다. 화면이 두 개로 늘어나도 동기화 코드를 복붙하지 않아도 됩니다.
+
+### 출처
+
+- [The Power of stateIn in ViewModel](https://proandroiddev.com/the-power-of-statein-in-viewmodel-6a57864a8c5d) — chanzmao, ProAndroidDev, 2026년 10월 16일 (명령/상태 구분·stateIn 파생 패턴·공유 전략 주의점 인용)

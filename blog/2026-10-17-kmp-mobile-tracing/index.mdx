@@ -1,0 +1,70 @@
+---
+slug: kmp-mobile-tracing
+title: 트레이스 루트는 HTTP 호출이 아니라 비즈니스 연산이다 — KMP 모듈 OpenTelemetry 실전
+authors: [way]
+tags: [android, kotlin-multiplatform, opentelemetry, observability, grafana]
+---
+
+안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+
+"주문이 안 들어갔어요"라는 CS가 오면, 개발자는 주문 요청 하나를 추적해야 합니다. 그런데 실제 앱에서는 주문 하나가 토큰 갱신, 재시도, 여러 API 호출로 흩어져 있고, 각 호출의 시작·끝 시간만 찍힌 납작한 로그로는 무엇이 무엇의 자식인지 알 수 없습니다. 10월 16일 ProAndroidDev에 올라온 Damian Petla의 글 "Tracing Business Operations, Not HTTP Calls — Part 2"는 라이브 쇼핑 앱 Tilt에서 KMP 모듈에 OpenTelemetry 분산 트레이싱을 붙인 실전 기록입니다. 2부작 중 2부로, 1부의 파이프라인 프레임워크 위에 트레이싱을 올리는 이야기입니다.
+
+### 핵심 요약
+
+- **트레이스 단위 = 비즈니스 연산 1개**, HTTP 호출 1개가 아닙니다. 주문 넣기, 홈 피드 로드, 인증번호 전송 같은 연산 하나가 앱에서 시작해 마지막 백엔드 서비스까지 도달하는 단일 waterfall이 하나의 트레이스가 됩니다.
+- 개발자용 API는 놀랍게 단순합니다. 파이프라인의 종료 지점(`buildOnce`)에 타입화된 연산 하나를 인자로 넘기는 것이 전부입니다: `.buildOnce(ShopperTracedOperation.MakeBid(roomId, auctionId, bidValue))`. 스팬을 어디서 열고 닫을지 신경 쓸 필요가 없습니다.
+- KMP SDK `opentelemetry-kotlin`은 알파 상태였고, 글쓴이는 얇은 래퍼(`Tracer`·`Span`·`SpanContext`)로 격리한 뒤 실제 마주친 3가지 SDK 결함(오프라인 내보내기 크래시·비-protobuf 에러 바디 크래시·배치 스팬 프로세서 스레드 안전성)을 자체 코드에서 우회했습니다.
+- 모바일에서 시작한 스팬과 백엔드 스팬은 W3C `traceparent` 헤더로 하나의 트레이스로 합쳐지고, Grafana Tempo + TraceQL로 조회합니다. 로컬 개발용으로는 `grafana/otel-lgtm` 컨테이너 하나면 충분합니다.
+
+### 왜 "비즈니스 연산"인가
+
+레포지토리의 함수 하나는 종종 여러 쿼리와 구독을 합쳐놓습니다. GraphQL 호출 하나씩만 트레이싱하면 "정확한 숫자를 틀린 것에 대해" 구하게 되고, 앱 세션 전체를 트레이스로 묶으면 아무도 분석할 수 없는 거대한 트레이스가 됩니다. 그래서 저자는 트레이스 루트를 **경계가 있는 비즈니스 연산**으로 잡았습니다.
+
+이 설계의 진짜 위엄은 타입화된 연산 카탈로그에 있습니다. `ShopperTracedOperation.MakeBid`처럼 연산 이름과 속성(roomId·auctionId·bidValue)이 클래스 하나로 묶여 있고, 속성 키는 상수 객체에 모아두어 "한 곳은 `room_id`, 다른 곳은 `room.id`" 식의 조용한 Grafana 쿼리 깨짐을 막습니다. 숫자 타입도 유지돼 TraceQL에서 숫자 비교가 됩니다.
+
+### 실무에서 날아든 함정들
+
+- **재시도는 별도 스팬으로.** 재시도 로직 위에 스팬을 열면 개별 재시도가 안 보입니다. 저자는 Apollo 인터셉터를 재시도·인증 아래에 둬서 물리적 요청마다 스팬을 열고, 각 요청에 `traceparent`를 주입했습니다. 재시도된 주문은 하나의 연산 아래 두 개의 attempt 스팬으로 나타납니다.
+- **복구된 실패는 실패가 아닙니다.** 재시도 성공 시 자식 스팬에는 에러가 남지만 루트 스팬은 성공입니다. 에러율 집계를 자식 스팬 기준으로 하면 모든 재시도가 오경보를 냅니다. **에러율은 루트 스팬 상태 기준**으로만 봐야 합니다.
+- **취소는 성공도 아닙니다.** 화면을 이탈해 취소된 주문이 초기엔 트레이스 목록에서 성공처럼 보였습니다. 이제 루트 스팬에 명시적인 `cancelled` 마커를 답니다.
+- **스트림은 다릅니다.** 라이브 룸 같은 구독은 한 시간도 갑니다. 구독당 하나의 긴 스팬은 "닫히지 않는 루트"라는 세션 트레이스 안티패턴입니다. 대신 **bounded root**를 씁니다: 수집 시작 시 루트를 열고, 첫 번째 실제 결합 상태(화면이 보여줄 데이터가 생긴 순간)에 닫습니다. 트레이싱 대상은 "셋업 시간"입니다. emission마다 트레이스를 만들지 않는 건 의도적입니다.
+- **부모 스팬 전달은 코루틴 컨텍스트로 하지 마십시오.** 첫 버전은 `flow {}` 안에서 `withContext`로 부모 스팬을 넘겼고 단위 테스트는 통과했지만, 실기기에서 "Flow invariant is violated"로 크래시했습니다. flow는 내부에서 컨텍스트를 바꿀 수 없습니다. 지금은 Apollo의 `ExecutionContext`로 전달합니다.
+- **폰의 시계는 믿을 게 못 됩니다.** 첫 E2E 트레이스에서 백엔드 스팬이 원인이 된 클라이언트 스팬보다 늦게 시작된 것처럼 보였습니다. 디바이스 시계 드리프트 때문입니다. 앱에 있던 서버 동기화 시계를 SDK에 넘깁니다.
+- **알파 SDK의 메트릭 부재.** SDK에 `Meter` 뼈대는 있지만 인스트루먼트와 내보내기가 없어서 메트릭은 Collector의 `spanmetrics` 커넥터(백엔드 담당)로 넘겼습니다.
+
+### 운영 결정들
+
+- 트레이싱은 앱 쪽 피처 플래그로 사용자별로 켜고, 모듈은 `tracingEnabled` 람다만 받습니다. 플래그는 첫 스팬 때 읽어 프로세스에 캐시 — 트레이스 도중에 뒤집히지 않습니다. 엔드포인트가 없으면 트레이서는 no-op이라 SDK도 생성되지 않습니다.
+- **디바이스에서 샘플링하지 않습니다.** 폰에서 샘플링하면 나중에 Collector 쪽에서 특정 사용자를 잡아내 샘플링할 수 없습니다. 볼륨은 플래그를 켠 사용자 수로 조절했고, Android부터 단계적으로 올렸습니다.
+- 두 앱은 같은 `service.name`으로 보고하고 플랫폼은 속성으로 둡니다. 트레이싱 대상은 거의 항상 백엔드까지 이어지기 때문입니다.
+- 알림은 페이저가 아니라 **일간 다이제스트**로. 네트워크 끊긴 한 명의 사용자가 슬로우/행 알림을 울리니 노이즈가 됩니다.
+
+### 내 코드에서는 이렇게 적용할 생각입니다
+
+한투 앱의 "주문 넣기" 연산을 트레이스 루트로 잡는다면 이렇게 시작할 겁니다.
+
+```kotlin
+// 1. 타입화된 연산 카탈로그 — 속성 키는 한 객체에 상수로 모은다
+class PlaceOrder(accountNo: String, stockCode: String, qty: Int) :
+    TracedOperation(
+        name = "placeOrder",
+        attributes = mapOf(
+            TraceAttributes.ACCOUNT_NO to accountNo,
+            TraceAttributes.STOCK_CODE to stockCode,
+            TraceAttributes.QUANTITY to qty,
+        ),
+    )
+
+// 2. 레포지토리 종료 지점에서 인자 하나로 옵트인 — 스팬 위치는 신경 쓰지 않는다
+suspend fun placeOrder(...): Result<Order> =
+    source(accountStore.account)
+        .transformToSource { acct -> source(orderApi.place(acct, req)) }
+        .buildOnce(TracedOperation.PlaceOrder(accountNo, stockCode, qty))
+```
+
+개발자가 매일 새 쿼리를 추가하는 환경이라면, 글처럼 "추가 가이드를 읽지 않고도 트레이스를 볼 수 있게 만드는 것"이 완성 기준이 됩니다. 트레이싱 가이드를 문서화하고, 붙여넣기 바로 가능한 TraceQL 쿼리를 주는 것까지가 프로젝트입니다.
+
+### 출처
+
+- [Tracing Business Operations, Not HTTP Calls — Part 2](https://proandroiddev.com/tracing-business-operations-not-http-calls-part-2-517ba3b6f228) — Damian Petla | Tilt, ProAndroidDev, 2026년 10월 16일 (트레이스 단위·타입화된 연산 카탈로그·재시도/취소 스팬 처리·알파 SDK 우회·운영 결정 인용)
+- [Everything Is a Source — Part 1](https://androiddev.news) (androiddev.news 경유, 2026년 10월 16일) — 1부의 파이프라인 프레임워크 이야기
