@@ -63,7 +63,7 @@ class PortfolioViewModel(repository: HoldingRepository) : ViewModel() {
 
 ### 실무 영향 / 주의점
 
-- **LaunchedEffect(Unit) { viewModel.load() }로 화면에 들어갈 때마다 다시 로드하는 패턴**은 "명령으로 상태를 동기화"하는 전형적인 예입니다. 그 데이터가 이미 레포지토리의 Flow로 존재한다면 stateIn 파생으로 바꾸는 게 낫습니다.
+- **`LaunchedEffect(Unit) { viewModel.load() }`**로 화면에 들어갈 때마다 다시 로드하는 패턴은 "명령으로 상태를 동기화"하는 전형적인 예입니다. 그 데이터가 이미 레포지토리의 Flow로 존재한다면 stateIn 파생으로 바꾸는 게 낫습니다.
 - **명시적 명령이 정당한 경우도 있습니다.** 폼 제출·삭제·사용자가 누른 새로고침처럼 "이벤트"에 대한 반응은 명령으로 두세요. 모든 걸 Flow로 감싸지 마십시오. 글이 말하는 대로, "파생 상태를 동기화하기 위한 명령"만 제거하는 겁니다.
 - **테스트가 쉬워집니다.** 파생 로직은 순수 함수(`map`/`combine` 변환)라 ViewModel 전체를 띄우지 않고도 검증할 수 있습니다.
 - **SharingStarted 선택은 코드 리뷰 포인트로** 남겨두세요. `WhileSubscribed` vs `Eagerly`의 차이는 상류 비용(소켓·폴링·가격 스트리밍)을 누가 내는가와 직결됩니다.
