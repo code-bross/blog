@@ -6,23 +6,32 @@ tags: [android, play, target-sdk, release]
 ---
 
 안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
-2026년 8월 31일을 기점으로, Google Play에 제출되는 신규 앱과 앱 업데이트는 Android 16(API 36) 타깃이 필수 조건이 됐습니다. 경고로 끝나는 줄 알았던 마감일이 이제는 실제로 업로드를 막는 단계에 들어왔습니다. 한 줄짜리 크래시 핫픽스도 `targetSdk`를 36으로 올리기 전까지는 콘솔에 올라가지 않습니다. 아직 대응 전이라면 11월 1일까지 한 번의 연장을 신청할 수 있는데, 이것도 자동으로 주어지는 건 아닙니다. 이번 글에서는 규칙의 정확한 내용과 바로 실행할 수 있는 체크리스트를 정리합니다.
+Google Play 타깃 API 36 요구사항과 대응 체크리스트를 설명해드리겠습니다.<br/>
 
-### 핵심 요약
+### 배경
 
-- 2026년 8월 31일 이후, 신규 앱·앱 업데이트는 Android 16(API 레벨 36) 이상을 타깃해야 Google Play에 제출할 수 있습니다. (Wear OS·Android Automotive는 API 35, Android TV·Android XR은 API 34)
-- 이미 스토어에 있는 앱은 API 35 이상을 타깃해야 타깃보다 높은 OS를 쓰는 신규 사용자에게 계속 노출됩니다. API 34 이하에 머물면 신규 사용자 설치가 조용히 막힙니다.
-- 시간이 부족하면 Play Console에서 2026년 11월 1일까지의 연장을 한 번 신청할 수 있습니다. 한 번뿐이고, 11월 1일은 확정 기한입니다.
-- `targetSdk`만 바꾸는 게 끝이 아니라, Android 16의 동작 변경(엣지 투 엣지 의무화 등)에 대한 회귀 테스트가 진짜 작업량입니다.
+2026년 8월 31일을 기점으로, Google Play에 제출되는 신규 앱과 앱 업데이트는 Android 16(API 36) 타깃이 필수 조건이 됐습니다.<br/>
+경고로 끝나는 줄 알았던 마감일이 이제는 실제로 업로드를 막는 단계에 들어왔습니다.<br/>
+한 줄짜리 크래시 핫픽스도 `targetSdk`를 36으로 올리기 전까지는 콘솔에 올라가지 않습니다.<br/>
+이미 스토어에 있는 앱은 API 35 이상을 타깃해야 타깃보다 높은 OS를 쓰는 신규 사용자에게 계속 노출됩니다.<br/>
+API 34 이하에 머물면 신규 사용자 설치가 조용히 막힙니다.<br/>
+아직 대응 전이라면 11월 1일까지 한 번의 연장을 신청할 수 있는데, 이것도 자동으로 주어지는 건 아닙니다.
 
-### 무엇이 달라졌는지
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWozbjZkaDlhcWU5dWU5NW1wNHA4N204ZG80c2NyYzRmbjUzNzJ6dCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/39lbK6YEOFa0wnCTCt/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 타깃 API 요구사항 살펴보기
+
+자세한 기준은 [Google Play의 타깃 API 레벨 요구사항](https://support.google.com/googleplay/android-developer/answer/11926878)에서 확인할 수 있습니다.
 
 #### 규칙은 제출 시점에 막는다
-
-이 요구사항의 포인트는 "심사"가 아니라 "제출" 단계에서 걸린다는 점입니다. Play Console에 AAB를 올리는 순간 타깃 API 검사가 먼저 돌아가고, 조건을 못 맞추면 업로드 자체가 거부됩니다. 즉, 심사 지연이 아니라 아예 리뷰 대기열에 들어가지도 못합니다. 한참 전에 만들어 둔 빌드를 "그냥 올려야지" 하던 팀은 여기서 바로 발목이 잡힙니다.
+이 요구사항의 포인트는 심사가 아니라 제출 단계에서 걸린다는 점입니다.<br/>
+Play Console에 AAB를 올리는 순간 타깃 API 검사가 먼저 돌아가고, 조건을 못 맞추면 업로드 자체가 거부됩니다.<br/>
+즉, 심사 지연이 아니라 아예 리뷰 대기열에 들어가지도 못합니다.<br/>
+한참 전에 만들어 둔 빌드를 그냥 올리려던 팀은 여기서 바로 발목이 잡힙니다.
 
 #### 세 가지 상태, 세 가지 기준
-
 Google의 타깃 API 정책은 앱의 상태를 이렇게 구분합니다.
 
 | 앱 상태 | 적용 기준 |
@@ -31,22 +40,27 @@ Google의 타깃 API 정책은 앱의 상태를 이렇게 구분합니다.
 | 기존 앱의 업데이트 제출 | 대체 버전 제출 시 API 36 이상 |
 | 기존 앱(업데이트 안 함) | API 35 이상이어야 신규 사용자에게 노출 유지 |
 
-"기존 앱은 API 35면 되니까 업데이트도 35면 되지 않나?"라고 착각하기 쉬운데, 그렇지 않습니다. 업데이트를 한 번이라도 제출하면 그 순간부터 신규 앱과 같은 API 36 기준이 적용됩니다. API 35는 "아무것도 안 하고 놔둬도 스토어에서 사라지지는 않게 해주는" 완충선일 뿐, 업데이트 면제권이 아닙니다.
+여기서 착각하기 쉬운 부분이 있습니다.<br/>
+업데이트를 한 번이라도 제출하면 그 순간부터 신규 앱과 같은 API 36 기준이 적용됩니다.<br/>
+API 35는 아무것도 안 하고 놔둬도 스토어에서 사라지지는 않게 해주는 완충선일 뿐, 업데이트 면제권이 아닙니다.<br/>
+참고로 Wear OS·Android Automotive는 API 35, Android TV·Android XR은 API 34가 기준입니다.
 
 #### 연장 신청: 11월 1일까지, 한 번
+Play Console에서 해당 앱의 타깃 API 경고 화면으로 들어가면 연장 신청 양식을 찾을 수 있습니다.<br/>
+신청이 받아들여지면 기한이 2026년 11월 1일로 미뤄집니다.<br/>
+중요한 건 이 연장이 자동도 아니고 반복도 안 된다는 점입니다.<br/>
+11월 1일 이후에는 다시 기준이 원상복귀됩니다.<br/>
+신청 안 하고 버티면 하루라도 늦은 날부터 제출이 막히니, 대응 일정이 빠듯하다면 일단 신청부터 해두고 개발을 진행하는 게 합리적입니다.
 
-Play Console에서 해당 앱의 타깃 API 경고 화면으로 들어가면 연장 신청 양식을 찾을 수 있습니다. 신청이 받아들여지면 기한이 2026년 11월 1일로 미뤄집니다. 중요한 건 이 연장이 "자동"도 아니고 "반복"도 안 된다는 점입니다. 11월 1일 이후에는 다시 기준이 원상복귀됩니다. 신청 안 하고 버티면 하루라도 늦은 날부터 제출이 막히니, 대응 일정이 빠듯하다면 일단 신청부터 해두고 개발을 진행하는 게 합리적입니다.
-
-### 실무 영향 / 주의점
+### 실무에서 주의할 점
 
 - **숫자 바꾸는 건 1분, 동작 변경 대응이 본게임**: 2026년 10월 초에 세 개 앱을 API 36으로 올린 개발자의 회고에 따르면, `build.gradle.kts`의 숫자 변경은 1분이면 되지만 이후 작업에 이틀이 걸렸다고 합니다. Android 16에서는 엣지 투 엣지(Edge-to-Edge)가 의무화되고, 태블릿·폴더블에서는 방향 고정(orientation lock)이 무시되는 등 실제 동작이 바뀌는 지점이 있습니다. UI가 화면 끝까지 그려지는지, 인셋 처리가 깨지지 않는지 확인이 필요합니다.
 - **API 34 이하에 머무르면 "조용히" 죽는다**: 앱이 스토어에서 갑자기 삭제되는 게 아니라, 타깃보다 높은 OS 버전을 쓰는 신규 사용자에게만 노출이 중단됩니다. 설치율이 이유 없이 떨어지는 것처럼 보이기 때문에, 모니터링만 보고 있으면 원인 파악이 늦어집니다. 우리 앱의 현재 `targetSdk`를 Play Console 앱 대시보드에서 먼저 확인해 보세요.
 - **연장은 계획이 아니다**: 연장을 신청하면 6주 남짓의 시간을 버는 것뿐이고, 작업량은 그대로입니다. 연장 승인이 났다는 이유로 회귀 테스트를 줄이면 나중에 더 아픕니다.
 - **연관 게이트도 같이 확인**: 같은 시기, Play Billing을 쓰는 앱은 Billing Library 8.0.0 이상이 동반 요구되고, 네이티브 코드를 포함하는 앱은 2027년 2월 1일부터 16 KB 페이지 사이즈 지원 없이는 업로드가 거부됩니다. `targetSdk` 올릴 때 같이 점검하면 일정을 한 번으로 합칠 수 있습니다.
 
-### 내 코드에서 이렇게 확인할 생각입니다
-
-급한 순서대로 체크리스트입니다.
+대응 순서는 다음과 같습니다.<br/>
+급한 순서대로 정리한 체크리스트입니다.
 
 ```kotlin
 // app/build.gradle.kts (Kotlin DSL)
@@ -68,7 +82,12 @@ android {
 
 ### 마치며
 
-타깃 API 마감일은 매년 오는 행사지만, 올해는 "제출 차단"이라는 점에서 체감 강도가 다릅니다. 특히 API 34 이하에 머무는 앱은 신규 사용자 노출이 조용히 막히기 때문에, 별다른 이상 없이 설치 지표가 떨어지는 상황이면 `targetSdk`를 먼저 의심해 보길 권합니다. 연장은 마지막 수단이 아니라, 일정 확보를 위한 첫 번째 행동입니다.
+타깃 API 마감일은 매년 오는 행사지만, 올해는 제출 차단이라는 점에서 체감 강도가 다릅니다.<br/>
+특히 API 34 이하에 머무는 앱은 신규 사용자 노출이 조용히 막히기 때문에, 별다른 이상 없이 설치 지표가 떨어지는 상황이면 `targetSdk`를 먼저 의심해 보길 권합니다.
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3JnZXVjbjc2eG9oejAycWF6bXowdWl4NG01bzRwNDVmMmtneXQ3ZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3a53VvGpzUgh05qq7W/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
 > 출처: [Google Play의 타깃 API 레벨 요구사항](https://support.google.com/googleplay/android-developer/answer/11926878) (2026-08-31 기준: 신규 앱·업데이트는 API 36, Wear/Automotive는 API 35, TV/XR은 API 34 / 2026-11-01까지 1회 연장 가능)
 > 출처: [Google Play API 36 deadline: app status and extension choices — OTF Blog](https://otf-kit.dev/blog/google-play-target-api-deadline-2026) (2026-10-10, 기존 앱 API 35 기준·신규 제출 API 36 구분 정리)

@@ -6,39 +6,43 @@ tags: [android, androidx, compose, release]
 ---
 
 안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
-2026년 10월 7일, AndroidX 정기 릴리스 배치가 나왔습니다. 그중에서도 눈에 띄는 건 `remote-compose 1.0.0-alpha21`과 `compose.remote.foundation 1.0.0-alpha04`입니다. Remote Compose는 서버 구동 UI(Server-Driven UI)를 위한 Jetpack 라이브러리인데, 릴리스 노트를 읽다 보면 "에이전트가 만든 UI를 앱 업데이트 없이 내려받아 그리는" 흐름이 점점 현실화되고 있다는 느낌을 받습니다. 이번 글에서는 Remote Compose 알파21의 변경점을 중심으로, 같이 묶여 나온 10월 배치의 실무 포인트를 정리합니다.
+최근 공개된 Remote Compose 1.0.0-alpha21을 중심으로 10월 AndroidX 릴리스를 설명해드리겠습니다.<br/>
 
-### 핵심 요약
+### 배경
 
-- Remote Compose 1.0.0-alpha21: 라이트/다크 테마 인식 색상, 텍스트 크기 측정 API, `RemoteDocumentPreview` 설정 확장, 원형 텍스트 렌더링 지원, DEFLATE 압축 문서 로딩 등.
-- 새로 등장한 `compose.remote.foundation 1.0.0-alpha04`까지 합치면, "서버에서 UI 문서를 내려받아 그대로 그린다"는 그림이 Jetpack 레벨에서 정비되는 중입니다.
-- 같은 배치의 Compose 1.13.0-beta01은 이제 Kotlin 2.2를 타깃으로 하며 kotlinc 2.2를 요구합니다. 베타를 올릴 계획이라면 컴파일러 버전도 같이 봐야 합니다.
-- `appfunctions 1.0.0-alpha13`은 API 리네임이 있습니다. `AppFunction` 어노테이션이 `AppFunctionDeclaration`으로 바뀌었으니, 알파를 실험 중인 프로젝트는 릴리스 노트를 확인하고 올리세요.
-- `collection 1.7.0` 스테이블에는 `ScatterMap` 성능 개선과 원시 타입 리스트 정렬/이진 탐색 추가가 있습니다.
+2026년 10월 7일, AndroidX 정기 릴리스 배치가 나왔습니다.<br/>
+그중에서도 눈에 띄는 건 `remote-compose 1.0.0-alpha21`과 `compose.remote.foundation 1.0.0-alpha04`입니다.<br/>
+Remote Compose는 서버 구동 UI(Server-Driven UI)를 위한 Jetpack 라이브러리이며, 에이전트가 만든 UI를 앱 업데이트 없이 내려받아 그리는 흐름과 맞닿아 있습니다.<br/>
+같은 배치의 Compose 1.13.0-beta01은 이제 Kotlin 2.2를 타깃으로 하며 kotlinc 2.2를 요구합니다.<br/>
+`appfunctions 1.0.0-alpha13`은 API 리네임이 있어, `AppFunction` 어노테이션이 `AppFunctionDeclaration`으로 바뀌었습니다.<br/>
+`collection 1.7.0` 스테이블에는 `ScatterMap` 성능 개선과 원시 타입 리스트 정렬/이진 탐색 추가가 있습니다.
 
-### 무엇이 달라졌는지
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDF2djg2dTNpd3Ewd2t2OWl0MnQ4bWtjNnVuaWg2dm4wMzJyeWdoaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/77BiPhJ7iTDurQfPMN/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
-#### Remote Compose 1.0.0-alpha21
+### Remote Compose 1.0.0-alpha21 살펴보기
 
-**테마 인식 원격 색상**
+#### 테마 인식 원격 색상
+`RemoteColor.Companion`에 `createThemedRemoteColor`가 추가됐습니다.<br/>
+서버에서 내려받은 문서가 클라이언트의 라이트/다크 테마를 따라 색상을 바꿀 수 있게 되는 것입니다.<br/>
+서버 구동 UI에서 가장 자주 요구되는 다크 모드 대응을 플레이어 쪽이 해결해 주니, 문서 생성 로직에서 분기할 필요가 줄어듭니다.
 
-`RemoteColor.Companion`에 `createThemedRemoteColor`가 추가됐습니다. 서버에서 내려받은 문서가 클라이언트의 라이트/다크 테마를 따라 색상을 바꿀 수 있게 되는 겁니다. 서버 구동 UI에서 가장 자주 요구되는 "다크 모드 대응"을 플레이어 쪽이 해결해 주니, 문서 생성 로직에서 분기할 필요가 줄어듭니다.
+#### 텍스트 측정 API
+`RemoteTextMeasurer`와 `rememberRemoteTextMeasurer`가 새로 들어왔습니다.<br/>
+Remote Compose 문서 안에서 텍스트의 실제 렌더링 크기를 잴 수 있게 된 것으로, 문서 생성 시점에 텍스트 길이에 따라 레이아웃을 조정해야 하는 경우(예: 배지, 동적 라벨) 유용합니다.<br/>
+`Float.rsp`/`RemoteFloat.rsp` 확장 프로퍼티도 추가돼서 Sp 단위의 `RemoteTextUnit`을 리터럴이나 동적 표현식에서 바로 만들 수 있습니다.
 
-**텍스트 측정 API**
-
-`RemoteTextMeasurer`와 `rememberRemoteTextMeasurer`가 새로 들어왔습니다. Remote Compose 문서 안에서 텍스트의 실제 렌더링 크기를 잴 수 있게 된 것으로, 문서 생성 시점에 텍스트 길이에 따라 레이아웃을 조정해야 하는 경우(예: 배지, 동적 라벨) 유용합니다. `Float.rsp`/`RemoteFloat.rsp` 확장 프로퍼티도 추가돼서 Sp 단위의 `RemoteTextUnit`을 리터럴이나 동적 표현식에서 바로 만들 수 있습니다.
-
-**문서 생성·미리보기 개선**
-
+#### 문서 생성·미리보기 개선
 - `RemoteDocumentPreview`에 `profile` 파라미터가 생겼습니다. 문서 버퍼를 팽창시키기 전에 설정을 조정할 수 있어, 테스트·디버깅 환경에서 문서 생성을 세밀하게 제어할 수 있습니다.
 - 플레이어와 테스트 프로파일이 `DrawTextOnCircle`을 지원합니다. 원형 경로에 텍스트를 그리는 연출이 이제 원격 문서에서도 깨지지 않습니다.
 - DEFLATE로 압축된 문서를 플레이어가 로드할 수 있게 됐습니다. 문서 크기가 크다면 전송량을 줄이는 방향으로 설계할 여지가 생깁니다.
-- `captureSingleRemoteDocument`/`captureRemoteDocument`의 라이프사이클과 스냅샷 처리가 다져졌고, 수집 속도가 리컴포지션을 따라가지 못할 때 업데이트가 조용히 누락되던 버그도 수정됐습니다. 서버 구동 UI에서 "가끔 화면이 안 바뀌는" 식의 간헐적 이슈가 줄어들 것으로 보입니다.
+- `captureSingleRemoteDocument`/`captureRemoteDocument`의 라이프사이클과 스냅샷 처리가 다져졌고, 수집 속도가 리컴포지션을 따라가지 못할 때 업데이트가 조용히 누락되던 버그도 수정됐습니다. 서버 구동 UI에서 가끔 화면이 안 바뀌는 식의 간헐적 이슈가 줄어들 것으로 보입니다.
 - 커스텀 진입/종료 가시성 애니메이션 지원, 스프링 애니메이션의 스냅·범위 이탈 버그 수정 등 렌더링 품질 쪽도 여러 건 잡혔습니다.
 
-**compose.remote.foundation 1.0.0-alpha04**
-
-같은 배치에 `androidx.compose.remote.foundation`의 새 알파가 같이 나왔습니다. 의존성은 다음과 같이 선언합니다.
+#### compose.remote.foundation 1.0.0-alpha04
+같은 배치에 `androidx.compose.remote.foundation`의 새 알파가 같이 나왔습니다.<br/>
+의존성은 다음과 같이 선언합니다.
 
 ```kotlin
 dependencies {
@@ -47,22 +51,21 @@ dependencies {
 ```
 
 #### 같이 나온 것들
-
 - **Compose 1.13.0-beta01 (animation/foundation/material/runtime)**: 이번 배치부터 라이브러리들이 Kotlin 2.2를 타깃으로 하고 kotlinc 2.2를 요구합니다. 베타를 올릴 때는 Kotlin 버전을 2.2 이상으로 올려야 컴파일이 됩니다.
 - **appfunctions 1.0.0-alpha13**: `@AppFunction` → `@AppFunctionDeclaration`, `ObserveAppFunctionsEvent` → `AppFunctionsChangeEvent`로 리네임됐고, 접근 레벨 제한을 위한 `@AppFunctionAccessLevel`이 추가됐습니다. 에이전트·Gemini 시대의 앱 기능 노출 인터페이스라 실험 중이라면 이름 바뀐 것만 확인하면 됩니다.
 - **collection 1.7.0 (스테이블)**: `toOrderedScatterSet()` 확장(빈 소스에선 할당 없는 싱글턴 반환), `ScatterMap.getOrPut()` 최적화, `Float` 키 해시 충돌 개선, 원시 타입 리스트(`IntList`/`LongList` 등)에 `sortWith`/`sortBy`/`binarySearch` 추가. 퍼포먼스에 민감한 데이터 구조를 쓰는 팀은 별도 변경 없이 이득을 볼 수 있습니다.
-- **benchmark 1.6.0-alpha01**: `:lockClocks` 태스크가 root 없이도 고정 성능 모드를 쓸 수 있게 돼서, 더 많은 실기기에서 안정적인 마이크로벤치마크가 가능합니다. 히프 프로파일링용 `MemoryProfilingConfig`도 추가됐습니다.
+- **benchmark 1.6.0-alpha01**: `:lockClocks` 태스크가 root 없이도 고정 성능 모드를 쓸 수 있게 돼서, 더 많은 실기기에서 안정적인 마이크로벤치마크가 가능합니다. 힙 프로파일링용 `MemoryProfilingConfig`도 추가됐습니다.
 
-### 실무 영향 / 주의점
+### 실무에서 주의할 점
 
-- **Remote Compose는 아직 알파입니다.** API가 바뀔 수 있다는 전제로 실험·프로토타입 수준에서 접근하는 게 맞습니다. 다만 테마 인식, 텍스트 측정, 압축 문서 로딩처럼 "운영에 쓰려면 꼭 있어야 할" 기능들이 차례로 들어오고 있어서, 방향성 자체는 꽤 진지하게 보입니다.
-- **에이전트 시대의 SDUI**: 최근 Android CLI와 에이전트 스킬 흐름과 맞물려, "에이전트가 생성한 UI를 어떻게 앱에 그릴 것인가"가 실무 질문이 되고 있습니다. Remote Compose는 그 답 중 하나입니다. 당장 도입하지 않더라도 개념과 플레이어 구조는 한 번 훑어둘 만합니다.
+- **Remote Compose는 아직 알파입니다.** API가 바뀔 수 있다는 전제로 실험·프로토타입 수준에서 접근하는 게 맞습니다. 다만 테마 인식, 텍스트 측정, 압축 문서 로딩처럼 운영에 쓰려면 꼭 있어야 할 기능들이 차례로 들어오고 있어서, 방향성 자체는 꽤 진지하게 보입니다.
+- **에이전트 시대의 SDUI**: 최근 Android CLI와 에이전트 스킬 흐름과 맞물려, 에이전트가 생성한 UI를 어떻게 앱에 그릴 것인가가 실무 질문이 되고 있습니다. Remote Compose는 그 답 중 하나입니다. 당장 도입하지 않더라도 개념과 플레이어 구조는 한 번 훑어둘 만합니다.
 - **Compose 1.13 베타 + Kotlin 2.2**: 컴파일러 버전 요구사항이 같이 올라간 릴리스라서, 버전만 올렸다가 빌드가 깨지는 경우가 생길 수 있습니다. 베타를 쓸 거면 `libs.versions.toml`의 Kotlin 버전도 함께 올립니다.
 - **appfunctions 리네임**: 알파 실험 중이라면 컴파일 에러가 나는 게 정상이니, 이름만 바꿔 주면 됩니다.
 
-### 내 코드에서 이렇게 써볼 생각입니다
-
-당장은 프로덕션 도입이 아니라 관측 모드입니다. SDK 36 대응 같은 급한 일에 밀려 손이 안 가겠지만, 스프린트 사이에 작은 실험 프로젝트 하나로 Remote Compose 플레이어에 문서 하나 띄워 보는 건 해볼 생각입니다. 관전 포인트는 두 가지입니다.
+당장은 프로덕션 도입이 아니라 관측 모드입니다.<br/>
+스프린트 사이에 작은 실험 프로젝트 하나로 Remote Compose 플레이어에 문서 하나 띄워 보는 것 정도가 적당합니다.<br/>
+관전 포인트는 두 가지입니다.
 
 1. 서버에서 보낸 문서가 다크 테마에서 깨지지 않는지 (`createThemedRemoteColor` 사용)
 2. 텍스트 길이 가변적인 배지 UI를 `RemoteTextMeasurer`로 제대로 그릴 수 있는지
@@ -74,11 +77,17 @@ androidxRemoteCompose = "1.0.0-alpha21"
 composeRemoteFoundation = "1.0.0-alpha04"
 ```
 
-에이전트가 UI를 만드는 시대가 오고 있는데, "어떻게 그릴 것인가"는 여전히 앱 개발자의 몫입니다. Remote Compose가 그 몫을 나눠 가질 후보 중 하나라는 점에서, 이번 릴리스는 지켜볼 가치가 있습니다.
+에이전트가 UI를 만드는 시대가 오고 있는데, 어떻게 그릴 것인가는 여전히 앱 개발자의 몫입니다.<br/>
+Remote Compose가 그 몫을 나눠 가질 후보 중 하나라는 점에서, 이번 릴리스는 지켜볼 가치가 있습니다.
 
 ### 마치며
 
-10월 AndroidX 배치는 "UI를 코드가 아니라 문서로 다루는" 쪽으로 축이 이동하고 있음을 보여줍니다. Remote Compose 알파21의 변경점 대부분이 렌더링 품질과 운영 편의(테마, 압축, 측정)에 집중돼 있다는 점이 그 신호입니다. 바로 쓸 필요는 없지만, 다음에 SDUI를 고민할 때 선택지에 넣어두기 좋은 타이밍입니다.
+10월 AndroidX 배치는 UI를 코드가 아니라 문서로 다루는 쪽으로 축이 이동하고 있음을 보여줍니다.<br/>
+Remote Compose 알파21의 변경점 대부분이 렌더링 품질과 운영 편의(테마, 압축, 측정)에 집중돼 있다는 점이 그 신호이며, 다음에 SDUI를 고민할 때 선택지에 넣어두기 좋은 타이밍입니다.
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExa21xaDR1cHN4Z2UzZm9iMDM3a2Jld2tza2F4azVsNWM3Mmc3cTh1NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fx4vdyj25p0Nq0PEQ0/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
 > 출처: [AndroidX latest release notes](https://mahozad.ir/androidx-release-notes/) (2026-10-07 배치: remote-compose 1.0.0-alpha21, compose.remote.foundation 1.0.0-alpha04, appfunctions 1.0.0-alpha13, collection 1.7.0, Compose 1.13.0-beta01 등)
 > 출처: [Compose Remote Foundation — developer.android.com](https://developer.android.com/jetpack/androidx/releases/compose-remote-foundation)
