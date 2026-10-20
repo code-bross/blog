@@ -1,0 +1,82 @@
+---
+slug: grab-anr-r8-baseline-profile
+title: Grab이 R8와 프로파일 기반 최적화로 ANR 32%·콜드스타트 35%를 줄인 방법
+authors: [way]
+tags: [android, r8, baseline-profile, startup-profile, performance, case-study]
+---
+
+안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+
+2026년 10월 19일, 새 Android Developers Blog(developer.android.com/blog)에 Grab의 성능 최적화 사례가 올라왔습니다. 10년 된 코드베이스, 1,000만 줄이 넘는 코드, 수백 개의 서드파티 라이브러리라는 "우리랑 비슷해질 수 있는" 스케일에서 R8 최적화와 베이스라인·스타트업 프로파일로 **사용자 체감 ANR −32.5%, 앱 다운로드 크기 −30.4%, 콜드스타트 −35%**를 달성했다는 이야기입니다. 단계별 숫자가 상세히 공개돼 있어 단계적 R8 도입의 실무 레퍼런스로 정리합니다.
+
+### 핵심 요약
+
+- **1단계(2025년 출시) — R8 Compat 모드 + 베이스라인·스타트업 프로파일:** 사용자 체감 ANR −25%, 다운로드 크기 −16%, 콜드스타트 −27% 개선.
+- **2단계(2026년 출시) — R8 Full Mode 전환:** 여기에 ANR −10%p, 크기 −14%p, 콜드스타트 −10%p가 추가로 얹혔습니다.
+- **3단계(진행 중) — 킵룰 정제와 Configuration Analyzer:** Optimizations 점수가 72%→78.2%, Shrinking 73%→79.1%, Obfuscation 79.6%→81.7%로 올라가면서 다운로드 크기가 추가로 약 3.6% 감소. CI에 킵룰 거버넌스 게이트를 붙이는 중입니다.
+- **핵심 트릭:** Dagger 의존성 그래프 초기화 같은 "구글 플레이 클라우드 프로파일이 커버하지 못하는" 핵심 사용자 여정을 베이스라인 프로파일에 직접 담아 설치 즉시 머신 코드로 컴파일되게 만든 것입니다.
+
+### 무엇이 달라졌는지
+
+Grab이 겪던 문제는 새 버전 릴리스 직후마다 ANR이 급증하는 것이었습니다. 원인은 많은 DEX 파일을 읽는 초기화 오버헤드였습니다. 플레이의 클라우드 프로파일은 일반적인 흐름은 최적화해 주지만, Dagger 그래프 초기화 같은 앱 고유의 시작 경로는 커버하지 못합니다. 이런 경로는 JIT 컴파일과 백그라운드 최적화에 며칠간 의존하게 되고, 그 사이 사용자가 ANR을 겪는 구조였습니다.
+
+해법은 3단계로 나눈 점진 도입이었습니다.
+
+**1단계 — R8 Compat + 프로파일.** 레거시 ProGuard 기본 파일에서 `proguard-android-optimize.txt`로 옮기며 R8 최적화를 켰습니다. 10년 된 코드베이스라 레거시 설정과 리플렉션 사용을 손봐야 했습니다. 동시에 베이스라인 프로파일과 스타트업 프로파일을 합친 릴리스를 냈고, 릴리스 직후 ANR 급증 현상이 사라졌습니다.
+
+**2단계 — R8 Full Mode.** 1단계 출시 9개월 뒤의 일입니다. Retrofit·Firebase·Jetpack Compose 같은 표준 라이브러리는 내장 룰 덕분에 문제없이 통과했지만, 거대한 자체 코드의 리플렉션 구간을 하나씩 해결해야 했습니다. 대표적인 사례가 두 가지입니다. 최신 Gson 릴리스의 consumer keep rules를 적용해 JSON 파싱을 지키고, 자바 동적 프록시(런타임에 리플렉션으로 인터페이스 구현체를 생성하는 구조)는 R8이 컴파일 시점에 사용을 감지하지 못해 크래시가 나는 구간을 **폭넓은 예외가 아니라 해당 클래스에만 좁게 적용하는 타깃 킵룰**로 처리했습니다. 크기를 불리지 않으면서 안정성을 지킨 방식입니다.
+
+**3단계 — 킵룰 거버넌스.** R8 Configuration Analyzer로 킵룰 위생을 수치화하고, 새 킵룰은 정당화와 리뷰를 요구하는 사전 머지 CI 가드레일을 붙이고 있습니다. 최적화 점수를 CI 대시보드에서 추적해 회귀를 병합 전에 잡겠다는 계획입니다.
+
+테스트 전략도 참고할 만합니다. 수백만 줄을 전부 테스트할 수 없으니, 킵룰을 좁히는 범위에 해당하는 코드에 테스트를 집중하고 반복적으로 정제하는 방식을 택했습니다. 또한 하이브리드 빌드(Bazel로 디버그, Gradle로 R8 릴리스)라 R8 실험에 원격 CI가 최대 2시간 걸렸는데, 데일리 QA 빌드를 프로덕션 R8 동작과 맞춰 격차를 메우고 `mapping.txt`·`configuration.txt` 수집·업로드(Firebase Crashlytics에 자동 업로드, Play Console용 디오보스케이션 매핑 번들링)를 자동화해 디버깅 사이클을 줄였습니다.
+
+### 실무 영향과 주의점
+
+- **R8 Full Mode는 킵룰 정리 없이는 못 간다.** Grab도 1단계를 2025년에, 2단계를 그 9개월 후에 출시했습니다. "릴리스 빌드에 `isMinifyEnabled = true`만 켜면 끝"이 아니라, 리플렉션 사용 구간(동적 프록시, Gson 리플렉션 어댑터, 난독화-민감 API)을 좁은 범위의 킵룰로 지키는 작업이 본체입니다.
+- **베이스라인 프로파일은 "우리 앱의 핫패스"를 직접 정하는 것.** 플레이 클라우드 프로파일이 앱 시작 경로를 커버하지 못하면 매주 릴리스 때마다 ANR이 급증합니다. 매크로벤치마크로 핵심 여정을 프로파일에 담으면 설치 즉시 AOT 컴파일되니, 시작 경로 최적화의 1순위로 둘 만합니다.
+- **킵룰은 CI로 지켜야 한다.** 한 번 최적화한 뒤에는 Configuration Analyzer 점수를 CI 대시보드에 띄우고, 킵룰 추가를 리뷰 대상으로 삼는 것이 장기 전략입니다.
+- **주의점:** 동적 프록시·리플렉션 구간에 대한 과도한 `-keep`은 앱 크기를 불립니다. Grab이 그랬듯 클래스 단위로 좁혀 적용하고, 테스트는 킵룰 변경 범위에 집중하는 것이 효율적입니다.
+
+### 내 코드 예시
+
+```kotlin
+// app/build.gradle.kts — Grab 1단계에 해당하는 R8 기본 세팅
+android {
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), // ← 레거시 파일에서 교체
+                "proguard-rules.pro"
+            )
+        }
+    }
+}
+```
+
+```kotlin
+// baselineprofile 모듈 — 핵심 여정을 프로파일에 담는 Macrobenchmark 테스트
+@OptIn(ExperimentalBaselineProfilesApi::class)
+class StartupBaselineProfileGenerator {
+    @get:Rule
+    val baselineProfileRule = BaselineProfileRule()
+
+    @Test
+    fun startup() = baselineProfileRule.collect("com.example.app") {
+        // 시작부터 홈 진입까지: Grab이 Dagger 그래프 초기화 경로를
+        // 프로파일에 담은 것과 같은 원리
+        startActivityAndWait()
+    }
+}
+```
+
+```
+# proguard-rules.pro — 동적 프록시 구간은 좁은 범위로만 킵 (Grab 2단계 방식)
+-keep class com.example.net.ProxyService
+-keepclassmembers class com.example.net.ProxyService { *; }
+```
+
+### 출처
+
+- [Grab Reduces ANRs by 32% and improves startup time by 35% with R8 and Profile guided optimization — Android Developers Blog (2026년 10월 19일)](https://techy101.com/2026/10/20/grab-reduces-anrs-by-32-and-improves-startup-time-by-35-with-r8-and-profile-guided-optimization-android-developers-blog/) — 원문은 새 블로그 developer.android.com/blog에 게시. 3단계 숫자·R8 점수·CI 거버넌스 계획 인용
