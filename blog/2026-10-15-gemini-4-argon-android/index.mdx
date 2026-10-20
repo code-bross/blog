@@ -5,36 +5,58 @@ authors: [way]
 tags: [android, gemini, ai, antigravity, compose]
 ---
 
-안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+안드로이드 개발자에게 개방된 Gemini 4 Argon에 대해 설명해드리겠습니다.<br/>
 
-구글이 10월 13일 Android Developers Blog에서 최신 플래그십 모델 **Gemini 4 Argon**을 안드로이드 개발 표면에 개방한다고 발표했습니다. 지난주에 다뤘던 Android CLI/디바이스 스트리밍, BYOA(원하는 에이전트 쓰기) 흐름의 연장선이라 함께 보면 좋습니다. 모델 자체보다 "에이전트가 빌드를 스스로 고치고, 셰이더까지 짜준다"는 부분에 주목해서 정리합니다.
+### 배경
 
-### 핵심 요약
+구글은 10월 13일 Android Developers Blog에서 최신 플래그십 모델 Gemini 4 Argon을 안드로이드 개발 표면에 개방한다고 발표했습니다.<br/>
+자세한 내용은 [원문 글](https://developer.android.com/blog/posts/bringing-gemini-4-argon-to-android-agentic-engineering-antigravity-cli)(Jason Buchel)에서 확인할 수 있습니다.<br/>
+지난주에 다뤘던 Android CLI와 디바이스 스트리밍, BYOA(원하는 에이전트 쓰기) 흐름의 연장선에 있는 발표입니다.<br/>
+모델 자체보다 에이전트가 빌드를 스스로 고치고 셰이더까지 작성한다는 부분에 주목할 필요가 있습니다.<br/>
 
-- **접근 경로 3가지**: ① Google Antigravity(AI Ultra 구독, 데스크톱 앱·CLI·Android Studio Canary 내) ② Android Studio(Gemini API 유료 티어) ③ Google AI Studio(Playground/Build, AI Ultra 또는 Gemini API 유료 티어)
-- **클라이언트 인앱 AI**: Firebase AI Logic 경유로 Gemini API 유료 티어 개발자가 앱 안에서 Gemini 4 Argon을 직접 쓸 수 있습니다.
-- **Self-Healing Build Loops**: 빌드 실패 시 Antigravity 하네스가 Gradle 데몬·Kotlin 컴파일러 로그를 모델에 그대로 피드백하고, 근본 원인을 반복 진단해 수정안을 냅니다. 편집 라운드마다 가설을 일관되게 유지하고 AST 인지를 활용해 표면 증상이 아닌 진짜 원인에 도달하도록 훈련됐다는 설명입니다.
-- **Compose 셰이더 생성**: AGSL(Android Graphics Shading Language)을 Compose `Modifier.graphicsLayer`나 셰이더 브러시에 직접 작성합니다. 120fps Compose 애니메이션과 함께 도는 경량 GPU 셰이더(프로스트드 글래스·동적 조명·파문 등)를 벡터·렌더링 수학까지 처리해 뽑아낸다고 합니다.
-- 인트로 가격 적용은 **2026년 11월 30일까지**입니다.
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHh5bWVlNGMwczFvcGNobHZ3cG5wZ3cycGFncHVjNnp0ejM0djVxNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1n92hYPiFQ0efcCtrF/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
-### 무엇이 달라졌는지
+### Gemini 4 Argon 살펴보기
 
-지금까지 에이전트 코딩은 "코드 자동완성의 연장"에 가까웠습니다. 이번 발표가 말하는 방향은 **클로즈드 루프 실행**입니다. 빌드 → 실패 로그 수집 → 원인 진단 → 수정 → 재빌드를 사람이 아니라 하네스+모델이 돌리는 구조죠. Gradle 데몬과 Kotlin 컴파일러의 에러 스트림을 그대로 먹는다는 점이 핵심입니다. 로그를 읽는 사람이 아니라 빌드 시스템을 읽는 에이전트인 셈입니다.
+#### 접근 경로
+- Google Antigravity에서 사용할 수 있습니다. AI Ultra 구독이 전제이고, 데스크톱 앱·CLI·Android Studio Canary 안에 포함됩니다.
+- Android Studio에서는 Gemini API 유료 티어로 사용할 수 있습니다.
+- Google AI Studio의 Playground와 Build에서도 사용할 수 있습니다. AI Ultra 또는 Gemini API 유료 티어가 필요합니다.
+- 클라이언트 인앱 AI는 Firebase AI Logic 경유로 제공됩니다. Gemini API 유료 티어 개발자가 앱 안에서 Gemini 4 Argon을 직접 쓸 수 있습니다.
 
-UI 쪽도 눈에 띕니다. Compose 셰이더는 실무에서 진입 장벽이 높은 영역인데(AGSL 문법 + 렌더링 수학 + 성능 예산), 모델이 이를 "프로덕션급"으로 뽑아낸다는 주장입니다. 120fps 애니메이션과 공존하는 경량 셰이더라는 표현에서 타깃이 명확합니다. 검증은 직접 해봐야겠지만, 셰이더 브러시까지 에이전트에게 맡기는 워크플로가 생긴다는 건 디자인 시스템 팀에겐 의미 있는 변화입니다.
+#### Self-Healing Build Loops
+- 빌드 실패 시 Antigravity 하네스가 Gradle 데몬과 Kotlin 컴파일러 로그를 모델에 그대로 피드백합니다.
+- 모델은 근본 원인을 반복 진단해 수정안을 냅니다.
+- 편집 라운드마다 가설을 일관되게 유지하고 AST 인지를 활용해 표면 증상이 아닌 진짜 원인에 도달하도록 훈련되었다는 설명입니다.
+- 지금까지의 에이전트 코딩이 코드 자동완성의 연장에 가까웠다면, 이번 방향은 빌드 → 실패 로그 수집 → 원인 진단 → 수정 → 재빌드를 하네스와 모델이 돌리는 클로즈드 루프 실행입니다.
 
-터미널 에이전트 연결은 공식 Android CLI 플러그인이 맡습니다. `android init` 한 줄이면 어떤 터미널 에이전트든 로컬 Android 도구와 연결되고, Antigravity라면 플러그인 설치로 끝납니다.
+#### Compose 셰이더 생성
+- AGSL(Android Graphics Shading Language)을 Compose `Modifier.graphicsLayer`나 셰이더 브러시에 직접 작성합니다.
+- 120fps Compose 애니메이션과 함께 도는 경량 GPU 셰이더를 생성합니다. 프로스트드 글래스, 동적 조명, 파문 같은 효과가 예시입니다.
+- 벡터·렌더링 수학까지 처리해 뽑아낸다고 합니다.
+- Compose 셰이더는 AGSL 문법과 렌더링 수학, 성능 예산 때문에 실무에서 진입 장벽이 높은 영역입니다.
 
-### 실무 영향 / 주의점
+#### 터미널 에이전트 연결
+- 터미널 에이전트 연결은 공식 Android CLI 플러그인이 맡습니다.
+- `android init` 한 줄이면 어떤 터미널 에이전트든 로컬 Android 도구와 연결됩니다.
+- Antigravity라면 플러그인 설치로 끝납니다.
 
-- **빌드 로그가 곧 에이전트의 입력입니다.** Self-Healing이 위력을 내려면 빌드 실패 로그가 잘 읽혀야 합니다. 난독화된 멀티모듈 빌드에서 에이전트가 원인에 닿으려면, 지금부터라도 Gradle 빌드 스크립트와 에러 메시지를 사람이 읽을 수 있게 정리해 두는 게 이득입니다.
-- **비용 구조를 확인하세요.** Antigravity는 AI Ultra 구독 전제, API 경로는 Gemini API 유료 티어 전제입니다. 인트로 가격(2026-11-30까지) 이후 정가를 모르면 팀 도입 판단이 어렵습니다. 도입 전에 Console에서 실제 과금을 먼저 확인하세요.
-- **셰이더 코드는 리뷰가 필수입니다.** "프로덕션급"이라는 표현은 모델 벤더의 주장일 뿐, AGSL 셰이더는 GPU·디바이스별로 동작이 달라 실기 검증 없이는 못 씁니다. 에이전트가 짠 셰이더는 초안으로 보고 프레임 타임·배터리부터 재세요.
-- **Firebase AI Logic 경로는 인앱 기능용입니다.** 개발 워크플로(빌드 복구·코드 생성)와 앱 내 AI 기능(사용자 대면)은 접근 경로가 다릅니다. 팀에서 둘을 혼동하면 과금·권한 설계가 꼬입니다.
+### 실무에서 주의할 점
 
-### 내 코드에서는 이렇게 적용할 생각입니다
-
-일단 터미널 에이전트에 Android CLI를 붙이는 것부터 시작해 볼 만합니다. 발표에서 안내한 명령 그대로입니다.
+빌드 로그가 곧 에이전트의 입력입니다.<br/>
+Self-Healing이 동작하려면 빌드 실패 로그가 잘 읽혀야 합니다.<br/>
+난독화된 멀티모듈 빌드에서 에이전트가 원인에 닿으려면, 지금부터라도 Gradle 빌드 스크립트와 에러 메시지를 사람이 읽을 수 있게 정리해 두는 것이 이득입니다.<br/>
+비용 구조도 확인해야 합니다.<br/>
+Antigravity는 AI Ultra 구독 전제이고, API 경로는 Gemini API 유료 티어 전제입니다.<br/>
+인트로 가격은 2026년 11월 30일까지 적용되므로, 이후 정가를 모르면 팀 도입 판단이 어렵습니다. 도입 전에 Console에서 실제 과금을 먼저 확인해야 합니다.<br/>
+셰이더 코드는 리뷰가 필수입니다.<br/>
+"프로덕션급"이라는 표현은 모델 벤더의 주장일 뿐이고, AGSL 셰이더는 GPU와 디바이스별로 동작이 달라 실기 검증 없이는 쓸 수 없습니다. 에이전트가 짠 셰이더는 초안으로 보고 프레임 타임과 배터리부터 측정해야 합니다.<br/>
+Firebase AI Logic 경로는 인앱 기능용입니다.<br/>
+개발 워크플로(빌드 복구·코드 생성)와 앱 내 AI 기능(사용자 대면)은 접근 경로가 다르므로, 팀에서 둘을 혼동하면 과금·권한 설계가 꼬입니다.<br/>
+터미널 에이전트에 Android CLI를 붙이는 방법은 다음과 같습니다.<br/>
 
 ```bash
 # 어떤 터미널 에이전트에서든: 로컬 Android 도구와 연결
@@ -44,11 +66,15 @@ android init
 agy plugin install android-cli-plugin
 ```
 
-Firebase AI Logic으로 인앱에 붙일 때는 모델 선택만 새 모델로 바꾸는 구조라, 기존 Vertex AI / Gemini Developer API 연동 코드의 모델명 교체 수준에서 검토가 가능합니다. 정확한 모델 식별자는 Firebase AI Logic 문서를 확인하고, 릴리스 직후에는 SDK 업데이트가 필요할 수 있습니다.
+Firebase AI Logic으로 인앱에 붙일 때는 모델 선택만 새 모델로 바꾸는 구조라, 기존 Vertex AI와 Gemini Developer API 연동 코드의 모델명 교체 수준에서 검토가 가능합니다.<br/>
+정확한 모델 식별자는 Firebase AI Logic 문서를 확인해야 하고, 릴리스 직후에는 SDK 업데이트가 필요할 수 있습니다.<br/>
+샘플 프로젝트 [gemini-4-antigravity-quickstart](https://github.com/android-samples/gemini-4-antigravity-quickstart)도 함께 공개되었으니, 에이전트 워크플로를 팀에 도입하기 전에 퀵스타트로 확인하는 것이 좋습니다.<br/>
 
-샘플 프로젝트도 함께 공개됐으니, 에이전트 워크플로를 팀에 도입하기 전에 퀵스타트로 감을 잡는 게 좋습니다.
+### 마치며
 
-### 출처
+Gemini 4 Argon의 핵심은 모델 성능보다 빌드와 셰이더까지 에이전트 워크플로에 들어왔다는 점입니다.<br/>
+도입 전에 비용 구조와 실기 검증 절차부터 정리해 두는 것이 좋겠습니다.<br/>
 
-- [Bringing our latest frontier model to Android Developers](https://developer.android.com/blog/posts/bringing-gemini-4-argon-to-android-agentic-engineering-antigravity-cli) — Jason Buchel, Android Developers Blog, 2026년 10월 13일 (접근 경로·Self-Healing Build Loops·AGSL 셰이더·인트로 가격 2026-11-30 사실 인용)
-- [gemini-4-antigravity-quickstart](https://github.com/android-samples/gemini-4-antigravity-quickstart) — android-samples, 퀵스타트 샘플
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHh5bWVlNGMwczFvcGNobHZ3cG5wZ3cycGFncHVjNnp0ejM0djVxNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o2ITDLRkP2oGk/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

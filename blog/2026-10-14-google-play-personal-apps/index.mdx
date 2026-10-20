@@ -5,39 +5,56 @@ authors: [way]
 tags: [android, google-play, ai]
 ---
 
-안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+Google Play를 통해 개인 앱을 바로 실행할 수 있게 된 10월 13일 업데이트에 대해 설명해드리겠습니다.<br/>
 
-구글이 10월 13일 Google Play 업데이트를 발표했습니다. 여러 게임·발견 기능 소식이 함께 나왔는데, 개발자 입장에서 가장 눈여겨볼 건 **Google AI Studio에서 바이브코딩으로 만든 커스텀 Android 앱을 Google Play를 통해 개인 앱(personal app)으로 바로 실행**할 수 있게 된 소식입니다.
+### 배경
 
-## 핵심 요약
+예전에는 AI로 만든 앱을 실기기에 올리려면 APK를 직접 빌드해서 설치하거나, 내부 테스트 트랙용으로 Play Console에 올리는 절차가 필요했습니다.<br/>
+구글은 10월 13일 [Google Play 업데이트](https://blog.google/products-and-platforms/platforms/google-play/google-play-updates-october-2026/)를 발표하며 이 과정을 Play가 직접 감싸는 방식을 공개했습니다.<br/>
+여러 게임·발견 기능 소식이 함께 나왔지만, 개발자 입장에서 가장 눈여겨볼 내용은 개인 앱 실행입니다.<br/>
 
-- Google AI Studio에서 만든 앱을 Google Play에서 개인 앱으로 자신의 기기에 실행 가능
-- **별도의 개발자 계정 없이 일반 Google 계정**으로 가능
-- 개인 앱은 공개 스토어 카탈로그와 분리되어 private하고 안전하게 유지
-- 10월 13일부터 선별 시장에 롤아웃 (미국 포함, 18세 이상)
-- 향후 몇 달 내 친구·가족과의 소규모 공유 지원 예정
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2p3ZG1uNnBxYmx5aWg5dHZzYXk0ZTE4M3Z2enJjb3Z3NTVkeG1rZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bOXnd3kig533u93OND/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
-## 무엇이 달라졌는지
+### 개인 앱 실행 살펴보기
 
-예전에는 AI로 뚝딱 만든 앱을 실기기에 올리려면 APK를 직접 빌드해서 설치하거나, 내부 테스트 트랙용으로 Play Console에 올리는 절차가 필요했습니다. 이제 그 과정을 Play가 직접 감싸줍니다. "there's an app for that"에서 "there's an app for me"로,라는 게 구글의 표현입니다.
+#### 개인 앱이란
+- Google AI Studio에서 바이브코딩으로 만든 커스텀 Android 앱을 Google Play를 통해 개인 앱(personal app)으로 자신의 기기에 실행할 수 있습니다.
+- 별도의 개발자 계정 없이 일반 Google 계정으로 가능합니다.
+- 개인 앱은 공개 스토어 카탈로그와 분리되어 private하고 안전하게 유지됩니다.
+- 구글의 표현으로는 "there's an app for that"에서 "there's an app for me"로 바뀌는 변화입니다.
 
-정식으로 세상에 공개하고 싶어지면 프로 개발자 계정으로 전환하면 되고, 그 시점부터는 다른 앱들과 동일한 Trust & Safety 리뷰와 품질 기준이 적용됩니다. 즉, **실험 구간과 배포 구간의 경계가 명확해졌다**는 뜻입니다.
+#### 롤아웃과 공유 계획
+- 10월 13일부터 선별 시장에 롤아웃됩니다. 미국이 포함되고 18세 이상이 대상입니다.
+- 향후 몇 달 내 친구·가족과의 소규모 공유 지원이 예정되어 있습니다.
 
-## 실무 영향 / 주의점
+#### 정식 공개로 전환
+- 정식으로 세상에 공개하고 싶어지면 프로 개발자 계정으로 전환하면 됩니다.
+- 그 시점부터는 다른 앱들과 동일한 Trust & Safety 리뷰와 품질 기준이 적용됩니다.
+- 실험 구간과 배포 구간의 경계가 명확해진 것입니다.
 
-- 기획·QA용 내부 실험 빌드 경로가 더 가벼워질 여지가 있습니다. 내부 테스트 트랙보다도 진입 장벽이 낮은 개인 실행 경로가 생긴 셈입니다.
-- 공개 스토어 리뷰와 완전히 분리되므로, 실험적인 기능을 개인 기기에서 빠르게 돌려보는 용도로 적합합니다.
-- 단, 아직은 선별 시장 중심 롤아웃이라 한국에서 바로 사용할 수 있는지는 확인이 필요합니다.
-- 프로 계정 전환 시점의 리뷰는 기존과 동일하니, "일단 올리고 보자"식 접근은 여전히 통하지 않습니다.
+#### 함께 발표된 내용
+- **Ask Play**: 질문에 맞는 앱 추천과 앱 간 비교(주요 차이점, 사용자 반응)를 생성합니다.
+- **Play in Gemini**: Gemini 대화 안에서 Play 앱·게임·개발자 콘텐츠에 접근할 수 있습니다.
+- **Game Finder**: 플레이 취향 분석(Gamer DNA) 기반 게임 추천으로, 미국 영어 사용자에게 먼저 제공됩니다.
+- 게임 관련으로는 48시간 미니 챌린지 Sprints, Sidekick 오버레이의 30초 Playbacks 녹화, 게임 상세 페이지의 Community Posts가 포함되었습니다.
+- **Family Link**를 통한 연령대 정보 공유로 연령에 맞는 경험을 제공합니다.
 
-## 함께 발표된 내용
+### 실무에서 주의할 점
 
-- **Ask Play**: 질문에 맞는 앱 추천 + 앱 간 비교(주요 차이점, 사용자 반응) 생성
-- **Play in Gemini**: Gemini 대화 안에서 Play 앱·게임·개발자 콘텐츠 접근
-- **Game Finder**: 플레이 취향 분석(Gamer DNA) 기반 게임 추천, 미국 영어 사용자에게 먼저 제공
-- 게임 관련: 48시간 미니 챌린지 Sprints, Sidekick 오버레이의 30초 Playbacks 녹화, 게임 상세 페이지의 Community Posts
-- **Family Link**를 통한 연령대 정보 공유로 연령에 맞는 경험 제공
+기획·QA용 내부 실험 빌드 경로가 더 가벼워질 여지가 있습니다.<br/>
+내부 테스트 트랙보다도 진입 장벽이 낮은 개인 실행 경로가 생긴 것입니다.<br/>
+공개 스토어 리뷰와 완전히 분리되므로, 실험적인 기능을 개인 기기에서 빠르게 돌려보는 용도로 적합합니다.<br/>
+다만 아직은 선별 시장 중심 롤아웃이라 한국에서 바로 사용할 수 있는지는 확인이 필요합니다.<br/>
+프로 계정 전환 시점의 리뷰는 기존과 동일하므로, 일단 올리고 보는 식의 접근은 여전히 통하지 않습니다.<br/>
 
-## 출처
+### 마치며
 
-- [New on Google Play: More ways to create, discover, and play](https://blog.google/products-and-platforms/platforms/google-play/google-play-updates-october-2026/) — Google, 2026-10-13
+개인 앱 실행은 AI로 만든 앱을 실기기에서 확인하는 절차를 크게 줄여줍니다.<br/>
+실험은 가볍게, 공개는 기존 기준으로 진행되는 구조이므로 용도에 맞게 나눠 사용하는 것이 좋겠습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTNhbjdyc3oxeHdvY2FzcW8wOThjdjg2M25pbTZtMGpyeDZoajZsdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fjgccj3kdQXKl8Ekil/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
