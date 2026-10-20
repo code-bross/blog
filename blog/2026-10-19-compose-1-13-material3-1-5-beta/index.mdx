@@ -5,24 +5,29 @@ authors: [way]
 tags: [android, compose, material3, release-notes, migration]
 ---
 
-안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 7일에 공개된 Compose 1.13.0-beta01과 Material3 1.5.0-beta01의 변경 사항에 대해 설명해드리겠습니다.<br/>
 
-2026년 10월 7일, Compose BOM의 두 축이 베타로 나왔습니다. `androidx.compose.runtime:runtime:1.13.0-beta01`와 `androidx.compose.material3:material3:1.5.0-beta01`입니다(당일 stable도 `runtime 1.12.1`·`material3 1.4.0`으로 같이 릴리스됐습니다). 둘 다 아직 베타지만, 소스 브레이킹이 포함돼 있어 지금 미리 파악해 두는 게 나중에 스테이블로 올릴 때 덜 아픕니다. 공식 AndroidX 릴리스 노트 원문 기준으로 실무에 닿는 변경만 추립니다.
+### 배경
 
-### 핵심 요약
+2026년 10월 7일, Compose BOM의 두 축이 베타로 나왔습니다.<br/>
+`androidx.compose.runtime:runtime:1.13.0-beta01`와 `androidx.compose.material3:material3:1.5.0-beta01`입니다.<br/>
+같은 날 stable도 `runtime 1.12.1`과 `material3 1.4.0`으로 함께 릴리스되었습니다.<br/>
+둘 다 아직 베타지만 소스 브레이킹 변경이 포함되어 있어, 지금 미리 파악해 두면 나중에 스테이블로 올릴 때 수월합니다.<br/>
+공식 AndroidX 릴리스 노트([Material3](https://developer.android.com/jetpack/androidx/releases/compose-material3), [Runtime](https://developer.android.com/jetpack/androidx/releases/compose-runtime))를 기준으로 실무에 닿는 변경만 정리합니다.<br/>
+참고로 이 글은 최근 30일 이내 릴리스를 다루는 심화 해설입니다.<br/>
 
-- **Slider·RangeSlider의 `onValueChange`가 필수 파라미터로.** 소스 브레이킹입니다. 무상태(stateless) 오버로드는 폐기(deprecated) 방향이고, `SliderState(value = ...)`를 기억해 넘기는 상태ful 방식으로 이관이 권장됩니다.
-- **computedStateOf의 계산 블록이 읽기 전용으로 강제.** 블록 안에서 state에 쓰면 `IllegalStateException`이 던져집니다. `derivedStateOf`처럼 "계산은 순수해야 한다"는 규칙이 강제된 셈입니다.
-- **Kotlin 2.2 타게팅 요구.** Compose 라이브러리들이 Kotlin 2.2를 타깃으로 빌드되고, kotlinc 2.2가 필요합니다.
-- **compileSdk 37.1 전이적 요구.** Compose 라이브러리를 쓰면 앱·라이브러리 모두 `compileSdk`를 37.1로 올려야 합니다(Android 17 대응과 맞물립니다).
-- **비밀번호 필드 기본 난독화 방식 변경.** `SecureTextField`·`OutlinedSecureTextField`의 기본값이 `RevealLastTyped`(마지막 한 글자 잠깐 보여주기)에서 `TextObfuscationMode.System`(시스템 기본)으로 바뀝니다.
-- **`Float.NaN` 관련 리컴포지션 스킵 버그 수정.** `Dp.Unspecified`(내부적으로 `Float.NaN` 기반)를 인자로 받은 `@Composable`이 인자가 변하지 않았는데도 리컴포지션 스킵을 못 했던 버그가 고쳐졌습니다.
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm1pcWJlZm56eXU2dmF0Mzl2Y3FsaGJ4d2plMXhjN3Bjb3FrcGhpdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7ZeqkYTvaL3lGjCw/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
 ### 무엇이 달라졌는지
 
-**1. Slider/RangeSlider의 상태ful 마이그레이션 (Material3 1.5.0)**
+#### Slider와 RangeSlider의 상태 분리
 
-가장 큰 소스 브레이킹입니다. 1.5.0-alpha29에서 `Slider`와 `RangeSlider`의 `onValueChange`가 필수 파라미터가 됐고, 파라미터 순서도 바뀌었습니다. 동시에 무상태 오버로드는 deprecated(일부는 hidden) 처리되고, 이렇게 바꾸라는 이관 가이드가 릴리스 노트에 명시돼 있습니다.
+가장 큰 소스 브레이킹 변경입니다.<br/>
+Material3 1.5.0-alpha29에서 `Slider`와 `RangeSlider`의 `onValueChange`가 필수 파라미터가 되었고, 파라미터 순서도 바뀌었습니다.<br/>
+무상태(stateless) 오버로드는 deprecated(일부는 hidden) 처리되었고, 상태를 별도 객체로 분리하는 방식으로 이관이 권장됩니다.<br/>
 
 ```kotlin
 // 기존 방식 (1.5.0에서 deprecated)
@@ -39,42 +44,58 @@ RangeSlider(value = range, onValueChange = { range = it })
 //   RangeSlider(state = state)
 ```
 
-함께 바뀐 것들: `RangeSliderState`의 `activeRangeStart`·`activeRangeEnd`가 `startValue`·`endValue`로 개명, `SliderState`가 더 이상 공개적으로 `DraggableState`를 구현하지 않음(바이너리 호환 유지를 위해 `DraggableState`는 `SliderState`에 복원됐고, `onValueChange`가 nullable인 오버로드는 hidden deprecated로 유지). 즉, **소스 코드는 고쳐야 하지만 이미 빌드된 바이너리는 안 깨지게** 설계된 셈입니다.
+함께 바뀐 사항은 다음과 같습니다.<br/>
 
-**2. computedStateOf 읽기 전용 강제 (runtime 1.13.0-beta01)**
+- `RangeSliderState`의 `activeRangeStart`와 `activeRangeEnd`가 `startValue`와 `endValue`로 개명되었습니다.
+- `SliderState`는 더 이상 공개적으로 `DraggableState`를 구현하지 않습니다. 바이너리 호환 유지를 위해 `DraggableState`는 `SliderState`에 복원되었고, `onValueChange`가 nullable인 오버로드는 hidden deprecated로 유지됩니다.
 
-`computedStateOf`의 계산 블록 안에서 state에 쓰면 이제 `IllegalStateException`이 던져집니다. 이전에도 쓰면 안 되는 패턴이었지만 실제로는 조용히 넘어가거나 이상한 무효화(invalidation)를 일으키곤 했습니다(외부 기여로 들어온 `SnapshotStateObserver` 읽기 시 예상 밖 무효화 수정과 같은 맥락입니다). 계산 블록은 순수하게 읽고 반환만 한다는 규칙을 강제하는 변화라, 기존 코드에서 계산 블록 안에 값을 세팅하는 꼼수가 있었다면 베타에서 바로 터집니다. 미리 grep 해 보세요.
+소스 코드는 고쳐야 하지만 이미 빌드된 바이너리는 깨지지 않게 설계된 셈입니다.<br/>
 
-**3. Kotlin 2.2 + AGP 9.5.0-alpha04 라인**
+#### computedStateOf의 읽기 전용 강제
 
-Compose 라이브러리가 Kotlin 2.2를 타깃으로 하고 kotlinc 2.2를 요구합니다. 또 `androidx.lifecycle:lifecycle-runtime:2.10.0` 의존성 업데이트 때문에, 번들된 lifecycle lint 체크가 동작하려면 AGP 9.5.0-alpha04 이상이 필요합니다. 툴체인 전체가 2.2/37.1 라인으로 움직이고 있다는 신호입니다.
+runtime 1.13.0-beta01부터 `computedStateOf`의 계산 블록 안에서 state에 쓰면 `IllegalStateException`이 던져집니다.<br/>
+이전에도 쓰면 안 되는 패턴이었지만 실제로는 조용히 넘어가거나 이상한 무효화(invalidation)를 일으키곤 했습니다.<br/>
+이는 외부 기여로 들어온 `SnapshotStateObserver` 읽기 시 예상 밖 무효화 수정과 같은 맥락입니다.<br/>
+계산 블록은 순수하게 읽고 반환만 한다는 규칙이 강제됩니다.<br/>
 
-**4. compileSdk 37.1 전이적 요구**
+#### Kotlin 2.2와 AGP 요구사항
 
-Compose 라이브러리의 `compileSdk`가 37.1로 올라갔고, 이는 Compose를 쓰는 모든 앱과 라이브러리도 `compileSdk`를 37.1로 올려야 한다는 뜻입니다. Android 17(targetSdk 37) 대응을 아직 안 했다면, Compose 1.13/1.5 스테이블로 올라가는 시점이 강제 마이그레이션 시점이 됩니다.
+Compose 라이브러리들이 Kotlin 2.2를 타깃으로 빌드되고, kotlinc 2.2가 필요합니다.<br/>
+또 `androidx.lifecycle:lifecycle-runtime:2.10.0` 의존성 업데이트 때문에, 번들된 lifecycle lint 체크가 동작하려면 AGP 9.5.0-alpha04 이상이 필요합니다.<br/>
+툴체인 전체가 2.2와 37.1 라인으로 움직이고 있다는 신호입니다.<br/>
 
-**5. 나머지 실무 변경 한 줄 요약**
+#### compileSdk 37.1 전이적 요구
 
-- `SecureTextField`/`OutlinedSecureTextField` 기본 난독화 → `TextObfuscationMode.System`. 금융 앱에서 PIN·계좌비밀번호 입력 화면이 있다면, 타이핑 중 마지막 글자 잠깐 노출(reveal-last-typed)이 사라지는 UX 변화라 QA에 미리 공유해 두는 게 좋습니다.
-- `BottomAppBar`와 연관 API가 스테이블 승격, `BasicAlertDialog`가 Experimental 졸업. `@ExperimentalMaterial3Api` opt-in이 덜 들어갑니다.
-- `LocalMotionScheme` 제거 → `MaterialTheme.motionScheme`으로 교체.
-- `ExposedDropdownMenu`가 멤버 함수에서 `ExposedDropdownMenuBoxScope`의 확장 함수로 변경 — import를 새로 잡아야 합니다.
-- 새로운 `material3-ripple` 라이브러리 추가(`material-ripple`의 대체, inset focus ring 지원).
-- `DatePicker`가 월 이동 가용성을 표시 월 인덱스에서 직접 계산해 1프레임에 해결되도록 개선.
-- `TopAppBarDefaults.enterAlwaysScrollBehavior`의 `reverseLayout` 오버로드가 1.4 호환을 위해 deprecated(경고)로 복원.
-- `HorizontalCenteredHeroCarousel`의 `maxItemWidth`가 `preferredItemWidth`로 개명, 멀티애스펙트 캐러셀 API가 전역 `carouselParallaxScrollEffect` 모디파이어로 단순화.
-- runtime 쪽: `movableContent` 이동 시 wrapper 슬롯을 들고 있던 `LinkComposer` 메모리 누수 수정, `CompositionObserver`가 패스당 1회 해결되도록 변경, 오프-메인 스레드 `ComposeTracer` 지원.
-- `Float.NaN`/`Double.NaN` 인자 리컴포지션 스킵 버그 수정: `Dp.Unspecified`를 넘기는 컴포저블이 매번 리컴포즈되던 미묘한 성능 문제가 해소됩니다.
+Compose 라이브러리의 `compileSdk`가 37.1로 올라갔습니다.<br/>
+이는 Compose를 쓰는 모든 앱과 라이브러리도 `compileSdk`를 37.1로 올려야 한다는 뜻입니다.<br/>
+Android 17(targetSdk 37) 대응을 아직 하지 않았다면, Compose 1.13과 1.5 스테이블로 올라가는 시점이 강제 마이그레이션 시점이 됩니다.<br/>
 
-### 실무 영향과 주의점
+#### 그 외 변경 사항
 
-- **지금 할 일 1: Slider 사용처 전수 조사.** 금융 앱에 수수료 슬라이더·투자 금액 조절 같은 `Slider`/`RangeSlider`가 있다면 1.5.0 스테이블 전에 stateful 방식으로 바꿔 두세요. `onValueChange` 필수화는 컴파일 에러로 드러나니 놓칠 염려는 적지만, 파라미터 순서 변경 때문에 **컴파일은 되는데 의미가 달라지는** 케이스는 없습니다(순서가 바뀐 오버로드는 시그니처 자체가 바뀌어서 에러가 나거나 deprecated로 걸립니다). 그래도 리뷰는 한 번씩.
-- **지금 할 일 2: computedStateOf/derivedStateOf 블록 안 쓰기 검사.** `IllegalStateException`은 런타임에 터지므로, 린트나 코드 검색으로 `computedStateOf { ... }` 안에서 `=` 대입이 있는지 미리 확인하는 게 안전합니다.
-- **Kotlin 2.2·AGP·compileSdk 37.1을 묶어서 계획.** 셋이 서로 의존합니다(Compose 1.13 → Kotlin 2.2, lint → AGP 9.5.0-alpha04+, Compose → compileSdk 37.1). 하나씩 따로 올리기보다 한 스프린트에 묶어 CI에서 같이 검증하는 편이 낫습니다.
-- **비밀번호 입력 UX 변경은 기획·디자인과 공유.** `RevealLastTyped`에서 `System` 기본으로 바뀌면, 기존에 "마지막 글자 확인"에 의존하던 QA 시나리오가 바뀝니다. 보안 정책상 오히려 환영할 변화지만, 릴리스 노트 한 줄로 바뀌는 UX라 미리 말해 두지 않으면 "버그 아니냐"는 문의가 들어옵니다.
-- 이 글은 7일 이내 신소식보다 **최근 30일 이내 릴리스 심화 해설**입니다. 베타 릴리스라 스테이블 전에 API가 또 바뀔 수 있고, 1.5.0-beta01의 변경 중 일부(alpha 단계의 리네임 등)는 베타 시점 기준 확정된 내용만 다뤘습니다.
+- 비밀번호 필드의 기본 난독화 방식이 `RevealLastTyped`에서 `TextObfuscationMode.System`으로 바뀝니다. `SecureTextField`와 `OutlinedSecureTextField`의 기본값 변경입니다.
+- `Float.NaN` 관련 리컴포지션 스킵 버그가 수정되었습니다. `Dp.Unspecified`(내부적으로 `Float.NaN` 기반)를 인자로 받은 컴포저블이 인자가 변하지 않았는데도 리컴포지션을 스킵하지 못하던 문제입니다.
+- `BottomAppBar`와 연관 API가 스테이블로 승격되었고, `BasicAlertDialog`가 Experimental을 졸업했습니다.
+- `LocalMotionScheme`이 제거되고 `MaterialTheme.motionScheme`으로 교체되었습니다.
+- `ExposedDropdownMenu`가 멤버 함수에서 `ExposedDropdownMenuBoxScope`의 확장 함수로 변경되어 import를 새로 잡아야 합니다.
+- 새로운 `material3-ripple` 라이브러리가 추가되었습니다. 기존 `material-ripple`의 대체이며 inset focus ring을 지원합니다.
+- `DatePicker`가 월 이동 가용성을 표시 월 인덱스에서 직접 계산해 1프레임에 해결되도록 개선되었습니다.
+- `TopAppBarDefaults.enterAlwaysScrollBehavior`의 `reverseLayout` 오버로드가 1.4 호환을 위해 deprecated(경고)로 복원되었습니다.
+- `HorizontalCenteredHeroCarousel`의 `maxItemWidth`가 `preferredItemWidth`로 개명되었고, 멀티애스펙트 캐러셀 API가 전역 `carouselParallaxScrollEffect` 모디파이어로 단순화되었습니다.
+- runtime에서는 `movableContent` 이동 시 wrapper 슬롯을 들고 있던 `LinkComposer` 메모리 누수가 수정되었고, `CompositionObserver`가 패스당 1회 해결되도록 변경되었으며, 오프-메인 스레드 `ComposeTracer`가 지원됩니다.
 
-### 출처
+### 실무에서 주의할 점
 
-- [Compose Material 3 Release Notes — Version 1.5.0-beta01](https://developer.android.com/jetpack/androidx/releases/compose-material3) — 2026-10-07
-- [Compose Runtime Release Notes — Version 1.13.0-beta01](https://developer.android.com/jetpack/androidx/releases/compose-runtime) — 2026-10-07
+- Slider 사용처를 전수 조사해야 합니다. 금융 앱에 수수료 슬라이더나 투자 금액 조절 같은 `Slider`와 `RangeSlider`가 있다면 1.5.0 스테이블 전에 상태 분리 방식으로 바꿔 두는 것이 좋습니다. `onValueChange` 필수화는 컴파일 에러로 드러나지만, 파라미터 순서가 바뀐 오버로드는 시그니처 자체가 바뀌어 에러가 나거나 deprecated로 걸리므로 리뷰는 한 번씩 필요합니다.
+- `computedStateOf`와 `derivedStateOf` 블록 안에서 값을 쓰는 코드가 있는지 검사해야 합니다. `IllegalStateException`은 런타임에 발생하므로, 코드 검색으로 계산 블록 안에 대입이 있는지 미리 확인하는 것이 안전합니다.
+- Kotlin 2.2와 AGP, compileSdk 37.1은 묶어서 계획해야 합니다. Compose 1.13은 Kotlin 2.2를, lint는 AGP 9.5.0-alpha04 이상을, Compose는 compileSdk 37.1을 각각 요구하므로 서로 의존합니다. 하나씩 따로 올리기보다 한 스프린트에 묶어 CI에서 함께 검증하는 편이 낫습니다.
+- 비밀번호 입력 UX 변경은 기획과 디자인 부서와 공유해야 합니다. 기본값이 `System`으로 바뀌면 타이핑 중 마지막 글자를 잠깐 보여주는 동작이 사라집니다. 보안 정책상 환영할 변화지만, 릴리스 노트 한 줄로 바뀌는 UX라 미리 공유하지 않으면 버그 문의가 들어올 수 있습니다.
+- 베타 릴리스이므로 스테이블 전에 API가 또 바뀔 수 있습니다. 이 글에서 다룬 내용은 베타 시점에 확정된 변경 기준입니다.
+
+### 마치며
+
+Compose 1.13과 Material3 1.5는 베타 단계에서 미리 확인해 두면 스테이블 상향이 훨씬 수월해집니다.<br/>
+특히 Slider의 상태 분리와 툴체인 요구사항은 일정을 잡아 미리 준비하는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXA4NTM2NmsybHRncHQ4ZW1yd2JybzJ5Y3M3ZnVweWFsdHFxMXExZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/KEVNWkmWm6dm8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

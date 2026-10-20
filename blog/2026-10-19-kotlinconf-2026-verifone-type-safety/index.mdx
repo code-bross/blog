@@ -5,50 +5,62 @@ authors: [way]
 tags: [kotlin, android, fintech, design-pattern, kotlinconf]
 ---
 
-안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+KotlinConf 2026에서 발표된 Verifone의 타입 기반 결제 시스템 설계 사례에 대해 설명해드리겠습니다.<br/>
 
-금융 앱을 만들다 보면 "이 값은 절대 null이면 안 돼" 같은 규칙을 코드 리뷰와 주석에 의존해 두곤 합니다. Verifone의 아키텍트 Yuri Geronimus는 지난 KotlinConf 2026 강연 "Kotlin as a Safety Net: Type-Driven Reliability in the Finance Industry"에서 다른 접근을 이야기합니다. 규칙을 문서가 아니라 **타입 시스템에 새기는 것** — 즉, "잘못된 상태는 만들 수 없게 만드는" 10가지 패턴입니다. JetBrains 블로그에 2026년 10월 14일 올라온 강연 리캡을 실무 관점에서 정리합니다.
+### 배경
 
-### 핵심 요약
+금융 앱을 만들다 보면 이 값은 절대 null이면 안 된다는 규칙을 코드 리뷰와 주석에 의존해 두곤 합니다.<br/>
+Verifone의 아키텍트 Yuri Geronimus는 KotlinConf 2026 강연 "Kotlin as a Safety Net: Type-Driven Reliability in the Finance Industry"에서 다른 접근을 이야기했습니다.<br/>
+규칙을 문서가 아니라 타입 시스템에 새기는 것, 즉 잘못된 상태는 만들 수 없게 만드는 방식입니다.<br/>
+이 글은 2026년 10월 14일 [JetBrains 블로그에 올라온 강연 리캡](https://blog.jetbrains.com/kotlin/2026/10/kotlinconf-recap-lessons-from-verifone-s-architect-on-kotlin-in-mission-critical-payments/)을 실무 관점에서 정리한 것입니다.<br/>
+발단은 실제 결제 장애 사례 여섯 가지였습니다.<br/>
+다른 계좌로 입금된 돈, 혹시 모르니 nullable로 두었다가 터미널 일부가 먹통이 된 필드, 로그에 찍힌 카드번호, 이미 되돌린 건을 또 환불해 가맹점이 두 번 청구된 사례, 타임아웃과 동시에 성공한 승인 등이었습니다.<br/>
+공통 원인은 스펙이 말하는 단어와 코드가 말하는 단어의 불일치였고, 어느 곳에서도 강제로 드러나지 않았다는 점입니다.<br/>
 
-- **발단:** 실제 결제 장애 사례 여섯 가지 — 다른 계좌로 입금된 돈, "혹시 모르니" nullable로 뒀다가 터미널 일부가 먹통이 된 필드, 로그에 찍힌 카드번호, 이미 되돌린 건을 또 환불해 가맹점이 두 번 청구된 사례, 타임아웃과 동시에 성공한 승인 등. 공통 원인은 **"스펙이 말하는 단어"와 "코드가 말하는 단어"의 불일치**였고, 어느 곳에서도 강제로 드러나지 않았다는 점입니다.
-- **해결책:** 스펙의 명사를 타입으로 표현하고, 잘못된 사용은 컴파일이 안 되게 만든다. 규율(discipline)이 아니라 컴파일러에게 맡긴다는 것이 핵심입니다. 20개 팀이 세계 각지에서 일하는 규모에서는 리뷰어의 성실함이 균일하지 않지만, 컴파일 체크는 항상 동일하게 적용됩니다.
-- **결과:** 개발 속도 2.7배, 인증을 **단 1건의 결함으로 첫 시도에 통과**, 코드베이스는 30% 축소. 코드리뷰는 "누락된 상태 체크 찾기"에서 "스펙 문장과 코드의 문장 대조"로 바뀌었고, 신규 입사자가 5,000페이지 분량의 스펙을 다 이해하기 전에 며칠 만에 첫 프로덕션 PR을 열 수 있었다고 합니다.
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHJ3YjBsdGw2MHVqamVhZzQzbGlkN25wb3pvajNuczc1M25qOGVnYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7xTjys6ICtSu5M41S2/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
-### 무엇이 달라졌는지 — 10가지 패턴
+### 도입 결과
 
-1. **스펙의 명사는 value class로.** 가맹점 ID·단말 ID·가맹정산 ID는 형식이 규제로 동일해 보이는데, plain String이면 복사-붙여넣기나 리팩터링에서 순서가 바뀌어도 컴파일이 됩니다. `@JvmInline value class`를 붙여 개수를 세는 단위까지 분리하면 인자 순서가 바뀌는 실수가 빌드 에러가 됩니다.
+스펙의 명사를 타입으로 표현하고, 잘못된 사용은 컴파일이 되지 않게 만들었습니다.<br/>
+핵심은 규율(discipline)이 아니라 컴파일러에게 맡긴다는 것입니다.<br/>
+20개 팀이 세계 각지에서 일하는 규모에서는 리뷰어의 성실함이 균일하지 않지만, 컴파일 체크는 항상 동일하게 적용됩니다.<br/>
+결과는 개발 속도 2.7배, 인증은 단 1건의 결함으로 첫 시도에 통과, 코드베이스는 30% 축소였습니다.<br/>
+코드리뷰는 누락된 상태 체크 찾기에서 스펙 문장과 코드의 문장 대조로 바뀌었습니다.<br/>
+신규 입사자가 5,000페이지 분량의 스펙을 다 이해하기 전에 며칠 만에 첫 프로덕션 PR을 열 수 있었다고 합니다.<br/>
 
-2. **경계에서는 sealed 팩토리로 파싱.** 외부에서 들어오는 필드는 모두 untyped string입니다. `Result<T>`로 감싸거나 `runCatching`으로 삼키는 대신, `sealed interface` 결과(예: `Valid` / `WrongLength` / `NotNumeric`)로 즉시 파싱합니다. `when`에서 `else` 없이 exhaustive하게 처리하면 도메인이 숨지 않습니다.
+### 10가지 타입 설계 패턴
 
-3. **필수 필드는 nullable로 만들지 마라.** "혹시 모르니"라는 nullable이 침묵의 폴백을 만들고, 진짜 원인을 숨깁니다. 경계에서 `requireNotNull(raw.tvr) { "TVR null - firmware contract violated" }`처럼 **한 곳에서 크게 실패**시키면, 모니터링 가능한 한 지점에서 터지고 하류에서는 다시는 조용히 무너지지 않습니다.
+1. 스펙의 명사는 value class로 표현합니다. 가맹점 ID, 단말 ID, 가맹정산 ID는 형식이 규제로 동일해 보이는데, plain String이면 복사-붙여넣기나 리팩터링에서 순서가 바뀌어도 컴파일이 됩니다. `@JvmInline value class`를 붙여 단위까지 분리하면 인자 순서가 바뀌는 실수가 빌드 에러가 됩니다.
+2. 경계에서는 sealed 팩토리로 파싱합니다. 외부에서 들어오는 필드는 모두 untyped string입니다. `Result<T>`로 감싸거나 `runCatching`으로 삼키는 대신, `sealed interface` 결과(예: `Valid`, `WrongLength`, `NotNumeric`)로 즉시 파싱합니다. `when`에서 `else` 없이 exhaustive하게 처리하면 도메인이 숨지 않습니다.
+3. 필수 필드는 nullable로 만들지 않습니다. 혹시 모르니라는 nullable이 침묵의 폴백을 만들고 진짜 원인을 숨깁니다. 경계에서 `requireNotNull(raw.tvr) { "TVR null - firmware contract violated" }`처럼 한 곳에서 크게 실패시키면, 모니터링 가능한 한 지점에서 터지고 하류에서는 다시는 조용히 무너지지 않습니다.
+4. 민감 정보는 기본적으로 마스킹합니다. 카드번호는 로그와 스택트레이스에 평문으로 흘러다니기 쉽고, 이는 공개 의무(disclosure obligation)로 이어집니다. private 생성자와 `toString()` 오버라이드로 `PAN[****]`가 기본값이 되게 하고, 진짜 값은 `toNetwork()`처럼 명시적이고 검색 가능한(grep-able) 호출로만 꺼냅니다.
+5. 상태마다 별도의 클래스를 둡니다. `status` 필드를 가진 가변 `Transaction` 하나에 의존하면 환불 가능 여부를 모든 호출자가 매번 확인해야 합니다. `Captured`, `FullyRefunded`, `Reversed`를 각각의 data class로 두면, 되돌려진 건을 다시 환불하는 전이가 컴파일러에 의해 차단됩니다.
+6. 불변으로 두고 전이에 이름을 붙입니다. 비즈니스 데이터를 불변으로 두고, 전이 메서드에 스펙의 동사 이름을 붙입니다. 호출될 수 없는 메서드는 아예 존재하지 않게 됩니다. `@ConsistentCopyVisibility`로 data class의 private 생성자를 일관되게 유지하는 것도 이 맥락입니다(Kotlin 2.0.20+).
+7. else를 지웁니다. 스펙이 모든 케이스를 명시했는데 그 외가 없다면, 코드의 `else`는 스펙에 없는 경우를 만들어내는 것입니다. 부분 환불이 새로 생겼을 때 예전 `else`는 조용히 삼켜 테스트도 통과하고 프로덕션에서만 틀립니다. `else`를 지우면 새 케이스 추가가 변경이 필요한 모든 지점을 가리키는 컴파일 에러가 됩니다. 분기마다 스펙이 바뀌는 결제 환경에서는 이것이 드리프트 대응의 전부입니다.
+8. 코루틴 스코프는 스펙이 정합니다. 승인, 리스크, 부정거래 체크를 각자 try/catch로 돌리다가, 부하가 걸린 부정거래 체크가 조용히 실패하고 승인만 난 사례가 있었습니다. `coroutineScope`는 실패 시 전부 취소(fail-fast)되어 부분 성공이 곧 장애이고, `supervisorScope`는 격리되어 부분 성공이 목표입니다. 어떤 것이 관용적인지가 아니라, 스펙이 한 갈래가 실패했을 때 무엇을 해야 하는지를 묻고 답해야 합니다.
+9. 타임아웃은 예외가 아니라 도메인 결과입니다. 게이트웨이 타임아웃은 아무 일도 없었다가 아니라 뭔가 일어났는데 응답을 못 들었다일 수 있습니다. 예외로 뭉개면 아무 일도 안 일어남과 일어났는데 불확실함의 차이가 사라집니다. `AuthorizationOutcome`의 `TimedOut`을 일급 결과로 모델링하면, 재시도 대신 정산 조회(reconciliation)로 갈아탈 수 있습니다. 타임아웃 후 무지성 재시도가 이중 청구를 만드는 이유입니다.
+10. 테스트는 규제기관이 읽을 수 있게 작성합니다. 인증 테스트 1,000개에 각 200줄이면 아키텍트도 읽기 어렵습니다. Kotlin DSL로 쓰면 코틀린을 모르는 인증 전문가도 스펙과 대조해 직접 서명할 수 있습니다. 테스트가 테스트 엔지니어만 검증 가능한 아티팩트에서 비즈니스가 검토할 수 있는 스펙이 됩니다.
 
-4. **민감 정보는 기본적으로 마스킹.** 카드번호는 로그와 스택트레이스에 평문으로 흘러다니기 쉽고, 그건 공개 의무(disclosure obligation)로 이어집니다. private 생성자 + `toString()` 오버라이드로 "PAN[****]"이 기본값이 되게 하고, 진짜 값은 `toNetwork()`처럼 명시적이고 검색 가능한(grep-able) 호출로만 꺼냅니다.
+### 레거시 모더니제이션
 
-5. **상태마다 별도의 클래스를.** `status` 필드를 가진 가변 `Transaction` 하나에 의존하면, 환불 가능 여부를 모든 호출자가 매번 확인해야 합니다. `Captured`·`FullyRefunded`·`Reversed`를 각각의 data class로 두면, 되돌려진 건을 다시 환불하는 전이가 **컴파일러에 의해 차단**됩니다.
+강연자의 입장은 분명합니다. 마이그레이션은 리라이트 프로젝트로 만들지 않는 것입니다.<br/>
+25년 된 Java와 C++가 매초 실거래를 처리하고 다운타임이 허용되지 않는 환경에서 리라이트는 선택지가 아닙니다.<br/>
+네 개의 트랙을 순차가 아니라 병렬로 진행합니다.<br/>
 
-6. **불변 + 이름 붙은 전이.** 비즈니스 데이터를 불변으로 두고, 전이 메서드에 스펙의 동사 이름을 붙입니다. 호출될 수 없는 메서드는 아예 존재하지 않게 됩니다. `@ConsistentCopyVisibility`로 data class의 private 생성자를 일관되게 유지하는 것도 이 맥락입니다(Kotlin 2.0.20+).
+- 언어는 건드리지 않고 기존 코드베이스 구조부터 정리합니다.
+- 단위 테스트가 아니라 인수 테스트를 중심으로 둡니다.
+- 마이그레이션 내내 적합도 함수(fitness function)를 돌립니다.
+- 새 어댑터부터 점진적으로 이관합니다.
 
-7. **else를 지워라.** 스펙이 모든 케이스를 명시했는데 "그 외"가 없다면, 코드의 `else`는 스펙에 없는 경우를 만들어내는 것입니다. 부분 환불이 새로 생겼을 때 예전 `else`는 조용히 삼켜 테스트도 통과하고 프로덕션에서만 틀립니다. `else`를 지우면 새 케이스 추가가 **변경이 필요한 모든 지점을 가리키는 컴파일 에러**가 됩니다. 분기마다 스펙이 바뀌는 결제 환경에서는 이게 드리프트 대응의 전부입니다.
+Kotlin과 Java의 상호운용이 이 점진 경로를 가능하게 합니다.<br/>
+마이그레이션은 언어 취향이 아니라 투자 결정이라는 대목은 국내 증권사 앱을 운영하는 입장에서도 공감이 갑니다.<br/>
 
-8. **코루틴 스코프는 스펙이 정한다.** 승인·리스크·부정거래 체크를 각자 try/catch로 돌리다가, 부하가 걸린 부정거래 체크가 조용히 실패하고 승인만 난 사례가 있었습니다. `coroutineScope`는 실패 시 전부 취소(fail-fast, 부분 성공이 곧 장애)이고, `supervisorScope`는 격리(부분 성공이 목표)입니다. 어떤 게 "관용적"인지가 아니라 스펙이 "한 갈래가 실패했을 때 무엇을 해야 하는지"를 묻고 답해야 합니다.
+### 내 코드 예시
 
-9. **타임아웃은 예외가 아니라 도메인 결과.** 게이트웨이 타임아웃은 "아무 일도 없었다"가 아니라 "뭔가 일어났는데 응답을 못 들었다"일 수 있습니다. 예외로 뭉개면 "아무 일도 안 일어남"과 "일어났는데 불확실함"의 차이가 사라집니다. `AuthorizationOutcome`의 `TimedOut`을 일급 결과로 모델링하면, 재시도 대신 정산 조회(reconciliation)로 갈아탈 수 있습니다. 타임아웃 후 무지성 재시도가 이중 청구를 만드는 이유입니다.
-
-10. **테스트는 규제기관이 읽을 수 있게.** 인증 테스트 1,000개 × 200줄은 아키텍트도 못 읽습니다. Kotlin DSL로 쓰면 코틀린을 모르는 인증 전문가도 스펙과 대조해 직접 서명할 수 있습니다. 테스트가 "테스트 엔지니어만 검증 가능한 아티팩트"에서 "비즈니스가 검토할 수 있는 스펙"이 됩니다.
-
-레거시 모더니제이션도 언급됐는데, 강연자의 입장은 분명합니다. **마이그레이션은 "리라이트 프로젝트"로 만들지 말 것.** 25년 된 Java/C++가 매초 실거래를 처리하는데 다운타임이 허용되지 않는 환경에서 리라이트는 선택지가 아닙니다. 네 개의 트랙을 순차가 아니라 병렬로: (1) 언어는 건드리지 않고 기존 코드베이스 구조부터 정리, (2) 단위 테스트가 아니라 인수 테스트 중심으로, (3) 마이그레이션 내내 돌리는 적합도 함수(fitness function), (4) 새 어댑터부터 점진 이관. Kotlin-Java 상호운용이 이 점진 경로를 가능하게 합니다. 마이그레이션은 언어 취향이 아니라 **투자 결정**이라는 대목은 국내 증권사 앱을 운영하는 입장에서도 공감이 갑니다.
-
-### 실무 영향과 주의점
-
-- 이 패턴들은 결제만의 이야기가 아닙니다. 주문 접수· 체결 상태 머신·입출금 같은 국내 금융 앱의 도메인에도 그대로 적용됩니다. `status: String` + `if (status == "완료")` 같은 코드가 있다면 5번 패턴이 가장 먼저 쓸모 있습니다.
-- **Kotlin Multiplatform 시나리오에도 붙습니다.** 강연자는 디바이스 팀과 백엔드 팀 사이를 엔지니어가 오갈 수 있게 된 점을 언급하는데, 이는 언어 2개로 갈라진 코드베이스에서는 불가능했던 효과입니다. KMP를 도입한 조직에서 도메인 모델을 commonMain에 둘 때 정확히 이 방식으로 타입 경계를 세울 수 있습니다.
-- **오버엔지니어링 경계 주의.** 1번·5번 패턴은 "스펙의 명사"가 있을 때 빛나지만, 단순 CRUD 화면까지 씌우면 읽기만 나빠집니다. 돈이 움직이거나 상태 전이가 되돌릴 수 없는 경계부터 적용하는 것이 실무적입니다.
-- 강연에서 언급된 22페이지짜리 엔터프라이즈 도입 플레이북(강연 이틀 전 JetBrains 사이트에 공개)이 마이그레이션의 비즈니스 케이스·운영 모델을 다룹니다. 레거시 전환을 설득해야 하는 리더라면 원문 리캡 하단의 링크를 따라가 볼 만합니다.
-
-### 내 코드 예시 — 체결 상태 머신에 적용하기
-
-주식 주문의 체결 상태를 enum 하나로 관리하다 환불/취소 전이가 꼬이는 상황을 가정해 5·7번 패턴을 결합해 봅니다.
+주식 주문의 체결 상태를 enum 하나로 관리하다 환불과 취소 전이가 꼬이는 상황을 가정해 5번과 7번 패턴을 결합합니다.<br/>
 
 ```kotlin
 // 체결 상태는 enum 문자열이 아니라 별도 타입으로
@@ -78,7 +90,8 @@ fun onFillEvent(status: FillStatus): String = when (status) {
 }
 ```
 
-원문 예시처럼 인자 순서 실수를 막는 것도 즉시 적용 가능합니다. 주문번호·계좌번호·종목코드가 모두 String인 기존 코드에:
+원문 예시처럼 인자 순서 실수를 막는 것도 즉시 적용 가능합니다.<br/>
+주문번호, 계좌번호, 종목코드가 모두 String인 기존 코드에 value class를 적용하면 다음과 같습니다.<br/>
 
 ```kotlin
 @JvmInline value class AccountNo(val value: String)
@@ -89,8 +102,20 @@ fun requestCancel(account: AccountNo, order: OrderNo) { /* ... */ }
 // requestCancel(orderNo, accountNo) — 이제 컴파일이 안 된다
 ```
 
-이 정도만 해도 "혹시 모르니"의 nullable·String 남발이 빚는 장애의 상당 부분을 빌드 타임으로 끌어올릴 수 있습니다.
+이 정도만 해도 혹시 모르니의 nullable과 String 남발이 빚는 장애의 상당 부분을 빌드 타임으로 끌어올릴 수 있습니다.<br/>
 
-### 출처
+### 실무에서 주의할 점
 
-- [KotlinConf Recap: Lessons from Verifone's Architect on Kotlin in Mission-Critical Payments](https://blog.jetbrains.com/kotlin/2026/10/kotlinconf-recap-lessons-from-verifone-s-architect-on-kotlin-in-mission-critical-payments/) — JetBrains Kotlin Blog, 2026-10-14, 강연자 Yuri Geronimus (Verifone 아키텍트, 강연명 "Kotlin as a Safety Net: Type-Driven Reliability in the Finance Industry")
+- 이 패턴들은 결제만의 이야기가 아닙니다. 주문 접수, 체결 상태 머신, 입출금 같은 국내 금융 앱의 도메인에도 그대로 적용됩니다. `status: String`과 조건문으로 상태를 비교하는 코드가 있다면 5번 패턴이 가장 먼저 쓸모 있습니다.
+- Kotlin Multiplatform 시나리오에도 붙습니다. 강연자는 디바이스 팀과 백엔드 팀 사이를 엔지니어가 오갈 수 있게 된 점을 언급하는데, 이는 언어 2개로 갈라진 코드베이스에서는 불가능했던 효과입니다. KMP를 도입한 조직에서 도메인 모델을 commonMain에 둘 때 정확히 이 방식으로 타입 경계를 세울 수 있습니다.
+- 오버엔지니어링 경계에 주의해야 합니다. 1번과 5번 패턴은 스펙의 명사가 있을 때 빛나지만, 단순 CRUD 화면까지 씌우면 읽기만 나빠집니다. 돈이 움직이거나 상태 전이가 되돌릴 수 없는 경계부터 적용하는 것이 실무적입니다.
+- 강연에서 언급된 22페이지짜리 엔터프라이즈 도입 플레이북(강연 이틀 전 JetBrains 사이트에 공개)은 마이그레이션의 비즈니스 케이스와 운영 모델을 다룹니다. 레거시 전환을 설득해야 하는 리더라면 원문 리캡 하단의 링크를 따라가 볼 만합니다.
+
+### 마치며
+
+규칙을 리뷰어의 주의력에 맡기지 않고 타입에 새기면, 잘못된 상태는 코드가 되기 전에 막을 수 있습니다.<br/>
+돈이 움직이는 도메인부터 작은 경계 하나씩 적용해 나가는 것이 현실적인 시작입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXA4NTM2NmsybHRncHQ4ZW1yd2JybzJ5Y3M3ZnVweWFsdHFxMXExZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OHZ1gSUThmEso/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

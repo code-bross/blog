@@ -5,23 +5,49 @@ authors: [way]
 tags: [android, agp, target-sdk, 16kb, kotlin]
 ---
 
-안녕하세요, 한국투자증권 [한투](https://play.google.com/store/apps/details?id=com.truefriend.neosmartpension&hl=ko) 앱 개발자 way입니다.
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+3년 동안 빌드를 만지지 않은 앱을 Android 17로 올린 마이그레이션 사례에 대해 설명해드리겠습니다.<br/>
 
-"돌아가니까 건드리지 마"는 잘 돌아갈 때만 맞는 말입니다. 2023년 중반 이후 빌드를 만지지 않은 오픈소스 앱 NoFlix가 2026년 10월, 한 번에 3년을 따라잡는 마이그레이션을 기록했습니다. AGP 8.0 → 9.4.1, Kotlin 1.7 → 2.4.21, targetSdk 33 → 37, 그리고 16KB 페이지 대응까지. 10월 17일 Medium에 올라온 Zobaer Hossain의 17분짜리 케이스 스터디를 실무 관점에서 정리합니다. 결론부터 말하면, 가장 비싼 교훈은 "업그레이드가 찾아낸 버그 4개는 마이그레이션 전부터 프로덕션에 있었다"는 것입니다.
+### 배경
 
-### 핵심 요약
+"돌아가니까 건드리지 마"는 잘 돌아갈 때만 맞는 말입니다.<br/>
+오픈소스 앱 NoFlix는 2023년 중반 이후 빌드를 만지지 않은 상태였습니다.<br/>
+2026년 10월, 이 앱이 한 번에 3년을 따라잡는 마이그레이션을 진행했습니다.<br/>
+AGP는 8.0에서 9.4.1로, Kotlin은 1.7에서 2.4.21로, targetSdk는 33에서 37로 올렸고 16KB 페이지 대응까지 포함되었습니다.<br/>
+10월 17일 Medium에 올라온 [Zobaer Hossain의 케이스 스터디](https://medium.com/@zobaer53/bringing-a-3-year-old-android-app-to-android-17-0da7e2a7c457)를 실무 관점에서 정리합니다.<br/>
+가장 비싼 교훈은 업그레이드가 찾아낸 버그 4개가 마이그레이션 전부터 프로덕션에 있었다는 것입니다.<br/>
 
-- **순서가 반이다.** 빌드 도구 → SDK → 라이브러리 순으로, 의존성 그래프가 시키는 대로 올립니다. AGP 9가 에러로 만드는 것들은 마지막 AGP 8 릴리스(8.13)에서 경고로 나오니, 8.13.2를 디딤돌로 먼저 밟고 올라갑니다.
-- **안전망은 구현이 아니라 동작을 테스트합니다.** 유닛 테스트는 플레이스홀더뿐이었기에, 아무것도 바꾸기 전에 Maestro UI 테스트 스위트를 "바뀌지 않은 앱"에 맞춰 먼저 그린으로 만들었습니다. "페이지가 스와이프된다", "당겨서 새로고침이 된다" 같은 동작 기반 테스트는 Accompanist→Foundation, M2→M3 같은 구현 교체를 전부 살아남았습니다.
-- **kapt 작별이 가장 큰 일입니다.** AGP 9의 내장 Kotlin은 `kotlin-kapt`를 지원하지 않습니다. Room과 Hilt는 KSP로 쉽게 옮겼지만, 죽은 라이브러리(Mezzanine·Anko·Edsuns HttpRequest)는 아예 교체 대상이었습니다. JitPack과 JCenter 의존성도 이때 정리됩니다.
-- **16KB 호환성은 APK 전체의 속성입니다.** NDK r28 이상으로 자기 네이티브 코드를 고쳐도 DataStore 1.1.0-alpha04 안에 들어 있던 `libdatastore_shared_counter.so` 하나 때문에 경고 다이얼로그가 안 사라졌습니다. DataStore 1.2.1로 올리니 해결됐습니다. 그래서 검사는 CI에서 모든 `.so`를 대상으로 합니다.
-- **targetSdk는 한 레벨씩, 한 커밋씩.** API 35(엣지투엣지 강제) → 36(predictive back 기본값, 600dp 이상에서 오리엔테이션 락 무시) → 37(CT·ECH 기본 활성화)까지, 각 단계마다 전체 테스트 스위트를 돌렸습니다. 대부분 "확인"이었지만 확인 자체가 일이었습니다.
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXYwcnFhdjJ2anF4dmIxMng0NDR2OTh3anlmZzRsb3J2bnhpdGEzbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4JhyL6iRXrzQA/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
 
-### 실무에서 바로 써먹을 디테일
+### 마이그레이션 순서와 안전망
 
-**AGP 9의 classpath 함정.** 새 Kotlin에서 `TextFieldDefaults.colors`가 안 잡히는 빌드 실패가 났는데, 원인은 의존성 선언이 아니라 AGP 9가 `android.dependency.useConstraints` 기본값을 `false`로 바꾼 것이었습니다. 이전엔 전이(transitive) 제약이 선언한 Compose BOM(2023.05.00)을 컴파일·런타임 classpath 양쪽에서 조용히 2023.06.00으로 올려줬는데, AGP 9에선 런타임에만 올라가고 컴파일은 옛날 Material 3(1.1.0 vs 1.0.1 불일치)을 본 겁니다. 교훈은 명확합니다: **AGP 9부터는 내가 실제로 출하하는 버전을 직접 선언하고, 업그레이드 때마다 컴파일/런타임 classpath를 diff로 비교하십시오.**
+#### 순서는 의존성 그래프를 따릅니다
 
-**16KB는 CI 게이트로.** 릴리스 워크플로우에 들어간 검사 스크립트의 핵심은 이렇습니다.
+빌드 도구, SDK, 라이브러리 순으로 올립니다.<br/>
+AGP 9에서 에러가 되는 항목은 마지막 AGP 8 릴리스인 8.13에서 경고로 나옵니다.<br/>
+그래서 8.13.2를 디딤돌로 먼저 밟고 올라가는 방식을 사용했습니다.<br/>
+
+#### 안전망은 동작을 테스트합니다
+
+기존 유닛 테스트는 플레이스홀더뿐이었습니다.<br/>
+그래서 아무것도 바꾸기 전에 Maestro UI 테스트 스위트를 바뀌지 않은 앱에 맞춰 먼저 그린으로 만들었습니다.<br/>
+페이지가 스와이프된다, 당겨서 새로고침이 된다 같은 동작 기반 테스트는 Accompanist에서 Foundation으로, M2에서 M3로 구현을 교체해도 살아남았습니다.<br/>
+
+### kapt에서 KSP로
+
+AGP 9의 내장 Kotlin은 `kotlin-kapt`를 지원하지 않습니다.<br/>
+Room과 Hilt는 KSP로 쉽게 옮겼지만, 유지보수가 중단된 라이브러리(Mezzanine, Anko, Edsuns HttpRequest)는 아예 교체 대상이었습니다.<br/>
+이 과정에서 JitPack과 JCenter 의존성도 함께 정리되었습니다.<br/>
+
+### 16KB 페이지 대응
+
+16KB 호환성은 APK 전체의 속성입니다.<br/>
+NDK r28 이상으로 자체 네이티브 코드를 고쳐도 경고 다이얼로그가 사라지지 않았습니다.<br/>
+원인은 DataStore 1.1.0-alpha04 안에 들어 있던 `libdatastore_shared_counter.so` 하나였습니다.<br/>
+DataStore를 1.2.1로 올리니 해결되었습니다.<br/>
+그래서 검사는 CI에서 모든 `.so` 파일을 대상으로 합니다.<br/>
 
 ```bash
 # APK 안의 모든 64비트 .so가 16KB(2**14) 이상 정렬됐는지 확인
@@ -33,15 +59,43 @@ for so in "$libs"/lib/*/*.so; do
 done
 ```
 
-참고로 32비트 `.so`는 4KB 정렬 그대로 둬도 됩니다. 16KB 페이지는 64비트 전용입니다.
+참고로 32비트 `.so`는 4KB 정렬을 그대로 두어도 됩니다. 16KB 페이지는 64비트 전용입니다.<br/>
 
-**오래된 앱일수록 minSdk는 정직해져야 합니다.** `minSdk 24`였지만 Android 7.0 에뮬레이터에서 실행 1초 만에 `NoClassDefFoundError: java/time/LocalDate`로 죽었습니다. `kotlinx-datetime`이 API 26부터 있는 `java.time`에 의존했기 때문이고, **마이그레이션 전 빌드도 똑같이 죽었습니다.** Core desugaring으로 고칠 수 있었지만, 같은 7.x에서 필터 호스트의 Let's Encrypt 체인이 루트 스토어에 없고 WebView 플레이어도 안 뜨는 게 확인됐습니다. 플레이어가 목적인 앱에서 이건 타협이 안 되니 `minSdk`는 26으로 올리고 desugaring은 다시 뺐습니다.
+### targetSdk 단계별 상향
 
-**업그레이드가 파헤친 4개의 구 버그** 중 하나는 WorkManager 데드락입니다. 워커 생성자에서 `AdFilter.get(context)`가 싱글톤 락을 잡고, 그 초기화가 WorkManager 직렬 executor 뒤에 줄 선 `getWorkInfosForUniqueWork(id).get()`을 블로킹으로 기다립니다. 그런데 바로 그 executor 앞에는 자기 워커가 있으니 영원히 안 풀립니다. 필터 다운로드 중 앱을 죽였다가 플레이어를 열면 메인 스레드까지 같은 락을 기다려 ANR(5초)이 선언됩니다. 고친 건 단순합니다. 워커는 `AdFilter` 전체가 아니라 데이터 스토어만 직접 열도록 바꿨습니다(`BinaryDataStore.of(context)`). 이 버그는 모든 안드로이드 버전에 있었고, 7.x에선 다운로드 자체가 안 돼서 안 보였을 뿐입니다.
+targetSdk는 한 레벨씩, 한 커밋씩 올렸습니다.<br/>
+API 35에서는 엣지투엣지가 강제되고, API 36에서는 predictive back이 기본값이 되며 600dp 이상에서 오리엔테이션 락이 무시됩니다.<br/>
+API 37에서는 CT와 ECH가 기본으로 활성화됩니다.<br/>
+각 단계마다 전체 테스트 스위트를 실행했습니다. 대부분은 확인 작업이었지만, 확인 자체가 일이었습니다.<br/>
 
-### 내 코드에서는 이렇게 적용할 생각입니다
+### AGP 9의 classpath 함정
 
-한투 앱처럼 릴리스 주기가 촘촘한 앱이라도, targetSdk 한 단계 올릴 때 "한 레벨 = 한 커밋 = 전체 UI 테스트 그린" 규칙은 그대로 가져갈 만합니다. 특히 엣지투엣지는 이런 회귀가 숨어 있습니다.
+새 Kotlin에서 `TextFieldDefaults.colors`가 잡히지 않는 빌드 실패가 발생했습니다.<br/>
+원인은 의존성 선언이 아니라 AGP 9가 `android.dependency.useConstraints` 기본값을 `false`로 바꾼 것이었습니다.<br/>
+이전에는 전이(transitive) 제약이 선언한 Compose BOM(2023.05.00)을 컴파일과 런타임 classpath 양쪽에서 조용히 2023.06.00으로 올려 주었습니다.<br/>
+AGP 9에서는 런타임에만 올라가고 컴파일은 옛날 Material 3(1.1.0과 1.0.1 불일치)를 보게 됩니다.<br/>
+교훈은 명확합니다. AGP 9부터는 실제로 출하하는 버전을 직접 선언하고, 업그레이드 때마다 컴파일과 런타임 classpath를 diff로 비교해야 합니다.<br/>
+
+### minSdk는 정직해야 합니다
+
+기존 `minSdk`는 24였지만 Android 7.0 에뮬레이터에서 실행 1초 만에 `NoClassDefFoundError: java/time/LocalDate`로 종료되었습니다.<br/>
+`kotlinx-datetime`이 API 26부터 있는 `java.time`에 의존했기 때문이고, 마이그레이션 전 빌드도 똑같이 종료되었습니다.<br/>
+Core desugaring으로 고칠 수 있었지만, 같은 7.x에서 필터 호스트의 Let's Encrypt 체인이 루트 스토어에 없고 WebView 플레이어도 뜨지 않는 것이 확인되었습니다.<br/>
+플레이어가 목적인 앱에서 이는 타협할 수 없는 문제라서, `minSdk`를 26으로 올리고 desugaring은 다시 제거했습니다.<br/>
+
+### 업그레이드가 찾아낸 기존 버그
+
+4개의 구 버그 중 하나는 WorkManager 데드락입니다.<br/>
+워커 생성자에서 `AdFilter.get(context)`가 싱글톤 락을 잡고, 그 초기화가 WorkManager 직렬 executor 뒤에 줄 선 `getWorkInfosForUniqueWork(id).get()`을 블로킹으로 기다립니다.<br/>
+그런데 바로 그 executor 앞에는 자기 워커가 있어서 영원히 풀리지 않습니다.<br/>
+필터 다운로드 중 앱을 종료했다가 플레이어를 열면 메인 스레드까지 같은 락을 기다려 ANR(5초)이 선언됩니다.<br/>
+수정은 단순합니다. 워커가 `AdFilter` 전체가 아니라 데이터 스토어만 직접 열도록 `BinaryDataStore.of(context)`로 바꿨습니다.<br/>
+이 버그는 모든 안드로이드 버전에 있었고, 7.x에서는 다운로드 자체가 되지 않아 보이지 않았을 뿐입니다.<br/>
+
+### 실무에서 주의할 점
+
+- targetSdk를 한 단계 올릴 때 한 레벨, 한 커밋, 전체 UI 테스트 그린 규칙은 릴리스 주기가 촘촘한 앱에도 그대로 가져갈 만합니다.
+- 엣지투엣지에는 회귀가 숨어 있습니다. `enableEdgeToEdge()`만 호출하면 API 29~34의 3버튼 내비게이션 뒤에 흰색 스크림(contrast enforcement)이 깔려 예전 배경과 달라집니다.
 
 ```kotlin
 // enableEdgeToEdge()만 호출하면 API 29~34의 3버튼 내비게이션 뒤에
@@ -54,9 +108,16 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 }
 ```
 
-API 35 단말에선 강제 엣지투엣지라 문제가 없는데, 구버전 단말에서만 스크림이 튀어나오는 비대칭 회귀입니다. 원문 저자는 Android 11 에뮬레이터에서 이걸 잡아냈습니다. 오래된 단말 매트릭스를 UI 테스트에 넣어두지 않으면 이런 건 스토어 리뷰에서 발견됩니다.
+API 35 단말에서는 강제 엣지투엣지라 문제가 없는데, 구버전 단말에서만 스크림이 튀어나오는 비대칭 회귀입니다.<br/>
+원문 저자는 Android 11 에뮬레이터에서 이를 잡아냈습니다.<br/>
+오래된 단말 매트릭스를 UI 테스트에 넣어두지 않으면 이런 문제는 스토어 리뷰에서 발견됩니다.<br/>
+마이그레이션 대상인 NoFlix의 소스는 [GitHub](https://github.com/zobaer53/NoFlix)에서 확인할 수 있습니다.<br/>
 
-### 출처
+### 마치며
 
-- [Bringing a 3-Year-Old Android App to Android 17](https://medium.com/@zobaer53/bringing-a-3-year-old-android-app-to-android-17-0da7e2a7c457) — Zobaer Hossain, Medium, 2026년 10월 17일 (마이그레이션 순서·AGP 9 classpath 함정·16KB CI 검사·targetSdk 레벨별 검증·4개 구 버그 인용)
-- NoFlix 소스: github.com/zobaer53/NoFlix (원문 내 표기 기준)
+3년 묵은 앱도 순서를 지키고 동작 기반 테스트를 먼저 갖추면 한 번에 따라잡을 수 있습니다.<br/>
+업그레이드 과정에서 드러나는 기존 버그까지 포함하면, 마이그레이션은 비용이 아니라 점검의 기회입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHloNDIxazkxdXVlOXJ0MDMwdDB5ZGJ0b2JkOHplOWhmcTJuc3QybyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bOXnd3kig533u93OND/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
