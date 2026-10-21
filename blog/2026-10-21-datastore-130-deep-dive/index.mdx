@@ -63,7 +63,7 @@ val dataStore = dataStore(
 alpha10에서는 `GeneralSecurityException`이 `CorruptionException`으로 감싸지도록 바뀌었습니다.<br/>
 암호화 실패가 DataStore의 `CorruptionHandler` 흐름에 자연스럽게 녹아들게 된 것입니다.<br/>
 
-#### DataStore.Builder<T> — DataStoreFactory의 후계자
+#### `DataStore.Builder<T>` — DataStoreFactory의 후계자
 `DataStore.Builder<T>`가 `DataStoreFactory`의 공식 대체 API로 도입되었습니다.<br/>
 공식 릴리스 노트는 모든 사용자에게 Builder로의 마이그레이션을 권장합니다.<br/>
 가장 큰 차이는 스코프 전달 방식입니다.<br/>
