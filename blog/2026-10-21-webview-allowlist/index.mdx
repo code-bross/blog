@@ -1,0 +1,76 @@
+---
+slug: webview-v156-allowlist
+title: 전체를 잠그지 말고 신뢰하는 origin만 허용하기 — WebView v156의 cross-origin isolation allowlist
+authors: [way]
+tags: [android,webview,sharedarraybuffer]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+이번 10월 Google System Updates에서 공개된 Android WebView v156의 새 API에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+`SharedArrayBuffer`는 웹 스레드 간 메모리를 공유하는 기능입니다.<br/>
+멀티스레드 Wasm이나 고성능 웹 렌더링에서 핵심이 되는 API이기도 합니다.<br/>
+그런데 Spectre 계열 취약점 이후, 이 기능은 cross-origin isolation이라는 울타리 뒤로 들어갔습니다.<br/>
+페이지 전체에 `Cross-Origin-Opener-Policy`와 `Cross-Origin-Embedder-Policy`를 걸지 않으면 쓸 수 없는 구조가 되었습니다.<br/>
+웹에서는 이해할 만한 조치였지만, WebView를 쓰는 하이브리드 앱에서는 이야기가 다릅니다.<br/>
+하나의 WebView 안에서 인증·광고·외부 위젯 등 신뢰 수준이 다른 origin이 함께 도는 경우가 많기 때문입니다.<br/>
+전체 페이지를 격리하면 다른 콘텐츠가 깨지고, 격리를 안 하면 멀티스레드 Wasm을 못 쓰는 딜레마가 생겼습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/hv14mGOF3MY7wDKPkE/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### WebView v156의 allowlist API 살펴보기
+2026년 10월 7일에 릴리스된 [Android WebView v156](https://9to5google.com/2026/10/19/october-2026-google-system-updates/)의 변경 로그에 새 API가 등장했습니다.<br/>
+"신뢰할 수 있는 origin에 대해 SharedArrayBuffer 같은 cross-origin isolated 기능을 선택적으로 허용하는, 설정 가능한 allowlist를 이용한 새 Android WebView API"라는 설명입니다.<br/>
+격리 단위를 "페이지 전체"에서 "지정한 origin 목록"으로 낮춘 셈입니다.<br/>
+
+#### Cross-Origin Isolation이 요구되는 이유
+`SharedArrayBuffer`는 프로세스 간에 공유되는 고해상도 타이머 역할을 할 수 있습니다.<br/>
+공격자가 이를 이용해 캐시 타이밍을 재면 Spectre 계열의 부채널 공격이 가능해집니다.<br/>
+그래서 브라우저들은 `COOP: same-origin`과 `COEP: require-corp` 헤더를 함께 요구해 왔습니다.<br/>
+두 헤더가 있으면 해당 문서는 다른 origin 프로세스와 메모리를 공유하지 않음이 보장됩니다.<br/>
+
+#### 기존 WebView에서의 선택지
+기존에는 크게 두 가지 선택지만 있었습니다.<br/>
+첫째, 모든 콘텐츠를 격리 상태로 올리는 방법입니다.<br/>
+신뢰할 수 없는 서드파티 iframe까지 같은 격리 정책을 따라야 해서 현실적이지 않았습니다.<br/>
+둘째, 아예 `SharedArrayBuffer`를 포기하는 방법입니다.<br/>
+멀티스레드 Wasm을 쓰는 차트 라이브러리나 문서 렌더러가 싱글스레드로 떨어졌습니다.<br/>
+
+#### Allowlist가 바꾸는 것
+allowlist 방식에서는 격리를 포기하지 않습니다.<br/>
+대신 개발자가 "이 origin만큼은 격리된 것으로 취급해도 된다"고 명시하는 allowlist를 둡니다.<br/>
+신뢰하는 자사 도메인의 Wasm 차트 모듈만 허용하고, 광고 iframe은 그대로 두는 설계가 가능해집니다.<br/>
+보안 모델을 이분법에서 세밀한 제어로 바꾼 것입니다.<br/>
+
+#### 응답 헤더 복습 (개념 예시)
+allowlist는 WebView 클라이언트 측 설정이지만, 기본이 되는 격리 헤더는 서버에서 내려줍니다.<br/>
+아래는 웹 표준의 일반적인 헤더 조합입니다.<br/>
+
+```http
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Embedder-Policy: require-corp
+```
+
+두 헤더가 모두 있어야 브라우저가 해당 문서를 cross-origin isolated 상태로 표시합니다.<br/>
+allowlist API는 이 위에 "어떤 origin을 신뢰 목록에 넣을지"를 얹는 개념입니다.<br/>
+정확한 클래스명과 메서드명은 아직 공식 WebView 문서에 공개되지 않았습니다.<br/>
+변경 로그에도 "Some features may be experimental"이라는 주의 문구가 붙어 있습니다.<br/>
+따라서 실제 도입 전에는 WebView 릴리스 노트와 Chromium 문서를 다시 확인해야 합니다.<br/>
+
+### 실무 관점
+allowlist는 "신뢰 경계"를 코드로 표현하는 작업입니다.<br/>
+목록에 넣는 origin 하나하나가 공격 표면이 되므로, 목록은 최소 단위로 유지하는 것이 원칙입니다.<br/>
+MTS처럼 WebView로 시세·차트를 보여주는 앱이라면, 차트 모듈 origin만 허용하고 나머지는 기존 정책을 유지하는 방식이 현실적입니다.<br/>
+allowlist가 적용되는 WebView 버전 범위를 앱에서 미리 확인해 두는 것도 필요합니다.<br/>
+구형 WebView에서는 API 자체가 없어 기능이 조용히 비활성화될 수 있기 때문입니다.<br/>
+
+### 마치며
+WebView v156의 allowlist API는 보안과 성능 사이의 이분법을 깨는 첫 공식 경로입니다.<br/>
+전체 격리가 부담스러웠던 하이브리드 앱이라면, 신뢰 origin 목록 설계부터 시작해 보시기 바랍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/yUGI8LqNRBP8A6ahHj/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

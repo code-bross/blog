@@ -1,0 +1,111 @@
+---
+slug: datastore-1-3-0-rc01
+title: DataStore 1.3.0이 준비 중인 것들 — Tink 암호화와 새로운 Builder API
+authors: [way]
+tags: [android,datastore,androidx]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+최근 30일 내 릴리스 중 하나를 골라 심화 해설을 하겠습니다.<br/>
+[DataStore 1.3.0-rc01](https://developer.android.com/jetpack/androidx/releases/datastore)(2026년 10월 12일)까지 이어진 1.3.0 라인의 변경 사항을 정리해드리겠습니다.<br/>
+
+### 현재 상황
+DataStore 1.2.1은 안정 채널의 최신입니다.<br/>
+그 위로 1.3.0 라인이 alpha 단계를 거치며 2026년 10월 12일 rc01에 도달했습니다.<br/>
+rc01 자체는 버그 수정 위주이지만, 1.3.0이 안정으로 오면 두 가지 큰 변화가 함께 옵니다.<br/>
+Tink 기반 암호화 지원과 새로운 Builder API입니다.<br/>
+두 기능 모두 alpha07(2026년 3월 11일)에 이미 확정된 내용입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/AgAzev3Mv0vcuDHN1X/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### DataStore 1.3.0 살펴보기
+
+#### datastore-tink 아티팩트와 AeadSerializer
+새 아티팩트 `androidx.datastore:datastore-tink`가 추가되었습니다.<br/>
+핵심 클래스는 `AeadSerializer`로, 기존 `Serializer<T>`를 감싸는 래퍼입니다.<br/>
+내부는 [Tink](https://github.com/google/tink)의 AEAD(Authenticated Encryption with Associated Data)로 암호화·복호화를 수행합니다.<br/>
+JVM과 Android 타깃 모두에서 사용할 수 있습니다.<br/>
+공식 문서의 사용 순서는 세 단계입니다.<br/>
+
+```kotlin
+// 1. Tink API로 키 생성
+val keysetHandle =
+    AndroidKeysetManager.Builder()
+        .withSharedPref(applicationContext, "keyset", "keyset_prefs")
+        .withKeyTemplate(KeyTemplate.createFrom(PredefinedAeadParameters.AES256_GCM))
+        .withMasterKeyUri("android-keystore://master_key")
+        .build()
+        .keysetHandle
+
+// 2. 기존 serializer를 감싸는 AeadSerializer 생성
+val aeadSerializer = AeadSerializer(
+    aead = keysetHandle.getPrimitive(
+        RegistryConfiguration.get(),
+        Aead::class.java,
+    ),
+    wrappedSerializer = ExistingSerializer,
+    // ciphertext swapping 공격 방지를 위한 고유 이름
+    associatedData = "settings.json".encodeToByteArray(),
+)
+
+// 3. 기존 serializer 대신 aeadSerializer로 DataStore 생성
+val dataStore = dataStore(
+    fileName = "settings.json",
+    serializer = aeadSerializer,
+    scope = scope,
+)
+```
+
+마스터 키는 Android Keystore에 두는 패턴이 권장됩니다.<br/>
+`associatedData`에는 파일마다 고유한 이름을 넣어, 암호문을 서로 바꿔치기하는 공격을 막습니다.<br/>
+alpha10에서는 `GeneralSecurityException`이 `CorruptionException`으로 감싸지도록 바뀌었습니다.<br/>
+암호화 실패가 DataStore의 `CorruptionHandler` 흐름에 자연스럽게 녹아들게 된 것입니다.<br/>
+
+#### DataStore.Builder<T> — DataStoreFactory의 후계자
+`DataStore.Builder<T>`가 `DataStoreFactory`의 공식 대체 API로 도입되었습니다.<br/>
+공식 릴리스 노트는 모든 사용자에게 Builder로의 마이그레이션을 권장합니다.<br/>
+가장 큰 차이는 스코프 전달 방식입니다.<br/>
+Builder는 `CoroutineScope`가 아니라 `CoroutineContext`를 요구합니다.<br/>
+호출자가 `viewModelScope` 같은 짧은 생명주기의 스코프를 넘겨도, DataStore가 그 생명주기에 묶이지 않게 하려는 설계입니다.<br/>
+구조적 동시성(structured concurrency) 관점에서 올바른 방향입니다.<br/>
+또한 `setCorruptionHandler`로 손상 시 처리 로직을 직접 주입할 수 있게 되었습니다.<br/>
+alpha09에서는 `ReThrowCorruptionHandler`가 public으로 공개되기도 했습니다.<br/>
+
+#### 웹 플랫폼 지원 (alpha08)
+DataStore가 웹 타깃 지원을 넓혔습니다.<br/>
+`WebOpfsStorage`로 OPFS(Origin Private File System)를 지원합니다.<br/>
+크로스탭 알림은 `BroadcastChannel`, 분산 락은 Web Locks API를 씁니다.<br/>
+`WebLocalStorage`와 `WebSessionStorage` API로 저장소 타입도 명시적으로 관리할 수 있습니다.<br/>
+
+#### rc01에서 바뀐 것
+1.3.0-rc01의 API 변경은 소규모입니다.<br/>
+`EdgeToEdge#enable()` 대신 `WindowCompat#enableEdgeToEdge(Window)`를 쓰도록 정리되었습니다.<br/>
+`lifecycle-runtime` 의존성이 2.10.0으로 올라갔는데, 이는 AGP 9.5.0-alpha04 이상에서 번들된 lifecycle lint 검사가 동작하기 위한 요구사항입니다.<br/>
+
+#### 의존성 선언
+```toml
+# libs.versions.toml 예시
+[versions]
+datastore = "1.3.0-rc01"
+
+[libraries]
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-tink = { module = "androidx.datastore:datastore-tink", version.ref = "datastore" }
+```
+
+### 실무 관점
+Builder에 넘기는 `CoroutineContext`에는 반드시 `Job`이 있어야 하고, 애플리케이션 스코프여야 합니다.<br/>
+공식 문서의 Warning에도 명시된 대로, 컨텍스트가 취소되면 DataStore 내부 동작이 중간에 멈춥니다.<br/>
+`viewModelScope`를 그대로 넘기는 실수를 하지 않도록 주의해야 합니다.<br/>
+Tink 도입 시에는 `associatedData`를 파일명과 일치시켜 관리하는 규칙을 팀에 정해 두는 것이 좋습니다.<br/>
+민감 데이터 저장소가 늘어나면 키 로테이션 정책도 함께 논의해야 합니다.<br/>
+
+### 마치며
+DataStore 1.3.0은 저장(암호화)과 생성(Builder API) 두 축을 한 번에 끌어올립니다.<br/>
+안정 릴리스 전에 Tink 암호화 대상 데이터와 Builder 전환 범위를 정리해 두시기 바랍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/JTmeHIHvI7WnQoJKxm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
