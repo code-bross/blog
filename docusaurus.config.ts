@@ -77,6 +77,25 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-blog',
+      {
+        id: 'finance',
+        routeBasePath: 'finance',
+        path: './finance',
+        showReadingTime: true,
+        feedOptions: {
+          type: ['rss', 'atom'],
+          xslt: true,
+        },
+        onInlineTags: 'warn',
+        onInlineAuthors: 'warn',
+        onUntruncatedBlogPosts: 'warn',
+      },
+    ],
+  ],
+
   headTags: [
     {
       tagName: 'meta',
@@ -101,6 +120,7 @@ const config: Config = {
       },
       items: [
         {to: '/posts', label: 'Posts', position: 'left'},
+        {to: '/finance', label: 'Finance', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -130,6 +150,10 @@ const config: Config = {
             {
               label: 'Posts',
               to: '/posts',
+            },
+            {
+              label: 'Finance',
+              to: '/finance',
             },
           ],
         },
