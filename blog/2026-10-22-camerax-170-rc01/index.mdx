@@ -1,0 +1,82 @@
+---
+slug: camerax-170-rc01
+title: 네이티브 크래시를 잡는 릴리스 — CameraX 1.7.0-rc01 들여다보기
+authors: [way]
+tags: [android,camerax,androidx,camera,mts,한국투자증권,한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일에 공개된 [CameraX 1.7.0-rc01](https://developer.android.com/jetpack/androidx/releases/camera)의 릴리스 노트를 정리해드리겠습니다.<br/>
+
+### 현재 상황
+CameraX는 카메라 기능을 단말 파편화 없이 구현할 수 있게 돕는 Jetpack 라이브러리입니다.<br/>
+신분증 촬영, 얼굴 인증처럼 금융 앱에서도 카메라 기능은 흔하게 쓰입니다.<br/>
+반면 카메라 파이프라인의 네이티브 영역에서 발생하는 크래시는 재현이 어렵고 대응 비용이 큽니다.<br/>
+이번 rc는 그런 네이티브 크래시 수정과 API 정리에 무게가 실린 릴리스입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/NzeJJic0gjUaw8FoVV/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### CameraX 1.7.0-rc01 살펴보기
+
+#### 네이티브 SIGSEGV 크래시 수정
+`SurfaceProcessor`가 입력 `SurfaceTexture`를 해제하는 시점에, 연결된 `SurfaceRequest`가 먼저 가비지 컬렉션되면 네이티브 `SIGSEGV`가 발생하던 버그가 수정되었습니다.<br/>
+타이밍에 의존하는 문제라 특정 단말과 특정 시나리오에서만 나타나고, 주로 크래시 리포트에서만 보이는 유형입니다.<br/>
+이펙트나 필터로 `SurfaceProcessor`를 직접 다루는 앱이라면 이번 수정이 반가울 것입니다.<br/>
+
+#### Surface 누수와 OpenGL 크래시 수정
+`CameraEffect`의 executor나 `HandlerThread`가 `SurfaceOutput`이 닫히기 전에 종료되면, Surface 누수와 네이티브 OpenGL 크래시가 발생하던 문제가 수정되었습니다.<br/>
+카메라 파이프라인의 종료 순서가 리소스 정리와 직결된다는 점을 보여주는 사례입니다.<br/>
+
+#### Camera2Interop — 인터페이스에서 추상 클래스로 전환
+`UseCaseCamera2Interop`, `ImageCaptureCamera2Interop`, `SessionConfigCamera2Interop`, `CameraControlCamera2Interop`이 인터페이스에서 추상 클래스로 바뀌었습니다.<br/>
+소스 호환성에 영향을 줄 수 있는 변경이니, interop 클래스를 직접 참조하는 코드가 있다면 1.7.0 적용 전에 컴파일을 확인해야 합니다.<br/>
+한편 1.7.0-alpha03부터는 Kotlin DSL 확장 블록으로 interop을 쓰는 방식이 권장되고 있습니다.<br/>
+
+```kotlin
+// 1.7.0-alpha03부터 권장되는 방식 — Kotlin DSL 확장 블록
+val preview = preview {
+    camera2Interop {
+        // Camera2 설정을 이 블록 안에 지정합니다
+    }
+}
+```
+
+#### Low Light Boost와 Torch — last setting wins
+저조도 부스트와 토치를 동시에 켜려고 하면 요청이 거부되던 동작이 바뀌었습니다.<br/>
+이제는 마지막에 설정한 쪽이 이기는 방식으로 동작합니다. 하나를 켜면 다른 하나가 자동으로 꺼집니다.<br/>
+저조도 부스트가 켜진 상태에서도 촬영 시 플래시가 터지도록 함께 개선되었습니다.<br/>
+
+#### 물리 카메라에 UseCase 바인딩
+`CameraInfo.getPhysicalCameraInfos()`에서 얻은 물리 카메라의 `CameraSelector`로 `UseCase`를 바인딩할 수 있게 되었습니다.<br/>
+물리 `CameraSelector`로 `CameraInfo`를 조회하면 논리 카메라가 아닌 물리 카메라의 정보가 반환됩니다.<br/>
+멀티 카메라 단말에서 특정 렌즈를 직접 다루는 기능에 활용할 수 있습니다.<br/>
+
+#### 의존성 선언
+
+```toml
+[versions]
+camerax = "1.7.0-rc01"
+
+[libraries]
+camerax-core = { module = "androidx.camera:camera-core", version.ref = "camerax" }
+camerax-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
+```
+
+`androidx.lifecycle:lifecycle-runtime` 의존성은 2.10.0으로 올라갔습니다.<br/>
+번들로 제공되는 lifecycle runtime lint 검사가 AGP 9.5.0-alpha04 이상에서 동작하려면 이 버전이 필요합니다.<br/>
+
+### 실무 관점
+신분증 촬영이나 얼굴 인증 흐름이 있는 MTS 앱에서는 네이티브 크래시 수정이 안정성 지표에 직결됩니다.<br/>
+interop 클래스 변경은 컴파일 단계에서 바로 드러나니, Camera2를 직접 건드리는 코드가 있다면 마이그레이션 계획을 먼저 세우는 편이 좋습니다.<br/>
+아직 rc 단계이므로 프로덕션 적용은 stable 승격을 기다리는 것이 안전합니다.<br/>
+
+### 마치며
+이번 rc는 기능 추가보다 안정화와 API 정리에 무게가 실린 릴리스입니다.<br/>
+카메라 기능을 쓰는 앱이라면 릴리스 노트를 한 번 읽어두는 것만으로도 대응 비용을 줄일 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/fWfEFUlgjjWBar6XDf/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

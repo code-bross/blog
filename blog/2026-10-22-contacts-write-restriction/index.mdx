@@ -1,0 +1,59 @@
+---
+slug: contacts-write-restriction
+title: 연락처 직접 쓰기가 막힌다 — 차기 Android 릴리스의 WRITE_CONTACTS 동작 변경
+authors: [way]
+tags: [android,contacts,behavior-change,mts,한국투자증권,한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+[Android Developers' Blog](https://developer.android.com/blog/posts/reliable-way-to-add-and-edit-contacts-android)에 2026년 10월 21일 올라온 연락처 관련 동작 변경 소식을 정리해드리겠습니다.<br/>
+
+### 현재 상황
+지금까지는 `WRITE_CONTACTS` 권한을 받아 `ContentResolver`로 연락처에 직접 쓰는 방식이 가능했습니다.<br/>
+송금 수취인 저장, 지인 초대 같은 기능에서 쓰이던 패턴입니다.<br/>
+그런데 차기 Android 릴리스를 타깃하는 앱부터는 이 직접 쓰기가 막힌다고 공지되었습니다.<br/>
+읽기 쪽이 이미 [Contact Picker](https://developer.android.com/about/versions/17/features/contact-picker)로 정리된 데 이어, 쓰기 쪽도 시스템 UI 경유로 수렴하는 흐름입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/w36BFUqi1e9ZY01mPg/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 바뀐 내용 살펴보기
+
+#### WRITE_CONTACTS 직접 쓰기 제한
+차기 릴리스를 target으로 하는 앱은 `WRITE_CONTACTS` 권한으로 연락처에 직접 쓸 수 없게 됩니다.<br/>
+권한이 선언되어 있어도 쓰기 동작이 차단되는 행위 변경입니다.<br/>
+
+#### 시스템 제공 UI로 추가·편집하기
+추가와 편집은 시스템이 제공하는 UI, 즉 인텐트 기반 흐름을 쓰도록 바뀌었습니다.<br/>
+연락처 앱의 편집 화면을 띄워 사용자가 직접 확인하고 저장하는 방식입니다.<br/>
+
+```kotlin
+// 연락처 추가 — 시스템 UI를 통해 저장
+val intent = Intent(ContactsContract.Intents.Insert.ACTION).apply {
+    type = ContactsContract.RawContacts.CONTENT_TYPE
+    putExtra(ContactsContract.Intents.Insert.NAME, "홍길동")
+    putExtra(ContactsContract.Intents.Insert.PHONE, "010-1234-5678")
+}
+startActivity(intent)
+```
+
+이 방식은 저장 전에 사용자가 내용을 확인할 수 있어, 잘못된 연락처가 등록되는 일을 줄여줍니다.<br/>
+
+#### 읽기 흐름과의 정합성
+읽기 쪽은 Android 17부터 [Contact Picker](https://developer.android.com/about/versions/17/features/contact-picker)가 표준입니다.<br/>
+`READ_CONTACTS` 권한 없이 필요한 데이터 필드만 지정해, 사용자가 고른 연락처에만 접근합니다.<br/>
+쓰기 제한까지 더해지면 연락처 접근 전반이 시스템 UI 경유라는 하나의 원칙으로 정리됩니다.<br/>
+
+### 실무 관점
+`ContentResolver.insert`로 연락처를 직접 쓰던 코드가 있다면 targetSdk 상향 계획과 함께 감사 대상에 올려야 합니다.<br/>
+`WRITE_CONTACTS` 권한 요청 흐름도 함께 정리할 수 있습니다.<br/>
+시스템 UI 경유 방식은 사용자 확인이 개입되므로, 무음 저장을 기대하던 UX라면 흐름을 다시 설계해야 합니다.<br/>
+
+### 마치며
+연락처 쓰기 제한은 권한 최소화 흐름의 연장선에 있는 변경입니다.<br/>
+차기 릴리스 대응 체크리스트에 연락처 쓰기 경로를 미리 넣어두는 것이 안전합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/yUGI8LqNRBP8A6ahHj/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
