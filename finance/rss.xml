@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="rss.xsl"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Way Tech Blog Blog</title>
+        <link>https://code-bross.github.io/blog/finance</link>
+        <description>Way Tech Blog Blog</description>
+        <lastBuildDate>Fri, 23 Oct 2026 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>ko</language>
+        <item>
+            <title><![CDATA[AI 데이터센터와 전력 인프라 산업 구조 해설]]></title>
+            <link>https://code-bross.github.io/blog/finance/data-center-power-grid-structure</link>
+            <guid>https://code-bross.github.io/blog/finance/data-center-power-grid-structure</guid>
+            <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>AI 데이터센터가 왜 전력 설비 산업을 끌어올리는지, 그 구조를 교육 목적으로 정리해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--산술이-아니라-전기가-발목을-잡는다">배경 — 산술이 아니라 전기가 발목을 잡는다<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EB%B0%B0%EA%B2%BD--%EC%82%B0%EC%88%A0%EC%9D%B4-%EC%95%84%EB%8B%88%EB%9D%BC-%EC%A0%84%EA%B8%B0%EA%B0%80-%EB%B0%9C%EB%AA%A9%EC%9D%84-%EC%9E%A1%EB%8A%94%EB%8B%A4" class="hash-link" aria-label="배경 — 산술이 아니라 전기가 발목을 잡는다에 대한 직접 링크" title="배경 — 산술이 아니라 전기가 발목을 잡는다에 대한 직접 링크" translate="no">​</a></h3>
+<p>AI 데이터센터가 늘어나면서 희소 자원이 반도체 칩에서 전력망으로 옮겨가고 있습니다.<br>
+전력망 연결 지연이 3년에서 길게는 5년까지 길어지자, 유틸리티 회사의 송전선 구축을 기다릴 수 없는 상황이 되었습니다.<br>
+HD현대일렉트릭은 10월 28~30일 코엑스에서 열리는 <a href="https://www.mt.co.kr/industry/2026/10/08/2026100714420243542" target="_blank" rel="noopener noreferrer" class="">SEP 2026</a> 발표를 앞두고 "현재의 변압기 수요는 슈퍼사이클에 그치지 않고 뉴노멀로 자리 잡을 것"이라고 밝혔습니다.<br>
+이는 전력이 단순한 부품이 아니라 데이터센터 건설의 선결 조건이 되었다는 의미입니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXg5dzR0MTUyeXB1aWFlYWo4a2wxM2phaGszbW96a2FxZDdheDh3biZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AXLv8xVMmASjtr9xeD/giphy.gif" alt="Electricity" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="전력이-데이터센터에-도착하는-경로">전력이 데이터센터에 도착하는 경로<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EC%A0%84%EB%A0%A5%EC%9D%B4-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%EC%97%90-%EB%8F%84%EC%B0%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EB%A1%9C" class="hash-link" aria-label="전력이 데이터센터에 도착하는 경로에 대한 직접 링크" title="전력이 데이터센터에 도착하는 경로에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="송전--발전소에서-데이터센터까지">송전 — 발전소에서 데이터센터까지<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EC%86%A1%EC%A0%84--%EB%B0%9C%EC%A0%84%EC%86%8C%EC%97%90%EC%84%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0%EA%B9%8C%EC%A7%80" class="hash-link" aria-label="송전 — 발전소에서 데이터센터까지에 대한 직접 링크" title="송전 — 발전소에서 데이터센터까지에 대한 직접 링크" translate="no">​</a></h4>
+<p>발전소에서 생산된 전기는 송전선을 타고 장거리를 이동합니다.<br>
+장거리 송전에는 <code>154kV</code>, <code>345kV</code>, <code>765kV</code> 같은 초고압이 쓰이며, 전압이 높을수록 손실이 적습니다.<br>
+도착한 전기는 변전소의 변압기를 거쳐 단계적으로 전압이 낮아집니다.<br>
+최종적으로 데이터센터 내부에서는 서버 랙이 쓰는 전압으로 변환됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="변압기-납기가-23년인-이유">변압기 납기가 2~3년인 이유<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EB%B3%80%EC%95%95%EA%B8%B0-%EB%82%A9%EA%B8%B0%EA%B0%80-23%EB%85%84%EC%9D%B8-%EC%9D%B4%EC%9C%A0" class="hash-link" aria-label="변압기 납기가 2~3년인 이유에 대한 직접 링크" title="변압기 납기가 2~3년인 이유에 대한 직접 링크" translate="no">​</a></h4>
+<p>대형 변압기는 주문 제작 방식이라 생산 리드타임이 2~3년에 이릅니다.<br>
+미국 에너지정보청(EIA)은 2026년 미국 연간 전력 판매량을 4.135조 kWh, 2027년을 4.211조 kWh로 전망했습니다.<br>
+대형 데이터센터가 요구하는 변압기 용량은 <code>150~200 MVA</code>급까지 올라갔습니다.<br>
+수요가 늘어도 공장이 당장 따라가지 못하므로, 수주잔고가 실적의 선행지표 역할을 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배전망--건물-내부로-전기를-쪼개는-일">배전망 — 건물 내부로 전기를 쪼개는 일<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EB%B0%B0%EC%A0%84%EB%A7%9D--%EA%B1%B4%EB%AC%BC-%EB%82%B4%EB%B6%80%EB%A1%9C-%EC%A0%84%EA%B8%B0%EB%A5%BC-%EC%AA%BC%EA%B0%9C%EB%8A%94-%EC%9D%BC" class="hash-link" aria-label="배전망 — 건물 내부로 전기를 쪼개는 일에 대한 직접 링크" title="배전망 — 건물 내부로 전기를 쪼개는 일에 대한 직접 링크" translate="no">​</a></h4>
+<p>송전이 '발전소에서 데이터센터까지'라면, 배전은 '데이터센터 건물 안에서 서버 랙까지' 전기를 나누는 단계입니다.<br>
+버스덕트(전기 통로)와 중전압 케이블이 이 구간을 담당합니다.<br>
+송전 병목이 길어지면서 시장의 관심이 배전 구간으로까지 확산되고 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="btmbehind-the-meter--전력망을-거치지-않는-전원">BTM(Behind The Meter) — 전력망을 거치지 않는 전원<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#btmbehind-the-meter--%EC%A0%84%EB%A0%A5%EB%A7%9D%EC%9D%84-%EA%B1%B0%EC%B9%98%EC%A7%80-%EC%95%8A%EB%8A%94-%EC%A0%84%EC%9B%90" class="hash-link" aria-label="BTM(Behind The Meter) — 전력망을 거치지 않는 전원에 대한 직접 링크" title="BTM(Behind The Meter) — 전력망을 거치지 않는 전원에 대한 직접 링크" translate="no">​</a></h4>
+<p>BTM은 유틸리티 전력망을 거치지 않고 현장에서 직접 전력을 공급하는 구조입니다.<br>
+수소 연료전지, 가스터빈, 배터리 에너지저장장치(BESS)를 데이터센터 옆에 설치해 자급자족합니다.<br>
+이 전력을 제어하는 특수변압기가 별도 시장을 형성하고 있으며, 기존 범용 변압기보다 난도가 높아 마진이 두터운 편입니다.<br>
+전력망 연계가 3~5년씩 지연되는 환경에서 BTM은 우회로이자 필수 경로가 되고 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="업계의-대응--생산능력-확충">업계의 대응 — 생산능력 확충<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EC%97%85%EA%B3%84%EC%9D%98-%EB%8C%80%EC%9D%91--%EC%83%9D%EC%82%B0%EB%8A%A5%EB%A0%A5-%ED%99%95%EC%B6%A9" class="hash-link" aria-label="업계의 대응 — 생산능력 확충에 대한 직접 링크" title="업계의 대응 — 생산능력 확충에 대한 직접 링크" translate="no">​</a></h4>
+<p>HD현대일렉트릭은 올해 4분기 울산 공장 증설을 완료하고, 내년 상반기 미국 앨라배마 법인 제2공장을 가동할 계획입니다.<br>
+앨라배마 증설이 끝나면 현지 변압기 생산능력은 기존보다 50% 늘어날 전망입니다.<br>
+이 회사의 북미 매출은 2024년 1조 원에서 지난해 1조 6천억 원으로 증가했고, 올해 상반기에도 1조 원을 넘었습니다.<br>
+전력기기 업체들의 공통 전략은 생산능력 확충과 북미 현지화입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="투자에서 확인할 점에 대한 직접 링크" title="투자에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>전력 인프라 산업을 볼 때는 수주잔고, 리드타임, 납기 단축 여부를 함께 확인합니다.<br>
+주문이 몰려도 납기가 2~3년이므로, 신규 공장의 가동 시점이 실적 반영 시점을 가릅니다.<br>
+BTM 구조가 확산되는지, 해외 현지 생산 비중이 늘어나는지도 구조적 변화의 단서가 됩니다.<br>
+이 글은 산업 구조를 설명하는 교육 목적의 해설이며, 특정 종목의 매수나 매도를 권하지 않습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/data-center-power-grid-structure#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>AI 시대의 진짜 병목은 칩이 아니라 전력이 될 가능성이 커지고 있습니다.<br>
+송전에서 배전, BTM까지 전력 흐름을 이해하면 데이터센터 관련 뉴스가 달리 보이기 시작합니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXg5dzR0MTUyeXB1aWFlYWo4a2wxM2phaGszbW96a2FxZDdheDh3biZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Yd9BNyMoC6d6NFZ1iW/giphy.gif" alt="Power" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>sector</category>
+            <category>power-infrastructure</category>
+        </item>
+        <item>
+            <title><![CDATA[배당과 배당락일, 배당수익률 계산법]]></title>
+            <link>https://code-bross.github.io/blog/finance/dividend-exdividend-guide</link>
+            <guid>https://code-bross.github.io/blog/finance/dividend-exdividend-guide</guid>
+            <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>연말 배당 시즌을 앞두고 배당과 배당락일, 배당수익률의 개념을 정리해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--배당은-공짜-돈이-아니다">배경 — 배당은 '공짜 돈'이 아니다<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EA%B2%BD--%EB%B0%B0%EB%8B%B9%EC%9D%80-%EA%B3%B5%EC%A7%9C-%EB%8F%88%EC%9D%B4-%EC%95%84%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="배경 — 배당은 '공짜 돈'이 아니다에 대한 직접 링크" title="배경 — 배당은 '공짜 돈'이 아니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>주식을 가진 주주는 회사의 이익을 배당으로 나눠 받습니다.<br>
+그런데 배당을 받는 날 주가가 떨어지는 것을 보고 당황하는 투자자가 적지 않습니다.<br>
+배당락일의 원리를 알면, 배당이 공짜로 생기는 돈이 아니라 구조적으로 정산되는 금액임을 이해할 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzc2dXR3YTRrY2R2dXJuMXU1aTFzMnF6MWk3YTBmb3B1dzA1NTRhMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/RGXhikrzGUUyh8vrsH/giphy.gif" alt="Money" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당의-종류">배당의 종류<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EC%9D%98-%EC%A2%85%EB%A5%98" class="hash-link" aria-label="배당의 종류에 대한 직접 링크" title="배당의 종류에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="중간배당과-기말배당">중간배당과 기말배당<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EC%A4%91%EA%B0%84%EB%B0%B0%EB%8B%B9%EA%B3%BC-%EA%B8%B0%EB%A7%90%EB%B0%B0%EB%8B%B9" class="hash-link" aria-label="중간배당과 기말배당에 대한 직접 링크" title="중간배당과 기말배당에 대한 직접 링크" translate="no">​</a></h4>
+<p>배당은 지급 시기에 따라 중간배당과 기말배당으로 나뉩니다.<br>
+중간배당은 회계연도 중간에 지급하는 배당이고, 기말배당은 결산 후 지급하는 배당입니다.<br>
+12월 결산법인의 기말배당은 보통 다음 해 3~4월 주주총회 뒤에 지급됩니다.<br>
+이 밖에 특별한 사유로 한 번만 지급하는 특별배당도 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당받을-권리는-기준일로-정해진다">배당받을 권리는 기준일로 정해진다<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EB%B0%9B%EC%9D%84-%EA%B6%8C%EB%A6%AC%EB%8A%94-%EA%B8%B0%EC%A4%80%EC%9D%BC%EB%A1%9C-%EC%A0%95%ED%95%B4%EC%A7%84%EB%8B%A4" class="hash-link" aria-label="배당받을 권리는 기준일로 정해진다에 대한 직접 링크" title="배당받을 권리는 기준일로 정해진다에 대한 직접 링크" translate="no">​</a></h4>
+<p>배당을 받을 주주는 '배당기준일' 현재 주주명부에 있는 사람입니다.<br>
+12월 결산법인의 기말배당 기준일은 통상 12월 말일입니다.<br>
+기준일에 주주여야 하므로, 그 전에 주식을 사야 합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당락일의-원리">배당락일의 원리<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EB%9D%BD%EC%9D%BC%EC%9D%98-%EC%9B%90%EB%A6%AC" class="hash-link" aria-label="배당락일의 원리에 대한 직접 링크" title="배당락일의 원리에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당받을-권리가-떨어지는-날">배당받을 권리가 떨어지는 날<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EB%B0%9B%EC%9D%84-%EA%B6%8C%EB%A6%AC%EA%B0%80-%EB%96%A8%EC%96%B4%EC%A7%80%EB%8A%94-%EB%82%A0" class="hash-link" aria-label="배당받을 권리가 떨어지는 날에 대한 직접 링크" title="배당받을 권리가 떨어지는 날에 대한 직접 링크" translate="no">​</a></h4>
+<p>배당락일(ex-dividend date)은 배당받을 권리가 새로 떨어지는 날입니다.<br>
+국내 시장에서는 배당기준일 2영업일 전부터 거래한 주식이 배당 권리를 갖습니다.<br>
+즉 배당락일에 주식을 사면 해당 배당은 받을 수 없습니다.<br>
+배당락일 이전에 매수한 주주만이 배당 대상이 됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="왜-배당락일에-주가가-조정되는가">왜 배당락일에 주가가 조정되는가<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EC%99%9C-%EB%B0%B0%EB%8B%B9%EB%9D%BD%EC%9D%BC%EC%97%90-%EC%A3%BC%EA%B0%80%EA%B0%80-%EC%A1%B0%EC%A0%95%EB%90%98%EB%8A%94%EA%B0%80" class="hash-link" aria-label="왜 배당락일에 주가가 조정되는가에 대한 직접 링크" title="왜 배당락일에 주가가 조정되는가에 대한 직접 링크" translate="no">​</a></h4>
+<p>배당락일에는 주가가 배당금만큼 기준가격에서 조정됩니다.<br>
+예를 들어 주가가 <code>50,000원</code>이고 배당금이 <code>1,000원</code>인 종목은 배당락일 기준가가 <code>49,000원</code>에서 출발합니다.<br>
+배당락일의 주가 하락은 악재가 아니라 배당금을 반영한 정산입니다.<br>
+배당금을 현금으로 받은 주주 입장에서는 전체 재산이 달라지지 않습니다.<br>
+배당락일에 "주가가 떨어졌다"며 당황할 필요가 없는 이유가 여기에 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당수익률-계산">배당수익률 계산<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EC%88%98%EC%9D%B5%EB%A5%A0-%EA%B3%84%EC%82%B0" class="hash-link" aria-label="배당수익률 계산에 대한 직접 링크" title="배당수익률 계산에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당수익률-공식">배당수익률 공식<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EC%88%98%EC%9D%B5%EB%A5%A0-%EA%B3%B5%EC%8B%9D" class="hash-link" aria-label="배당수익률 공식에 대한 직접 링크" title="배당수익률 공식에 대한 직접 링크" translate="no">​</a></h4>
+<p>배당수익률은 주당배당금을 주가로 나눈 비율입니다.<br></p>
+<p><code>배당수익률(%) = 주당배당금 ÷ 주가 × 100</code></p>
+<p>주당배당금이 <code>1,000원</code>이고 주가가 <code>50,000원</code>이면 배당수익률은 2%입니다.<br>
+같은 배당금이라도 주가가 오르면 수익률은 낮아지고, 주가가 내리면 수익률은 높아집니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당수익률의-함정">배당수익률의 함정<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EC%88%98%EC%9D%B5%EB%A5%A0%EC%9D%98-%ED%95%A8%EC%A0%95" class="hash-link" aria-label="배당수익률의 함정에 대한 직접 링크" title="배당수익률의 함정에 대한 직접 링크" translate="no">​</a></h4>
+<p>배당수익률이 높다고 무조건 좋은 것은 아닙니다.<br>
+주가가 실적 악화로 급락하면 배당수익률은 수치상 높아집니다.<br>
+배당금은 회사의 이익에서 나오는 것이므로, 이익이 줄어들면 배당도 줄어들 수 있습니다.<br>
+배당수익률을 볼 때는 배당성향(순이익 중 배당 비율)과 이익 추이를 함께 봅니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당소득에는-세금이-붙는다">배당소득에는 세금이 붙는다<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%B0%B0%EB%8B%B9%EC%86%8C%EB%93%9D%EC%97%90%EB%8A%94-%EC%84%B8%EA%B8%88%EC%9D%B4-%EB%B6%99%EB%8A%94%EB%8B%A4" class="hash-link" aria-label="배당소득에는 세금이 붙는다에 대한 직접 링크" title="배당소득에는 세금이 붙는다에 대한 직접 링크" translate="no">​</a></h4>
+<p>받은 배당은 배당소득으로 분류되어 <code>15.4%</code>의 세율로 원천징수됩니다.<br>
+주당 <code>1,000원</code> 배당을 받으면 실제 수령액은 <code>846원</code>입니다.<br>
+연간 금융소득이 일정 기준을 넘으면 금융소득종합과세 대상이 되므로, 배당이 큰 투자자는 연말에 합산을 함께 계산합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="투자에서 확인할 점에 대한 직접 링크" title="투자에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>배당기준일과 배당락일 일정을 미리 확인하면 매수 시점을 계획할 수 있습니다.<br>
+배당락일 전후의 주가 움직임을 '락 효과'와 혼동하지 않는 것이 중요합니다.<br>
+배당수익률은 현재 주가 기준이므로, 과거 높은 수익률에 기대어 매수 결정을 내리지 않습니다.<br>
+이 글은 배당 구조를 설명하는 교육 목적의 해설이며, 특정 종목의 매수나 매도를 권하지 않습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/dividend-exdividend-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>배당은 구조를 알면 단순한 현금 지급이 아니라 권리와 가격의 정산 과정임을 알 수 있습니다.<br>
+연말 배당 시즌에 배당락일 일정을 확인하는 습관이 의외로 실수를 많이 막아줍니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzc2dXR3YTRrY2R2dXJuMXU1aTFzMnF6MWk3YTBmb3B1dzA1NTRhMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/XfDqt93JwrfwgoHkrq/giphy.gif" alt="Dividend" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>dividend</category>
+            <category>basics</category>
+        </item>
+        <item>
+            <title><![CDATA[FOMC와 금통위 금리 결정 읽는 법]]></title>
+            <link>https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide</link>
+            <guid>https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide</guid>
+            <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>다음 주 FOMC를 앞두고, 미국 연준과 한국은행의 금리 결정을 어떻게 읽어야 하는지 정리해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--금리-결정-주간이-온다">배경 — 금리 결정 주간이 온다<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EB%B0%B0%EA%B2%BD--%EA%B8%88%EB%A6%AC-%EA%B2%B0%EC%A0%95-%EC%A3%BC%EA%B0%84%EC%9D%B4-%EC%98%A8%EB%8B%A4" class="hash-link" aria-label="배경 — 금리 결정 주간이 온다에 대한 직접 링크" title="배경 — 금리 결정 주간이 온다에 대한 직접 링크" translate="no">​</a></h3>
+<p>2026년 10월 22일, 한국은행 금융통화위원회는 기준금리를 연 3.00%로 동결했습니다.<br>
+물가 압박이 이어지는 가운데 추가 인상 가능성도 거론되는 '매파적 동결'이었습니다.<br>
+이어서 10월 27~28일에는 미국 연방공개시장위원회(FOMC)가 열리고, 결과는 한국 시각 10월 29일 새벽 3시에 발표됩니다.<br>
+두 금리 결정의 읽는 법은 비슷하지만, 확인해야 할 포인트가 조금씩 다릅니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnl5OGQ1djMwMWx2eDZtODI5OXB1OWk4YmF6dTR2eDV5ZTA5d2NtZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/GFIpUu2yP0C5UEN10L/giphy.gif" alt="Interest rate" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="기준금리가-무엇인가">기준금리가 무엇인가<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EA%B8%B0%EC%A4%80%EA%B8%88%EB%A6%AC%EA%B0%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80" class="hash-link" aria-label="기준금리가 무엇인가에 대한 직접 링크" title="기준금리가 무엇인가에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="연준의-연방기금금리">연준의 연방기금금리<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EC%97%B0%EC%A4%80%EC%9D%98-%EC%97%B0%EB%B0%A9%EA%B8%B0%EA%B8%88%EA%B8%88%EB%A6%AC" class="hash-link" aria-label="연준의 연방기금금리에 대한 직접 링크" title="연준의 연방기금금리에 대한 직접 링크" translate="no">​</a></h4>
+<p>미국 연준이 정하는 기준금리는 연방기금금리 목표 범위입니다.<br>
+2026년 9월 15~16일 회의에서 0.25%포인트 인상된 뒤, 현재 목표 범위는 <code>3.75~4.00%</code>입니다.<br>
+이는 은행 간 초단기 대출 금리를 겨냥한 것으로, 미국 달러 자금의 기준 가격 역할을 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="한국은행의-기준금리">한국은행의 기준금리<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%ED%95%9C%EA%B5%AD%EC%9D%80%ED%96%89%EC%9D%98-%EA%B8%B0%EC%A4%80%EA%B8%88%EB%A6%AC" class="hash-link" aria-label="한국은행의 기준금리에 대한 직접 링크" title="한국은행의 기준금리에 대한 직접 링크" translate="no">​</a></h4>
+<p>한국은행 기준금리는 현재 연 3.00%입니다.<br>
+2026년 7월과 8월 두 차례에 걸쳐 0.25%포인트씩 올랐고, 10월 22일에는 동결되었습니다.<br>
+기준금리는 예금과 대출 금리의 출발점이 됩니다.<br>
+다만 은행 대출금리는 기준금리보다 코픽스(COFIX) 같은 시장 지표의 영향을 더 크게 받습니다.<br>
+9월 신규취급액 기준 코픽스는 <code>3.43%</code>로, 이미 기준금리를 웃돌고 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="fomc-발표-읽는-법">FOMC 발표 읽는 법<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#fomc-%EB%B0%9C%ED%91%9C-%EC%9D%BD%EB%8A%94-%EB%B2%95" class="hash-link" aria-label="FOMC 발표 읽는 법에 대한 직접 링크" title="FOMC 발표 읽는 법에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="언제-무엇을-확인하는가">언제, 무엇을 확인하는가<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EC%96%B8%EC%A0%9C-%EB%AC%B4%EC%97%87%EC%9D%84-%ED%99%95%EC%9D%B8%ED%95%98%EB%8A%94%EA%B0%80" class="hash-link" aria-label="언제, 무엇을 확인하는가에 대한 직접 링크" title="언제, 무엇을 확인하는가에 대한 직접 링크" translate="no">​</a></h4>
+<p>FOMC는 10월 27~28일 이틀간 회의를 하고, 미국 동부 시각 28일 오후 2시에 성명서를 발표합니다.<br>
+한국 시각으로는 10월 29일 새벽 3시입니다.<br>
+30분 뒤에는 의장 기자회견이 이어지므로, 새벽 3시 30분부터 추가 발언이 나옵니다.<br>
+미국은 11월 1일에 서머타임이 끝나므로, 12월 회의부터는 같은 오후 2시 발표가 한국 시각 새벽 4시가 됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="10월-회의에는-점도표가-없다">10월 회의에는 점도표가 없다<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#10%EC%9B%94-%ED%9A%8C%EC%9D%98%EC%97%90%EB%8A%94-%EC%A0%90%EB%8F%84%ED%91%9C%EA%B0%80-%EC%97%86%EB%8B%A4" class="hash-link" aria-label="10월 회의에는 점도표가 없다에 대한 직접 링크" title="10월 회의에는 점도표가 없다에 대한 직접 링크" translate="no">​</a></h4>
+<p>연준 위원들의 금리 전망을 점으로 찍은 점도표(dot plot)는 3월, 6월, 9월, 12월 회의에만 나옵니다.<br>
+10월 회의는 점도표가 없는 회의이므로, 성명서 문구와 의장 발언이 더 중요해집니다.<br>
+'인내심을 가질 수 있다', '데이터에 의존하겠다' 같은 문구의 미묘한 변화가 시장의 단서가 됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="동결인상인하보다-방향의-단서">동결·인상·인하보다 방향의 단서<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EB%8F%99%EA%B2%B0%EC%9D%B8%EC%83%81%EC%9D%B8%ED%95%98%EB%B3%B4%EB%8B%A4-%EB%B0%A9%ED%96%A5%EC%9D%98-%EB%8B%A8%EC%84%9C" class="hash-link" aria-label="동결·인상·인하보다 방향의 단서에 대한 직접 링크" title="동결·인상·인하보다 방향의 단서에 대한 직접 링크" translate="no">​</a></h4>
+<p>금리를 올렸는지 내렸는지보다, 앞으로 어디로 갈지가 더 중요합니다.<br>
+10월 22일 한국은행 결정도 동결이었지만 '매파적 동결'로 읽혔습니다.<br>
+발표문과 총재 기자간담회, FOMC에서는 의장 기자회견의 표현이 향후 방향을 가늠하는 단서가 됩니다.<br>
+시장이 먼저 움직이는 것은 금리 결정 자체가 아니라 그 해석입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="금리가-시장에-전달되는-경로">금리가 시장에 전달되는 경로<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EA%B8%88%EB%A6%AC%EA%B0%80-%EC%8B%9C%EC%9E%A5%EC%97%90-%EC%A0%84%EB%8B%AC%EB%90%98%EB%8A%94-%EA%B2%BD%EB%A1%9C" class="hash-link" aria-label="금리가 시장에 전달되는 경로에 대한 직접 링크" title="금리가 시장에 전달되는 경로에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="채권과-대출">채권과 대출<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EC%B1%84%EA%B6%8C%EA%B3%BC-%EB%8C%80%EC%B6%9C" class="hash-link" aria-label="채권과 대출에 대한 직접 링크" title="채권과 대출에 대한 직접 링크" translate="no">​</a></h4>
+<p>기준금리가 오르면 시장금리도 따라 오르는 경향이 있습니다.<br>
+채권 가격은 금리와 반대로 움직이므로, 금리 상승기에는 기존 채권 가격이 떨어집니다.<br>
+은행 변동금리 대출은 코픽스 상승분만큼 재산정일에 금리가 올라갑니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율">환율<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%ED%99%98%EC%9C%A8" class="hash-link" aria-label="환율에 대한 직접 링크" title="환율에 대한 직접 링크" translate="no">​</a></h4>
+<p>미국 금리가 오르면 달러가 강세를 보이는 경향이 있습니다.<br>
+한미 금리 차이와 달러 방향은 국내 증시의 외국인 수급에도 영향을 줍니다.<br>
+원/달러 환율은 10월 23일 <code>1,324.6원</code>에 마감했습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="투자에서 확인할 점에 대한 직접 링크" title="투자에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>금리 발표 당일에는 변동성이 커질 수 있으므로, 발표 전후의 뉴스 해석을 서두르지 않습니다.<br>
+동결·인상·인하의 여부보다 성명서 문구 변화와 의장 발언을 함께 읽는 습관이 중요합니다.<br>
+내 대출 금리는 기준금리보다 코픽스와 재산정일의 영향을 먼저 확인합니다.<br>
+이 글은 금리 결정 구조를 설명하는 교육 목적의 해설이며, 금리 방향을 예측하거나 투자를 권하지 않습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/fomc-bok-rate-decision-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>금리 결정은 숫자를 읽는 일이 아니라 문구를 읽는 일에 가깝습니다.<br>
+10월 29일 새벽 발표 뒤에는 성명서 원문의 문구 변화부터 확인하는 습관을 권해드립니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnl5OGQ1djMwMWx2eDZtODI5OXB1OWk4YmF6dTR2eDV5ZTA5d2NtZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/M8doLiB9p18QFo8XIM/giphy.gif" alt="Fed" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>interest-rate</category>
+            <category>fomc</category>
+        </item>
+        <item>
+            <title><![CDATA[ISA(개인종합자산관리계좌) 기초 해설]]></title>
+            <link>https://code-bross.github.io/blog/finance/isa-basics-guide</link>
+            <guid>https://code-bross.github.io/blog/finance/isa-basics-guide</guid>
+            <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>하나의 계좌로 여러 금융상품을 굴리면서 세금 혜택을 받는 ISA의 기본 구조를 정리해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--계좌-하나에-담는-절세-구조">배경 — 계좌 하나에 담는 절세 구조<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EB%B0%B0%EA%B2%BD--%EA%B3%84%EC%A2%8C-%ED%95%98%EB%82%98%EC%97%90-%EB%8B%B4%EB%8A%94-%EC%A0%88%EC%84%B8-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="배경 — 계좌 하나에 담는 절세 구조에 대한 직접 링크" title="배경 — 계좌 하나에 담는 절세 구조에 대한 직접 링크" translate="no">​</a></h3>
+<p>ISA는 Individual Savings Account의 약자로, 우리말로는 개인종합자산관리계좌입니다.<br>
+예금, 펀드, ETF, 국내 상장주식 등을 하나의 계좌에 담아 운용할 수 있습니다.<br>
+핵심은 각 상품의 수익을 따로따로 과세하는 것이 아니라, 계좌 전체의 순이익을 기준으로 세금 혜택을 주는 점입니다.<br>
+손실과 이익을 합산하는 '손익통산' 구조 덕분에 실효세율이 낮아집니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW50YW51MXp0dGFrbHI4MnBhbjdxd2ZvMWFhbGwxNnFwcHN4bjVuayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7JMFaaqRtn6K2jUd2O/giphy.gif" alt="Savings" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="가입과-납입의-규칙">가입과 납입의 규칙<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EA%B0%80%EC%9E%85%EA%B3%BC-%EB%82%A9%EC%9E%85%EC%9D%98-%EA%B7%9C%EC%B9%99" class="hash-link" aria-label="가입과 납입의 규칙에 대한 직접 링크" title="가입과 납입의 규칙에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="누가-가입할-수-있는가">누가 가입할 수 있는가<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EB%88%84%EA%B0%80-%EA%B0%80%EC%9E%85%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94%EA%B0%80" class="hash-link" aria-label="누가 가입할 수 있는가에 대한 직접 링크" title="누가 가입할 수 있는가에 대한 직접 링크" translate="no">​</a></h4>
+<p>가입일 기준으로 19세 이상인 거주자가 가입 대상입니다.<br>
+15세 이상이라도 가입일이 속한 해의 직전 과세기간에 근로소득이 있으면 가입할 수 있습니다.<br>
+1인당 1개의 계좌만 보유할 수 있습니다.<br>
+다만 직전 3개 과세기간 중 한 번이라도 금융소득종합과세 대상이었던 경우에는 과세특례가 적용되지 않습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="납입한도와-의무기간">납입한도와 의무기간<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EB%82%A9%EC%9E%85%ED%95%9C%EB%8F%84%EC%99%80-%EC%9D%98%EB%AC%B4%EA%B8%B0%EA%B0%84" class="hash-link" aria-label="납입한도와 의무기간에 대한 직접 링크" title="납입한도와 의무기간에 대한 직접 링크" translate="no">​</a></h4>
+<p>연간 납입한도는 <code>2,000만 원</code>, 총 납입한도는 <code>1억 원</code>입니다.<br>
+못 채운 연간 한도는 다음 해로 이월할 수 있습니다.<br>
+계약기간은 3년 이상이어야 합니다.<br>
+3년 전에 해지하면 감면받은 세금을 추징당하므로, 3년간 묶일 수 있는 여유 자금으로 납입하는 것이 원칙입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="세-가지-유형">세 가지 유형<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EC%84%B8-%EA%B0%80%EC%A7%80-%EC%9C%A0%ED%98%95" class="hash-link" aria-label="세 가지 유형에 대한 직접 링크" title="세 가지 유형에 대한 직접 링크" translate="no">​</a></h4>
+<p>ISA는 운용 방식에 따라 중개형, 신탁형, 일임형으로 나뉩니다.<br>
+중개형은 투자자가 직접 주식과 ETF를 사고팔 수 있는 유형으로, 증권사에서만 개설할 수 있습니다.<br>
+신탁형은 금융회사가 투자자의 지시를 받아 운용하며 예금 위주의 보수적 운용에 적합합니다.<br>
+일임형은 운용사에 자산 운용을 맡기는 방식으로, 수수료가 발생합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="세제-혜택의-구조">세제 혜택의 구조<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EC%84%B8%EC%A0%9C-%ED%98%9C%ED%83%9D%EC%9D%98-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="세제 혜택의 구조에 대한 직접 링크" title="세제 혜택의 구조에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="비과세-한도">비과세 한도<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EB%B9%84%EA%B3%BC%EC%84%B8-%ED%95%9C%EB%8F%84" class="hash-link" aria-label="비과세 한도에 대한 직접 링크" title="비과세 한도에 대한 직접 링크" translate="no">​</a></h4>
+<p>계좌에서 발생한 이자·배당 소득은 일반형 기준 <code>200만 원</code>까지 비과세입니다.<br>
+서민형(총급여 5,000만 원 이하 등)과 농어민형은 <code>400만 원</code>까지 비과세입니다.<br>
+일반 계좌에서 ETF로 번 수익에 붙는 세율이 <code>15.4%</code>인 것과 비교하면 차이가 큽니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="초과분은-9-분리과세">초과분은 9% 분리과세<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EC%B4%88%EA%B3%BC%EB%B6%84%EC%9D%80-9-%EB%B6%84%EB%A6%AC%EA%B3%BC%EC%84%B8" class="hash-link" aria-label="초과분은 9% 분리과세에 대한 직접 링크" title="초과분은 9% 분리과세에 대한 직접 링크" translate="no">​</a></h4>
+<p>비과세 한도를 초과하는 순이익에는 <code>9%</code>의 세율로 분리과세가 적용됩니다.<br>
+농어촌특별세를 포함하면 실효세율은 <code>9.9%</code>입니다.<br>
+분리과세이므로 금융소득종합과세에 합산되지 않는다는 점도 장점입니다.<br>
+다만 배당소득 자체는 ISA 안에서도 원천징수 개념이 적용되므로, 순이익 기준으로 정산됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="손익통산의-효과">손익통산의 효과<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EC%86%90%EC%9D%B5%ED%86%B5%EC%82%B0%EC%9D%98-%ED%9A%A8%EA%B3%BC" class="hash-link" aria-label="손익통산의 효과에 대한 직접 링크" title="손익통산의 효과에 대한 직접 링크" translate="no">​</a></h4>
+<p>한 상품에서 손실이 나도 다른 상품의 이익과 상쇄한 뒤 순이익에만 과세합니다.<br>
+개별 상품마다 세금을 계산하는 일반 계좌보다 실효세율이 낮아지는 구조입니다.<br>
+이 때문에 ISA는 단일 상품보다는 여러 상품을 함께 담을 때 효과가 커집니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2026년-논의-중인-개편">2026년 논의 중인 개편<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#2026%EB%85%84-%EB%85%BC%EC%9D%98-%EC%A4%91%EC%9D%B8-%EA%B0%9C%ED%8E%B8" class="hash-link" aria-label="2026년 논의 중인 개편에 대한 직접 링크" title="2026년 논의 중인 개편에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="무엇이-바뀌려-하는가">무엇이 바뀌려 하는가<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EB%AC%B4%EC%97%87%EC%9D%B4-%EB%B0%94%EB%80%8C%EB%A0%A4-%ED%95%98%EB%8A%94%EA%B0%80" class="hash-link" aria-label="무엇이 바뀌려 하는가에 대한 직접 링크" title="무엇이 바뀌려 하는가에 대한 직접 링크" translate="no">​</a></h4>
+<p>2026년 세제개편안에는 ISA 관련 개편이 포함되어 논의 중입니다.<br>
+연간 납입한도 확대, 미사용 연간 한도의 다음 해 이월 제도 폐지(2027년 시행 예정), 생산적금융 ISA 신설 등이 거론됩니다.<br>
+생산적금융 ISA는 국내 주식·펀드 전용 계좌로 이자·배당소득 전액 비과세를 특징으로 하는 방안입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="아직-시행-전이다">아직 시행 전이다<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EC%95%84%EC%A7%81-%EC%8B%9C%ED%96%89-%EC%A0%84%EC%9D%B4%EB%8B%A4" class="hash-link" aria-label="아직 시행 전이다에 대한 직접 링크" title="아직 시행 전이다에 대한 직접 링크" translate="no">​</a></h4>
+<p>위 내용은 모두 논의·예고 단계이며, 입법 과정을 거쳐 확정됩니다.<br>
+시행 전에는 기존 규칙이 적용되므로, 현재 납입 계획은 현행 기준으로 세웁니다.<br>
+개편이 확정되면 납입 전략도 그때 다시 점검하면 됩니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서-확인할-점">실무에서 확인할 점<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="실무에서 확인할 점에 대한 직접 링크" title="실무에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>ISA는 3년 의무기간이 있으므로 단기 자금이 아닌 중장기 여유 자금으로 운용합니다.<br>
+연금저축·IRP는 노후 자금의 세액공제가 목적이고, ISA는 운용 중 세금 절감이 목적이라는 점이 다릅니다.<br>
+중도해지 시 세금 추징이 발생하므로, 해지 시점도 3년 이후로 계획합니다.<br>
+이 글은 ISA 제도를 설명하는 교육 목적의 해설이며, ISA 가입 자체를 권하지 않습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/isa-basics-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>ISA는 손익통산과 비과세 한도가 만드는 절세 구조를 이해하면 활용도가 높아집니다.<br>
+3년 의무기간을 감당할 수 있는 자금인지 먼저 판단하는 것이 가장 중요한 출발점입니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW50YW51MXp0dGFrbHI4MnBhbjdxd2ZvMWFhbGwxNnFwcHN4bjVuayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/zbsMLe0hKqS2nNJ7LT/giphy.gif" alt="ISA" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>personal-finance</category>
+            <category>isa</category>
+            <category>tax</category>
+        </item>
+        <item>
+            <title><![CDATA[코스피, 장중 4% 급락 딛고 반등 — 10월 23일 시장 정리]]></title>
+            <link>https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23</link>
+            <guid>https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23</guid>
+            <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>10월 23일 금요일 장 마감 동향과 다음 주에 확인할 일정을 정리해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--4-넘게-흔들린-하루">배경 — 4% 넘게 흔들린 하루<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EB%B0%B0%EA%B2%BD--4-%EB%84%98%EA%B2%8C-%ED%9D%94%EB%93%A4%EB%A6%B0-%ED%95%98%EB%A3%A8" class="hash-link" aria-label="배경 — 4% 넘게 흔들린 하루에 대한 직접 링크" title="배경 — 4% 넘게 흔들린 하루에 대한 직접 링크" translate="no">​</a></h3>
+<p>간밤 뉴욕증시에서 반도체주가 약세를 보인 여파로, 10월 23일 코스피는 2.36% 하락한 <code>5,403.17</code>에서 출발했습니다.<br>
+개장 이후 외국인의 매도세가 확대되며 장중 한때 <code>5,305.98</code>까지 밀렸고, 전일 대비 낙폭은 4%를 넘어섰습니다.<br>
+그러나 오후 들어 기관의 매수세가 유입되며 낙폭을 빠르게 줄였고, 장중 최고점에서 <code>5,550.30</code>(+0.30%, +16.53포인트)으로 마감했습니다.<br>
+하루 등락률은 0.30%에 불과했지만, 장중 진폭이 4%포인트를 넘은 날이었습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmR1MzltcWFlZmFzcDNnMWJjZWl1ZDNxYnZ0a3gzN3U4Y2JvZ2d1MSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1AjFk7MzJBT2UPYKLB/giphy.gif" alt="Market" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="외국인이-판-만큼-기관이-받아-샀다">외국인이 판 만큼 기관이 받아 샀다<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EC%99%B8%EA%B5%AD%EC%9D%B8%EC%9D%B4-%ED%8C%90-%EB%A7%8C%ED%81%BC-%EA%B8%B0%EA%B4%80%EC%9D%B4-%EB%B0%9B%EC%95%84-%EC%83%80%EB%8B%A4" class="hash-link" aria-label="외국인이 판 만큼 기관이 받아 샀다에 대한 직접 링크" title="외국인이 판 만큼 기관이 받아 샀다에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수급-구조">수급 구조<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EC%88%98%EA%B8%89-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="수급 구조에 대한 직접 링크" title="수급 구조에 대한 직접 링크" translate="no">​</a></h4>
+<p>외국인이 약 1조 원 가까이 순매도하며 매도 우위를 이어갔습니다.<br>
+반면 기관은 8천억 원대 순매수, 개인도 순매수에 동참하며 지수 반등을 뒷받침했습니다.<br>
+매도 물량의 반대편에 국내 기관이 있었다는 점이 오늘 시장의 특징입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="반등의-중심--반도체-대형주">반등의 중심 — 반도체 대형주<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EB%B0%98%EB%93%B1%EC%9D%98-%EC%A4%91%EC%8B%AC--%EB%B0%98%EB%8F%84%EC%B2%B4-%EB%8C%80%ED%98%95%EC%A3%BC" class="hash-link" aria-label="반등의 중심 — 반도체 대형주에 대한 직접 링크" title="반등의 중심 — 반도체 대형주에 대한 직접 링크" translate="no">​</a></h4>
+<p>장 초반 5% 넘게 밀렸던 SK하이닉스는 손자회사 솔리다임의 미국 증시 상장 절차 중단 소식이 전해진 뒤 상승 전환해 4.42% 오른 <code>1,277,000원</code>에 마감했습니다.<br>
+삼성전자는 장중 5% 넘게 하락했다가 오후에 상승 전환해 0.47% 오른 <code>215,500원</code>에 거래를 마쳤습니다.<br>
+두 종목을 묶어 부르는 '삼전닉스'가 지수 회복을 견인한 하루였습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="상승-종목과-하락-종목">상승 종목과 하락 종목<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EC%83%81%EC%8A%B9-%EC%A2%85%EB%AA%A9%EA%B3%BC-%ED%95%98%EB%9D%BD-%EC%A2%85%EB%AA%A9" class="hash-link" aria-label="상승 종목과 하락 종목에 대한 직접 링크" title="상승 종목과 하락 종목에 대한 직접 링크" translate="no">​</a></h4>
+<p>삼성바이오로직스는 7.71% 급등한 <code>1,466,000원</code>에 거래를 마쳤습니다.<br>
+삼성전자우(+0.48%), SK스퀘어(+3.20%), 삼성생명(+1.45%)도 상승했습니다.<br>
+반면 LG에너지솔루션(-1.79%), 삼성SDI(-4.20%), 현대차(-1.99%), KB금융(-3.29%)은 하락 마감했습니다.<br>
+반도체 대형주 안에서도 엇갈린 흐름이 나타났습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="코스닥은-반등에-실패했다">코스닥은 반등에 실패했다<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EC%BD%94%EC%8A%A4%EB%8B%A5%EC%9D%80-%EB%B0%98%EB%93%B1%EC%97%90-%EC%8B%A4%ED%8C%A8%ED%96%88%EB%8B%A4" class="hash-link" aria-label="코스닥은 반등에 실패했다에 대한 직접 링크" title="코스닥은 반등에 실패했다에 대한 직접 링크" translate="no">​</a></h4>
+<p>코스닥은 12.41포인트(-1.62%) 내린 <code>751.69</code>에 마감했습니다.<br>
+외국인과 기관이 각각 수백억 원씩 순매도했고, 개인은 순매수했습니다.<br>
+시가총액 상위 종목 대부분이 약세였습니다.<br>
+에코프로(-5.83%, 72,700원), 에코프로비엠(-5.50%), 알테오젠(-2.81%), 리노공업(-4.05%), 레인보우로보틱스(-3.42%) 등이 하락했습니다.<br>
+이차전지주와 반도체 장비주가 함께 눌린 것이 코스닥 약세의 배경입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율과-해외-변수">환율과 해외 변수<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%ED%99%98%EC%9C%A8%EA%B3%BC-%ED%95%B4%EC%99%B8-%EB%B3%80%EC%88%98" class="hash-link" aria-label="환율과 해외 변수에 대한 직접 링크" title="환율과 해외 변수에 대한 직접 링크" translate="no">​</a></h4>
+<p>서울 외환시장에서 원/달러 환율은 전일 주간 종가보다 0.4원 오른 <code>1,324.6원</code>에 마감했습니다.<br>
+간밤 미국에서는 나스닥종합지수가 2.60%, S&amp;P500이 1.21% 하락했습니다.<br>
+AI 투자 지속성에 대한 우려가 국내 반도체주로 전이된 뒤 오후에 진정된 흐름입니다.<br>
+오늘 마감 시황은 <a href="https://news.tf.co.kr/read/economy/2380152.htm" target="_blank" rel="noopener noreferrer" class="">더팩트</a>와 <a href="https://m.newspim.com/news/view/20261023001023" target="_blank" rel="noopener noreferrer" class="">뉴스핌</a> 기사로 교차 확인할 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="투자에서 확인할 점에 대한 직접 링크" title="투자에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>장중 4% 급락과 종가 반등은 성격이 다른 신호입니다.<br>
+종가만 보면 0.30% 상승이지만, 장중 흔들림의 폭을 함께 봐야 다음 주 변동성을 가늠할 수 있습니다.<br>
+외국인 순매도가 이어지는 가운데 반등이 국내 수급에 의존했다는 점도 함께 확인합니다.<br>
+다음 주 일정은 10월 27~28일 미국 FOMC 회의(한국 시각 10월 29일 새벽 3시 결과 발표)와 주요 기업 실적 발표입니다.<br>
+금리 결정과 실적 숫자가 나온 뒤에는, 오늘 반등의 근거가 유지되는지 다시 점검하는 것이 좋습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/kospi-4percent-rebound-oct23#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>장중 4% 급락을 딛고 오른 0.30%는 종가보다 진폭에 주목해야 하는 날이었습니다.<br>
+다음 주 FOMC 결과까지 확인한 뒤에 이번 반등의 성격을 다시 정리해드리겠습니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWJ1ZHMwM2FvbHFvZXQ4NjBhdjFpcjR3d2VuYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4xpB3eE00FfBm/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>market-recap</category>
+            <category>kospi</category>
+        </item>
+        <item>
+            <title><![CDATA[채권 가격과 금리의 관계 — 금리가 오르면 채권값이 떨어지는 이유]]></title>
+            <link>https://code-bross.github.io/blog/finance/bond-price-yield</link>
+            <guid>https://code-bross.github.io/blog/finance/bond-price-yield</guid>
+            <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 한국은행이 기준금리를 연 3.00%로 동결한 날에 맞춰, 채권 가격과 금리의 관계를 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--오늘의-금리-결정">배경 — 오늘의 금리 결정<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EB%B0%B0%EA%B2%BD--%EC%98%A4%EB%8A%98%EC%9D%98-%EA%B8%88%EB%A6%AC-%EA%B2%B0%EC%A0%95" class="hash-link" aria-label="배경 — 오늘의 금리 결정에 대한 직접 링크" title="배경 — 오늘의 금리 결정에 대한 직접 링크" translate="no">​</a></h3>
+<p>2026년 10월 22일, 한국은행 금융통화위원회는 기준금리를 연 3.00%로 동결했습니다.<br>
+물가 압박이 이어지는 가운데 11월 추가 인상 가능성도 거론되는 상황입니다.<br>
+기준금리는 시중 금리의 기준점이 되고, 시중 금리는 채권 가격을 움직입니다.<br>
+금리 뉴스가 채권 투자에 어떤 영향을 주는지 이해하려면, 먼저 채권 가격과 금리의 관계를 알아야 합니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHc0MjBibDZvZDY0dzFib2g0YzNmbzFkZTVwb3N3MDV1c2loZm04MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1BPvv1QvbKV156jyul/giphy.gif" alt="Money" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="채권-가격과-금리는-왜-반대로-움직이는가">채권 가격과 금리는 왜 반대로 움직이는가<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EC%B1%84%EA%B6%8C-%EA%B0%80%EA%B2%A9%EA%B3%BC-%EA%B8%88%EB%A6%AC%EB%8A%94-%EC%99%9C-%EB%B0%98%EB%8C%80%EB%A1%9C-%EC%9B%80%EC%A7%81%EC%9D%B4%EB%8A%94%EA%B0%80" class="hash-link" aria-label="채권 가격과 금리는 왜 반대로 움직이는가에 대한 직접 링크" title="채권 가격과 금리는 왜 반대로 움직이는가에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="채권의-기본-구조">채권의 기본 구조<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EC%B1%84%EA%B6%8C%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="채권의 기본 구조에 대한 직접 링크" title="채권의 기본 구조에 대한 직접 링크" translate="no">​</a></h4>
+<p>채권은 발행자가 투자자에게 원금과 이자를 약속하는 증서입니다.<br>
+액면금액, 표면금리(쿠폰금리), 만기가 발행 시점에 정해집니다.<br>
+예를 들어 액면 10,000원, 표면금리 연 3%, 만기 3년인 채권은 매년 300원의 이자를 지급하고 만기에 10,000원을 돌려줍니다.<br>
+이 조건은 발행 이후에도 바뀌지 않습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="시장금리가-오르면-기존-채권의-매력이-떨어진다">시장금리가 오르면 기존 채권의 매력이 떨어진다<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EC%8B%9C%EC%9E%A5%EA%B8%88%EB%A6%AC%EA%B0%80-%EC%98%A4%EB%A5%B4%EB%A9%B4-%EA%B8%B0%EC%A1%B4-%EC%B1%84%EA%B6%8C%EC%9D%98-%EB%A7%A4%EB%A0%A5%EC%9D%B4-%EB%96%A8%EC%96%B4%EC%A7%84%EB%8B%A4" class="hash-link" aria-label="시장금리가 오르면 기존 채권의 매력이 떨어진다에 대한 직접 링크" title="시장금리가 오르면 기존 채권의 매력이 떨어진다에 대한 직접 링크" translate="no">​</a></h4>
+<p>채권은 발행 후에도 시장에서 사고팔 수 있습니다.<br>
+이때 채권 가격은 시장금리에 따라 달라집니다.<br>
+시장금리가 3%일 때 연 3% 이자를 주는 채권은 액면가인 10,000원에 거래됩니다.<br>
+그런데 시장금리가 4%로 오르면, 새로 발행되는 채권은 연 4%의 이자를 줍니다.<br>
+기존의 연 3% 채권은 새 채권보다 매력이 떨어지므로, 누군가 사려면 가격이 10,000원보다 낮아져야 합니다.<br>
+가격이 떨어지면 그 채권을 산 투자자의 실질 수익률(만기수익률)은 4%에 가까워집니다.<br>
+즉, 시장금리 상승은 기존 채권 가격 하락으로 이어집니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="시장금리가-내리면-반대로-움직인다">시장금리가 내리면 반대로 움직인다<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EC%8B%9C%EC%9E%A5%EA%B8%88%EB%A6%AC%EA%B0%80-%EB%82%B4%EB%A6%AC%EB%A9%B4-%EB%B0%98%EB%8C%80%EB%A1%9C-%EC%9B%80%EC%A7%81%EC%9D%B8%EB%8B%A4" class="hash-link" aria-label="시장금리가 내리면 반대로 움직인다에 대한 직접 링크" title="시장금리가 내리면 반대로 움직인다에 대한 직접 링크" translate="no">​</a></h4>
+<p>반대로 시장금리가 2%로 내리면, 연 3% 이자를 주는 기존 채권은 귀해집니다.<br>
+새 채권보다 이자를 많이 주므로, 가격이 10,000원보다 높게 형성됩니다.<br>
+가격이 오르면 실질 수익률은 2%에 가까워집니다.<br>
+정리하면 채권 가격과 시장금리는 항상 반대 방향으로 움직입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="계산-예시로-확인하기">계산 예시로 확인하기<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EA%B3%84%EC%82%B0-%EC%98%88%EC%8B%9C%EB%A1%9C-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0" class="hash-link" aria-label="계산 예시로 확인하기에 대한 직접 링크" title="계산 예시로 확인하기에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="단순화된-현재가치-계산">단순화된 현재가치 계산<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EB%8B%A8%EC%88%9C%ED%99%94%EB%90%9C-%ED%98%84%EC%9E%AC%EA%B0%80%EC%B9%98-%EA%B3%84%EC%82%B0" class="hash-link" aria-label="단순화된 현재가치 계산에 대한 직접 링크" title="단순화된 현재가치 계산에 대한 직접 링크" translate="no">​</a></h4>
+<p>채권 가격은 미래에 받을 현금흐름을 현재 가치로 할인한 합과 같습니다.<br>
+액면 10,000원, 표면금리 3%, 만기 3년, 매년 이자 지급 채권으로 계산해 봅니다.<br>
+매년 받는 금액은 <code>300원</code>, <code>300원</code>, <code>10,300원</code>입니다.<br>
+시장금리가 3%일 때 가격은 <code>10,000원</code>으로 액면과 같습니다.<br>
+시장금리가 4%로 오르면 가격은 약 <code>9,723원</code>으로 떨어집니다.<br>
+시장금리가 2%로 내리면 가격은 약 <code>10,288원</code>으로 오릅니다.<br>
+같은 채권인데 시장금리에 따라 가격이 달라지는 것을 수치로 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="듀레이션--가격이-얼마나-민감한가">듀레이션 — 가격이 얼마나 민감한가<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EB%93%80%EB%A0%88%EC%9D%B4%EC%85%98--%EA%B0%80%EA%B2%A9%EC%9D%B4-%EC%96%BC%EB%A7%88%EB%82%98-%EB%AF%BC%EA%B0%90%ED%95%9C%EA%B0%80" class="hash-link" aria-label="듀레이션 — 가격이 얼마나 민감한가에 대한 직접 링크" title="듀레이션 — 가격이 얼마나 민감한가에 대한 직접 링크" translate="no">​</a></h4>
+<p>금리가 1%포인트 움직일 때 채권 가격이 몇 % 움직이는지를 나타내는 지표가 듀레이션입니다.<br>
+만기가 길고 표면금리가 낮을수록 듀레이션이 커서 가격 변동이 큽니다.<br>
+장기채가 단기채보다 금리 변화에 민감한 이유가 여기에 있습니다.<br>
+금리 상승이 예상되는 국면에서는 듀레이션이 짧은 채권이 가격 하락 폭이 작습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>기준금리 결정문을 읽을 때는 동결·인상·인하 여부보다 향후 방향에 대한 문구를 함께 봅니다.<br>
+오늘처럼 동결이면서도 물가 압박과 추가 인상 가능성이 거론되는 경우, 시장금리는 동결에도 불구하고 오를 수 있습니다.<br>
+채권 금리는 국고채 수익률 곡선으로 확인하고, 기준금리와의 차이를 함께 봅니다.<br>
+보유 중인 채권의 듀레이션을 알면, 금리 변화 시 평가금액이 어느 정도 움직일지 가늠할 수 있습니다.<br>
+예금과 달리 채권은 중도 매도 시 가격 변동이 발생한다는 점도 함께 기억합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/bond-price-yield#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>채권 가격과 금리의 역관계는 한 번 이해하면 평생 쓰는 기본기입니다.<br>
+금리 뉴스를 볼 때마다 "그래서 채권 가격은 어느 방향인가"를 함께 떠올리는 습관이 도움이 됩니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHc0MjBibDZvZDY0dzFib2g0YzNmbzFkZTVwb3N3MDV1c2loZm04MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/67ThRZlYBvibtdF9JH/giphy.gif" alt="Finance" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>bond</category>
+            <category>interest-rate</category>
+        </item>
+        <item>
+            <title><![CDATA[코스피 3.52% 급락 — 하루 만에 뒤집힌 시장, 하락장에서 확인할 것들]]></title>
+            <link>https://code-bross.github.io/blog/finance/kospi-plunge-oct22</link>
+            <guid>https://code-bross.github.io/blog/finance/kospi-plunge-oct22</guid>
+            <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 어제의 상승분을 하루 만에 반납한 국내 증시의 급락과, 지수가 크게 떨어진 날에 확인해야 할 지표들에 대해 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="오늘의-시장">오늘의 시장<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EC%98%A4%EB%8A%98%EC%9D%98-%EC%8B%9C%EC%9E%A5" class="hash-link" aria-label="오늘의 시장에 대한 직접 링크" title="오늘의 시장에 대한 직접 링크" translate="no">​</a></h3>
+<p>2026년 10월 22일, 코스피는 전일 대비 201.89포인트, 3.52% 하락한 5,533.77로 마감했습니다.<br>
+어제 5,700선을 넘었던 상승분을 하루 만에 고스란히 반납한 셈입니다.<br>
+지수는 5,670.11에 출발해 장중 5,740.28까지 반등을 시도했지만, 이후 낙폭을 키워 장중 한때 5,485.98까지 밀렸습니다.<br>
+코스닥도 전일 대비 28.66포인트, 3.62% 하락한 764.10으로 마감했습니다.<br>
+대형주 중심의 코스피200 지수는 3.71% 하락한 858.02로, 코스피보다 낙폭이 컸습니다.<br>
+원/달러 환율은 1,324.6원으로 전일 대비 0.11% 하락해 원화가 소폭 강세를 이어갔습니다.<br>
+간밤 미국 시장은 나스닥 종합지수가 1.05%, S&amp;P500이 0.58% 오르는 등 상승 마감했습니다.<br>
+즉, 오늘 국내 증시의 급락은 해외 시장의 흐름과 반대로 움직인, 국내 요인이 강하게 작용한 하루였습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExanZuZzl0cmFhanF3Z290c3F3YjdrYjJsa2hvODVmejAzMm45aHZiaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/JtBZm3Getg3dqxK0zP/giphy.gif" alt="Falling chart" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="급락의-배경">급락의 배경<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EA%B8%89%EB%9D%BD%EC%9D%98-%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="급락의 배경에 대한 직접 링크" title="급락의 배경에 대한 직접 링크" translate="no">​</a></h3>
+<p>오늘의 하락은 하나의 원인으로 설명되지 않습니다.<br>
+여러 악재가 겹치며 투자심리가 한 번에 얼어붙은 하루였습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="ai-투자-수익성-우려와-반도체-차익-실현">AI 투자 수익성 우려와 반도체 차익 실현<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#ai-%ED%88%AC%EC%9E%90-%EC%88%98%EC%9D%B5%EC%84%B1-%EC%9A%B0%EB%A0%A4%EC%99%80-%EB%B0%98%EB%8F%84%EC%B2%B4-%EC%B0%A8%EC%9D%B5-%EC%8B%A4%ED%98%84" class="hash-link" aria-label="AI 투자 수익성 우려와 반도체 차익 실현에 대한 직접 링크" title="AI 투자 수익성 우려와 반도체 차익 실현에 대한 직접 링크" translate="no">​</a></h4>
+<p>하락을 주도한 것은 반도체 대형주였습니다.<br>
+삼성전자와 SK하이닉스는 각각 4.03%, 5.49% 하락했습니다.<br>
+(<a href="https://www.ajunews.com/view/20261022154721705" target="_blank" rel="noopener noreferrer" class="">아주경제 보도</a>를 기준으로 합니다.)<br>
+간밤 미국 시장에서 메타가 3분기 호실적을 발표했음에도, 내년 설비투자 가이던스를 제시하지 않았고 3분기 잉여현금흐름이 21억2천만 달러 적자로 전환한 점이 부담으로 작용했습니다.<br>
+AI 사업의 성장세와 별개로, 대규모 투자 비용을 감당할 현금흐름과 수익성을 확보할 수 있을지에 대한 의문이 해소되지 않은 것입니다.<br>
+여기에 전날 급등에 따른 차익 실현 매물이 겹쳤습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="자사주-매입-종료에-따른-수급-공백">자사주 매입 종료에 따른 수급 공백<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EC%9E%90%EC%82%AC%EC%A3%BC-%EB%A7%A4%EC%9E%85-%EC%A2%85%EB%A3%8C%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%88%98%EA%B8%89-%EA%B3%B5%EB%B0%B1" class="hash-link" aria-label="자사주 매입 종료에 따른 수급 공백에 대한 직접 링크" title="자사주 매입 종료에 따른 수급 공백에 대한 직접 링크" translate="no">​</a></h4>
+<p>삼성전자와 SK하이닉스의 자사주 매입이 잇달아 종료되며 매수 기반이 약화됐습니다.<br>
+삼성전자는 15조원 규모의 자사주 매입을 지난 6일 마쳤고, SK하이닉스는 40조원 규모의 자사주 매입을 지난 21일 완료했습니다.<br>
+대신증권 이경민 연구원은 SK하이닉스의 자사주 매입 종료로 "수급 완충력이 추가로 약화됐다"고 진단했습니다.<br>
+SK하이닉스의 미국 자회사 솔리다임 상장 추진을 둘러싼 중복상장 논란도 투자심리에 부담을 더했습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="지정학적-긴장과-통화정책-경계감">지정학적 긴장과 통화정책 경계감<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EC%A7%80%EC%A0%95%ED%95%99%EC%A0%81-%EA%B8%B4%EC%9E%A5%EA%B3%BC-%ED%86%B5%ED%99%94%EC%A0%95%EC%B1%85-%EA%B2%BD%EA%B3%84%EA%B0%90" class="hash-link" aria-label="지정학적 긴장과 통화정책 경계감에 대한 직접 링크" title="지정학적 긴장과 통화정책 경계감에 대한 직접 링크" translate="no">​</a></h4>
+<p>중동의 지정학적 긴장도 투자심리를 압박했습니다.<br>
+미국이 사우디아라비아 주재 비필수 외교 인력에 출국을 명령하면서 국지적 군사 충돌에 대한 경계감이 이어졌습니다.<br>
+한국은행 금융통화위원회는 기준금리를 연 3.00%로 동결했지만, 물가 부담과 통화정책을 둘러싼 경계감 속에 증시 반등을 이끌 만한 재료가 되지는 못했습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="지수가-크게-떨어진-날-확인할-것들">지수가 크게 떨어진 날 확인할 것들<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EC%A7%80%EC%88%98%EA%B0%80-%ED%81%AC%EA%B2%8C-%EB%96%A8%EC%96%B4%EC%A7%84-%EB%82%A0-%ED%99%95%EC%9D%B8%ED%95%A0-%EA%B2%83%EB%93%A4" class="hash-link" aria-label="지수가 크게 떨어진 날 확인할 것들에 대한 직접 링크" title="지수가 크게 떨어진 날 확인할 것들에 대한 직접 링크" translate="no">​</a></h3>
+<p>어제 상승장에서 확인한 지표들은 하락장에서도 똑같이 유효합니다.<br>
+다만 해석의 방향이 달라집니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수급--누가-팔았는가">수급 — 누가 팔았는가<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EC%88%98%EA%B8%89--%EB%88%84%EA%B0%80-%ED%8C%94%EC%95%98%EB%8A%94%EA%B0%80" class="hash-link" aria-label="수급 — 누가 팔았는가에 대한 직접 링크" title="수급 — 누가 팔았는가에 대한 직접 링크" translate="no">​</a></h4>
+<p>오늘 유가증권시장에서는 개인이 5,748억원을 순매수했고, 외국인은 619억원, 기관은 5,556억원을 순매도했습니다.<br>
+(네이버 증권 투자자별 매매동향 집계, 2026년 10월 22일 기준입니다.)<br>
+기관 중에서는 금융투자(-3,771억원)와 투신(-3,073억원)의 매도가 컸고, 연기금은 1,161억원을 순매수했습니다.<br>
+어제와 반대로 오늘은 기관의 매도가 지수를 끌어내렸고, 개인이 매물을 받아낸 구도였습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="낙폭의-분포--일부-종목인가-시장-전체인가">낙폭의 분포 — 일부 종목인가, 시장 전체인가<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EB%82%99%ED%8F%AD%EC%9D%98-%EB%B6%84%ED%8F%AC--%EC%9D%BC%EB%B6%80-%EC%A2%85%EB%AA%A9%EC%9D%B8%EA%B0%80-%EC%8B%9C%EC%9E%A5-%EC%A0%84%EC%B2%B4%EC%9D%B8%EA%B0%80" class="hash-link" aria-label="낙폭의 분포 — 일부 종목인가, 시장 전체인가에 대한 직접 링크" title="낙폭의 분포 — 일부 종목인가, 시장 전체인가에 대한 직접 링크" translate="no">​</a></h4>
+<p>오늘 유가증권시장에서는 상승 종목이 174개에 그친 반면 하락 종목은 709개였습니다.<br>
+(<a href="https://www.seoul.co.kr/news/economy/securities/2026/10/22/20261022500246" target="_blank" rel="noopener noreferrer" class="">서울신문 보도</a>를 기준으로 합니다.)<br>
+시가총액 상위 종목 대부분이 약세였고, LG에너지솔루션(-5.22%), 삼성바이오로직스(-3.95%), 현대차(-2.58%) 등 업종을 가리지 않고 하락했습니다.<br>
+특정 업종의 문제가 아니라 시장 전반의 투자심리가 위축된 날이었음을 알 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="거래대금">거래대금<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EA%B1%B0%EB%9E%98%EB%8C%80%EA%B8%88" class="hash-link" aria-label="거래대금에 대한 직접 링크" title="거래대금에 대한 직접 링크" translate="no">​</a></h4>
+<p>오늘 코스피 거래대금은 13조7002억원 수준이었습니다.<br>
+지수가 크게 떨어지면서 거래대금도 함께 늘었다면, 매도 물량이 실제로 쏟아져 나왔다는 뜻입니다.<br>
+반등을 시도하는 구간에서 거래대금이 어떻게 움직이는지도 함께 확인합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율">환율<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%ED%99%98%EC%9C%A8" class="hash-link" aria-label="환율에 대한 직접 링크" title="환율에 대한 직접 링크" translate="no">​</a></h4>
+<p>원/달러 환율은 1,324.6원으로 5거래일 연속 하락했습니다.<br>
+지수 하락과 환율 하락(원화 강세)이 동시에 나타난 것은, 오늘의 하락이 외국인 자금 이탈보다는 국내 수급과 심리에 기인했다는 해석에 힘을 싣습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>지수가 크게 떨어진 날일수록 마감 수치 하나만 보지 않고 원인을 분해해 보는 습관이 도움이 됩니다.<br>
+오늘처럼 해외 시장과 국내 시장이 반대로 움직인 날은, 국내 고유의 요인이 무엇인지 뉴스와 수급을 대조해 확인합니다.<br>
+수급 화면에서는 기관 세부 주체(금융투자·투신·연기금 등)별로 매매 방향이 엇갈리는지도 함께 봅니다.<br>
+급락의 원인이 단발성 수급 공백인지, 실적·정책 등 펀더멘털 요인인지를 구분하는 것이 이후의 흐름을 판단하는 기준이 됩니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/kospi-plunge-oct22#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>어제의 상승과 오늘의 하락은 같은 시장의 다른 얼굴입니다.<br>
+지수 등락 자체보다 수급, 낙폭의 분포, 거래대금, 환율을 함께 살펴보는 습관이 변동성 장세에서 시장의 흐름을 읽는 기본기가 됩니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExanZuZzl0cmFhanF3Z290c3F3YjdrYjJsa2hvODVmejAzMm45aHZiaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/MEq4za8poCEOfdY5Pr/giphy.gif" alt="Market data" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>market</category>
+            <category>kospi</category>
+        </item>
+        <item>
+            <title><![CDATA[연금저축과 IRP 세액공제 — 2026년 기준 한도와 계산법]]></title>
+            <link>https://code-bross.github.io/blog/finance/pension-tax-credit-2026</link>
+            <guid>https://code-bross.github.io/blog/finance/pension-tax-credit-2026</guid>
+            <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 연말이 다가오는 시점에 맞춰, 연금저축과 IRP의 세액공제 구조를 2026년 기준으로 정리해드리겠습니다.<br>
+절세를 권유하는 글이 아니라, 제도를 이해하기 위한 교육 목적의 해설입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--왜-연말에-연금-이야기가-나오는가">배경 — 왜 연말에 연금 이야기가 나오는가<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EB%B0%B0%EA%B2%BD--%EC%99%9C-%EC%97%B0%EB%A7%90%EC%97%90-%EC%97%B0%EA%B8%88-%EC%9D%B4%EC%95%BC%EA%B8%B0%EA%B0%80-%EB%82%98%EC%98%A4%EB%8A%94%EA%B0%80" class="hash-link" aria-label="배경 — 왜 연말에 연금 이야기가 나오는가에 대한 직접 링크" title="배경 — 왜 연말에 연금 이야기가 나오는가에 대한 직접 링크" translate="no">​</a></h3>
+<p>연금저축과 IRP(개인형 퇴직연금)에 넣은 돈은 일정 한도 안에서 세액공제를 받을 수 있습니다.<br>
+세액공제는 1월부터 12월까지 납입한 금액을 기준으로 계산되므로, 연말이 되면 올해 납입액을 점검하는 시기가 됩니다.<br>
+한도와 공제율을 정확히 알아야 "얼마를 더 넣어야 하는지"가 아니라 "얼마까지가 의미 있는지"를 판단할 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4N3MweGZ4djhmZmRkbTg5cjhyNWI3Y3d2bWJnNWp2bnU4d3lsbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oriO2rfuppV6GkC5O/giphy.gif" alt="Savings" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="세액공제의-기본-구조">세액공제의 기본 구조<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EC%84%B8%EC%95%A1%EA%B3%B5%EC%A0%9C%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="세액공제의 기본 구조에 대한 직접 링크" title="세액공제의 기본 구조에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="한도--600만원과-900만원">한도 — 600만원과 900만원<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%ED%95%9C%EB%8F%84--600%EB%A7%8C%EC%9B%90%EA%B3%BC-900%EB%A7%8C%EC%9B%90" class="hash-link" aria-label="한도 — 600만원과 900만원에 대한 직접 링크" title="한도 — 600만원과 900만원에 대한 직접 링크" translate="no">​</a></h4>
+<p>연금저축의 세액공제 대상 납입한도는 연 600만원입니다.<br>
+여기에 IRP 등 퇴직연금계좌의 본인 추가 납입액을 합치면 연 900만원까지 세액공제 대상이 됩니다.<br>
+즉, 연금저축에 600만원, IRP에 300만원을 넣으면 합산 900만원 전액이 공제 대상이 됩니다.<br>
+연금저축에만 900만원을 넣으면 600만원까지만 공제 대상이 되므로, 구조를 알고 나누는 것이 중요합니다.<br>
+참고로 연금계좌에 넣을 수 있는 금액 자체의 한도(납입한도)는 연 1,800만원으로 별도이며, 전액이 공제되는 것은 아닙니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="공제율--165와-132">공제율 — 16.5%와 13.2%<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EA%B3%B5%EC%A0%9C%EC%9C%A8--165%EC%99%80-132" class="hash-link" aria-label="공제율 — 16.5%와 13.2%에 대한 직접 링크" title="공제율 — 16.5%와 13.2%에 대한 직접 링크" translate="no">​</a></h4>
+<p>세액공제율은 소득 구간에 따라 달라집니다.<br>
+근로소득만 있는 경우 총급여 5,500만원 이하이면 16.5%, 초과이면 13.2%입니다.<br>
+(종합소득금액 기준으로는 4,500만원이 기준선이며, 지방소득세를 포함한 수치입니다.)<br>
+계산상 최대 절세액은 다음과 같습니다.<br></p>
+<table><thead><tr><th>공제 대상 납입액</th><th>총급여 5,500만원 이하 (16.5%)</th><th>총급여 5,500만원 초과 (13.2%)</th></tr></thead><tbody><tr><td>600만원</td><td>99만원</td><td>79만2천원</td></tr><tr><td>900만원</td><td>148만5천원</td><td>118만8천원</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="계산-전에-확인할-것들">계산 전에 확인할 것들<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EA%B3%84%EC%82%B0-%EC%A0%84%EC%97%90-%ED%99%95%EC%9D%B8%ED%95%A0-%EA%B2%83%EB%93%A4" class="hash-link" aria-label="계산 전에 확인할 것들에 대한 직접 링크" title="계산 전에 확인할 것들에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="결정세액의-한도">결정세액의 한도<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EA%B2%B0%EC%A0%95%EC%84%B8%EC%95%A1%EC%9D%98-%ED%95%9C%EB%8F%84" class="hash-link" aria-label="결정세액의 한도에 대한 직접 링크" title="결정세액의 한도에 대한 직접 링크" translate="no">​</a></h4>
+<p>위 표의 금액은 "계산상 최대"입니다.<br>
+세액공제는 낼 세금(결정세액)이 있어야 의미가 있습니다.<br>
+결정세액이 적으면 한도만큼 넣어도 계산된 금액을 전부 돌려받지 못합니다.<br>
+국세청 연말정산 미리보기로 예상 세액을 먼저 확인하는 것이 순서입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="중도해지의-세금">중도해지의 세금<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EC%A4%91%EB%8F%84%ED%95%B4%EC%A7%80%EC%9D%98-%EC%84%B8%EA%B8%88" class="hash-link" aria-label="중도해지의 세금에 대한 직접 링크" title="중도해지의 세금에 대한 직접 링크" translate="no">​</a></h4>
+<p>세액공제를 받은 돈을 연금이 아닌 방식으로 중도에 찾으면, 공제받은 원금과 수익에 16.5%의 기타소득세가 부과됩니다.<br>
+공제율이 13.2%인 구간에 해당하는 분은 오히려 손해가 될 수 있는 구조입니다.<br>
+3년 안에 쓸 가능성이 있는 돈은 연금저축보다 예금이나 파킹통장 등 별도 자금으로 분리하는 편이 안전합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수령-단계의-기준">수령 단계의 기준<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EC%88%98%EB%A0%B9-%EB%8B%A8%EA%B3%84%EC%9D%98-%EA%B8%B0%EC%A4%80" class="hash-link" aria-label="수령 단계의 기준에 대한 직접 링크" title="수령 단계의 기준에 대한 직접 링크" translate="no">​</a></h4>
+<p>연금으로 받을 때는 연금소득세가 적용되며, 연간 사적연금 수령액 1,500만원이라는 기준도 함께 관리해야 합니다.<br>
+납입 단계의 절세만 보고 수령 단계의 세금을 놓치면 전체 그림이 어긋납니다.<br>
+만기가 된 ISA 잔액을 연금계좌로 옮기면 옮긴 금액의 10%, 최대 300만원까지 공제 한도가 추가로 늘어나는 특례도 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>연말정산 시즌이 오기 전에 올해 연금저축과 IRP에 실제로 납입한 금액을 합산해 봅니다.<br>
+600만원과 900만원이라는 두 개의 한도선에서 현재 위치를 확인합니다.<br>
+본인의 총급여 구간에 맞는 공제율로 계산상 절세액을 구해 봅니다.<br>
+결정세액이 충분한지, 중도에 찾을 가능성은 없는지를 함께 점검합니다.<br>
+세제 혜택은 매년 조금씩 바뀔 수 있으므로, 최종 판단 전에는 국세청 안내나 금융회사 공지를 원문으로 확인합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/pension-tax-credit-2026#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>연금 세액공제는 "많이 넣을수록 좋은 제도"가 아니라 "한도와 조건을 알고 쓰는 제도"입니다.<br>
+600만원과 900만원, 16.5%와 13.2%라는 숫자 네 개만 기억해도 연말 점검의 기준이 섭니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4N3MweGZ4djhmZmRkbTg5cjhyNWI3Y3d2bWJnNWp2bnU4d3lsbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/KoWFceykJC0NNjucLC/giphy.gif" alt="Piggy bank" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>pension</category>
+            <category>tax</category>
+        </item>
+        <item>
+            <title><![CDATA[반도체 산업의 구조 — 메모리와 시스템반도체, 실적 시즌에 확인하는 것들]]></title>
+            <link>https://code-bross.github.io/blog/finance/semiconductor-industry-structure</link>
+            <guid>https://code-bross.github.io/blog/finance/semiconductor-industry-structure</guid>
+            <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 오늘 시장의 하락을 주도한 반도체 산업의 구조와, 실적 시즌에 이 업종을 볼 때 확인하는 지표들에 대해 설명해드리겠습니다.<br>
+특정 종목의 매수·매도를 권유하는 글이 아니라, 산업을 이해하기 위한 교육 목적의 해설입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--왜-반도체가-지수를-움직이는가">배경 — 왜 반도체가 지수를 움직이는가<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EB%B0%B0%EA%B2%BD--%EC%99%9C-%EB%B0%98%EB%8F%84%EC%B2%B4%EA%B0%80-%EC%A7%80%EC%88%98%EB%A5%BC-%EC%9B%80%EC%A7%81%EC%9D%B4%EB%8A%94%EA%B0%80" class="hash-link" aria-label="배경 — 왜 반도체가 지수를 움직이는가에 대한 직접 링크" title="배경 — 왜 반도체가 지수를 움직이는가에 대한 직접 링크" translate="no">​</a></h3>
+<p>국내 증시에서 반도체의 비중은 매우 큽니다.<br>
+오늘 코스피가 3.52% 하락한 날에도 삼성전자(-4.03%)와 SK하이닉스(-5.49%) 두 종목의 하락이 지수 낙폭의 상당 부분을 설명합니다.<br>
+(<a href="https://www.ajunews.com/view/20261022154721705" target="_blank" rel="noopener noreferrer" class="">아주경제 보도</a>를 기준으로 합니다.)<br>
+지수를 움직이는 업종을 이해하려면, 그 업종이 어떤 구조로 돈을 버는지를 먼저 알아야 합니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3U4NWZjMDIwN3BldXQ1c3hiM2V3Z2ExZHdhbmt3Z2s3ano5OWFsMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/R2eoW62p8mcKGWUKSk/giphy.gif" alt="Chip" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="반도체-산업의-큰-그림">반도체 산업의 큰 그림<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EB%B0%98%EB%8F%84%EC%B2%B4-%EC%82%B0%EC%97%85%EC%9D%98-%ED%81%B0-%EA%B7%B8%EB%A6%BC" class="hash-link" aria-label="반도체 산업의 큰 그림에 대한 직접 링크" title="반도체 산업의 큰 그림에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="메모리와-시스템반도체">메모리와 시스템반도체<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EB%A9%94%EB%AA%A8%EB%A6%AC%EC%99%80-%EC%8B%9C%EC%8A%A4%ED%85%9C%EB%B0%98%EB%8F%84%EC%B2%B4" class="hash-link" aria-label="메모리와 시스템반도체에 대한 직접 링크" title="메모리와 시스템반도체에 대한 직접 링크" translate="no">​</a></h4>
+<p>반도체는 크게 메모리 반도체와 시스템반도체(비메모리)로 나뉩니다.<br>
+메모리 반도체는 데이터를 저장하는 칩으로, D램과 낸드플래시가 대표적입니다.<br>
+시스템반도체는 연산·제어를 담당하는 칩으로, CPU, GPU, 애플리케이션 프로세서 등이 여기에 속합니다.<br>
+한국 기업이 강한 분야는 메모리 반도체이며, 세계 시장 점유율 기준으로 D램과 낸드 모두 상위권을 차지하고 있습니다.<br>
+최근에는 AI 서버용 고대역폭 메모리(HBM)처럼 메모리 안에서도 고부가 제품의 비중이 커지고 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="밸류체인--설계-생산-장비-소재">밸류체인 — 설계, 생산, 장비, 소재<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EB%B0%B8%EB%A5%98%EC%B2%B4%EC%9D%B8--%EC%84%A4%EA%B3%84-%EC%83%9D%EC%82%B0-%EC%9E%A5%EB%B9%84-%EC%86%8C%EC%9E%AC" class="hash-link" aria-label="밸류체인 — 설계, 생산, 장비, 소재에 대한 직접 링크" title="밸류체인 — 설계, 생산, 장비, 소재에 대한 직접 링크" translate="no">​</a></h4>
+<p>반도체 산업은 설계, 생산, 장비, 소재로 이어지는 긴 밸류체인을 가집니다.<br>
+설계만 하는 회사를 팹리스, 생산만 위탁받아 하는 회사를 파운드리라고 합니다.<br>
+설계부터 생산까지 모두 하는 회사는 종합반도체기업(IDM)이라고 부릅니다.<br>
+여기에 노광·식각 장비를 만드는 장비 기업과, 웨이퍼·특수가스를 공급하는 소재 기업이 생태계를 이룹니다.<br>
+국내에서는 소부장(소재·부품·장비) 기업들이 코스닥을 중심으로 포진해 있어, 메모리 업황이 움직이면 함께 영향을 받는 구조입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="사이클-산업의-특성">사이클 산업의 특성<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EC%82%AC%EC%9D%B4%ED%81%B4-%EC%82%B0%EC%97%85%EC%9D%98-%ED%8A%B9%EC%84%B1" class="hash-link" aria-label="사이클 산업의 특성에 대한 직접 링크" title="사이클 산업의 특성에 대한 직접 링크" translate="no">​</a></h4>
+<p>반도체는 대표적인 사이클 산업입니다.<br>
+수요가 늘면 가격이 오르고(업사이클), 공급이 과잉되면 가격이 떨어지는(다운사이클) 패턴을 반복합니다.<br>
+가격을 움직이는 핵심 변수는 재고와 수요, 그리고 공급 업체들의 설비투자(CAPEX)입니다.<br>
+업사이클에서는 증설 투자가 늘고, 다운사이클에서는 감산과 투자 축소가 나타납니다.<br>
+이런 사이클 때문에 반도체 기업의 실적은 분기마다 크게 출렁이는 경향이 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실적-시즌에-확인하는-것들">실적 시즌에 확인하는 것들<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EC%8B%A4%EC%A0%81-%EC%8B%9C%EC%A6%8C%EC%97%90-%ED%99%95%EC%9D%B8%ED%95%98%EB%8A%94-%EA%B2%83%EB%93%A4" class="hash-link" aria-label="실적 시즌에 확인하는 것들에 대한 직접 링크" title="실적 시즌에 확인하는 것들에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="재고와-가격asp">재고와 가격(ASP)<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EC%9E%AC%EA%B3%A0%EC%99%80-%EA%B0%80%EA%B2%A9asp" class="hash-link" aria-label="재고와 가격(ASP)에 대한 직접 링크" title="재고와 가격(ASP)에 대한 직접 링크" translate="no">​</a></h4>
+<p>메모리 실적을 볼 때 가장 먼저 확인하는 것은 재고 수준과 평균판매단가(ASP)입니다.<br>
+재고가 줄고 ASP가 오르면 업황 개선의 신호로 해석하고, 반대면 수요 둔화를 의심합니다.<br>
+분기 실적 발표 때 공개되는 재고자산의 증감은 다음 분기 가격 방향을 가늠하는 단서가 됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="설비투자capex-가이던스">설비투자(CAPEX) 가이던스<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EC%84%A4%EB%B9%84%ED%88%AC%EC%9E%90capex-%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4" class="hash-link" aria-label="설비투자(CAPEX) 가이던스에 대한 직접 링크" title="설비투자(CAPEX) 가이던스에 대한 직접 링크" translate="no">​</a></h4>
+<p>기업이 제시하는 내년 설비투자 계획도 중요한 지표입니다.<br>
+CAPEX가 늘면 공급 증가로 이어질 수 있어 가격에 부담이 되고, 줄면 공급 조절로 해석됩니다.<br>
+어제 미국 시장에서 메타가 호실적에도 불구하고 내년 설비투자 가이던스를 제시하지 않아 투자심리가 위축된 것도 같은 맥락입니다.<br>
+빅테크의 CAPEX는 AI 서버 수요, 즉 메모리와 시스템반도체 수요로 직결되기 때문입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="자회사-이슈와-주주-가치">자회사 이슈와 주주 가치<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EC%9E%90%ED%9A%8C%EC%82%AC-%EC%9D%B4%EC%8A%88%EC%99%80-%EC%A3%BC%EC%A3%BC-%EA%B0%80%EC%B9%98" class="hash-link" aria-label="자회사 이슈와 주주 가치에 대한 직접 링크" title="자회사 이슈와 주주 가치에 대한 직접 링크" translate="no">​</a></h4>
+<p>오늘 SK하이닉스에는 미국 자회사 솔리다임의 상장 추진을 둘러싼 중복상장 논란이 부담으로 작용했습니다.<br>
+자회사 상장이 왜 모회사에 부담이 되는지 이해하려면 주주 가치의 관점에서 봐야 합니다.<br>
+자회사의 가치가 별도로 상장되며 시장에서 재평가되면, 기존 모회사 주주가 보유한 지분 가치에 대한 할인 우려가 생기기 때문입니다.<br>
+이런 이슈가 나올 때는 공시된 상장 구조와 지분 관계를 원문으로 확인하는 것이 기본입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>반도체 뉴스를 볼 때는 헤드라인보다 수치의 출처를 먼저 확인합니다.<br>
+ASP, 재고, 가동률 같은 지표는 분기 보고서와 실적 발표 자료에 원문이 있습니다.<br>
+CAPEX 가이던스는 기업 IR 자료나 컨퍼런스콜 기록에서 직접 확인할 수 있습니다.<br>
+자회사 상장 같은 지배구조 이슈는 전자공시(DART)의 공시 원문을 읽는 습관이 도움이 됩니다.<br>
+업종 전체의 흐름을 볼 때는 개별 기업 뉴스와 함께 메모리 가격 동향, 빅테크의 설비투자 계획을 겹쳐서 봅니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/semiconductor-industry-structure#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>반도체는 구조를 알면 뉴스가 읽히고, 구조를 모르면 등락만 보이는 업종입니다.<br>
+메모리와 시스템반도체의 구분, 밸류체인, 사이클의 관점을 갖춰 두면 실적 시즌의 숫자들을 차분히 해석할 수 있습니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3U4NWZjMDIwN3BldXQ1c3hiM2V3Z2ExZHdhbmt3Z2s3ano5OWFsMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ihM636Z71DgV3ZKZiP/giphy.gif" alt="Technology" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>sector</category>
+            <category>semiconductor</category>
+        </item>
+        <item>
+            <title><![CDATA[원/달러 환율 읽는 법 — 1,300원대 환율이 의미하는 것]]></title>
+            <link>https://code-bross.github.io/blog/finance/usd-krw-guide</link>
+            <guid>https://code-bross.github.io/blog/finance/usd-krw-guide</guid>
+            <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 5거래일 연속 하락한 원/달러 환율의 움직임을 계기로, 환율을 읽는 기본적인 방법을 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경--오늘의-환율">배경 — 오늘의 환율<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EB%B0%B0%EA%B2%BD--%EC%98%A4%EB%8A%98%EC%9D%98-%ED%99%98%EC%9C%A8" class="hash-link" aria-label="배경 — 오늘의 환율에 대한 직접 링크" title="배경 — 오늘의 환율에 대한 직접 링크" translate="no">​</a></h3>
+<p>2026년 10월 22일, 원/달러 환율은 1,324.6원으로 마감했습니다.<br>
+전일 대비 1.4원, 0.11% 하락한 수치로, 5거래일 연속 하락세를 이어갔습니다.<br>
+(KIS MTS 시장 데이터 기준입니다.)<br>
+환율은 주식만큼 자주 언급되지만, 숫자의 방향을 반대로 읽는 경우가 많습니다.<br>
+오늘을 계기로 환율 표시법과 해석의 기본을 정리해 보겠습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3l1ZjhyMnd4Nmd4eTF0OGhycndudWNjajM4bWJlcnYydGpib2M3ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/h0MTqLyvgG0Ss/giphy.gif" alt="Dollar" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율-숫자의-읽는-법">환율 숫자의 읽는 법<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%ED%99%98%EC%9C%A8-%EC%88%AB%EC%9E%90%EC%9D%98-%EC%9D%BD%EB%8A%94-%EB%B2%95" class="hash-link" aria-label="환율 숫자의 읽는 법에 대한 직접 링크" title="환율 숫자의 읽는 법에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="원달러-13246원의-뜻">원/달러 1,324.6원의 뜻<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EC%9B%90%EB%8B%AC%EB%9F%AC-13246%EC%9B%90%EC%9D%98-%EB%9C%BB" class="hash-link" aria-label="원/달러 1,324.6원의 뜻에 대한 직접 링크" title="원/달러 1,324.6원의 뜻에 대한 직접 링크" translate="no">​</a></h4>
+<p>원/달러 환율 1,324.6원은 1달러를 사는 데 1,324.6원이 필요하다는 뜻입니다.<br>
+즉, 달러의 원화 가격입니다.<br>
+이 숫자가 오르면 달러가 비싸진 것이고, 원화의 가치는 떨어진 것입니다.<br>
+이 숫자가 내리면 달러가 싸진 것이고, 원화의 가치는 올라간 것입니다.<br>
+오늘처럼 환율이 하락했다는 것은 원화가 강세를 보였다는 뜻입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율-상승과-하락의-표현">환율 상승과 하락의 표현<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%ED%99%98%EC%9C%A8-%EC%83%81%EC%8A%B9%EA%B3%BC-%ED%95%98%EB%9D%BD%EC%9D%98-%ED%91%9C%ED%98%84" class="hash-link" aria-label="환율 상승과 하락의 표현에 대한 직접 링크" title="환율 상승과 하락의 표현에 대한 직접 링크" translate="no">​</a></h4>
+<p>환율이 오를 때는 "환율 상승" 또는 "원화 약세(원화 가치 하락)"라고 표현합니다.<br>
+환율이 내릴 때는 "환율 하락" 또는 "원화 강세(원화 가치 상승)"라고 표현합니다.<br>
+뉴스에서 "환율이 올랐다"와 "원화가 강세다"는 반대 방향을 가리키므로, 주어가 무엇인지 확인하고 읽어야 합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율을-움직이는-요인들">환율을 움직이는 요인들<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%ED%99%98%EC%9C%A8%EC%9D%84-%EC%9B%80%EC%A7%81%EC%9D%B4%EB%8A%94-%EC%9A%94%EC%9D%B8%EB%93%A4" class="hash-link" aria-label="환율을 움직이는 요인들에 대한 직접 링크" title="환율을 움직이는 요인들에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="금리-차이">금리 차이<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EA%B8%88%EB%A6%AC-%EC%B0%A8%EC%9D%B4" class="hash-link" aria-label="금리 차이에 대한 직접 링크" title="금리 차이에 대한 직접 링크" translate="no">​</a></h4>
+<p>두 나라의 금리 차이가 환율에 영향을 줍니다.<br>
+미국 금리가 한국보다 높으면 달러 자산의 이자 매력이 커져 달러 수요가 늘어납니다.<br>
+오늘 한국은행이 기준금리를 3.00%로 동결한 가운데, 미국의 금리 방향에 대한 기대가 바뀌면 원/달러 환율이 움직입니다.<br>
+금리 결정문을 볼 때는 국내 금리뿐 아니라 미국 연방준비제도의 정책 방향도 함께 확인합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="무역수지와-외국인-자금">무역수지와 외국인 자금<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EB%AC%B4%EC%97%AD%EC%88%98%EC%A7%80%EC%99%80-%EC%99%B8%EA%B5%AD%EC%9D%B8-%EC%9E%90%EA%B8%88" class="hash-link" aria-label="무역수지와 외국인 자금에 대한 직접 링크" title="무역수지와 외국인 자금에 대한 직접 링크" translate="no">​</a></h4>
+<p>수출이 늘면 달러가 국내로 들어와 원화 강세 요인이 됩니다.<br>
+반대로 수입이 늘거나 해외투자가 늘면 달러 수요가 늘어 원화 약세 요인이 됩니다.<br>
+주식시장의 외국인 매매도 환율과 연결됩니다.<br>
+외국인이 국내 주식을 사려면 원화를 사야 하므로, 외국인 순매수는 원화 강세와 함께 나타나는 경우가 많습니다.<br>
+오늘은 지수가 3.52% 하락했는데도 환율이 하락(원화 강세)했습니다.<br>
+외국인이 코스피에서 619억원을 순매도한 날이었으므로, 오늘의 원화 강세는 외국인 자금 유입보다는 다른 요인에 기인한 것으로 해석됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="달러-자체의-움직임">달러 자체의 움직임<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EB%8B%AC%EB%9F%AC-%EC%9E%90%EC%B2%B4%EC%9D%98-%EC%9B%80%EC%A7%81%EC%9E%84" class="hash-link" aria-label="달러 자체의 움직임에 대한 직접 링크" title="달러 자체의 움직임에 대한 직접 링크" translate="no">​</a></h4>
+<p>원/달러 환율은 달러 자체의 움직임에도 영향을 받습니다.<br>
+달러 인덱스가 오르면 달러가 주요 통화 대비 강세를 보이는 것이므로, 원/달러 환율도 오르기 쉽습니다.<br>
+원화의 강세인지 달러의 약세인지를 구분하려면, 엔화·유로화 대비 달러의 움직임도 함께 봅니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="원화-강세와-약세의-양면성">원화 강세와 약세의 양면성<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EC%9B%90%ED%99%94-%EA%B0%95%EC%84%B8%EC%99%80-%EC%95%BD%EC%84%B8%EC%9D%98-%EC%96%91%EB%A9%B4%EC%84%B1" class="hash-link" aria-label="원화 강세와 약세의 양면성에 대한 직접 링크" title="원화 강세와 약세의 양면성에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="원화-강세가-반가운-경우와-부담스러운-경우">원화 강세가 반가운 경우와 부담스러운 경우<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EC%9B%90%ED%99%94-%EA%B0%95%EC%84%B8%EA%B0%80-%EB%B0%98%EA%B0%80%EC%9A%B4-%EA%B2%BD%EC%9A%B0%EC%99%80-%EB%B6%80%EB%8B%B4%EC%8A%A4%EB%9F%AC%EC%9A%B4-%EA%B2%BD%EC%9A%B0" class="hash-link" aria-label="원화 강세가 반가운 경우와 부담스러운 경우에 대한 직접 링크" title="원화 강세가 반가운 경우와 부담스러운 경우에 대한 직접 링크" translate="no">​</a></h4>
+<p>원화 강세는 수입 물가를 낮춰 물가 안정에 도움이 됩니다.<br>
+해외여행이나 해외직구, 외화 자산 매수 입장에서는 유리합니다.<br>
+반면 수출 기업 입장에서는 가격 경쟁력이 떨어져 부담이 됩니다.<br>
+같은 환율 움직임도 입장에 따라 의미가 달라지므로, 방향 하나만으로 좋고 나쁨을 단정하지 않습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="증시와의-관계">증시와의 관계<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EC%A6%9D%EC%8B%9C%EC%99%80%EC%9D%98-%EA%B4%80%EA%B3%84" class="hash-link" aria-label="증시와의 관계에 대한 직접 링크" title="증시와의 관계에 대한 직접 링크" translate="no">​</a></h4>
+<p>일반적으로 원화 강세는 외국인 자금 유입과 맞물리는 경우가 많아 주식시장에 우호적으로 해석되곤 합니다.<br>
+하지만 오늘처럼 지수 하락과 원화 강세가 동시에 나타나면, 수급의 주체가 다르다는 신호일 수 있습니다.<br>
+환율과 지수를 따로 보지 않고 함께 보는 습관이 필요한 이유입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>환율을 볼 때는 종가 숫자 하나보다 방향과 속도를 함께 봅니다.<br>
+5거래일 연속 하락처럼 같은 방향이 이어지면, 그 배경이 무엇인지 금리·무역·달러 인덱스에서 원인을 찾습니다.<br>
+MTS의 환율 화면에서는 전일 대비 등락과 함께 장중 고점·저점을 확인합니다.<br>
+수출입 기업에 투자한다면 실적 발표 때 환율 변동이 매출과 이익에 미친 영향을 설명하는 부분을 찾아봅니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/usd-krw-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>환율은 숫자의 방향만 정확히 읽어도 뉴스의 절반은 이해됩니다.<br>
+"누구의 가격이 올랐는가"를 먼저 묻는 습관이 환율을 읽는 첫걸음입니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3l1ZjhyMnd4Nmd4eTF0OGhycndudWNjajM4bWJlcnYydGpib2M3ciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/11IXPaNTDdw2Eo/giphy.gif" alt="Currency" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>fx</category>
+            <category>exchange-rate</category>
+        </item>
+        <item>
+            <title><![CDATA[분산투자와 리밸런싱 — 정해둔 비중을 지키는 방법]]></title>
+            <link>https://code-bross.github.io/blog/finance/diversification-rebalancing</link>
+            <guid>https://code-bross.github.io/blog/finance/diversification-rebalancing</guid>
+            <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 투자의 가장 기본 원칙으로 꼽히는 분산투자와 리밸런싱에 대해 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="배경에 대한 직접 링크" title="배경에 대한 직접 링크" translate="no">​</a></h3>
+<p>투자를 시작하면 어떤 종목을 고를지에 먼저 관심이 가기 마련입니다.<br>
+하지만 장기적인 성과는 종목 선택만큼이나 자산을 어떻게 나누어 담고, 그 비중을 어떻게 유지하느냐에도 영향을 받습니다.<br>
+분산투자는 비중을 설계하는 방법이고, 리밸런싱은 그 비중을 시간이 지나도 유지하는 방법입니다.<br>
+두 가지를 차례로 살펴보겠습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2l4eWJoZXp6enNmdnJyeGlibzdjNzJiaGhnaTltMzl0aHVnZ2dpdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/PxZqQHKP3VFbkZ0EDI/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="분산투자란">분산투자란<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EB%B6%84%EC%82%B0%ED%88%AC%EC%9E%90%EB%9E%80" class="hash-link" aria-label="분산투자란에 대한 직접 링크" title="분산투자란에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="자산군으로-나누는-것부터-시작합니다">자산군으로 나누는 것부터 시작합니다<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EC%9E%90%EC%82%B0%EA%B5%B0%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%88%84%EB%8A%94-%EA%B2%83%EB%B6%80%ED%84%B0-%EC%8B%9C%EC%9E%91%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="자산군으로 나누는 것부터 시작합니다에 대한 직접 링크" title="자산군으로 나누는 것부터 시작합니다에 대한 직접 링크" translate="no">​</a></h4>
+<p>분산투자는 여러 종목에 나누어 담는 것에서 끝나지 않습니다.<br>
+주식, 채권, 현금성 자산처럼 성격이 다른 자산군에 나누는 것이 출발점입니다.<br>
+주식 안에서도 국내와 해외, 시가총액 규모가 다른 자산을 섞으면 특정 시장이 흔들릴 때 받는 충격을 줄일 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="상관관계가-핵심입니다">상관관계가 핵심입니다<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EC%83%81%EA%B4%80%EA%B4%80%EA%B3%84%EA%B0%80-%ED%95%B5%EC%8B%AC%EC%9E%85%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="상관관계가 핵심입니다에 대한 직접 링크" title="상관관계가 핵심입니다에 대한 직접 링크" translate="no">​</a></h4>
+<p>상관관계는 두 자산이 얼마나 같은 방향으로 움직이는지를 나타냅니다.<br>
+함께 오르고 함께 내리는 자산만 모아두면 개수는 많아도 분산 효과는 작습니다.<br>
+반대로 움직임이 서로 다른 자산을 조합하면, 한쪽이 흔들릴 때 전체 포트폴리오의 출렁임이 줄어드는 효과를 기대할 수 있습니다.<br></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">예시) 주가가 하락하는 국면에서도 채권 가격이 안정적이라면</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">     전체 자산의 하락 폭은 주식만 보유했을 때보다 작아집니다.</span><br></span></code></pre></div></div>
+<p>분산의 목적은 수익을 극대화하는 것이 아니라, 예상하지 못한 상황에서 받는 충격을 줄이는 데 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="리밸런싱이란">리밸런싱이란<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EB%A6%AC%EB%B0%B8%EB%9F%B0%EC%8B%B1%EC%9D%B4%EB%9E%80" class="hash-link" aria-label="리밸런싱이란에 대한 직접 링크" title="리밸런싱이란에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="틀어진-비중을-원래대로-되돌립니다">틀어진 비중을 원래대로 되돌립니다<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%ED%8B%80%EC%96%B4%EC%A7%84-%EB%B9%84%EC%A4%91%EC%9D%84-%EC%9B%90%EB%9E%98%EB%8C%80%EB%A1%9C-%EB%90%98%EB%8F%8C%EB%A6%BD%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="틀어진 비중을 원래대로 되돌립니다에 대한 직접 링크" title="틀어진 비중을 원래대로 되돌립니다에 대한 직접 링크" translate="no">​</a></h4>
+<p>시간이 지나면 오른 자산의 비중은 커지고, 내린 자산의 비중은 작아집니다.<br>
+리밸런싱은 이렇게 틀어진 비중을 처음 정한 목표 비중으로 되돌리는 작업입니다.<br>
+오른 자산을 일부 팔고 내린 자산을 사는 형태가 되므로, 결과적으로 비싸진 것을 줄이고 싸진 것을 늘리는 원칙이 자동으로 적용됩니다.<br></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">예시) 목표 비중이 주식 60 : 채권 40인데</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">     주식 상승으로 70 : 30이 되었다면</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">     주식의 10만큼을 팔아 채권을 사서 60 : 40으로 되돌립니다.</span><br></span></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="주기를-정하는-두-가지-방법">주기를 정하는 두 가지 방법<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EC%A3%BC%EA%B8%B0%EB%A5%BC-%EC%A0%95%ED%95%98%EB%8A%94-%EB%91%90-%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95" class="hash-link" aria-label="주기를 정하는 두 가지 방법에 대한 직접 링크" title="주기를 정하는 두 가지 방법에 대한 직접 링크" translate="no">​</a></h4>
+<p>날짜 기준으로 정하는 방법이 있습니다.<br>
+분기나 반기처럼 정해진 시점에 비중을 점검하는 방식으로, 규칙이 단순해 꾸준히 실천하기 쉽습니다.<br>
+비중 기준으로 정하는 방법도 있습니다.<br>
+목표에서 일정 폭 이상 벗어났을 때만 조정하는 방식으로, 잦은 거래를 줄일 수 있습니다.<br>
+어느 쪽을 택하든 매매에는 수수료와 세금 같은 비용이 따를 수 있으므로, 너무 잦은 조정은 오히려 손해가 될 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="초보자가-흔히-하는-실수">초보자가 흔히 하는 실수<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EC%B4%88%EB%B3%B4%EC%9E%90%EA%B0%80-%ED%9D%94%ED%9E%88-%ED%95%98%EB%8A%94-%EC%8B%A4%EC%88%98" class="hash-link" aria-label="초보자가 흔히 하는 실수에 대한 직접 링크" title="초보자가 흔히 하는 실수에 대한 직접 링크" translate="no">​</a></h3>
+<p>종목 수만 늘리고 분산했다고 생각하는 경우입니다.<br>
+같은 성격의 자산만 많아지면 분산 효과는 제한적일 수밖에 없습니다.<br>
+오른 자산만 계속 사서 비중이 한쪽으로 쏠리는 경우도 흔합니다.<br>
+리밸런싱 없이 그대로 두면 처음 의도와 전혀 다른 포트폴리오가 되어 있습니다.<br>
+시장이 흔들릴 때마다 비중을 바꾸는 것도 주의해야 합니다.<br>
+리밸런싱은 시장을 맞히기 위한 도구가 아니라, 정해둔 원칙을 지키기 위한 도구입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서-확인할-점">실무에서 확인할 점<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="실무에서 확인할 점에 대한 직접 링크" title="실무에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>목표 비중은 자신의 투자 기간과 감당할 수 있는 하락 폭을 먼저 정한 뒤에 정하는 것이 순서입니다.<br>
+적립식으로 꾸준히 투자하고 있다면, 새로 넣는 돈으로 부족해진 자산군을 채우는 방식으로도 비중을 맞출 수 있습니다.<br>
+이렇게 하면 파는 거래를 줄이면서 목표 비중에 가까워질 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/diversification-rebalancing#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>분산투자가 위험을 나누는 설계라면, 리밸런싱은 그 설계가 시간이 지나도 유지되도록 하는 관리 방법입니다.<br>
+종목을 고르는 일만큼, 비중을 정하고 지키는 일을 투자 과정의 일부로 두시기 바랍니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzljbTkxanZmajYwZXF6ZWtvbmtlbGhvNjBtdW80NnliYm84dmxsNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5bcVz12UJLRvyLlx21/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>portfolio</category>
+            <category>basics</category>
+        </item>
+        <item>
+            <title><![CDATA[ETF란 무엇인가 — 주식처럼 사고파는 펀드]]></title>
+            <link>https://code-bross.github.io/blog/finance/etf-basics</link>
+            <guid>https://code-bross.github.io/blog/finance/etf-basics</guid>
+            <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 펀드와 주식의 중간 형태로 불리는 ETF가 무엇인지, 어떤 점을 확인하고 골라야 하는지에 대해 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/finance/etf-basics#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="배경에 대한 직접 링크" title="배경에 대한 직접 링크" translate="no">​</a></h3>
+<p>개별 종목을 고르는 것이 부담스럽지만 예금만으로는 아쉬운 분들이 처음 접하는 상품이 ETF인 경우가 많습니다.<br>
+ETF는 이름 그대로 거래소에 상장된 펀드(Exchange Traded Fund)입니다.<br>
+여러 종목을 한 바구니에 담아 운용한다는 점에서는 펀드와 같고, 그 바구니를 주식처럼 실시간으로 사고팔 수 있다는 점에서는 주식과 같습니다.<br>
+이 구조 덕분에 하나의 상품을 사는 것만으로 여러 종목에 나누어 투자하는 효과를 얻을 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODg5anViMzF1aG5vcHo3MG4zcjYxaWFyMmszNTlqNDBrcW8xb2s4dyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7oIn6Khh0sF3r4qQdW/giphy.gif" alt="Investment" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="etf의-기본-구조">ETF의 기본 구조<a href="https://code-bross.github.io/blog/finance/etf-basics#etf%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="ETF의 기본 구조에 대한 직접 링크" title="ETF의 기본 구조에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="지수-추종">지수 추종<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%A7%80%EC%88%98-%EC%B6%94%EC%A2%85" class="hash-link" aria-label="지수 추종에 대한 직접 링크" title="지수 추종에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">대부분의 ETF는 특정 지수의 움직임을 따라가도록 설계되어 있습니다.</li>
+<li class="">예를 들어 코스피200 지수를 추종하는 ETF는 지수를 구성하는 대형주들을 비슷한 비중으로 담습니다.</li>
+<li class="">지수가 오르면 ETF 가격도 비슷한 비율로 오르는 것을 목표로 운용됩니다.</li>
+<li class="">운용사가 종목을 직접 고르는 액티브 ETF도 있지만, 지수 추종형이 기본 형태입니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="주식과의-차이">주식과의 차이<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%A3%BC%EC%8B%9D%EA%B3%BC%EC%9D%98-%EC%B0%A8%EC%9D%B4" class="hash-link" aria-label="주식과의 차이에 대한 직접 링크" title="주식과의 차이에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">주식은 한 기업의 지분을 사는 것이고, ETF는 여러 자산을 담은 바구니의 지분을 사는 것입니다.</li>
+<li class="">주식처럼 장중에 실시간으로 매매할 수 있고, 호가를 보면서 가격을 지정해 주문할 수 있습니다.</li>
+<li class="">일반 펀드처럼 환매에 며칠이 걸리지 않는다는 점이 큰 차이입니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="펀드와의-차이">펀드와의 차이<a href="https://code-bross.github.io/blog/finance/etf-basics#%ED%8E%80%EB%93%9C%EC%99%80%EC%9D%98-%EC%B0%A8%EC%9D%B4" class="hash-link" aria-label="펀드와의 차이에 대한 직접 링크" title="펀드와의 차이에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">일반 펀드는 하루에 한 번 정해지는 기준가격으로 거래되지만, ETF는 장중 가격이 계속 바뀝니다.</li>
+<li class="">일반 펀드에 부과되는 판매 수수료가 없는 경우가 많고, MTS에서 주식과 같은 화면으로 거래할 수 있습니다.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="사기-전에-확인해야-할-것들">사기 전에 확인해야 할 것들<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%82%AC%EA%B8%B0-%EC%A0%84%EC%97%90-%ED%99%95%EC%9D%B8%ED%95%B4%EC%95%BC-%ED%95%A0-%EA%B2%83%EB%93%A4" class="hash-link" aria-label="사기 전에 확인해야 할 것들에 대한 직접 링크" title="사기 전에 확인해야 할 것들에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="보수ter">보수(TER)<a href="https://code-bross.github.io/blog/finance/etf-basics#%EB%B3%B4%EC%88%98ter" class="hash-link" aria-label="보수(TER)에 대한 직접 링크" title="보수(TER)에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">ETF를 보유하는 동안 운용 비용으로 차감되는 비율을 총보수(TER)라고 합니다.</li>
+<li class="">보수는 수익률에서 매일 조금씩 반영되어 빠지기 때문에, 같은 지수를 추종하는 상품끼리는 보수가 낮을수록 장기 성과에 유리합니다.</li>
+<li class="">상품 이름이 비슷해도 운용사마다 보수가 다를 수 있어 비교가 필요합니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="괴리율">괴리율<a href="https://code-bross.github.io/blog/finance/etf-basics#%EA%B4%B4%EB%A6%AC%EC%9C%A8" class="hash-link" aria-label="괴리율에 대한 직접 링크" title="괴리율에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">ETF의 시장가격과 실제 바구니의 가치(순자산가치, NAV)가 벌어진 정도를 괴리율이라고 합니다.</li>
+<li class="">거래가 활발하지 않은 상품은 시장가격이 자산 가치보다 비싸거나 싸게 형성될 수 있습니다.</li>
+<li class="">매수하기 전에 괴리율이 지나치게 크지 않은지 확인하는 것이 좋습니다.</li>
+<li class="">장중에는 추정 순자산가치인 iNAV를 통해 대략적인 가치를 참고할 수 있습니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="분배금">분배금<a href="https://code-bross.github.io/blog/finance/etf-basics#%EB%B6%84%EB%B0%B0%EA%B8%88" class="hash-link" aria-label="분배금에 대한 직접 링크" title="분배금에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">ETF가 담고 있는 주식의 배당이나 채권의 이자를 모아 투자자에게 나눠주는 돈을 분배금이라고 합니다.</li>
+<li class="">지급 여부와 주기는 상품마다 다르기 때문에, 분배금을 기대하고 매수한다면 지급 정책을 먼저 확인해야 합니다.</li>
+<li class="">분배금을 지급하면 그만큼 ETF의 자산이 줄어 가격이 조정된다는 점도 함께 이해해 두는 것이 좋습니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="거래량과-운용-규모">거래량과 운용 규모<a href="https://code-bross.github.io/blog/finance/etf-basics#%EA%B1%B0%EB%9E%98%EB%9F%89%EA%B3%BC-%EC%9A%B4%EC%9A%A9-%EA%B7%9C%EB%AA%A8" class="hash-link" aria-label="거래량과 운용 규모에 대한 직접 링크" title="거래량과 운용 규모에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">거래량이 적은 상품은 원하는 가격에 사고팔기 어렵고, 매수·매도 호가의 간격이 벌어질 수 있습니다.</li>
+<li class="">운용 규모가 너무 작은 상품은 상장폐지가 될 가능성도 있어 규모를 함께 확인합니다.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="etf의-유형">ETF의 유형<a href="https://code-bross.github.io/blog/finance/etf-basics#etf%EC%9D%98-%EC%9C%A0%ED%98%95" class="hash-link" aria-label="ETF의 유형에 대한 직접 링크" title="ETF의 유형에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="시장대표지수형">시장대표지수형<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%8B%9C%EC%9E%A5%EB%8C%80%ED%91%9C%EC%A7%80%EC%88%98%ED%98%95" class="hash-link" aria-label="시장대표지수형에 대한 직접 링크" title="시장대표지수형에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">코스피200처럼 한 나라 시장 전체를 대표하는 지수를 추종하는 가장 기본적인 유형입니다.</li>
+<li class="">해외 시장을 대상으로 S&amp;P500, 나스닥100 같은 지수를 추종하는 상품도 여기에 속합니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="섹터테마형">섹터·테마형<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%84%B9%ED%84%B0%ED%85%8C%EB%A7%88%ED%98%95" class="hash-link" aria-label="섹터·테마형에 대한 직접 링크" title="섹터·테마형에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">반도체, 2차전지처럼 특정 산업이나 주제를 모아 담은 유형입니다.</li>
+<li class="">시장 전체가 아닌 일부 영역에 집중하기 때문에 변동성이 더 클 수 있습니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="채권형">채권형<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%B1%84%EA%B6%8C%ED%98%95" class="hash-link" aria-label="채권형에 대한 직접 링크" title="채권형에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">국채나 회사채 같은 채권을 담는 유형입니다.</li>
+<li class="">주식형에 비해 가격 변동이 작은 편이라 자금을 안정적으로 두는 용도로 쓰입니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="원자재대체자산형">원자재·대체자산형<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%9B%90%EC%9E%90%EC%9E%AC%EB%8C%80%EC%B2%B4%EC%9E%90%EC%82%B0%ED%98%95" class="hash-link" aria-label="원자재·대체자산형에 대한 직접 링크" title="원자재·대체자산형에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">금과 같은 원자재나 리츠 등을 담는 유형입니다.</li>
+<li class="">주식과 다르게 움직이는 자산을 섞어 포트폴리오의 변동을 나누는 데 활용됩니다.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/etf-basics#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>MTS의 ETF 검색에서는 지수 이름만 보지 않고 총보수, 괴리율, 거래량을 함께 정렬해 보는 것이 좋습니다.<br>
+같은 지수를 추종하는 상품이 여러 개라면 보수와 거래량, 운용 규모를 비교하는 것만으로도 선택의 기준이 명확해집니다.<br>
+처음에는 시장대표지수형처럼 구조가 단순한 상품부터 살펴보면서, 괴리율과 iNAV를 확인하는 흐름에 익숙해지는 것을 권합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/etf-basics#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>ETF는 펀드의 분산 투자를 주식의 거래 편의성으로 옮겨 온 상품입니다.<br>
+구조를 이해하고 보수와 괴리율만 확인해도, 상품을 고를 때 흔들리는 일이 훨씬 줄어듭니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjRnd3J3azg3M3dobWZoem45azJzZXZ6bGFjNzJ2bDJvc3JsZGc0MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/2SxYjYV9vP9NDSc2r4/giphy.gif" alt="Piggy bank" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>etf</category>
+            <category>basics</category>
+        </item>
+        <item>
+            <title><![CDATA[금리와 주가의 관계 — 기준금리가 움직이면 주가는 왜 움직일까]]></title>
+            <link>https://code-bross.github.io/blog/finance/interest-rate-and-stocks</link>
+            <guid>https://code-bross.github.io/blog/finance/interest-rate-and-stocks</guid>
+            <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 기준금리가 오르내릴 때 주가와 채권가격이 왜 움직이는지, 그 원리에 대해 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="배경에 대한 직접 링크" title="배경에 대한 직접 링크" translate="no">​</a></h3>
+<p>뉴스에서는 중앙은행이 기준금리를 올리면 주가가 흔들리고, 내리면 반등한다는 이야기를 자주 접합니다.<br>
+그런데 금리는 대출 이자에 붙는 숫자이고, 주가는 기업의 가치를 나타내는 숫자인데 둘 사이에 어떤 연결고리가 있는 것일까요.<br>
+이 연결고리를 이해하려면 먼저 기준금리가 무엇인지, 그리고 할인율이라는 개념을 알아야 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="기준금리">기준금리<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EA%B8%B0%EC%A4%80%EA%B8%88%EB%A6%AC" class="hash-link" aria-label="기준금리에 대한 직접 링크" title="기준금리에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">중앙은행이 시중 은행과의 거래에 적용하는 정책 금리입니다.</li>
+<li class="">이 금리가 오르면 예금·대출 금리가 따라 움직이며, 돈의 가격이 전반적으로 비싸집니다.</li>
+<li class="">반대로 내리면 돈을 빌리는 비용이 줄어들어 시중에 자금이 풀리기 쉬워집니다.</li>
+</ul>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTJzZzkwdnFoOHp2OWd2OGV1eXFyOG5jejJiM2dhNzJoZWh1eGtrbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IvYx0wz4V9ivnvpVGV/giphy.gif" alt="Interest rate" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="금리가-주가에-닿는-길">금리가 주가에 닿는 길<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EA%B8%88%EB%A6%AC%EA%B0%80-%EC%A3%BC%EA%B0%80%EC%97%90-%EB%8B%BF%EB%8A%94-%EA%B8%B8" class="hash-link" aria-label="금리가 주가에 닿는 길에 대한 직접 링크" title="금리가 주가에 닿는 길에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="할인율과-현재가치">할인율과 현재가치<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%ED%95%A0%EC%9D%B8%EC%9C%A8%EA%B3%BC-%ED%98%84%EC%9E%AC%EA%B0%80%EC%B9%98" class="hash-link" aria-label="할인율과 현재가치에 대한 직접 링크" title="할인율과 현재가치에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">주식의 가격은 그 기업이 앞으로 벌어들일 이익을 현재의 가치로 환산한 값에 가깝습니다.</li>
+<li class="">미래의 돈을 현재 가치로 바꿀 때 적용하는 비율이 할인율이며, 할인율은 금리를 따라 움직입니다.</li>
+<li class="">예를 들어 1년 뒤에 받을 110만 원은 할인율이 10%이면 오늘의 100만 원과 같은 가치입니다.</li>
+<li class="">같은 돈이라도 할인율이 5%로 낮아지면 현재가치는 약 104.8만 원으로 커집니다.</li>
+<li class="">즉, 금리가 내리면 미래 이익의 현재가치가 커져 주가에 우호적으로 작용하고, 금리가 오르면 그 반대가 됩니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="채권가격과의-역관계">채권가격과의 역관계<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EC%B1%84%EA%B6%8C%EA%B0%80%EA%B2%A9%EA%B3%BC%EC%9D%98-%EC%97%AD%EA%B4%80%EA%B3%84" class="hash-link" aria-label="채권가격과의 역관계에 대한 직접 링크" title="채권가격과의 역관계에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">채권은 정해진 이자(표면금리)를 지급하기로 약속한 증권입니다.</li>
+<li class="">시장 금리가 오르면 새로 발행되는 채권이 더 높은 이자를 주기 때문에, 이자가 낮은 기존 채권의 매력은 떨어지고 가격은 하락합니다.</li>
+<li class="">반대로 시장 금리가 내리면 기존 채권의 상대적 매력이 커져 가격이 오릅니다.</li>
+<li class="">그래서 채권가격과 금리는 반대로 움직인다고 정리합니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="기업의-비용과-실적">기업의 비용과 실적<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EA%B8%B0%EC%97%85%EC%9D%98-%EB%B9%84%EC%9A%A9%EA%B3%BC-%EC%8B%A4%EC%A0%81" class="hash-link" aria-label="기업의 비용과 실적에 대한 직접 링크" title="기업의 비용과 실적에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">금리가 오르면 기업이 돈을 빌리는 비용이 늘어 이익이 줄어들 수 있습니다.</li>
+<li class="">빚이 많은 기업일수록 이자 부담의 영향을 크게 받습니다.</li>
+<li class="">금리가 내리면 이자 부담이 줄고, 소비와 투자도 늘어나기 쉬워 기업 실적에 우호적인 환경이 됩니다.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="성장주와-가치주가-다르게-받는-영향">성장주와 가치주가 다르게 받는 영향<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EC%84%B1%EC%9E%A5%EC%A3%BC%EC%99%80-%EA%B0%80%EC%B9%98%EC%A3%BC%EA%B0%80-%EB%8B%A4%EB%A5%B4%EA%B2%8C-%EB%B0%9B%EB%8A%94-%EC%98%81%ED%96%A5" class="hash-link" aria-label="성장주와 가치주가 다르게 받는 영향에 대한 직접 링크" title="성장주와 가치주가 다르게 받는 영향에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="성장주">성장주<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EC%84%B1%EC%9E%A5%EC%A3%BC" class="hash-link" aria-label="성장주에 대한 직접 링크" title="성장주에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">지금의 이익보다 먼 미래의 큰 이익을 기대하고 가격이 형성되는 주식입니다.</li>
+<li class="">이익의 상당 부분이 먼 미래에 있기 때문에, 할인율이 오르면 현재가치가 크게 깎입니다.</li>
+<li class="">그래서 금리 상승기에 상대적으로 더 큰 조정을 받는 경우가 많습니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="가치주">가치주<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EA%B0%80%EC%B9%98%EC%A3%BC" class="hash-link" aria-label="가치주에 대한 직접 링크" title="가치주에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">현재의 이익과 자산에 비해 가격이 낮게 평가된 주식입니다.</li>
+<li class="">이익이 가까운 시기에 발생하므로 할인율 변화의 영향을 비교적 덜 받습니다.</li>
+<li class="">금리 상승기에는 성장주보다 방어적인 모습을 보이는 경우가 많습니다.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-봅니다">실무에서는 이렇게 봅니다<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%EB%B4%85%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 봅니다에 대한 직접 링크" title="실무에서는 이렇게 봅니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>금리 뉴스를 접할 때는 인상·인하 여부 자체보다 시장의 예상과 얼마나 다른지를 함께 봅니다.<br>
+이미 예상된 금리 결정은 주가에 미리 반영된 경우가 많아, 발표 후에도 시장이 크게 움직이지 않을 수 있습니다.<br>
+반대로 예상과 다른 결정이나 중앙은행 총재의 발언은 할인율에 대한 기대 자체를 바꾸기 때문에 변동성이 커질 수 있습니다.<br>
+보유한 주식이 먼 미래의 성장에 기대는 유형인지, 현재 이익 중심의 유형인지 구분해 두면 금리 환경 변화에 따른 영향을 가늠하는 데 도움이 됩니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/interest-rate-and-stocks#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>금리와 주가의 관계는 결국 미래의 돈을 오늘의 가치로 바꾸는 할인율에서 출발합니다.<br>
+이 원리를 알아두면 금리 관련 뉴스가 나올 때마다 시장이 왜 그렇게 반응하는지 이해하는 데 도움이 됩니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjZnNzNwamZvb2kxNTVyNG9tNW5ycG9manhwZHg2cHU1czQ2cHI3eiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/12Eo7WogCAoj84/giphy.gif" alt="Money" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>interest-rate</category>
+            <category>basics</category>
+        </item>
+        <item>
+            <title><![CDATA[코스피 5,700선 돌파 — 지수가 오를 때 확인해야 할 것들]]></title>
+            <link>https://code-bross.github.io/blog/finance/kospi-5700-rally</link>
+            <guid>https://code-bross.github.io/blog/finance/kospi-5700-rally</guid>
+            <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br></p>
+<p>오늘은 코스피가 5,700선을 넘은 시장 동향과, 지수가 오를 때 함께 확인해야 할 지표들에 대해 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="오늘의-시장">오늘의 시장<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EC%98%A4%EB%8A%98%EC%9D%98-%EC%8B%9C%EC%9E%A5" class="hash-link" aria-label="오늘의 시장에 대한 직접 링크" title="오늘의 시장에 대한 직접 링크" translate="no">​</a></h3>
+<p>2026년 10월 21일, 코스피는 오후 2시 무렵 5,712.46을 기록하며 5,700선을 넘어섰습니다.<br>
+전일 대비 159.72포인트, 2.88% 오른 수치입니다.<br>
+코스닥도 792.38로 전일 대비 10.41포인트, 1.33% 상승했습니다.<br>
+대형주 중심의 코스피200 지수는 886.28로 3.20% 오르며 코스피보다 큰 상승폭을 보였습니다.<br>
+원/달러 환율은 1,324.0원으로 전일 대비 0.15% 하락해 원화가 소폭 강세를 보였습니다.<br>
+간밤 미국 시장은 나스닥 종합지수가 0.02% 하락하고 S&amp;P500이 0.28% 오르는 등 방향성이 엇갈렸습니다.<br>
+즉, 오늘 국내 증시의 상승은 해외 시장의 흐름만으로는 설명하기 어려운, 국내 요인이 강하게 작용한 하루였습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnN6MWxzOGNpMmF2N3BtaXFsYzZyYWFmMXVjbWdqdTY2bXV0NHduaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5RNNQvq3fhYlOYDIQ2/giphy.gif" alt="Stock market" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="지수가-오를-때-확인해야-할-것들">지수가 오를 때 확인해야 할 것들<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EC%A7%80%EC%88%98%EA%B0%80-%EC%98%A4%EB%A5%BC-%EB%95%8C-%ED%99%95%EC%9D%B8%ED%95%B4%EC%95%BC-%ED%95%A0-%EA%B2%83%EB%93%A4" class="hash-link" aria-label="지수가 오를 때 확인해야 할 것들에 대한 직접 링크" title="지수가 오를 때 확인해야 할 것들에 대한 직접 링크" translate="no">​</a></h3>
+<p>지수 상승률만 보고 시장을 판단하면 흐름을 잘못 읽을 수 있습니다.<br>
+같은 상승이라도 어떤 돈이, 어떤 종목을 사서 올랐는지에 따라 의미가 달라지기 때문입니다.<br>
+대표적으로 다음 네 가지를 함께 확인합니다.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="거래대금">거래대금<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EA%B1%B0%EB%9E%98%EB%8C%80%EA%B8%88" class="hash-link" aria-label="거래대금에 대한 직접 링크" title="거래대금에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">지수가 오르면서 거래대금도 함께 늘었는지를 봅니다.</li>
+<li class="">거래대금이 뒷받침되는 상승은 시장에 참여하는 자금 자체가 늘었다는 신호로 해석합니다.</li>
+<li class="">반대로 거래가 한산한데 지수만 오르면, 적은 매수세에도 가격이 움직인 것일 수 있어 상승의 지속성을 보수적으로 보게 됩니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="외국인기관-수급">외국인·기관 수급<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EC%99%B8%EA%B5%AD%EC%9D%B8%EA%B8%B0%EA%B4%80-%EC%88%98%EA%B8%89" class="hash-link" aria-label="외국인·기관 수급에 대한 직접 링크" title="외국인·기관 수급에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">외국인과 기관, 개인 중 누가 순매수를 주도했는지를 확인합니다.</li>
+<li class="">특히 외국인의 매매는 환율과 글로벌 자금 흐름의 영향을 크게 받기 때문에, 국내 증시의 방향을 가늠하는 데 자주 참고합니다.</li>
+<li class="">기관 중에서도 연기금, 투신, 금융투자 등 주체별로 성격이 달라, 어느 주체가 샀는지도 함께 살펴봅니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="주도-업종">주도 업종<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EC%A3%BC%EB%8F%84-%EC%97%85%EC%A2%85" class="hash-link" aria-label="주도 업종에 대한 직접 링크" title="주도 업종에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">어떤 업종이 상승을 이끌었는지 확인합니다.</li>
+<li class="">시가총액이 큰 업종이 주도하면 지수 상승폭이 커지기 쉽고, 특정 업종에 상승이 집중됐는지 시장 전반으로 확산됐는지에 따라 체감 강도가 달라집니다.</li>
+<li class="">오늘처럼 코스피200의 상승률이 코스피를 웃도는 날은 대형주 중심의 상승이었음을 짐작할 수 있습니다.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율">환율<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%ED%99%98%EC%9C%A8" class="hash-link" aria-label="환율에 대한 직접 링크" title="환율에 대한 직접 링크" translate="no">​</a></h4>
+<ul>
+<li class="">원/달러 환율의 방향을 지수와 함께 봅니다.</li>
+<li class="">일반적으로 원화 강세(환율 하락)는 외국인 자금 유입과 맞물리는 경우가 많아, 지수 상승과 환율 하락이 동시에 나타나면 수급 환경을 우호적으로 해석하기도 합니다.</li>
+<li class="">다만 환율은 수출 기업의 실적에도 영향을 주기 때문에, 방향 하나만으로 좋고 나쁨을 단정하지는 않습니다.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서는-이렇게-확인합니다">실무에서는 이렇게 확인합니다<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="실무에서는 이렇게 확인합니다에 대한 직접 링크" title="실무에서는 이렇게 확인합니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>MTS에서는 지수 화면만 보지 않고 수급 화면과 업종별 지수를 함께 확인하는 습관이 도움이 됩니다.<br>
+지수가 오른 날일수록 상승률보다 먼저 거래대금 추이와 외국인·기관의 매매 동향을 대조해 봅니다.<br>
+특정 업종이 급등한 경우에는 그 업종 안에서 대장주가 움직였는지, 업종 전반이 따라 올랐는지도 구분해서 봅니다.<br>
+이렇게 지표를 겹쳐서 보면 하루의 상승이 자금 유입에 기반한 것인지, 단기적인 수급 쏠림인지 판단하는 데 도움이 됩니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/kospi-5700-rally#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>지수가 큰 폭으로 오른 날에는 상승률 자체보다 그 안의 내용을 확인하는 것이 중요합니다.<br>
+거래대금, 수급, 주도 업종, 환율을 함께 살펴보는 습관이 시장의 흐름을 읽는 기본기가 됩니다.</p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcG1ocTFtbTk0aWY0d2hzZGJpNnhtN3J3dmUwaGRxNXNtbGFsb20zYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/U7gTVK2ch30xsUskCL/giphy.gif" alt="Chart" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>market</category>
+            <category>kospi</category>
+        </item>
+        <item>
+            <title><![CDATA[PER과 PBR 읽는 법 — 이익과 자산으로 주가를 가늠하는 두 가지 지표]]></title>
+            <link>https://code-bross.github.io/blog/finance/per-pbr-guide</link>
+            <guid>https://code-bross.github.io/blog/finance/per-pbr-guide</guid>
+            <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 주식의 가격 수준을 판단할 때 가장 먼저 확인하게 되는 지표인 PER과 PBR에 대해 설명해드리겠습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="배경에 대한 직접 링크" title="배경에 대한 직접 링크" translate="no">​</a></h3>
+<p>종목을 검색하면 현재가와 함께 PER, PBR 같은 숫자가 나란히 표시됩니다.<br>
+숫자가 낮으면 싸고 높으면 비싸다고 단순하게 이해하기 쉽습니다.<br>
+하지만 이 지표들은 어떤 숫자를 나누어 만든 것인지, 그리고 업종의 특성이 무엇인지와 함께 봐야 제대로 읽을 수 있습니다.<br>
+각 지표의 계산 방식부터 차례로 살펴보겠습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2dvNTI5bTQ2dzUyMTQ2MjN5N3h1dXVsdnJzczMxaXNsOGtpemw3dCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3tEFVAbfzzcwo/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="per--이익과-비교한-가격">PER — 이익과 비교한 가격<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#per--%EC%9D%B4%EC%9D%B5%EA%B3%BC-%EB%B9%84%EA%B5%90%ED%95%9C-%EA%B0%80%EA%B2%A9" class="hash-link" aria-label="PER — 이익과 비교한 가격에 대한 직접 링크" title="PER — 이익과 비교한 가격에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="정의와-계산식">정의와 계산식<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EC%A0%95%EC%9D%98%EC%99%80-%EA%B3%84%EC%82%B0%EC%8B%9D" class="hash-link" aria-label="정의와 계산식에 대한 직접 링크" title="정의와 계산식에 대한 직접 링크" translate="no">​</a></h4>
+<p>PER(주가수익비율, Price Earnings Ratio)은 주가를 주당순이익(EPS)으로 나눈 값입니다.<br>
+기업이 벌어들이는 이익에 비해 주가가 몇 배로 거래되고 있는지를 나타냅니다.<br></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">PER = 주가 ÷ EPS(주당순이익)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">EPS = 당기순이익 ÷ 발행주식수</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">예시) 주가 50,000원, EPS 5,000원인 경우</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">     PER = 50,000 ÷ 5,000 = 10배</span><br></span></code></pre></div></div>
+<p>PER이 10배라는 것은 현재의 이익 수준이 그대로 유지된다고 가정하면, 투자한 금액과 같은 크기의 이익이 쌓이기까지 10년이 걸린다는 의미로 해석할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="per을-읽을-때-주의할-점">PER을 읽을 때 주의할 점<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#per%EC%9D%84-%EC%9D%BD%EC%9D%84-%EB%95%8C-%EC%A3%BC%EC%9D%98%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="PER을 읽을 때 주의할 점에 대한 직접 링크" title="PER을 읽을 때 주의할 점에 대한 직접 링크" translate="no">​</a></h4>
+<p>이익이 일시적으로 흔들리면 PER도 함께 크게 흔들립니다.<br>
+일회성 이익이 발생한 해에는 이익이 부풀려져 PER이 실제보다 낮아 보일 수 있습니다.<br>
+적자 기업은 EPS가 음수가 되어 PER을 계산할 수 없습니다.<br>
+이 경우 PER이 표시되지 않는다고 해서 이상한 것은 아닙니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="pbr--자산과-비교한-가격">PBR — 자산과 비교한 가격<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#pbr--%EC%9E%90%EC%82%B0%EA%B3%BC-%EB%B9%84%EA%B5%90%ED%95%9C-%EA%B0%80%EA%B2%A9" class="hash-link" aria-label="PBR — 자산과 비교한 가격에 대한 직접 링크" title="PBR — 자산과 비교한 가격에 대한 직접 링크" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="정의와-계산식-1">정의와 계산식<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EC%A0%95%EC%9D%98%EC%99%80-%EA%B3%84%EC%82%B0%EC%8B%9D-1" class="hash-link" aria-label="정의와 계산식에 대한 직접 링크" title="정의와 계산식에 대한 직접 링크" translate="no">​</a></h4>
+<p>PBR(주가순자산비율, Price Book-value Ratio)은 주가를 주당순자산(BPS)으로 나눈 값입니다.<br>
+회사가 가진 순자산에 비해 주가가 어느 수준인지를 나타냅니다.<br></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">PBR = 주가 ÷ BPS(주당순자산)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">BPS = 자본총계 ÷ 발행주식수</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">예시) 주가 50,000원, BPS 100,000원인 경우</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">     PBR = 50,000 ÷ 100,000 = 0.5배</span><br></span></code></pre></div></div>
+<p>PBR이 1배보다 낮으면 장부상 순자산보다 주가가 낮게 형성되어 있다는 뜻입니다.<br>
+다만 장부에 기록된 자산 가치와 실제 가치가 다를 수 있다는 점은 함께 고려해야 합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="업종마다-기준이-다른-이유">업종마다 기준이 다른 이유<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EC%97%85%EC%A2%85%EB%A7%88%EB%8B%A4-%EA%B8%B0%EC%A4%80%EC%9D%B4-%EB%8B%A4%EB%A5%B8-%EC%9D%B4%EC%9C%A0" class="hash-link" aria-label="업종마다 기준이 다른 이유에 대한 직접 링크" title="업종마다 기준이 다른 이유에 대한 직접 링크" translate="no">​</a></h3>
+<p>성장 산업은 미래 이익에 대한 기대가 가격에 먼저 반영되어 PER이 높게 형성되는 경우가 많습니다.<br>
+은행·보험 같은 금융 업종은 자산 규모가 크고 이익의 변동이 상대적으로 작아, PER과 함께 PBR을 보는 경우가 많습니다.<br>
+플랫폼·소프트웨어 기업은 장부에 잡히지 않는 무형자산의 비중이 커서 PBR이 높게 나타나는 경향이 있습니다.<br>
+따라서 절대적인 숫자 하나만으로 비교하기보다, 같은 업종 안에서 비교하고 그 기업의 과거 흐름과 비교하는 것이 먼저입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="낮다고-무조건-싼-것은-아닙니다">낮다고 무조건 싼 것은 아닙니다<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EB%82%AE%EB%8B%A4%EA%B3%A0-%EB%AC%B4%EC%A1%B0%EA%B1%B4-%EC%8B%BC-%EA%B2%83%EC%9D%80-%EC%95%84%EB%8B%99%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="낮다고 무조건 싼 것은 아닙니다에 대한 직접 링크" title="낮다고 무조건 싼 것은 아닙니다에 대한 직접 링크" translate="no">​</a></h3>
+<p>PER과 PBR이 낮게 머무는 데에는 그만한 이유가 있는 경우가 많습니다.<br>
+이렇게 싸 보이는 상태가 오래 지속되는 상황을 가치 함정이라고 부릅니다.<br>
+이익이 줄어드는 추세이거나, 산업 자체가 쇠퇴하고 있거나, 재무 구조에 문제가 있으면 낮은 지표가 오히려 위험 신호일 수 있습니다.<br>
+지표가 낮은 이유를 확인하지 않고 숫자만 보고 접근하면, 싸 보이는 가격이 계속 싸게 머무는 상황을 겪을 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="roe와-함께-보는-법">ROE와 함께 보는 법<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#roe%EC%99%80-%ED%95%A8%EA%BB%98-%EB%B3%B4%EB%8A%94-%EB%B2%95" class="hash-link" aria-label="ROE와 함께 보는 법에 대한 직접 링크" title="ROE와 함께 보는 법에 대한 직접 링크" translate="no">​</a></h3>
+<p>ROE(자기자본이익률)는 회사가 자본을 얼마나 효율적으로 이익으로 바꾸는지를 나타냅니다.<br>
+세 지표 사이에는 다음과 같은 관계가 성립합니다.<br></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">ROE = 당기순이익 ÷ 자본총계 × 100</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">관계식) PBR = PER × ROE</span><br></span></code></pre></div></div>
+<p>ROE가 높은 기업은 같은 자본으로 더 많은 이익을 내므로, 시장이 더 높은 PBR을 받아들이는 경우가 많습니다.<br>
+반대로 PBR이 낮은데 ROE까지 낮다면, 자산은 있지만 이익을 잘 내지 못하는 기업일 수 있습니다.<br>
+PER, PBR, ROE 세 가지를 함께 보면 가격 수준과 수익성을 같이 놓고 판단할 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서-확인할-점">실무에서 확인할 점<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="실무에서 확인할 점에 대한 직접 링크" title="실무에서 확인할 점에 대한 직접 링크" translate="no">​</a></h3>
+<p>MTS나 포털에서 제공하는 PER·PBR은 어떤 날짜의 재무제표를 기준으로 계산했는지에 따라 숫자가 달라질 수 있습니다.<br>
+최근 확정 실적 기준인지, 예상 실적 기준인지 확인하는 습관이 필요합니다.<br>
+지표를 비교할 때는 같은 기준, 같은 업종, 같은 시점으로 맞추는 것이 기본입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/finance/per-pbr-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="마치며에 대한 직접 링크" title="마치며에 대한 직접 링크" translate="no">​</a></h3>
+<p>PER과 PBR은 주가가 이익과 자산에 비해 어느 수준인지 알려주는 출발점일 뿐, 그 자체로 결론이 되지는 않습니다.<br>
+업종의 특성과 ROE를 함께 놓고, 지표가 낮은 이유까지 확인하는 순서로 읽어보시기 바랍니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeG9rczN5dWlqdWtlNWM2N3pkcWxsa25seDk5a285b3hscmUzd3FhbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/U7gTVK2ch30xsUskCL/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>valuation</category>
+            <category>basics</category>
+        </item>
+    </channel>
+</rss>

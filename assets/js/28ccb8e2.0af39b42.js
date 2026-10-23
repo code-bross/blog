@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmy_tech_blog=globalThis.webpackChunkmy_tech_blog||[]).push([[5084],{6021:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-blog","id":"finance"}')}}]);
