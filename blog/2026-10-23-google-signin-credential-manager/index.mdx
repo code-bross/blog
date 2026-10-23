@@ -1,0 +1,135 @@
+---
+slug: mts-google-signin-credential-manager
+title: Google Sign-In deprecated, 이제는 Credential Manager로 옮기기
+authors: [way]
+tags: [android, credential-manager, sign-in, authentication, mts]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+오랫동안 사용해 온 Google Sign-In for Android의 deprecated 선언과 Credential Manager로의 이전 방법에 대해 설명해드리겠습니다.<br/>
+
+### 현재 상황
+
+Android에서 Google 계정으로 로그인하는 방법은 오랫동안 `play-services-auth`의 `GoogleSignInClient`와 `GoogleSignInOptions`였습니다.<br/>
+하지만 Android Developers 문서에 따르면 Google Sign-In for Android는 deprecated 상태이며, Google Play services Auth SDK의 향후 릴리스에서는 제거될 예정이라고 명시되어 있습니다.<br/>
+후계자로는 [Credential Manager](https://developer.android.com/identity/sign-in/credential-manager)가 공식 권장되고 있습니다.<br/>
+제거 시기는 아직 정해지지 않았지만 제거가 예고된 만큼, 인증 흐름을 손보는 시점에 함께 이전하는 것이 안전합니다.<br/>
+
+<div style={textAlign: 'center', margin: '1.5rem 0'}>
+  <img src="https://media.giphy.com/media/GRlEX375LPXaJX7ZtO/giphy.gif" alt="Success" style={maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'} />
+</div>
+
+### Credential Manager 살펴보기
+
+Credential Manager는 패스키, 비밀번호, Google을 포함한 연합 로그인 방식을 하나의 통합 API로 처리하는 Jetpack API입니다.<br/>
+Android 4.4(API 19) 이상에서 동작하며 모바일, Android XR, Wear OS를 포함한 다양한 폼 팩터를 지원합니다.<br/>
+[공식 마이그레이션 가이드](https://developer.android.com/identity/sign-in/legacy-gsi-migration)에서는 새 API의 이점을 하나의 통합 지점, 표준 Sign in with Google 버튼 지원, 원탭 자동 로그인, 패스키 내장 보안으로 정리하고 있습니다.<br/>
+
+#### 의존성 추가하기
+
+[구현 가이드](https://developer.android.com/identity/sign-in/credential-manager-siwg-implementation)에 따르면 다음 세 가지 의존성을 추가합니다.
+
+```kotlin
+dependencies {
+    implementation("androidx.credentials:credentials:1.7.0-alpha03")
+    implementation("androidx.credentials:credentials-play-services-auth:1.7.0-alpha03")
+    implementation("com.google.android.libraries.identity.googleid:googleid:<latest version>")
+}
+```
+
+#### 바텀 시트 플로우 만들기
+
+Credential Manager의 바텀 시트는 패스키, 비밀번호, Google 로그인에 모두 동일한 경험을 제공하는 내장 UI입니다.<br/>
+기존처럼 별도의 로그인 화면을 만들 필요가 없습니다.<br/>
+먼저 이전에 인증된 계정을 조회하는 요청을 만듭니다.
+
+```kotlin
+val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+    .setFilterByAuthorizedAccounts(true)
+    .setServerClientId(WEB_CLIENT_ID)
+    .setAutoSelectEnabled(true)
+    .setNonce(generateSecureRandomNonce())
+    .build()
+```
+
+`setFilterByAuthorizedAccounts(true)`는 이 앱에서 이전에 사용한 계정만 보여 줍니다.<br/>
+`setAutoSelectEnabled(true)`와 함께 사용하면 기존 `silentSignIn`과 유사한 자동 로그인을 구현할 수 있습니다.<br/>
+단, 자동 로그인이 동작하려면 디바이스에 승인된 계정이 하나뿐이고, 이전 세션에서 명시적으로 로그아웃하지 않았으며, 사용자가 Google 계정 설정에서 자동 로그인을 끄지 않은 조건을 만족해야 합니다.<br/>
+
+이어서 요청을 실행합니다.
+
+```kotlin
+val request: GetCredentialRequest = GetCredentialRequest.Builder()
+    .addCredentialOption(googleIdOption)
+    .build()
+
+val result = credentialManager.getCredential(
+    request = request,
+    context = mutableContext
+)
+handleSignIn(result)
+```
+
+승인된 계정이 하나도 없으면 `NoCredentialException`이 발생하므로, 이 경우에는 `setFilterByAuthorizedAccounts(false)`로 필터를 풀고 다시 요청하면 됩니다.<br/>
+보안을 위해 `setNonce`로 재생 공격을 방지할 것을 권장합니다.<br/>
+공식 문서는 `SecureRandom`으로 생성한 32바이트 난수를 Base64 URL-safe 방식으로 인코딩해 전달하는 함수를 예시로 제시합니다.
+
+```kotlin
+fun generateSecureRandomNonce(byteLength: Int = 32): String {
+    val randomBytes = ByteArray(byteLength)
+    SecureRandom().nextBytes(randomBytes)
+    return Base64.encodeToString(randomBytes, Base64.NO_WRAP or Base64.URL_SAFE or Base64.NO_PADDING)
+}
+```
+
+#### 버튼 플로우 만들기
+
+Google은 바텀 시트와 함께 Sign in with Google 버튼을 둘 다 구현할 것을 권장합니다.<br/>
+사용자가 바텀 시트를 닫았거나, 디바이스에 Google 계정이 없거나, 기존 계정이 재인증을 요구하는 경우에 버튼이 필요하기 때문입니다.<br/>
+버튼용 요청은 `GetSignInWithGoogleOption`으로 만듭니다.
+
+```kotlin
+val signInWithGoogleOption: GetSignInWithGoogleOption = GetSignInWithGoogleOption.Builder(
+    serverClientId = WEB_CLIENT_ID
+).setNonce(generateSecureRandomNonce())
+    .build()
+```
+
+#### 로그인 응답 처리하기
+
+응답은 `CustomCredential` 형태로 반환됩니다.<br/>
+타입이 `GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL`인지 확인한 뒤 파싱합니다.
+
+```kotlin
+fun handleSign(result: GetCredentialResponse) {
+    val credential = result.credential
+    if (credential is CustomCredential &&
+        credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+    ) {
+        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+        // idToken을 서버로 보내 검증합니다
+    }
+}
+```
+
+#### 인증과 인가가 분리되는 점
+
+기존 SDK는 인증과 인가를 한 번의 호출로 처리할 수 있었지만, 새 방식에서는 명확히 분리됩니다.<br/>
+인증은 Credential Manager가, Drive 접근 같은 특정 데이터 권한 요청은 `AuthorizationClient` API가 맡습니다.<br/>
+사용자 흐름을 사용자 의도에 맞게 매핑하는 데 도움이 된다고 문서는 설명합니다.<br/>
+로그아웃 시에는 `clearCredentialState()`를 호출해 모든 인증 정보 제공자의 세션을 정리해야, 다음 로그인에서 전체 로그인 옵션을 다시 볼 수 있습니다.<br/>
+
+#### 실무 관점
+
+MTS처럼 계정 기반의 금융 앱에서는 로그인과 권한 요청을 분리할 수 있다는 점이 오히려 장점입니다.<br/>
+전제 조건으로는 Google Cloud 프로젝트의 웹 클라이언트 ID(`setServerClientId`에 전달) 설정이 필요하고, 동의 화면에 앱 이름을 표시하려면 브랜드 검증도 마쳐야 합니다.<br/>
+서버 측에서는 ID 토큰과 함께 `nonce`를 검증하는 로직을 추가하는 것을 권장합니다.<br/>
+
+### 마치며
+
+Google Sign-In for Android의 제거는 시점만 남았을 뿐 확정된 흐름입니다.<br/>
+Credential Manager는 패스키까지 아우르는 통합 API이므로, 로그인 UI를 손보는 김에 함께 이전하는 것을 권장합니다.<br/>
+
+<div style={textAlign: 'center', margin: '1.5rem 0'}>
+  <img src="https://media.giphy.com/media/ooyAxPcL4l2YbDvk4H/giphy.gif" alt="Success" style={maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'} />
+</div>
