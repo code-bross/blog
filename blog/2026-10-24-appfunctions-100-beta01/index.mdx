@@ -1,0 +1,112 @@
+---
+slug: appfunctions-100-beta01
+title: 앱이 AI 에이전트의 도구가 된다 — AppFunctions 1.0.0-beta01 살펴보기
+authors: [way]
+tags: [android,appfunctions,androidx,ai,gemini,mts,한국투자증권,한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일에 공개된 [AppFunctions 1.0.0-beta01](https://developer.android.com/jetpack/androidx/releases/appfunctions)의 릴리스 노트를 정리해드리겠습니다.<br/>
+
+### 현재 상황
+[AppFunctions](https://developer.android.com/ai/appfunctions)는 앱의 기능을 AI 에이전트가 발견하고 실행할 수 있게 만드는 Jetpack 라이브러리입니다.<br/>
+앱이 온디바이스 MCP 서버처럼 동작한다는 비유로 설명되곤 합니다.<br/>
+사용자가 앱을 직접 열지 않아도, 에이전트가 앱의 함수를 찾아 호출하고 결과를 돌려주는 흐름이 목표입니다.<br/>
+그동안 알파 단계를 거치며 애너테이션 이름과 서비스 구조가 여러 차례 바뀌었습니다.<br/>
+이번 beta01은 알파를 벗어난 첫 베타라는 점에서 의미가 있습니다.<br/>
+아직 stable은 아니지만, API가 안정화 단계에 들어섰다는 신호로 읽을 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/hTOOnpWeFOnYvkYTwo/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### AppFunctions 1.0.0-beta01 살펴보기
+
+#### 앱 메타데이터 이름 변경
+`AppFunctionAppMetadata`의 `description`이 `instructions`로 바뀌었습니다.<br/>
+XML 속성 이름도 함께 바뀌었습니다.<br/>
+MCP의 명명 관례에 맞추기 위한 변경입니다.<br/>
+앱 수준의 동작 방식과 제약을 에이전트에게 전달하는 필드이므로, 이름을 보고 역할을 짐작하기가 더 쉬워졌습니다.<br/>
+기존 메타데이터를 쓰고 있었다면 이번 베타에서 이름을 함께 바꿔야 합니다.<br/>
+
+#### `isDescribedByKDoc` 기본값 제거
+`AppFunctionDeclaration`, `AppFunctionSerializable`, `AppFunctionSignature`에서 `isDescribedByKDoc`의 기본값이 제거되었습니다.<br/>
+이제 값을 반드시 명시적으로 지정해야 합니다.<br/>
+이 값은 KDoc 주석을 에이전트가 읽는 설명으로 쓸지를 결정합니다.<br/>
+기본값이 사라졌다는 것은, 설명 방식을 개발자가 의식적으로 선택하라는 뜻으로 읽힙니다.<br/>
+KDoc을 대충 쓰면 에이전트가 함수를 잘못 이해할 수 있으니, 주석이 곧 스키마라는 점을 염두에 두어야 합니다.<br/>
+
+```kotlin
+@RequiresApi(36)
+@AppFunctionServiceEntryPoint(
+    serviceName = "PortfolioAppFunctionService",
+    appFunctionXmlFileName = "portfolio_app_function_service"
+)
+abstract class BasePortfolioAppFunctionService : AppFunctionService() {
+
+    /**
+     * 보유 종목의 요약 정보를 반환합니다.
+     *
+     * @param accountId 조회할 계좌의 식별자입니다.
+     */
+    @AppFunctionDeclaration(isDescribedByKDoc = true)
+    suspend fun getPortfolioSummary(
+        accountId: String
+    ): PortfolioSummary = withContext(Dispatchers.IO) {
+        portfolioRepository.getSummary(accountId)
+    }
+}
+```
+
+위 예시에서 함수는 기본적으로 메인 스레드에서 실행됩니다.<br/>
+그래서 블로킹 작업이 있다면 `suspend` 함수로 만들고 백그라운드 디스패처로 전환해야 합니다.<br/>
+공식 [API 레퍼런스](https://developer.android.com/reference/kotlin/androidx/appfunctions/AppFunctionDeclaration)에서도 같은 주의사항을 강조하고 있습니다.<br/>
+
+#### 그 밖의 API 변경
+`AppFunctionName`이 `androidx.appfunctions.metadata` 패키지에서 `androidx.appfunctions` 패키지로 이동했습니다.<br/>
+임포트 경로를 정리하지 않으면 컴파일이 깨지니, 베타로 올릴 때 임포트부터 확인하는 편이 좋습니다.<br/>
+`AppFunctionResourceContainer`와 `AppFunctionTextResource`는 실험적 API로 표시되었습니다.<br/>
+`@AppFunctionStringValueConstraint`의 정규식 패턴은 `android.os.PatternMatcher` 기반의 패턴 매처로 대체되었습니다.<br/>
+테스트 쪽에서는 `AppFunctionTestRule`이 `AppFunctionServiceEntryPoint`를 지원하게 되었습니다.<br/>
+테스트에서 엔트리 포인트를 직접 다룰 수 있게 된 만큼, 함수 단위 검증이 조금 수월해졌습니다.<br/>
+
+#### 버그 수정
+자바 라이브러리 디슈가링을 켠 앱에서 `java.time` 파라미터 타입의 역직렬화가 실패하던 문제가 수정되었습니다.<br/>
+생성되는 파일 이름에 특정 운영체제에서 허용되지 않는 문자가 들어갈 수 있던 문제도 수정되었습니다.<br/>
+SDK 37 이상에서 URI 권한이 두 번 부여되던 문제도 함께 수정되었습니다.<br/>
+어느 하나 거창한 기능은 아니지만, 실무에서 마주치면 원인을 찾기 어려운 유형의 수정입니다.<br/>
+
+#### 의존성 선언
+
+```toml
+[versions]
+appfunctions = "1.0.0-beta01"
+
+[libraries]
+appfunctions = { module = "androidx.appfunctions:appfunctions", version.ref = "appfunctions" }
+appfunctions-compiler = { module = "androidx.appfunctions:appfunctions-compiler", version.ref = "appfunctions" }
+appfunctions-testing = { module = "androidx.appfunctions:appfunctions-testing", version.ref = "appfunctions" }
+```
+
+```kotlin
+dependencies {
+    implementation(libs.appfunctions)
+    ksp(libs.appfunctions-compiler)
+    testImplementation(libs.appfunctions-testing)
+}
+```
+
+### 실무 관점
+MTS 앱에 적용한다면, 노출 범위를 좁게 잡는 것이 먼저입니다.<br/>
+조회처럼 부작용이 없는 함수부터 시작하고, 주문이나 이체처럼 돈이 움직이는 동작은 에이전트 호출 대상으로 두지 않는 편이 안전합니다.<br/>
+에이전트는 함수 이름과 KDoc만 보고 호출을 결정하므로, 모호한 이름과 부실한 설명은 오호출로 이어질 수 있습니다.<br/>
+아직 베타 단계이므로 프로덕션 노출은 stable 승격을 기다리는 것이 안전합니다.<br/>
+그 전에 내부 빌드에서 KDoc 품질과 호출 범위를 먼저 다듬어 두는 편이 좋습니다.<br/>
+
+### 마치며
+이번 베타는 기능 추가보다 API 정리와 안정화에 무게가 실린 릴리스입니다.<br/>
+베타로 올리는 팀이라면 이름 변경과 필수 지정 항목부터 정리하고, KDoc을 스키마처럼 다듬는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/6qfh5hoBBCGZdj1XPm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
