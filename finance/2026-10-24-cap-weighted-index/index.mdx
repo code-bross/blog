@@ -1,0 +1,63 @@
+---
+slug: cap-weighted-index-oct24
+title: 시가총액 가중 지수와 동일가중 지수 읽기
+authors: [way]
+tags: [finance, concept, index, market-structure]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+10월 23일처럼 지수와 체감 온도가 어긋나는 날이 생기는 이유를, 지수 계산 방식에서 설명해드리겠습니다.<br/>
+
+### 배경 — 같은 시장, 다른 온도계
+
+지수는 시장 전체를 하나의 숫자로 요약한 온도계입니다.<br/>
+그런데 온도계의 설계 방식에 따라 같은 날의 숫자도 다르게 나옵니다.<br/>
+코스피가 대표적으로 쓰는 방식은 시가총액 가중 방식입니다.<br/>
+이와 대비되는 방식이 모든 종목을 같은 비중으로 다루는 동일가중 방식입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2VsYzc0a2tqbW1zcDF1amc3aXBxeTdlamcwb2ttNWh4dHJuaXdiOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SIB5Nv9q4LGULOaHZN/giphy.gif" alt="Balance" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 두 가지 가중 방식
+
+#### 시가총액 가중 방식
+
+시가총액 가중 방식에서는 종목의 시가총액이 클수록 지수에 미치는 영향이 큽니다.<br/>
+예를 들어 시가총액이 `100조 원`인 종목과 `1조 원`인 종목이 각각 1% 올랐을 때, 지수에 미치는 영향은 100배 차이가 납니다.<br/>
+이 방식은 시장 전체의 경제적 무게를 반영한다는 장점이 있습니다.<br/>
+반면 소수 대형주의 움직임이 지수를 좌우하기 쉽다는 단점이 있습니다.<br/>
+10월 23일 코스피가 상승 종목 173개, 하락 종목 717개라는 breadth 속에서도 상승 마감한 배경이 바로 이 방식입니다.<br/>
+
+#### 동일가중 방식
+
+동일가중 방식에서는 모든 종목이 같은 비중으로 지수에 반영됩니다.<br/>
+대형주 한 종목과 소형주 한 종목의 1% 상승이 지수에 똑같이 반영됩니다.<br/>
+이 방식은 시장 참여 종목들의 평균적인 움직임을 보여주는 데 유리합니다.<br/>
+반면 실제 투자 자금이 대형주에 더 많이 몰려 있다는 현실과는 거리가 생길 수 있습니다.<br/>
+같은 날의 두 지수를 비교하면, 상승이 대형주 중심인지 종목 전반으로 확산됐는지를 가늠할 수 있습니다.<br/>
+
+#### 계산 예시
+
+시가총액 `100조 원` 종목이 2% 오르고, 시가총액 `1조 원` 종목 10개가 각각 2% 내렸다고 가정합니다.<br/>
+시가총액 가중 관점에서는 대형주의 상승 영향이 더 커서 전체 지수는 상승 쪽으로 기울 수 있습니다.<br/>
+동일가중 관점에서는 하락 종목이 10개로 더 많으므로 전체 평균은 하락 쪽으로 기울 수 있습니다.<br/>
+숫자는 단순화한 예시이지만, 두 방식이 왜 다른 신호를 내는지 보여줍니다.<br/>
+
+### 투자에서 확인할 점
+
+지수를 볼 때는 어떤 가중 방식인지 먼저 확인합니다.<br/>
+코스피 같은 시가총액 가중 지수는 대형주 흐름을, 동일가중 지수는 종목 전반의 흐름을 더 잘 보여줍니다.<br/>
+ETF를 고를 때도 추종 지수의 가중 방식을 확인하는 것이 좋습니다.<br/>
+같은 업종 ETF라도 가중 방식에 따라 대형주 비중과 변동성이 달라질 수 있습니다.<br/>
+지수가 오르는데 보유 종목이 내린다면, 가중 방식 차이부터 점검해보는 것이 순서입니다.<br/>
+
+### 마치며
+
+지수는 하나의 숫자가 아니라 설계 방식이 담긴 요약본입니다.<br/>
+가중 방식을 알면 지수와 체감 사이의 간격이 왜 생기는지 이해하기가 쉬워집니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2VsYzc0a2tqbW1zcDF1amc3aXBxeTdlamcwb2ttNWh4dHJuaXdiOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/pNTxdmv2IKs4OxdSGN/giphy.gif" alt="Balance" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
