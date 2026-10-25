@@ -1,0 +1,73 @@
+---
+slug: a2ui-alpha02-compose
+title: "AI 에이전트가 만드는 네이티브 UI: Jetpack Compose A2UI 렌더러 살펴보기"
+authors: [way]
+tags: [android, a2ui, compose, ai-agent]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일 공개된 [A2UI 1.0.0-alpha02](https://developer.android.com/jetpack/androidx/releases/a2ui)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+AI 에이전트는 이제 작업을 추론하고 도구를 호출하고 대화를 이어갈 수 있습니다.<br/>
+그런데도 에이전트가 사용자에게 네이티브 화면을 보여주는 일은 여전히 어렵습니다.<br/>
+에이전트는 앱이 어떤 컴포넌트를 가지고 있는지 모르기 때문에, 날짜 선택기나 확인 버튼 같은 실제 UI를 건네줄 수 없습니다.<br/>
+[A2UI](https://developer.android.com/develop/ui/compose/agentic)는 이 간극을 메우기 위한 프로토콜입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/U5m6U5mvnYW1K/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### A2UI 살펴보기
+A2UI의 핵심 아이디어는 단순합니다.<br/>
+에이전트가 임의의 UI 코드를 만들어내는 대신, 클라이언트가 미리 정해둔 카탈로그 안에서만 UI를 조합합니다.<br/>
+
+#### 카탈로그가 계약이 됩니다
+모든 A2UI 인터페이스는 컴포넌트 카탈로그를 중심으로 동작합니다.<br/>
+카탈로그는 에이전트가 사용할 수 있는 UI 요소와 속성, 함수를 선언합니다.<br/>
+에이전트는 카탈로그에 등록되지 않은 컴포넌트를 만들어낼 수 없으므로, 렌더링 결과가 예측 가능한 범위를 벗어나지 않습니다.<br/>
+
+#### 임의 코드 실행이 없습니다
+A2UI 렌더러의 가장 중요한 성질은 임의 코드를 실행하지 않는다는 점입니다.<br/>
+에이전트는 구조화된 데이터를 보내고, 클라이언트는 그 데이터를 네이티브 Compose 컴포넌트로 렌더링합니다.<br/>
+서버에서 온 설명이 앱 안에서 코드로 실행되는 일이 없으므로, 신뢰 경계를 넘는 UI도 안전하게 다룰 수 있습니다.<br/>
+
+#### Jetpack A2UI 렌더러의 구조
+Jetpack의 A2UI 렌더러는 디자인 시스템과 무관한 렌더링 엔진과 구체적인 카탈로그 구현을 분리합니다.<br/>
+데이터 계층인 `a2ui-model`과 `a2ui-engine`이 프로토콜 메시지를 파싱하고 처리합니다.<br/>
+UI 계층인 `compose-runtime`과 `compose-ui`가 앱과 카탈로그를 위한 API를 제공합니다.<br/>
+Material 3 컴포넌트로 구성된 기본 카탈로그도 함께 제공되어, 별도 카탈로그 없이 바로 시작할 수 있습니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.a2ui:a2ui-engine:1.0.0-alpha02")
+    implementation("androidx.a2ui:a2ui-model:1.0.0-alpha02")
+    implementation("androidx.a2ui.compose:compose-runtime:1.0.0-alpha02")
+    implementation("androidx.a2ui.compose:compose-ui:1.0.0-alpha02")
+}
+```
+
+#### alpha02에서 바뀐 점
+이번 alpha02에서는 기본 카탈로그의 함수 목록이 인터페이스로 바뀌었습니다.<br/>
+구현체는 `openUrl`만 구현하면 되고, 나머지 함수는 기본 구현을 쓰거나 개별적으로 재정의할 수 있습니다.<br/>
+클라이언트가 렌더링할 수 있는 카탈로그를 먼저 알리는 기능도 추가되어, 에이전트와 렌더러 사이의 capability 협상이 가능해졌습니다.<br/>
+
+```kotlin
+val catalog = materialA2uiBasicCatalogV1(
+    functions = A2uiBasicCatalogV1.Functions(context)
+)
+```
+
+### 실무 관점
+아직 알파 단계이므로, 프로덕션 화면에 바로 적용할 라이브러리는 아닙니다.<br/>
+다만 MTS의 챗봇이나 상담 흐름처럼, 에이전트가 화면을 제시해야 하는 기능에는 참고할 만한 설계입니다.<br/>
+카탈로그를 계약으로 삼는 방식은, 에이전트 출력이 화면을 망가뜨리는 위험을 구조적으로 줄여줍니다.<br/>
+도입을 검토한다면, 렌더링할 컴포넌트 목록을 카탈로그로 먼저 정리하는 것부터 시작하는 편이 좋습니다.<br/>
+
+### 마치며
+A2UI는 에이전트에게 화면을 맡기되, 그릴 수 있는 범위는 앱이 먼저 정한다는 발상입니다.<br/>
+알파 단계이지만, AI와 네이티브 UI가 만나는 지점을 어떻게 설계해야 하는지 보여주는 좋은 출발점입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/SLy2U99N9FWCZng1yQ/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

@@ -1,0 +1,73 @@
+---
+slug: jetpack-xr-100-stable
+title: "Jetpack XR 1.0.0 정식 출시: XR Runtime, SceneCore, ARCore 살펴보기"
+authors: [way]
+tags: [android, jetpack-xr, xr, arcore, scenecore]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일 정식 버전으로 출시된 [Jetpack XR 1.0.0](https://developer.android.com/jetpack/androidx/releases/xr-runtime)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+Android XR은 헤드셋과 글라스, 공간 기능을 갖춘 폰을 아우르는 플랫폼입니다.<br/>
+그동안 XR 관련 라이브러리는 베타와 릴리스 후보 단계를 거치며 API가 계속 바뀌어 왔습니다.<br/>
+이번 1.0.0 출시로 핵심 라이브러리 세 종이 정식 버전이 되었고, API가 안정되었다는 신호가 나왔습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/3o6Mb2XGmq3qcLTvS8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Jetpack XR 1.0.0 살펴보기
+정식 버전이 된 라이브러리는 세 종입니다.<br/>
+각 라이브러리가 맡은 역할이 다르므로, 하나씩 나누어 살펴보겠습니다.<br/>
+
+#### XR Runtime
+[XR Runtime](https://developer.android.com/jetpack/androidx/releases/xr-runtime)은 XR 라이브러리들이 공유하는 기반 계층입니다.<br/>
+세션, 공간, 수학 타입 같은 공통 클래스와 유틸리티가 여기에 들어 있습니다.<br/>
+ARCore와 SceneCore, XR Compose가 모두 같은 런타임을 쓰기 때문에, 라이브러리 간에 세션과 생명주기가 어긋나는 문제가 줄어듭니다.<br/>
+
+#### SceneCore
+[SceneCore](https://developer.android.com/jetpack/androidx/releases/xr-scenecore)는 3D 콘텐츠를 배치하고 다루는 라이브러리입니다.<br/>
+2D 패널과 3D 모델을 가상 공간이나 혼합 현실 장면에 배치할 수 있습니다.<br/>
+공간 오디오 소스를 지정하거나, 가상 콘텐츠를 현실 세계에 고정하는 앵커도 다룰 수 있습니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.xr.runtime:runtime:1.0.0")
+    implementation("androidx.xr.scenecore:scenecore:1.0.0")
+    implementation("androidx.xr.arcore:arcore:1.0.0")
+}
+```
+
+#### ARCore for Jetpack XR
+[ARCore for Jetpack XR](https://developer.android.com/jetpack/androidx/releases/xr-arcore)는 현실 세계를 인식하는 라이브러리입니다.<br/>
+모션 트래킹, 지속 앵커, 히트 테스트, 평면 인식을 제공합니다.<br/>
+평면에는 바닥, 벽, 탁상 같은 의미 라벨이 붙어, 어떤 표면인지 구분할 수 있습니다.<br/>
+구글의 시각 측위 시스템을 이용한 지오스페이셜 포즈도 지원합니다.<br/>
+
+```kotlin
+val ray = Ray(perceptionOrigin, perceptionDirection)
+val hitResults = hitTest(session, ray)
+val anchorResult = hitResults.firstOrNull()?.let { hitResult ->
+    Anchor.create(session, hitResult.hitPose)
+}
+```
+
+#### XR Compose는 아직 베타
+한 가지 주의할 점이 있습니다.<br/>
+[XR Compose](https://developer.android.com/jetpack/androidx/releases/xr-compose)는 같은 날 1.0.0-beta02가 나왔을 뿐, 정식 버전은 아닙니다.<br/>
+공간 UI를 Compose로 그리는 부분은 아직 API가 바뀔 수 있으므로, 정식 버전 라이브러리와 같은 기준으로 다루면 안 됩니다.<br/>
+
+### 실무 관점
+MTS처럼 폰이 주력인 앱에서는 당장 XR 기능을 넣을 일은 많지 않습니다.<br/>
+다만 정식 버전이 나왔다는 사실 자체가 의미가 있습니다.<br/>
+기기 대응 범위를 넓혀야 할 때, 검증된 기반 위에서 시작할 수 있기 때문입니다.<br/>
+XR Compose가 정식 버전이 되기 전에는, 공간 UI 부분은 별도 모듈로 분리해 두는 편이 안전합니다.<br/>
+
+### 마치며
+Jetpack XR 1.0.0은 XR 개발의 기반이 안정되었다는 선언에 가깝습니다.<br/>
+런타임, 장면, 현실 인식이라는 세 축이 정식 버전으로 정리되었고, 이제는 그 위에 기능을 쌓을 수 있는 단계에 들어섰습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/3og0IPzJW8uVkxU6wU/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
