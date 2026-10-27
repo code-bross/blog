@@ -1,0 +1,89 @@
+---
+slug: media3-1120-alpha
+title: Media3 1.12.0 알파 — 플래그 레지스트리와 Play services 이펙트
+authors: [way]
+tags: [android, media3, exoplayer, release-notes]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일의 alpha01과 10월 26일의 alpha02로 공개된 Media3 1.12.0 알파 변경 사항에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+Media3는 ExoPlayer를 중심으로 재생, 세션, 변환, 이펙트를 묶은 미디어 라이브러리입니다.<br/>
+현재 안정 버전은 1.11.1이며, 1.12.0은 알파 단계에서 다음 변경을 준비하고 있습니다.<br/>
+공식 [Media3 릴리스 노트](https://developer.android.com/jetpack/androidx/releases/media3)를 기준으로 실무에 닿는 변경만 정리합니다.<br/>
+알파 API는 정식 출시 전에 바뀔 수 있으므로, 적용 전에 변경 범위를 확인하는 것이 중요합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/8c5Ck50qCxZ0xnCelI/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Media3 1.12 알파에서 달라진 것
+
+#### 중앙 플래그 레지스트리
+
+alpha01에서 실험적 기능 플래그를 관리하는 중앙 `Flags` 레지스트리가 추가되었습니다.<br/>
+기존에 흩어져 있던 실험적 API를 플래그 API로 단계적으로 전환하는 기반이 됩니다.<br/>
+카나리아 모드를 켜는 진입점도 함께 제공되어, 실험 기능을 단계적으로 공개하는 흐름을 만들 수 있습니다.<br/>
+플래그가 늘어날수록 어떤 실험이 켜져 있는지 한곳에서 파악할 수 있다는 점이 실무적으로 의미가 있습니다.<br/>
+
+#### Display P3 색 공간 지원
+
+`C.COLOR_SPACE_DISPLAY_P3`가 추가되고, `MediaFormatUtil`과 `ColorInfo`의 ISO 색상 매핑에서 Display P3가 지원됩니다.<br/>
+광색역 콘텐츠를 다루는 화면에서는 색 공간 정보가 형식 변환 과정에서 유지되는지 확인해 볼 만합니다.<br/>
+Ultra HDR 프레임 추출 시 BT.2020 색상이 sRGB로 잘리던 문제도 함께 개선되었습니다.<br/>
+범위를 벗어난 색은 자르는 대신 부드럽게 압축되어 SDR 기본 이미지에 담깁니다.<br/>
+
+#### 재생 목록 메타데이터 확장
+
+`MediaMetadata`에 재생 목록 식별자와 카테고리가 추가되었습니다.<br/>
+재생 목록 단위로 식별하고 분류하는 정보가 메타데이터 자체에 들어간다는 뜻입니다.<br/>
+세션 쪽에서는 재생 목록 식별자, 제목, 아트워크, 카테고리를 채우는 엑스트라 키도 함께 추가되었습니다.<br/>
+
+```kotlin
+val metadata = MediaMetadata.Builder()
+    .setPlaylistId("playlist-market-briefing")
+    .setCategories(listOf("market", "briefing"))
+    .build()
+```
+
+#### 기본 동작 변경
+
+`setLoadOnlySelectedTracks(true)`가 기본값이 되었습니다.<br/>
+선택되지 않은 비디오와 이미지 트랙은 로드하지 않으므로 메모리가 절약됩니다.<br/>
+오디오와 텍스트 트랙은 항상 로드되어, 끊김 없는 트랙 전환을 유지합니다.<br/>
+재생 중 선택되지 않았던 비디오 트랙을 새로 켜면 추가 버퍼링이 생길 수 있다는 점은 주의해야 합니다.<br/>
+DASH 다중 기간 재생에서 다음 기간의 첫 청크 로드가 실패하면 재생이 멈추던 문제도 수정되었습니다.<br/>
+
+#### Play services 이펙트 모듈
+
+alpha02에서는 새로운 `media3-effect-play-services` 모듈이 추가되었습니다.<br/>
+비디오 향상 기능을 제공하는 `EnhancementSessionDecorator`와 음원 분리 기능을 제공하는 `StudioSoundAudioProcessor`가 포함됩니다.<br/>
+이펙트 쪽에서는 스튜디오 사운드 기반 음원 분리 프로세서 구현도 함께 들어갔습니다.<br/>
+Play services 모듈에 의존하는 기능이라, 단말의 Play services 제공 여부를 전제로 설계해야 합니다.<br/>
+
+알파를 적용하는 의존성 선언은 다음과 같습니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.media3:media3-exoplayer:1.12.0-alpha02")
+    implementation("androidx.media3:media3-effect-play-services:1.12.0-alpha02")
+}
+```
+
+### 실무 관점
+
+알파 라이브러리는 프로덕션 모듈에 바로 올리기보다 별도 브랜치에서 검증하는 것이 안전합니다.<br/>
+트랙 로드 기본값 변경은 재생 화면의 메모리와 전환 동작에 직접 영향을 주므로, 기존 재생 시나리오로 회귀 테스트를 먼저 돌려보는 것이 좋습니다.<br/>
+자막 시간 오프셋 기능은 사이드로드 자막의 싱크를 맞추는 용도로, 재생을 중단하지 않고 교체할 수 있습니다.<br/>
+MTS처럼 미디어가 부가 기능인 앱에서는, 재생 모듈 전체를 올리기보다 필요한 아티팩트만 골라 적용하는 편이 의존성 부담을 줄입니다.<br/>
+
+### 마치며
+
+Media3 1.12 알파는 새 재생 기능보다 플래그 관리 체계와 색 공간, 메타데이터 같은 기반 정리에 무게가 실려 있습니다.<br/>
+Play services 이펙트 모듈은 알파 단계의 새로운 축이라, 정식 출시 과정을 지켜보며 검증 범위를 정하는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/t8WIg6pBMpmACvxt1g/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
