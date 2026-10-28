@@ -1,0 +1,84 @@
+---
+slug: room3-310-alpha03
+title: Room 3.1.0-alpha03 — 손상 복구와 준비된 문장 캐시 설정
+authors: [way]
+tags: [android, room, room3, jetpack, database, kotlin]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일에 공개된 [Room 3.1.0-alpha03](https://developer.android.com/jetpack/androidx/releases/room3#3.1.0-alpha03)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+Room 3.0은 패키지를 `androidx.room3`으로 바꾸고 Kotlin Multiplatform을 중심으로 다시 설계된 버전입니다.<br/>
+3.1.0-alpha01에서는 연결 풀 타임아웃 설정과 프로퍼티 중심 어노테이션, `kotlin.uuid.Uuid` 컨버터 같은 변경이 먼저 들어왔습니다.<br/>
+이번 alpha03은 그 위에 데이터베이스 복구와 준비된 문장 캐시 설정이라는, 운영에서 직접 체감되는 두 가지 손잡이를 추가했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/26gsobowozGM9umBi/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Room 3.1.0-alpha03 살펴보기
+
+#### 손상된 데이터베이스 복구
+`RoomDatabase.Builder`에 `allowDataLossOnRecovery()`가 추가되었습니다.<br/>
+데이터베이스 열기나 손상 복구에 실패했을 때, 데이터 손실을 감수하고 복구를 시도하도록 허용하는 설정입니다.<br/>
+앱이 아예 실행되지 않는 상황보다는, 일부 데이터를 잃더라도 다시 동작하는 편이 나은 화면에서 의미가 있습니다.<br/>
+
+```kotlin
+// 데이터베이스 열기 실패 시 데이터 손실을 감수하고 복구를 시도합니다
+builder.allowDataLossOnRecovery()
+```
+
+복구가 동작했다는 사실 자체가 데이터가 온전하지 않을 수 있다는 신호입니다.<br/>
+복구 뒤에는 서버에서 다시 내려받을 수 있는지를 먼저 확인하는 흐름이 필요합니다.<br/>
+
+#### 준비된 문장 캐시 크기 설정
+`setPreparedStatementCacheSize(maxCacheSize)`가 `RoomDatabase.Builder`에 추가되었습니다.<br/>
+연결마다 유지하는 준비된 문장 캐시의 크기를 직접 정하거나, 비활성화할 수 있게 되었습니다.<br/>
+자주 반복되는 쿼리가 많은 화면에서는 캐시를 키우고, 메모리가 빠듯한 환경에서는 크기를 줄이는 식으로 조절할 수 있습니다.<br/>
+
+```kotlin
+// 연결당 준비된 문장 캐시의 크기를 직접 지정합니다
+builder.setPreparedStatementCacheSize(64)
+```
+
+캐시를 무조건 크게 잡는 것이 정답은 아닙니다.<br/>
+한 번만 실행되는 쿼리가 많은 앱에서는 캐시가 메모리만 차지하고 끝날 수 있습니다.<br/>
+
+#### Kotlin 2.2 요구 사항
+3.1.0-alpha03부터 라이브러리는 Kotlin 2.2을 대상으로 빌드되고, `kotlinc` 2.2가 필요합니다.<br/>
+프로젝트의 Kotlin 버전이 그보다 낮다면, Room을 올리기 전에 Kotlin부터 먼저 올려야 합니다.<br/>
+버전 올림 순서를 바꾸면 빌드 오류의 원인을 찾기 어려워지므로, Kotlin과 Room의 변경은 따로 커밋하는 편이 안전합니다.<br/>
+
+#### 비결정적 절과 `@Relation` 재실행 수정
+`ORDER BY RANDOM() LIMIT :count` 같은 비결정적 절을 `@Relation` 쿼리와 함께 쓰면, 문장 리셋 시 쿼리가 다시 실행되어 관계 매핑이 실패하는 문제가 있었습니다.<br/>
+이번 버전에서 해당 문제가 수정되었습니다.<br/>
+랜덤 샘플링처럼 결과가 매번 달라지는 쿼리는, 관계 매핑과 섞기 전에 단독으로 먼저 검증하는 습관이 여전히 필요합니다.<br/>
+
+#### 프로퍼티 중심 어노테이션
+alpha01에서 이어지는 변경으로, `@ColumnInfo`와 `@PrimaryKey`, `@Relation`, `@Embedded`, `@Ignore`, `@ColumnTypeConverters`에 프로퍼티 대상이 추가되었습니다.<br/>
+백킹 필드가 없는 프로퍼티도 엔티티 컬럼이나 쿼리 결과 컬럼으로 사용할 수 있게 되었습니다.<br/>
+다만 사용할 수 있는 getter와, 사용할 수 있는 setter 또는 주 생성자 포함이 여전히 필요합니다.<br/>
+
+```kotlin
+@Entity
+data class Holding(
+    @PrimaryKey val symbol: String,
+    @ColumnInfo val quantity: Int,
+    val market: String,
+)
+```
+
+### 실무 관점
+알파 버전이므로 운영 앱에 바로 적용하기보다는 별도 브랜치에서 먼저 검증하는 것이 안전합니다.<br/>
+`allowDataLossOnRecovery()`는 이름 그대로 데이터 손실을 허용하는 설정이므로, 계좌나 주문 같은 핵심 데이터에는 적용하지 않는 것이 좋습니다.<br/>
+캐시성 데이터나 서버에서 다시 내려받을 수 있는 데이터부터 적용 범위를 정하는 편이 무난합니다.<br/>
+복구가 실제로 동작했는지는 로그로 남겨 두어야, 이후 고객 문의와 원인을 연결할 수 있습니다.<br/>
+
+### 마치며
+Room 3.1.0-alpha03은 새 쿼리 기능보다, 데이터베이스가 망가졌을 때와 반복 쿼리가 많을 때를 다루는 실무적인 손잡이를 더한 업데이트입니다.<br/>
+알파 단계에서 동작을 먼저 확인해 두면, 정식 버전이 나왔을 때 적용 범위를 빠르게 정할 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/KEVNWkmWm6dm8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

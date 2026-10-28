@@ -1,0 +1,79 @@
+---
+slug: photopicker-100-alpha03
+title: PhotoPicker 1.0.0-alpha03 — 임베디드 사진 선택기와 아티팩트 개명
+authors: [way]
+tags: [android, photopicker, jetpack, compose, photo]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일에 공개된 [PhotoPicker 1.0.0-alpha03](https://developer.android.com/jetpack/androidx/releases/photopicker#1.0.0-alpha03)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+기존 사진 선택은 시스템 사진 선택기를 별도 화면으로 띄워서 결과를 돌려받는 방식이었습니다.<br/>
+작성 중인 화면을 벗어났다가 돌아오는 흐름이라, 채팅이나 게시물 작성처럼 맥락이 중요한 화면에서는 흐름이 끊기기 쉬웠습니다.<br/>
+임베디드 사진 선택기는 선택기 자체를 앱 화면 안에 직접 내장하는 방식입니다.<br/>
+사용자는 작성 화면을 벗어나지 않고 사진을 고를 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### PhotoPicker 1.0.0-alpha03 살펴보기
+
+#### 아티팩트 개명
+이번 버전에서 아티팩트 이름이 정리되었습니다.<br/>
+`photopicker`는 `photopicker-embedded`로, Compose용 아티팩트는 `photopicker-embedded-compose`로, 테스트용 아티팩트는 `photopicker-embedded-testing`으로 바뀌었습니다.<br/>
+패키지도 `androidx.photopicker.embedded` 계열로 함께 이동했습니다.<br/>
+이름에 임베디드라는 목적이 드러나면서, 시스템 선택기용 계약과의 구분이 명확해졌습니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.photopicker:photopicker-embedded-compose:1.0.0-alpha03")
+    implementation("androidx.photopicker:photopicker-embedded:1.0.0-alpha03")
+}
+```
+
+#### 위치 메타데이터 접근 요청
+사진 요청에 위치 메타데이터 접근을 함께 요청할 수 있게 되었습니다.<br/>
+`PickVisualMediaRequest`에 `setLocationMetadataAccessRequested`가 추가되었고, 시스템 폴백 선택기용으로 위치 메타데이터 접근 요청을 전달하는 엑스트라도 추가되었습니다.<br/>
+임베디드 선택기가 동작하지 않아 시스템 선택기로 떨어지는 경우에도, 같은 요청 의도가 이어지도록 만든 변경입니다.<br/>
+
+```kotlin
+// 사진 요청에 위치 메타데이터 접근을 함께 요청합니다
+request.setLocationMetadataAccessRequested(true)
+```
+
+#### 상태 리셋은 `key` 블록으로
+`rememberEmbeddedPhotoPickerState`에서 `inputs` 파라미터가 제거되었습니다.<br/>
+입력 값이 바뀌었을 때 상태를 초기화하려면, 호출부를 `key` 블록으로 감싸는 방식으로 바뀌었습니다.<br/>
+상태 초기화 조건이 호출부에서 눈에 보이게 되므로, 언제 리셋되는지 파악하기 쉬워졌습니다.<br/>
+
+```kotlin
+key(selectedAlbumId) {
+    val state = rememberEmbeddedPhotoPickerState()
+    EmbeddedPhotoPicker(state = state)
+}
+```
+
+#### 상태 API 정리
+`EmbeddedPhotoPickerState`도 정리되었습니다.<br/>
+`surfacePackage`와 `notifyVisibilityChanged`가 노출되었고, `onError` 콜백이 추가되었습니다.<br/>
+선택기 표면의 가시성 변화를 앱이 직접 통지할 수 있게 되었고, 실패 상황도 콜백으로 받아 처리할 수 있습니다.<br/>
+
+#### 최소 SDK와 호출 가능 버전
+두 라이브러리의 최소 SDK가 23으로 낮아졌습니다.<br/>
+다만 관련 API 호출은 여전히 API 34부터 필요합니다.<br/>
+낮은 버전 기기에서는 임베디드 선택기를 그대로 호출할 수 없으므로, 시스템 선택기로 떨어지는 분기를 함께 설계해야 합니다.<br/>
+
+### 실무 관점
+알파 버전이므로 운영 화면에 바로 붙이기보다는, 프로필 이미지처럼 범위가 좁은 화면에서 먼저 검증하는 것이 안전합니다.<br/>
+위치 메타데이터는 개인정보에 해당하므로, 요청하기 전에 왜 필요한지를 안내하고 동의를 받는 흐름이 먼저 필요합니다.<br/>
+MTS처럼 금융 정보가 많은 앱에서는 사진 선택 화면과 계좌 정보 화면의 동선을 분리해 두는 편이 무난합니다.<br/>
+
+### 마치며
+PhotoPicker 1.0.0-alpha03은 임베디드 선택기라는 방향을 유지하면서, 이름 정리와 위치 메타데이터 요청, 상태 리셋 방식까지 다듬은 업데이트입니다.<br/>
+알파 단계에서 화면 내장 흐름을 먼저 검증해 두면, 정식 버전이 나왔을 때 적용 여부를 빠르게 판단할 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/03IoP34ByFpdRvT0wb/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
