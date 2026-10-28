@@ -1,0 +1,63 @@
+---
+slug: sidecar-circuit-breaker-guide
+title: 매수 사이드카와 서킷브레이커, 시장 급변동 제동장치 해설
+authors: [way]
+tags: [finance, 사이드카, 서킷브레이커, 시장제도]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+오늘은 10월 28일 오전에 이틀 연속 발동한 매수 사이드카와 서킷브레이커의 차이를 정리합니다.<br/>
+
+#### 배경
+
+10월 28일 오전 9시 54분 무렵 코스피 시장에서 매수 사이드카가 발동했습니다.<br/>
+코스피200 선물이 기준가 대비 5.17% 오른 928.02까지 상승했고, 그 수준이 1분 이상 유지된 것이 발동 조건이었습니다.<br/>
+발동 이후 프로그램 매수호가의 효력은 5분간 정지되었고, 5분이 지나면 자동으로 해제되었습니다.<br/>
+전날인 10월 27일에도 매수 사이드카가 발동했기 때문에, 이틀 연속 발동이라는 점이 주목을 받았습니다.<br/>
+발동 경위는 [SBS 보도](https://news.sbs.co.kr/english/article.do?news_id=N1008818555)에서 확인할 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHh4ejI2c3JucXRuemltZW5vd3c2NWd3NXByM3B0MDV6Z3ZvdWFheCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fapvHdWzoHtYY/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+#### 사이드카란 무엇인가
+
+사이드카는 선물 시장의 급변동이 현물 시장으로 과도하게 전이되는 것을 늦추는 장치입니다.<br/>
+코스피 매수 사이드카는 코스피200 선물 가격이 기준가 대비 5% 이상 상승한 상태가 1분 이상 지속될 때 발동합니다.<br/>
+발동하면 프로그램 매수호가의 효력이 5분간 정지됩니다.<br/>
+중요한 점은 현물 거래 자체가 중단되는 것이 아니라는 점입니다.<br/>
+일반 투자자의 주문은 계속 체결될 수 있으며, 정지되는 것은 프로그램 매매의 매수호가로 한정됩니다.<br/>
+매도 사이드카도 같은 구조이며, 선물 가격이 5% 이상 하락한 상태가 1분 이상 지속될 때 프로그램 매도호가가 정지됩니다.<br/>
+
+#### 서킷브레이커와 어떻게 다른가
+
+서킷브레이커는 현물 지수 자체가 급락할 때 전체 거래를 일시 중단하는 장치입니다.<br/>
+사이드카가 프로그램 매매만 대상으로 하는 데 비해, 서킷브레이커는 시장 전체의 거래를 멈추는 점에서 강도가 다릅니다.<br/>
+또한 사이드카는 상승과 하락 양방향에 모두 존재하지만, 서킷브레이커는 급락 국면에 초점을 맞춘 제도입니다.<br/>
+
+| 구분 | 사이드카 | 서킷브레이커 |
+| --- | --- | --- |
+| 발동 기준 | 선물 가격 급변 | 현물 지수 급락 |
+| 대상 | 프로그램 매매의 매수 또는 매도호가 | 시장 전체 거래 |
+| 조치 시간 | 5분간 효력 정지 | 단계별로 거래 일시 중단 |
+| 목적 | 선물 충격의 현물 전이를 늦추는 것 | 급락 속도를 늦추고 가격을 재평가할 시간을 주는 것 |
+
+#### 투자에서 확인할 점
+
+첫째, 사이드카 발동 자체를 매수 신호나 매도 신호로 해석하지 않습니다.<br/>
+사이드카는 변동성이 커졌다는 사실을 알려주는 제도적 표시일 뿐입니다.<br/>
+둘째, 해제 이후의 움직임을 확인합니다.<br/>
+5분의 정지가 끝나면 프로그램 매매가 다시 재개되며, 변동성이 곧바로 가라앉지 않을 수 있습니다.<br/>
+셋째, 이틀 연속 발동은 변동성 확대 국면이라는 신호로 읽는 것이 적절합니다.<br/>
+연속 발동이 방향의 지속을 보장하지는 않으며, 급등 이후 되돌림도 함께 고려해야 합니다.<br/>
+넷째, 사이드카 발동 시간대의 지수 수준만 보고 하루 전체를 판단하지 않습니다.<br/>
+장중 고점과 종가는 다를 수 있으며, 마감 지수는 별도로 확인합니다.<br/>
+
+#### 마치며
+
+사이드카는 시장을 멈추는 장치가 아니라, 프로그램 매매의 속도를 잠시 늦추는 장치입니다.<br/>
+이 글은 교육과 해설을 목적으로 작성되었으며, 특정 종목의 매수나 매도를 권유하지 않습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnRxNGJmcDRidTA4MmhvZ3FkemlqNXVvYXBrNGliaXBkYzZ5M2szZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/a0h7sAqON67nO/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
