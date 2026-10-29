@@ -1,0 +1,76 @@
+---
+slug: rabbit2-bring-your-own-agent
+title: Android Studio Rabbit 2와 Bring Your Own Agent, 에이전트 시대의 IDE
+authors: [way]
+tags: [android, android-studio, rabbit2, byoa, agent, cli, leakcanary]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 28일에 열린 Android Dev Summit 2026에서 공개된 [Android Studio Rabbit 2](https://developer.android.com/studio/releases)와 Bring Your Own Agent에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+그동안 Android Studio의 AI 기능은 Google이 제공하는 에이전트 중심으로 제공되었습니다.<br/>
+팀에서 이미 사용 중인 에이전트가 따로 있는 경우, IDE 안에서 그 에이전트를 그대로 쓰기 어려웠습니다.<br/>
+에이전트는 열려 있는 파일만 읽는 수준에서는 디버깅에 한계가 있습니다.<br/>
+프로젝트 구조와 빌드 상태, 에뮬레이터와 로그까지 함께 볼 수 있어야 실제 개발 작업에 쓸 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/Ssk1BvPxn79tUBOo5X/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Android Studio Rabbit 2 살펴보기
+
+#### Bring Your Own Agent
+[Bring Your Own Agent](https://developer.android.com/studio/releases)은 오픈 프로토콜인 Agent Client Protocol을 이용해 외부 코딩 에이전트를 IDE 안에 직접 연결하는 기능입니다.<br/>
+이번 Rabbit 2 정식 버전에서 안정화되었으며, 40개 이상의 ACP 호환 에이전트를 지원합니다.<br/>
+대표적으로 Claude Agent와 Codex, Google Antigravity를 마켓플레이스에서 설치해 사용할 수 있습니다.<br/>
+설정은 `Settings > Tools > AI > Agents` 메뉴에서 진행합니다.<br/>
+여러 에이전트를 함께 설치해 두고 작업 중간에 전환할 수도 있습니다.<br/>
+연결된 에이전트는 프로젝트 구조와 빌드 진단, 심볼 해석, Compose Preview 렌더링, 에뮬레이터와 Logcat에 접근합니다.<br/>
+
+#### Change Review
+에이전트가 만든 큰 변경 사항을 검토하는 일은 그 자체로 부담이 됩니다.<br/>
+Change Review는 보류 중인 에이전트 변경 사항이나 Git 변경 창에서 검토 세션을 시작하는 기능입니다.<br/>
+잠재적인 문제를 정리한 보고서를 만들고, 에이전트 도구 창에서 `/review` 명령으로 호출할 수도 있습니다.<br/>
+긴 변경 사항은 AI 안내 워크스루로 흐름을 파악하고, 발견된 문제는 에이전트가 직접 수정하게 할 수 있습니다.<br/>
+
+#### Android CLI
+터미널과 CI 파이프라인에서도 에이전트가 Android 도구 체인을 쓸 수 있게 [Android CLI](https://developer.android.com/studio/releases)가 강화되었습니다.<br/>
+`android device remote` 명령으로 Google 기기 랩의 실제 기기를 원격으로 할당받아 테스트할 수 있습니다.<br/>
+`android preview` 명령은 에뮬레이터나 IDE 없이 Compose Preview를 터미널에서 렌더링합니다.<br/>
+Google 내부 테스트에서는 이 방식을 쓴 에이전트가 UI 작업을 77% 더 빠르게 마쳤고, 토큰 사용량은 최대 3분의 1 수준이었다고 밝혔습니다.<br/>
+Claude Code와 Codex용 공식 Android 플러그인도 함께 공개되었습니다.<br/>
+
+```bash
+android device remote
+android preview
+android profiler leakcanary
+android signals
+android analyze
+```
+
+#### LeakCanary와 성능 분석
+메모리 누수는 OOM 크래시로 이어지기 전까지 조용히 앱을 느리게 만듭니다.<br/>
+Android CLI에는 LeakCanary를 직접 통합한 `android profiler leakcanary` 명령이 추가되었습니다.<br/>
+힙 덤프를 기기가 아니라 컴퓨터에서 분석하므로 앱 속도가 느려지지 않습니다.<br/>
+Android Studio Profiler에도 LeakCanary가 내장되었고, Canary 빌드에서는 `Fix with AI`로 누수 원인과 수정안을 함께 볼 수 있습니다.<br/>
+성능 분석 쪽에서는 Android Performance Analyzer가 CLI의 `android profiler` 명령을 지원하게 되었습니다.<br/>
+R8 설정 분석은 AGP 9.3에 내장된 R8 Configuration Analyzer로 확인할 수 있으며, `./gradlew :app:analyzeReleaseR8Config` 명령으로 보고서를 만듭니다.<br/>
+
+```bash
+./gradlew :app:analyzeReleaseR8Config
+```
+
+#### 실무 관점
+MTS 앱 관점에서는 에이전트 선택의 자유보다 검증 경로가 먼저입니다.<br/>
+에이전트가 만든 변경 사항은 Change Review로 한 번 걸러낸 뒤, 실제 기기 테스트와 릴리스 심사로 이어지는 흐름이 필요합니다.<br/>
+금융 앱은 개인정보와 보안 정책이 엄격하므로, 외부 에이전트에 프로젝트 접근을 허용하기 전에 조직의 보안 기준을 먼저 확인해야 합니다.<br/>
+`android preview`와 `android analyze` 같은 CLI 명령은 CI에 붙이기 좋은 형태라, 코드 리뷰 자동화에 활용할 여지가 있습니다.<br/>
+
+### 마치며
+Rabbit 2는 IDE를 특정 에이전트에 묶지 않고, 개발자가 고른 에이전트를 IDE의 이해력과 연결했습니다.<br/>
+에이전트가 코드를 만드는 단계에서, 만든 결과를 검증하는 단계까지 IDE 안에서 이어지게 된 점이 이번 발표의 핵심입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/4GkRbz4ofCQiDXQJ8z/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
