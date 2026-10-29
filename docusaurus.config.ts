@@ -94,6 +94,22 @@ const config: Config = {
         onUntruncatedBlogPosts: 'warn',
       },
     ],
+    [
+      '@docusaurus/plugin-content-blog',
+      {
+        id: 'market',
+        routeBasePath: 'market',
+        path: './market',
+        showReadingTime: true,
+        feedOptions: {
+          type: ['rss', 'atom'],
+          xslt: true,
+        },
+        onInlineTags: 'warn',
+        onInlineAuthors: 'warn',
+        onUntruncatedBlogPosts: 'warn',
+      },
+    ],
   ],
 
   headTags: [
@@ -121,6 +137,7 @@ const config: Config = {
       items: [
         {to: '/posts', label: 'Posts', position: 'left'},
         {to: '/finance', label: 'Finance', position: 'left'},
+        {to: '/market', label: 'Market', position: 'left'},
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -154,6 +171,10 @@ const config: Config = {
             {
               label: 'Finance',
               to: '/finance',
+            },
+            {
+              label: 'Market',
+              to: '/market',
             },
           ],
         },
