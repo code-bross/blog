@@ -1,0 +1,83 @@
+---
+slug: appstate-statestore-alpha01
+title: AppState StateStore 첫 알파, Compose 상태를 앱 계층으로 끌어올리기
+authors: [way]
+tags: [android, compose, appstate, statestore, datastore]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 28일에 첫 알파로 공개된 [AppState StateStore](https://developer.android.com/jetpack/androidx/releases/appstate-statestore)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+Compose 상태는 보통 화면이나 ViewModel 안에 머무릅니다.<br/>
+앱 전역에서 공유해야 하는 상태는 계층을 옮길 때마다 전달 코드가 늘어납니다.<br/>
+상태를 앱 계층으로 끌어올리면 공유와 저장이 한곳에서 관리됩니다.<br/>
+StateStore는 이 역할을 맡기 위해 새로 공개된 라이브러리입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/nuYgYpZtAcGFd3l12P/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### StateStore 살펴보기
+
+#### Compose 런타임 기반의 상태 저장소
+StateStore는 Compose 런타임을 기반으로 동작합니다.<br/>
+스냅샷 상태를 앱 계층으로 끌어올려 커스텀 연동을 제공하는 래퍼입니다.<br/>
+화면이 사라져도 상태의 수명을 앱 수준에서 유지할 수 있습니다.<br/>
+
+#### DataStore 연동으로 상태 유지하기
+`statestore-datastore` 아티팩트는 상태 영속성을 제공합니다.<br/>
+`syncToDataStore`로 스냅샷 상태를 DataStore 파일과 동기화할 수 있습니다.<br/>
+앱을 다시 시작해도 이전 상태를 복원할 수 있습니다.<br/>
+
+```kotlin
+class MyApplication : Application() {
+    val stateStore = StateStore()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    override fun onCreate() {
+        super.onCreate()
+        scope.launch {
+            launch {
+                try {
+                    stateStore.syncToDataStore(
+                        dataStoreFile("settings").absolutePath,
+                        this
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+}
+```
+
+#### 의존성 추가하기
+Android 타깃 기준 의존성은 다음과 같습니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.appstate.statestore:statestore:1.0.0-alpha01")
+    implementation("androidx.appstate.statestore:statestore-datastore:1.0.0-alpha01")
+}
+```
+
+#### 함께 공개된 Transform
+같은 날짜에 `appstate-transform` 아티팩트도 첫 알파로 공개되었습니다.<br/>
+이 글에서는 StateStore의 개념과 저장 연동에 집중합니다.<br/>
+Transform의 구체적인 활용은 후속 릴리스 노트에서 확인한 뒤 다루는 것이 좋습니다.<br/>
+
+### 실무 관점
+첫 알파 단계이므로 운영 코드에 바로 도입하지 않는 것이 좋습니다.<br/>
+상태를 앱 계층으로 올리면 수명과 동기화 시점을 직접 설계해야 합니다.<br/>
+동기화 중 예외가 나면 상태가 저장되지 않으므로 실패 처리 경로를 함께 둡니다.<br/>
+MTS처럼 세션과 설정 상태가 많은 앱에서는 저장 단위부터 나누는 것이 안전합니다.<br/>
+
+### 마치며
+StateStore는 Compose 상태를 앱 계층에서 관리하는 새로운 선택지입니다.<br/>
+DataStore 연동까지 함께 보면 상태 공유와 영속성을 한 구조로 정리할 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/XqbR31ueJdBaDpPlNi/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

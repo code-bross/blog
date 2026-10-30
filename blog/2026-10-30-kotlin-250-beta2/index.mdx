@@ -1,0 +1,84 @@
+---
+slug: kotlin-250-beta2
+title: Kotlin 2.5.0-Beta2, 이름 기반 구조 분해와 반환값 검사기
+authors: [way]
+tags: [android, kotlin, kotlin-250, destructuring, compiler]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일에 공개된 [Kotlin 2.5.0-Beta2](https://kotlinlang.org/docs/whatsnew-eap.html)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+기존 구조 분해는 위치를 기준으로 동작했습니다.<br/>
+프로퍼티 순서가 바뀌면 구조 분해 결과도 함께 바뀌는 문제가 있었습니다.<br/>
+반환값을 무시하고 호출해도 컴파일러가 이를 지적하지 않는 경우도 있었습니다.<br/>
+이번 베타는 이런 지점을 언어 차원에서 다듬은 릴리스입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/JTmEHIHvI7WnQoJKxm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Kotlin 2.5.0-Beta2 살펴보기
+
+#### 이름 기반 구조 분해
+[이름 기반 구조 분해](https://blog.jetbrains.com/kotlin/2026/05/the-road-to-name-based-destructuring/)는 `only-syntax` 모드에서 정식 기능이 되었습니다.<br/>
+기존 문법 `val (name, age)`는 위치 기반 동작을 그대로 유지합니다.<br/>
+새 문법 `(val name, val age)`는 이름을 기준으로 값을 꺼냅니다.<br/>
+순서와 무관하게 프로퍼티 이름으로 매칭되므로 리팩터링에 안전합니다.<br/>
+
+```kotlin
+data class User(val name: String, val age: Int)
+
+fun printUser(user: User) {
+    (val age, val name) = user
+    println("$name, $age")
+}
+```
+
+#### 반환값 검사기
+[반환값 검사기](https://kotlinlang.org/docs/unused-return-value-checker.html)는 이번 릴리스에서 기본으로 활성화됩니다.<br/>
+의미 있는 반환값을 버리고 호출하면 컴파일러가 경고를 냅니다.<br/>
+검사 강도는 `-Xreturn-value-checker` 옵션으로 조절할 수 있습니다.<br/>
+자체 함수에는 `MustUseReturnValues` 애너테이션으로 검사 대상을 표시할 수 있습니다.<br/>
+
+```kotlin
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xreturn-value-checker=check")
+    }
+}
+```
+
+#### Java 28 지원과 JDK 17 요구 사항
+Kotlin/JVM은 Java 28을 지원합니다.<br/>
+컴파일러 실행에는 JDK 17 이상이 필요합니다.<br/>
+Beta1에서는 오래된 JDK에서 경고만 나왔습니다.<br/>
+Beta2와 정식 2.5.0에서는 오류가 나며, 임시 플래그로만 구버전 사용을 이어갈 수 있습니다.<br/>
+2.5.20-Beta1부터는 JDK 17 이상이 필수입니다.<br/>
+CI 머신의 JDK 버전을 먼저 확인하는 것이 좋습니다.<br/>
+
+#### Swift Export와 네이티브 개선
+Swift Export는 새 DSL과 함께 베타 단계에 들어갔습니다.<br/>
+Kotlin/Native 증분 컴파일은 Apple 타깃에서 기본으로 활성화됩니다.<br/>
+멀티플랫폼 프로젝트의 iOS 빌드 시간이 줄어들 것으로 기대됩니다.<br/>
+
+버전 적용 예시는 다음과 같습니다.<br/>
+
+```toml
+[versions]
+kotlin = "2.5.0-Beta2"
+```
+
+### 실무 관점
+베타 릴리스이므로 운영 모듈에 바로 적용하지 않는 것이 좋습니다.<br/>
+별도 브랜치에서 컴파일과 테스트를 먼저 통과시키는 것이 안전합니다.<br/>
+이름 기반 구조 분해는 신규 코드부터 점진적으로 적용할 수 있습니다.<br/>
+JDK 버전이 낮은 CI가 있다면 릴리스 전에 교체 계획을 세워야 합니다.<br/>
+
+### 마치며
+이름 기반 구조 분해와 반환값 검사기는 코드의 실수를 줄이는 방향의 개선입니다.<br/>
+JDK 요구 사항까지 함께 확인하면 베타 검증이 한결 수월해집니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/6sMPbumdgfOgs5nIlF/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
