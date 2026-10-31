@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkmy_tech_blog=globalThis.webpackChunkmy_tech_blog||[]).push([[15110],{48628:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/blog/finance/page/3","page":3,"postsPerPage":10,"totalPages":6,"totalCount":55,"previousPage":"/blog/finance/page/2","nextPage":"/blog/finance/page/4","blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
