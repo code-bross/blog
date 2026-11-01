@@ -1,0 +1,76 @@
+---
+slug: android-17-qpr3-beta3
+title: Android 17 QPR3 Beta 3 살펴보기, API 변경 없는 분기 업데이트의 테스트 포인트
+authors: [way]
+tags: [android, android-17, qpr, beta, pixel]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 29일에 공개된 [Android 17 QPR3 Beta 3](https://developer.android.com/about/versions/17/qpr3/release-notes)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+Android 17 정식 버전이 공개된 이후에도 플랫폼 업데이트는 분기 단위로 계속 이어집니다.<br/>
+이 분기 업데이트를 [Quarterly Platform Release](https://developer.android.com/about/versions/17/qpr3/release-notes)라고 부릅니다.<br/>
+QPR은 AOSP와 Pixel 기기에 Feature Drop 형태로 전달됩니다.<br/>
+QPR3는 10월 초 Beta 1, 10월 중순 Beta 2에 이어 세 번째 베타 빌드입니다.<br/>
+이번 베타는 새로운 API를 추가하지 않고, 보고된 문제를 수정하는 데 초점을 맞추고 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/o75ajIFH0QnQC3nCeD/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Android 17 QPR3 Beta 3 살펴보기
+
+#### QPR의 성격
+[QPR](https://developer.android.com/about/versions/17/qpr3/release-notes)은 메이저 버전 업그레이드와 성격이 다릅니다.<br/>
+앱에 영향을 주는 API 변경을 포함하지 않습니다.<br/>
+따라서 기존 앱의 동작이 API 변경으로 깨질 가능성은 낮습니다.<br/>
+대신 시스템 동작과 기기별 문제가 수정되며, 앱 호환성 테스트의 의미가 큽니다.<br/>
+
+#### 빌드 정보
+이번 베타의 빌드 번호는 기기별로 두 가지로 나뉩니다.<br/>
+Pixel 11 시리즈는 `DP11.261016.004` 빌드를 사용합니다.<br/>
+그 외 지원 기기는 `DP11.261016.003` 빌드를 사용합니다.<br/>
+보안 패치 수준은 2026년 10월 5일 기준입니다.<br/>
+Google Play 서비스는 26.36.33 버전이 함께 제공됩니다.<br/>
+지원 대상은 Pixel 6a 이후 모델과 Android Emulator입니다.<br/>
+
+#### Beta 3에서 수정된 내용
+공식 릴리스 노트에 따르면 이번 베타에서는 26건의 문제가 수정되었습니다.<br/>
+대표적인 수정 항목은 다음과 같습니다.<br/>
+Multiply 블렌드 모드 사용 시 이미지가 잘못된 투명도로 렌더링되던 문제입니다.<br/>
+빠른 앱 전환 직후 홈 제스처를 수행할 때 Recents 화면이 깜빡이던 문제입니다.<br/>
+스레드 멘션을 볼 때 앱이 충돌하던 문제입니다.<br/>
+기기를 웹캠으로 사용할 때 화질이 저하되던 문제입니다.<br/>
+화면이 무작위로 꺼졌다 켜지던 문제와 WPA-Enterprise PEAP 방식 Wi-Fi 로그인 실패 문제도 포함됩니다.<br/>
+
+#### 테스트 방법
+베타 빌드는 [Android Beta Program](https://developer.android.com/about/versions/17/qpr3/release-notes)에 가입하면 OTA로 받을 수 있습니다.<br/>
+직접 이미지를 설치하는 경우에는 OTA 이미지를 사이드로드하는 방식을 사용합니다.<br/>
+
+```bash
+adb sideload ota.zip
+```
+
+에뮬레이터에서는 x86 64비트와 ARM v8-A 이미지가 지원됩니다.<br/>
+베타 빌드에서는 보안 패치 수준을 코드로 확인할 수도 있습니다.<br/>
+
+```kotlin
+val patch = Build.VERSION.SECURITY_PATCH
+Log.d("DeviceInfo", "Security patch: $patch")
+```
+
+### 실무 관점
+MTS와 같은 금융 앱에서는 베타 빌드 테스트의 목적을 분명히 정하는 것이 좋습니다.<br/>
+API 변경이 없는 업데이트에서는 신규 API 대응보다 회귀 테스트가 우선입니다.<br/>
+렌더링과 화면 전환, 카메라와 Wi-Fi 관련 수정이 포함된 만큼 해당 경로의 스모크 테스트를 먼저 수행합니다.<br/>
+베타 빌드는 업무용 주력 기기가 아니라 테스트 전용 기기나 에뮬레이터에서 검증하는 것이 안전합니다.<br/>
+베타에서 발견한 문제는 Beta Feedback 앱이나 이슈 트래커로 보고하는 흐름을 팀 안에 정해두면 좋습니다.<br/>
+
+### 마치며
+QPR3 Beta 3는 API 변경 없이 26건의 문제를 다듬은 베타 빌드입니다.<br/>
+정식 출시 전에 테스트 기기에서 회귀 테스트를 한 번 돌려보는 것이 이번 업데이트의 실용적인 대응입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/03IoP34ByFpdRvT0wb/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

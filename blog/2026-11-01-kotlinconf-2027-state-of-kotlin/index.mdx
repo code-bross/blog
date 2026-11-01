@@ -1,0 +1,80 @@
+---
+slug: kotlinconf-2027-state-of-kotlin
+title: KotlinConf 2027 크라쿠프 개최와 State of Kotlin 2026으로 보는 생태계
+authors: [way]
+tags: [kotlin, kotlinconf, kmp, state-of-kotlin]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+최근 공개된 [KotlinConf 2027](https://blog.jetbrains.com/kotlin/2026/10/kodee-s-kotlin-roundup-shipaton-2026-winners-kotlin-2-5-0-beta2-and-kotlinconf-2027/) 개최 소식과 State of Kotlin 2026 보고서의 핵심 내용을 설명해드리겠습니다.<br/>
+
+### 배경
+Kotlin은 올해로 15주년을 맞았습니다.<br/>
+JetBrains는 생태계의 현재 모습을 담은 State of Kotlin 2026 보고서를 공개했습니다.<br/>
+이와 함께 내년 컨퍼런스인 KotlinConf 2027의 개최지와 일정도 발표되었습니다.<br/>
+두 소식은 Kotlin의 현재 위치와 앞으로의 방향을 함께 보여줍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/Ssk1BvPxn79tUBOo5X/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### KotlinConf 2027 살펴보기
+
+#### 개최 개요
+[KotlinConf 2027](https://blog.jetbrains.com/kotlin/2026/10/kodee-s-kotlin-roundup-shipaton-2026-winners-kotlin-2-5-0-beta2-and-kotlinconf-2027/)은 폴란드 크라쿠프에서 열립니다.<br/>
+일정은 2027년 4월 21일부터 23일까지입니다.<br/>
+첫날인 4월 21일은 워크숍 일정으로 진행됩니다.<br/>
+이어서 이틀간 본 컨퍼런스 세션이 진행됩니다.<br/>
+
+#### 발표 제안 모집
+발표 제안 모집은 현재 진행 중입니다.<br/>
+제출 마감은 2026년 11월 27일입니다.<br/>
+현장에서 공유할 만한 경험이나 도구, Kotlin 활용 사례가 있다면 제안해 볼 수 있습니다.<br/>
+
+#### KMP 콘테스트
+학생과 최근 졸업자를 대상으로 한 Kotlin Multiplatform 콘테스트도 열리고 있습니다.<br/>
+상위 3개 프로젝트의 작성자는 KotlinConf 2027 참가 여행을 지원받습니다.<br/>
+그 외 유효한 출품작의 작성자에게는 기념품이 제공됩니다.<br/>
+콘테스트 제출 마감은 2026년 12월 7일입니다.<br/>
+
+### State of Kotlin 2026 살펴보기
+
+#### 백엔드 비중
+보고서에 따르면 Kotlin 개발자의 절반 이상이 백엔드 프로젝트에 참여하고 있습니다.<br/>
+Kotlin은 안드로이드 언어로 시작했지만, 활용 범위는 서버 영역까지 넓어진 상태입니다.<br/>
+멀티플랫폼과 서버 개발이 함께 성장하고 있다는 점이 보고서의 큰 흐름입니다.<br/>
+
+#### AI 도구 사용 현황
+설문에 참여한 Kotlin 개발자의 93%는 한 가지 이상의 AI 코딩 도구를 사용한다고 답했습니다.<br/>
+AI가 생성한 Kotlin 코드에 대해서는 81%가 완전히 정확하거나 약간의 수정만으로 충분하다고 답했습니다.<br/>
+AI 도구는 이미 일상적인 개발 과정에 들어와 있는 셈입니다.<br/>
+다만 생성된 코드의 최종 책임은 개발자에게 남아 있습니다.<br/>
+
+#### Shipaton 수상작
+RevenueCat Shipaton 2026에는 3,985건의 프로젝트가 출품되었습니다.<br/>
+이 가운데 JetBrains의 Ship Kotlin Everywhere 상은 세 팀이 받았습니다.<br/>
+수상작은 BoatBrawl과 AfterFade, Lumeo입니다.<br/>
+세 프로젝트 모두 Kotlin Multiplatform과 Compose Multiplatform으로 만들어졌습니다.<br/>
+하나의 코드베이스로 서로 다른 형태의 앱을 만든 사례라는 점이 공통점입니다.<br/>
+
+### 실무 관점
+MTS와 같은 실무 프로젝트에서는 보고서 수치를 그대로 받아들이기보다 검증 기준을 정하는 것이 중요합니다.<br/>
+AI 생성 코드는 81%가 약간의 수정으로 충분하다고 답했지만, 금융 앱에서는 그 약간의 수정이 곧 검토 항목이 됩니다.<br/>
+생성 코드에 대한 리뷰 기준과 테스트 커버리지 기준을 팀 규칙으로 정해두면 좋습니다.<br/>
+또한 Kotlin 컴파일러는 JDK 17 이상을 요구하는 방향으로 바뀌고 있습니다.<br/>
+CI 환경의 JDK 버전이 17 미만이라면 미리 올려두는 것이 안전합니다.<br/>
+Gradle 프로젝트에서는 툴체인 설정을 이용해 JDK 버전을 고정할 수 있습니다.<br/>
+
+```kotlin
+kotlin {
+    jvmToolchain(17)
+}
+```
+
+### 마치며
+KotlinConf 2027은 크라쿠프에서 열리며, 발표 제안 마감은 2026년 11월 27일입니다.<br/>
+State of Kotlin 2026은 백엔드 확장과 AI 도구 일상화가 생태계의 현재 모습임을 보여줍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/4GkRbz4ofCQiDXQJ8z/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
