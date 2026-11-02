@@ -1,0 +1,140 @@
+---
+slug: mts-navigation3-120-deeplink
+title: Navigation 3 1.2 딥링크 API 살펴보기
+authors: [way]
+tags: [android, navigation3, compose, deeplink, kotlin]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+Android Dev Summit 2026에서 다시 강조된 [Navigation 3](https://developer.android.com/jetpack/androidx/releases/navigation3) 1.2의 딥링크 API에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+기존 Navigation 2에서는 딥링크를 내비게이션 그래프에 선언하고, 컨트롤러가 백스택을 관리했습니다.<br/>
+Navigation 3에서는 방향이 달라졌습니다.<br/>
+백스택을 개발자가 직접 상태로 소유하고, 화면 전환은 그 상태를 렌더링하는 방식입니다.<br/>
+이런 구조에서는 딥링크 처리도 그래프 선언이 아니라, 요청을 받아 키로 변환하는 과정이 됩니다.<br/>
+1.2.0 안정 버전(2026년 9월 23일 공개)은 이 과정을 위한 딥링크 API를 정식으로 제공합니다.<br/>
+Kotlin Multiplatform 환경에서도 같은 API로 딥링크를 다룰 수 있다는 점이 특징입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Navigation 3 1.2 딥링크 살펴보기
+
+딥링크 처리는 크게 세 단계로 나뉩니다.<br/>
+요청 만들기, 매처 정의하기, 요청과 매처를 대조해 키 얻기가 그 순서입니다.<br/>
+각 단계를 코드와 함께 살펴보겠습니다.<br/>
+
+#### DeepLinkRequest 만들기
+
+`DeepLinkRequest`는 들어온 딥링크를 표현하는 객체입니다.<br/>
+문자열 URI, `DeepLinkUri`, Android `Intent` 중 하나로 만들 수 있습니다.<br/>
+URI 외에 액션이나 MIME 타입 같은 부가 정보는 타입 안전한 `RequestExtras`로 함께 담습니다.<br/>
+
+```kotlin
+import androidx.navigation3.runtime.deeplink.DeepLinkRequest
+import androidx.navigation3.runtime.deeplink.DeepLinkUri
+import androidx.navigation3.runtime.deeplink.requestExtras
+
+// 문자열 URI로 요청 만들기
+val request = DeepLinkRequest(uri = "https://www.example.com/home")
+
+// DeepLinkUri로 요청 만들기
+val deepLinkUri = DeepLinkUri("https://www.example.com/home")
+val requestFromUri = DeepLinkRequest(uri = deepLinkUri)
+
+// 액션과 MIME 타입을 함께 담기
+val requestWithExtras = DeepLinkRequest(
+    uri = "https://www.example.com/image",
+    extras = requestExtras {
+        put(DeepLinkRequest.ActionExtrasKey, "android.intent.action.VIEW")
+        put(DeepLinkRequest.MimeTypeExtrasKey, "image/*")
+    }
+)
+
+// Activity로 들어온 Intent에서 바로 만들기
+val requestFromIntent = DeepLinkRequest(intent = intent)
+```
+
+`RequestExtras`는 키와 값의 쌍을 타입에 맞게 보관하는 컨테이너입니다.<br/>
+예전처럼 문자열 키로 값을 꺼내 형변환하던 방식보다 실수가 줄어듭니다.<br/>
+
+#### DeepLinkMatcher 정의하기
+
+`DeepLinkMatcher`는 요청을 어떤 내비게이션 키에 연결할지 정의합니다.<br/>
+하나의 키에 여러 매처를 연결할 수 있습니다.<br/>
+기본 제공되는 매처는 세 가지입니다.<br/>
+
+```kotlin
+import androidx.navigation3.runtime.deeplink.DeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.DeepLinkUri
+import androidx.navigation3.runtime.deeplink.StaticKeyDeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.UriDeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.withBackStack
+
+// 고정 화면으로 연결되는 매처
+val homeMatcher = StaticKeyDeepLinkMatcher(
+    HomeKey,
+    listOf(DeepLinkMatcher.actionFilter(Intent.ACTION_VIEW))
+)
+
+// 경로 인자를 추출하는 매처
+val userProfileMatcher = UriDeepLinkMatcher(
+    DeepLinkUri("www.example.com/users/{id}"),
+    serializer<UserProfileKey>()
+).withBackStack { matchResult ->
+    listOf(HomeKey, matchResult.key)
+}
+```
+
+`UriDeepLinkMatcher`는 URI 패턴의 `{id}` 같은 플레이스홀더를 인자로 추출합니다.<br/>
+`withBackStack`은 매칭에 성공했을 때 합성 백스택을 함께 만듭니다.<br/>
+사용자가 딥링크로 상세 화면에 들어왔을 때, 뒤로 가기를 누르면 홈 화면으로 돌아가는 흐름을 이렇게 보장합니다.<br/>
+
+#### 요청 매칭하고 백스택 구성하기
+
+매처 목록을 준비했으면, 들어온 요청과 대조해 키를 얻습니다.<br/>
+매칭 결과는 비교가 가능하므로, 여러 매처 중 가장 적합한 결과를 고를 수 있습니다.<br/>
+
+```kotlin
+val deepLinkMatchers = listOf(homeMatcher, userProfileMatcher)
+
+val request = DeepLinkRequest(intent = intent)
+val matchResult = deepLinkMatchers.firstNotNullOfOrNull { matcher ->
+    matcher.match(request)
+}
+
+val backStack = rememberNavBackStack(
+    matchResult?.key ?: HomeKey
+)
+```
+
+이렇게 얻은 키를 `rememberNavBackStack`의 시작점으로 넘기면, 이후는 평소와 같은 `NavDisplay` 흐름으로 이어집니다.<br/>
+딥링크로 들어온 경우와 앱 안에서 이동한 경우의 화면 렌더링 방식이 달라지지 않습니다.<br/>
+한편 Activity를 딥링크로 열려면 `AndroidManifest.xml`에 `intent-filter`를 등록하는 절차는 여전히 필요합니다.<br/>
+
+#### 예측 뒤로 가기와 결과 전달
+
+1.2에는 딥링크 외에도 두 가지 보강이 함께 들어 있습니다.<br/>
+첫 번째는 예측 뒤로 가기 연결을 단순화하는 `NavigationBackHandler`와 `rememberNavigationEventState`입니다.<br/>
+전환 도중에 뒤로 제스처가 들어와도 애니메이션이 어긋나지 않도록 처리합니다.<br/>
+두 번째는 화면 간 결과 전달을 위한 Result API입니다.<br/>
+`ResultEventBus`를 통해 항목 간 결과를 주고받고, `ResultEffect`로 흐름 형태로 수집합니다.<br/>
+
+### 실무 관점
+
+MTS에서 딥링크는 푸시 알림, 공유 링크, 외부 연동 등 여러 진입점으로 연결됩니다.<br/>
+딥링크로 바로 열리는 화면이 민감 정보를 다룬다면, 진입 전에 로그인 상태와 접근 권한을 먼저 확인해야 합니다.<br/>
+합성 백스택은 뒤로 가기 경로를 자연스럽게 만들지만, 스택에 쌓이는 화면이 민감 화면을 거치지 않는지 함께 검토해야 합니다.<br/>
+URI 패턴은 서버나 마케팅 채널과 공유되므로, 패턴 변경 시에는 기존 링크의 호환 여부를 먼저 확인하는 편이 좋습니다.<br/>
+
+### 마치며
+
+Navigation 3 1.2는 딥링크를 그래프 선언이 아니라 요청과 매칭의 문제로 정리했습니다.<br/>
+타입 안전한 요청과 합성 백스택 덕분에, 진입 경로가 달라도 화면 흐름을 일관되게 유지할 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/uq30cwERWnMEcILIwr/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

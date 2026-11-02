@@ -1,0 +1,96 @@
+---
+slug: mts-android-cli-agent-plugin
+title: 터미널에서 에이전트와 함께 개발하기 Android CLI 공식 플러그인
+authors: [way]
+tags: [android, android-cli, ai-agent, claude-code, codex, antigravity]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+최근 Android Dev Summit 2026에서 공개된 Android CLI 공식 에이전트 플러그인에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+최근 Android 개발 환경에서는 AI 코딩 에이전트의 역할이 빠르게 커지고 있습니다.<br/>
+Android Studio Rabbit 2에서는 IDE 안에서 원하는 에이전트를 고르는 [Bring Your Own Agent](https://developer.android.com/blog/posts/build-your-way-use-any-ai-agent-of-your-choice-in-android-studio)가 안정화되었습니다.<br/>
+그런데 모든 개발자가 IDE 안에서만 에이전트를 쓰는 것은 아닙니다.<br/>
+터미널에서 작업하는 에이전트, CI 파이프라인에서 동작하는 자동화 흐름도 함께 고려해야 합니다.<br/>
+이번에 공개된 [Android CLI 공식 에이전트 플러그인](https://developer.android.com/tools/agents/android-cli/agent-plugins)은 바로 이 지점을 겨냥합니다.<br/>
+터미널에 상주하는 에이전트에게 Android 개발 도구를 직접 쥐여주는 방식입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/4GkRbz4ofCQiDXQJ8z/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Android CLI 공식 플러그인 살펴보기
+
+플러그인은 Claude Code, OpenAI Codex, Google Antigravity에 공식으로 제공됩니다.<br/>
+플러그인을 설치하면 에이전트에게 `android-cli` 스킬이 추가됩니다.<br/>
+이 스킬을 통해 에이전트는 프로젝트 생성, 가상 기기 관리, 실시간 UI 레이아웃 검사, Journeys 실행, 공식 Android Knowledge Base 검색을 수행합니다.<br/>
+
+#### 설치하기
+
+각 에이전트마다 설치 명령이 조금씩 다릅니다.<br/>
+Claude Code에서는 마켓플레이스를 추가한 뒤 플러그인을 설치합니다.<br/>
+
+```bash
+claude plugin marketplace add android/android-cli-plugin
+claude plugin install android-cli@android-cli-plugin
+```
+
+Codex에서는 두 번째 명령의 동사가 `add`라는 점이 다릅니다.<br/>
+
+```bash
+codex plugin marketplace add android/android-cli-plugin
+codex plugin add android-cli@android-cli-plugin
+```
+
+Antigravity에서는 전용 마켓플레이스 경로로 설치합니다.<br/>
+
+```bash
+agy plugin install android-cli-plugin@antigravity-plugins-official
+```
+
+설치가 끝나면 에이전트 세션 안에서 Android CLI를 바로 사용할 수 있습니다.<br/>
+먼저 `android init`으로 에이전트 설정을 마치고, `android skills list`로 제공되는 스킬 목록을 확인하는 흐름이 안내됩니다.<br/>
+
+#### Compose 프리뷰와 기기 스트리밍
+
+터미널 기반 에이전트의 약점은 화면을 직접 보지 못한다는 점이었습니다.<br/>
+Android CLI는 이 약점을 두 가지 기능으로 보완합니다.<br/>
+첫 번째는 Compose 프리뷰 렌더링입니다.<br/>
+에뮬레이터를 띄우거나 APK를 설치하지 않고도 프리뷰를 렌더링해 UI 변경을 즉시 시각적으로 검증합니다.<br/>
+두 번째는 [Android Device Streaming](https://developer.android.com/studio/run/android-device-streaming)입니다.<br/>
+Firebase 기반으로 원격 실기기를 연결해 기기별 이슈를 직접 확인합니다.<br/>
+구글은 내부 테스트 기준으로 `android preview`를 활용한 에이전트가 UI 작업을 더 빠르게 마쳤다고 밝혔습니다.<br/>
+이 수치는 구글 자체 테스트 결과이므로, 참고용 지표로 받아들이는 편이 좋습니다.<br/>
+
+#### 프로파일링과 분석
+
+Android CLI에는 성능 분석 도구도 함께 들어 있습니다.<br/>
+Perfetto 기반 시스템 트레이스를 수집해 콜드 스타트 지연, UI 끊김, 백그라운드 깨어남을 살펴봅니다.<br/>
+메모리 누수 탐지에는 오픈소스 [LeakCanary](https://square.github.io/leakcanary/)가 내장되어 있습니다.<br/>
+`analyze` 기능은 앱 번들과 라이브러리를 검사해 난독화, 최적화, 축소 점수를 확인합니다.<br/>
+Google Play에 업로드하기 전에 스토어와 같은 기준으로 품질 신호를 미리 점검하는 용도입니다.<br/>
+
+#### 30개 이상의 Android 스킬
+
+플러그인과 함께 제공되는 Android 스킬은 30개 이상이며, 20개 이상의 영역을 다룹니다.<br/>
+권한 보안, Glance 위젯 레이아웃, Compose 성능 최적화 같은 주제가 포함됩니다.<br/>
+에이전트가 범용 지식만으로 추측하지 않고, Android 공식 가이드에 근거해 작업하도록 돕는 장치입니다.<br/>
+필요한 스킬만 골라 추가하는 방식이라, 프로젝트 성격에 맞게 범위를 조절할 수 있습니다.<br/>
+
+### 실무 관점
+
+MTS처럼 보안과 정확성이 중요한 프로젝트에서 에이전트 도구를 쓸 때는 범위를 좁게 잡는 편이 좋습니다.<br/>
+에이전트에게는 프리뷰 렌더링, 레이아웃 검사, 트레이스 수집 같은 확인 작업부터 맡기고, 실제 반영은 사람이 검토하는 구조가 안전합니다.<br/>
+실기기 검증은 원격 스트리밍으로 1차 확인하고, 최종 검증은 내부 테스트 트랙과 실기기에서 마치는 편이 좋습니다.<br/>
+에이전트가 생성한 코드는 빌드와 테스트를 통과했는지, 기존 아키텍처와 어긋나지 않는지 별도로 확인해야 합니다.<br/>
+
+### 마치며
+
+Android CLI 공식 플러그인은 에이전트의 작업 공간을 IDE 밖으로 넓혔습니다.<br/>
+터미널과 CI에서도 프리뷰, 기기, 프로파일링 도구를 같은 방식으로 쓸 수 있게 되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/Ssk1BvPxn79tUBOo5X/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
