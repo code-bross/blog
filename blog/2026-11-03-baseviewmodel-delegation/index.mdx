@@ -1,0 +1,132 @@
+---
+slug: mts-baseviewmodel-delegation
+title: BaseViewModel을 상속하지 않고 조합하기 — Kotlin 위임과 Lifecycle 2.11 스코프 ViewModel
+authors: [way]
+tags: [android, kotlin, viewmodel, delegation, lifecycle]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+최근 Medium에서 다뤄진 [BaseViewModel의 위임 전환](https://medium.com/@aslam.iit.ju41/composition-over-inheritance-in-android-viewmodels-stop-writing-baseviewmodel-348c05dfb36e)과 [Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle) 2.11의 스코프 ViewModel을 함께 살펴보겠습니다.<br/>
+
+### 배경
+
+대부분의 성숙한 Android 코드베이스에는 `BaseViewModel` 파일이 있습니다.<br/>
+처음에는 일회성 메시지나 로딩 표시 같은 보일러플레이트를 줄이는 것이 목적입니다.<br/>
+그런데 시간이 지나면 네트워크 검사, 분석 추적, 오류 다이얼로그, 페이지네이션, 세션 로그아웃까지 쌓입니다.<br/>
+결국 정적인 화면까지 수백 줄짜리 베이스 클래스를 상속하게 됩니다.<br/>
+두 가지 부분 동작이 함께 필요한 화면에서는 단일 상속이 한계에 부딪힙니다.<br/>
+페이지네이션과 검색을 동시에 쓰는 화면이 대표적인 경우입니다.<br/>
+이 문제를 상속으로 해결하려 하면 베이스 클래스는 더 커지고, 단위 테스트는 모킹 중심으로 어려워집니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/VqP1cnzDipPWr1gMVz/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 위임으로 BaseViewModel 대체하기
+
+#### 기능별 홀더 인터페이스 나누기
+
+대안은 상속이 아니라 조합입니다.<br/>
+Kotlin의 인터페이스 위임 `by`를 사용하면, 필요한 기능만 골라서 붙일 수 있습니다.<br/>
+먼저 메시지 표시와 로딩 표시를 각각의 인터페이스로 나눕니다.<br/>
+각 인터페이스는 상태와 상태 변경 함수만 정의합니다.<br/>
+구현 클래스는 순수한 상태 보관 역할만 맡습니다.<br/>
+코루틴 스코프는 `ViewModel`이 소유하므로, 홀더 안에 스코프를 두지 않습니다.<br/>
+
+```kotlin
+interface MessageHolder {
+    val message: StateFlow<String?>
+    fun showMessage(text: String)
+    fun clearMessage()
+}
+
+class DefaultMessageHolder : MessageHolder {
+    private val _message = MutableStateFlow<String?>(null)
+    override val message: StateFlow<String?> = _message
+
+    override fun showMessage(text: String) {
+        _message.value = text
+    }
+
+    override fun clearMessage() {
+        _message.value = null
+    }
+}
+
+interface LoadingHolder {
+    val isLoading: StateFlow<Boolean>
+    fun setLoading(loading: Boolean)
+}
+
+class DefaultLoadingHolder : LoadingHolder {
+    private val _isLoading = MutableStateFlow(false)
+    override val isLoading: StateFlow<Boolean> = _isLoading
+
+    override fun setLoading(loading: Boolean) {
+        _isLoading.value = loading
+    }
+}
+```
+
+#### ViewModel에서 필요한 것만 조합하기
+
+`ViewModel`은 필요한 홀더만 위임으로 가져옵니다.<br/>
+메시지만 필요한 화면의 `ViewModel`은 메시지 홀더만 위임합니다.<br/>
+로딩까지 필요한 화면은 두 홀더를 함께 위임합니다.<br/>
+두 가지 부분 동작이 필요한 경우에도, 두 인터페이스를 함께 위임하면 해결됩니다.<br/>
+단위 테스트에서는 실제 홀더를 그대로 쓰거나, 작은 가짜 구현으로 교체할 수 있습니다.<br/>
+베이스 클래스 전체를 모킹할 필요가 없어집니다.<br/>
+
+```kotlin
+class HomeViewModel(
+    private val repository: HomeRepository
+) : ViewModel(),
+    MessageHolder by DefaultMessageHolder(),
+    LoadingHolder by DefaultLoadingHolder() {
+
+    fun load() {
+        viewModelScope.launch {
+            setLoading(true)
+            try {
+                repository.refresh()
+            } catch (e: Exception) {
+                showMessage("데이터를 불러오지 못했습니다.")
+            } finally {
+                setLoading(false)
+            }
+        }
+    }
+}
+```
+
+#### Lifecycle 2.11의 스코프 ViewModel
+
+위임과 함께 살펴볼 기능이 [Lifecycle](https://developer.android.com/jetpack/androidx/releases/lifecycle) 2.11의 스코프 ViewModel입니다.<br/>
+2.11.0은 2026년 6월 17일에 공개되었습니다.<br/>
+`ViewModelStoreProvider`와 `rememberViewModelStoreProvider`, `rememberViewModelStoreOwner`가 새로 들어갔습니다.<br/>
+이 API들은 `ViewModel`을 특정 UI 스코프에 묶는 용도입니다.<br/>
+예를 들어 Pager의 각 페이지마다 별도의 `ViewModel`을 유지할 수 있습니다.<br/>
+스코프에 묶인 `ViewModel`은 구성 변경에도 살아남습니다.<br/>
+해당 Composable이 계층에서 제거되면 자동으로 정리됩니다.<br/>
+Navigation3 연동도 함께 강화되었습니다.<br/>
+`ViewModelStoreNavEntryDecorator`가 `ViewModelStoreOwner`를 받아, 중첩된 `ViewModel`에 생성 정보와 팩토리를 전달합니다.<br/>
+`removeViewModelStoreOnPop`은 deprecated 되었습니다.<br/>
+위임으로 기능을 나누고 스코프로 수명을 나누면, 베이스 클래스에 의존하지 않는 구조가 됩니다.<br/>
+
+### 실무에서 적용할 때
+
+기존 `BaseViewModel`을 한 번에 지우지 않는 것이 좋습니다.<br/>
+신규 화면부터 홀더 위임 방식으로 만들고, 기존 화면은 리팩터링 대상으로 따로 관리합니다.<br/>
+홀더가 Android 프레임워크 타입에 의존하지 않도록 유지합니다.<br/>
+그래야 단위 테스트에서 홀더를 그대로 재사용할 수 있습니다.<br/>
+스코프 ViewModel은 Pager처럼 화면 단위 수명이 필요한 곳부터 적용합니다.<br/>
+MTS처럼 화면이 많은 앱에서는, 수명 범위를 먼저 정하고 나서 도입하는 것이 안전합니다.<br/>
+
+### 마치며
+
+상속은 기능을 한 번에 물려주지만, 필요 없는 기능까지 함께 물려줍니다.<br/>
+위임은 필요한 기능만 골라서 조합하게 하고, 스코프 ViewModel은 수명까지 화면에 맞게 나눠줍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/ZnVLvNSVAw7O3okaf0/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

@@ -1,0 +1,97 @@
+---
+slug: mts-androidx-test-180-alpha03
+title: 테스트도 minSdk 24 시대로 — AndroidX Test 1.8.0-alpha03과 Espresso 3.8.0-alpha03 살펴보기
+authors: [way]
+tags: [android, androidx-test, espresso, test, minsdk]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 29일에 공개된 [AndroidX Test](https://developer.android.com/jetpack/androidx/releases/test) 1.8.0-alpha03과 Espresso 3.8.0-alpha03 그룹 릴리스에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+Android 테스트 코드는 앱 코드만큼 오래 유지됩니다.<br/>
+그런데 테스트 라이브러리가 지원하는 최소 SDK가 앱의 최소 SDK보다 낮으면, 테스트 코드 안에 오래된 SDK를 위한 분기 로직이 계속 남습니다.<br/>
+이번 [AndroidX Test](https://developer.android.com/jetpack/androidx/releases/test) 알파 그룹은 바로 이 지점을 정리합니다.<br/>
+그룹 전체가 최소 SDK 24로 올라가며, SDK 24 미만을 위한 로직을 제거했습니다.<br/>
+알파 버전이므로 운영 앱에 바로 적용하기보다는, 변경 내용을 미리 파악하고 테스트 모듈의 방향을 정하는 데 의미가 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/uhJAs1vD0A4GbK7eRm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### AndroidX Test 1.8.0-alpha03 살펴보기
+
+#### 그룹 릴리스 구성
+
+2026년 10월 29일에는 테스트 그룹 전체가 함께 올라갔습니다.<br/>
+[Core](https://developer.android.com/jetpack/androidx/releases/test)는 1.8.0-alpha03, [Espresso](https://developer.android.com/jetpack/androidx/releases/test)는 3.8.0-alpha03입니다.<br/>
+[Espresso Device](https://developer.android.com/jetpack/androidx/releases/test)는 1.2.0-alpha03, JUnit 확장은 1.4.0-alpha03, Truth 확장은 1.8.0-alpha03입니다.<br/>
+Runner와 Rules도 1.8.0-alpha03, Orchestrator와 Services는 1.7.0-alpha03, Monitor는 1.9.0-alpha04입니다.<br/>
+참고로 alpha03 항목 자체에는 별도의 변경 목록이 적혀 있지 않습니다.<br/>
+실질적인 변경 내용은 직전 버전인 10월 15일의 alpha01에 담겨 있습니다.<br/>
+따라서 이번 글에서는 alpha01의 변경을 중심으로 살펴보겠습니다.<br/>
+
+```kotlin
+dependencies {
+    androidTestImplementation("androidx.test:core:1.8.0-alpha03")
+    androidTestImplementation("androidx.test:core-ktx:1.8.0-alpha03")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.8.0-alpha03")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.4.0-alpha03")
+}
+```
+
+#### 최소 SDK 24로의 상향
+
+alpha01에서 그룹 전체의 최소 SDK가 24로 올라갔습니다.<br/>
+Core와 Espresso, Espresso Device, JUnit 확장이 모두 같은 기준을 적용했습니다.<br/>
+SDK 24는 Android 7.0에 해당합니다.<br/>
+SDK 24 미만을 위한 로직이 제거되면서, 테스트 라이브러리 내부가 단순해졌습니다.<br/>
+앱의 최소 SDK가 이미 24 이상이라면, 테스트 의존성만으로 인한 제약은 줄어듭니다.<br/>
+반대로 앱의 최소 SDK가 24보다 낮다면, 이 알파 라인을 적용할 수 없습니다.<br/>
+안정 버전은 여전히 Core 1.7.0과 Espresso 3.7.0이므로, 운영 모듈에서는 안정 버전을 유지하는 것이 안전합니다.<br/>
+
+#### Espresso의 새로운 Intent 매처
+
+Espresso alpha01에는 `IntentMatchers`에 부정 매처가 추가되었습니다.<br/>
+`doesNotHaveFlag`와 `doesNotHaveFlags`가 그 대상입니다.<br/>
+Intent에 특정 플래그가 없어야 하는 경우를 검증할 때 사용합니다.<br/>
+기존에는 플래그가 있는 경우를 확인하는 매처가 중심이었습니다.<br/>
+부정 조건을 직접 표현할 수 있게 되면서, Intent 검증 코드가 읽기 쉬워집니다.<br/>
+예를 들어 화면 전환 시 특정 플래그가 붙지 않아야 하는 정책을 테스트 코드로 남길 수 있습니다.<br/>
+
+#### 버그 수정 내용
+
+alpha01의 버그 수정도 함께 살펴볼 필요가 있습니다.<br/>
+SDK 36 API를 사용할 때 `TestLooperManagerCompat`에서 불필요했던 리플렉션이 제거되었습니다.<br/>
+`dumpThreadStates`가 예외를 던지는 경우, `AppNotIdleException`을 억누르지 않도록 수정되었습니다.<br/>
+`Espresso.onIdle`의 트레이싱이 제거되었습니다.<br/>
+`UiControllerImpl`의 `NullPointerException`이 수정되었습니다.<br/>
+`isDisplayingAtLeast` 매처는 상위 뷰의 스케일을 반영하도록 수정되었습니다.<br/>
+스케일이 적용된 상위 뷰 안에 있는 뷰의 표시 비율 판정이 더 정확해집니다.<br/>
+
+```kotlin
+@Test
+fun detailScreen_showsTitle() {
+    ActivityScenario.launch(MainActivity::class.java)
+    onView(withId(R.id.title))
+        .check(matches(isDisplayingAtLeast(90)))
+}
+```
+
+### 실무에서 적용할 때
+
+알파 버전은 새로운 기능 확인용으로 사용하는 것이 좋습니다.<br/>
+운영 앱의 테스트 모듈은 안정 버전인 Core 1.7.0과 Espresso 3.7.0을 유지합니다.<br/>
+별도 브랜치에서 알파 버전을 올려보고, 테스트 전체가 통과하는지 확인합니다.<br/>
+특히 최소 SDK 24 상향이 테스트 모듈의 최소 SDK 설정과 충돌하지 않는지 확인합니다.<br/>
+통과한다면, 안정 버전이 나올 때 마이그레이션 범위를 미리 파악해 둘 수 있습니다.<br/>
+
+### 마치며
+
+AndroidX Test 알파 라인은 최소 SDK 24로의 정리와 Intent 매처 보강을 담고 있습니다.<br/>
+테스트 코드의 오래된 분기를 줄이고, 검증 표현을 더 직접적으로 만드는 방향입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/WXQvIDYmPbREaSqPpN/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
