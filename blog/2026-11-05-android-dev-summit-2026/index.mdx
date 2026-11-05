@@ -1,0 +1,121 @@
+---
+slug: android-dev-summit-2026
+title: "Android Dev Summit 2026 정리: 에이전트와 적응형 UI의 시대"
+authors: [way]
+tags: [android, android-dev-summit-2026, android-studio, compose, appfunctions]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 28일부터 29일까지 열린 [Android Dev Summit 2026](https://developer.android.com/blog/posts/build-it-your-way-a-next-era-of-android-development)의 핵심 발표를 정리해드리겠습니다.<br/>
+
+### 배경
+이번 서밋은 도구와 에이전트, 에이전트 경험 API, 적응형 UI, XR이라는 네 가지 방향으로 발표가 나뉘었습니다.<br/>
+구글은 개발자가 원하는 코딩 에이전트를 직접 고를 수 있게 하고, 앱이 에이전트와 연결되는 방식을 넓히는 데 초점을 맞췄습니다.<br/>
+공개된 내용 중 상당수는 이미 stable 단계에 도달했거나, 베타와 알파로 구분되어 공개되었습니다.<br/>
+실무에서는 어느 발표가 당장 적용 대상인지, 어느 발표가 준비 단계인지 구분하는 것이 중요합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Android Studio Rabbit 2 살펴보기
+[Android Studio Rabbit 2](https://developer.android.com/blog/posts/ai-agents-android-studio-integration)가 stable로 공개되었습니다.<br/>
+이제 Claude Agent, Codex, Antigravity를 비롯해 40개 이상의 ACP 호환 에이전트를 IDE 안에서 직접 고를 수 있습니다.<br/>
+에이전트는 에뮬레이터와 빌드 시스템, Logcat 같은 Android Studio의 개발 도구를 함께 쓸 수 있습니다.<br/>
+Gemini만 쓰던 구조에서 벗어나 팀이 이미 쓰고 있는 에이전트를 그대로 가져올 수 있게 된 점이 가장 큰 변화입니다.<br/>
+
+#### Android CLI 살펴보기
+Android CLI도 에이전트 중심으로 기능이 넓어졌습니다.<br/>
+Firebase 기반의 Android Device Streaming으로 실제 기기를 원격으로 테스트할 수 있습니다.<br/>
+에이전트는 Jetpack Compose 프리뷰를 렌더링해서 에뮬레이터나 APK 배포 없이 화면을 바로 확인할 수 있습니다.<br/>
+프로파일링은 Perfetto 기반의 시스템 트레이스를 수집해 콜드 스타트와 UI 끊김, 백그라운드 깨움을 분석합니다.<br/>
+Analyze 기능은 앱 번들과 라이브러리의 난독화와 최적화, 축소 점수를 검사해 Play 업로드 전에 품질 문제를 찾습니다.<br/>
+20개 이상의 영역을 다루는 30개 이상의 Android 스킬도 함께 공개되었습니다.<br/>
+
+```bash
+android init
+android skills list
+```
+
+위 명령으로 에이전트용 Android CLI 환경을 초기화하고, 설치된 스킬 목록을 확인할 수 있습니다.<br/>
+공식 에이전트 플러그인도 Antigravity용에 이어 Claude Code와 Codex용이 새로 나왔습니다.<br/>
+
+### 에이전트 경험을 만드는 API 살펴보기
+앱이 에이전트의 도구가 되는 흐름도 이번 서밋의 한 축입니다.<br/>
+[AppFunctions](https://developer.android.com/ai/appfunctions)는 앱 기능을 에이전트가 호출할 수 있게 만드는 통합 도구 호출 계층입니다.<br/>
+이번 서밋에서 AppFunctions가 베타 단계에 들어섰습니다.<br/>
+에이전트는 함수 이름과 설명만 보고 호출을 결정하므로, 이름과 KDoc이 곧 스키마라는 점을 염두에 두어야 합니다.<br/>
+
+```kotlin
+/**
+ * 코스피 지수 요약 정보를 반환합니다.
+ *
+ * @param market 조회할 시장 코드입니다.
+ */
+@AppFunctionDeclaration(isDescribedByKDoc = true)
+suspend fun getIndexSummary(
+    market: String
+): IndexSummary = withContext(Dispatchers.IO) {
+    marketRepository.getIndexSummary(market)
+}
+```
+
+A2UI for Jetpack Compose는 알파로 공개되었습니다.<br/>
+에이전트가 텍스트 답변이 아니라 앱 자체 컴포넌트로 만든 인터랙티브 UI를 반환할 수 있게 됩니다.<br/>
+네이티브 Jetpack Compose 렌더러가 들어가 앱 안에서 자연스럽게 동작합니다.<br/>
+
+ML Kit의 새로운 Agentic API도 알파로 공개되었습니다.<br/>
+Gemini Nano 4를 기반으로 함수 실행과 대화 기록, 오케스트레이션 루프를 자동으로 처리하고 가드레일도 포함합니다.<br/>
+온디바이스 에이전트를 만들 때 서버 왕복 없이 기기 안에서 루프를 돌릴 수 있다는 점이 특징입니다.<br/>
+
+Connected Apps Platform도 함께 소개되었습니다.<br/>
+앱 서비스를 Gemini가 시스템 AI 에이전트로 동작하는 사용자에게 공유하는 구조입니다.<br/>
+지금은 프로토타입 단계이며, 프로덕션 게시를 위해서는 미리보기 프로그램 등록이 필요합니다.<br/>
+
+### Compose 1.13과 적응형 개발 살펴보기
+다가오는 [Compose 1.13](https://developer.android.com/blog/posts/build-it-your-way-a-next-era-of-android-development) stable에는 적응형 레이아웃 지원이 들어갑니다.<br/>
+Grid와 Flexbox가 stable로 전환되고, Progressive Blur와 Formatted Text가 새로 추가됩니다.<br/>
+Navigation 3 1.2는 딥 링크 지원과 함께 stable이 되었습니다.<br/>
+AppState는 Compose의 반응형 모델을 상태 계층까지 확장하는 알파 단계의 building block입니다.<br/>
+기기 설정이 바뀌어도 상태를 유지하는 구조를 앱과 AI 에이전트가 함께 쓸 수 있게 만드는 것이 목표입니다.<br/>
+
+적응형 개발은 폰과 폴더블, 태블릿, 노트북, 차량, XR까지 한 코드베이스로 대응하는 방향으로 정리되었습니다.<br/>
+Compose adaptive skill이 업데이트되어 기존 Compose UI를 감사하고 키보드 단축키와 커서, 호버 상태, 툴팁을 자동으로 구현합니다.<br/>
+내비게이션 패턴 이전과 Grid, Flexbox, mediaQuery 기반의 레이아웃 이전도 skill이 다룹니다.<br/>
+미디어와 카메라 화면을 폴더블의 테이블탑 레이아웃으로 바꾸는 최적화도 포함되었습니다.<br/>
+내년부터 Google Play는 폴더블에서의 앱 동작을 자세히 살피고, 적응형으로 잘 만든 앱에 더 많은 노출 기회를 줄 예정입니다.<br/>
+구체적인 스토어 요구사항은 올해 안에 발표될 예정입니다.<br/>
+
+```kotlin
+@Composable
+fun AdaptiveStockList() {
+    BoxWithConstraints {
+        if (maxWidth > 600.dp) {
+            StockGrid()
+        } else {
+            StockList()
+        }
+    }
+}
+```
+
+XREAL과 함께 XREAL AURA가 공개되었습니다.<br/>
+Android XR 기반의 첫 유선 XR 글라스입니다.<br/>
+SceneCore와 ARCore for Jetpack XR, XR Runtime을 비롯한 핵심 Jetpack XR SDK 라이브러리가 stable이 되었습니다.<br/>
+Android Studio의 Android XR 에뮬레이터도 stable이 되어 실물 기기 없이 XR 글라스 경험을 검증할 수 있습니다.<br/>
+
+### 실무 관점
+MTS 앱에 적용한다면, 단계를 나눠 접근하는 것이 안전합니다.<br/>
+Rabbit 2의 BYOA는 stable이므로 팀이 이미 쓰는 에이전트를 IDE에 연결하는 것부터 검토할 수 있습니다.<br/>
+AppFunctions는 베타, A2UI와 ML Kit Agentic API는 알파 단계이므로 프로덕션 노출보다 내부 빌드에서의 검증이 먼저입니다.<br/>
+AppFunctions에 노출할 함수는 조회처럼 부작용이 없는 것부터 시작하고, 주문이나 이체처럼 돈이 움직이는 동작은 대상에서 빼는 편이 안전합니다.<br/>
+Compose 1.13의 적응형 기능은 폴더블 대응을 준비하는 팀이라면 미리 살펴볼 만합니다.<br/>
+내년 Play의 폴더블 평가에 대비해 Compose adaptive skill로 현재 화면을 한 번 감사해 보는 것도 좋습니다.<br/>
+
+### 마치며
+이번 서밋은 에이전트를 IDE에 들이는 것과 앱을 에이전트에 연결하는 것, 두 방향을 동시에 제시했습니다.<br/>
+적응형 UI까지 합치면, 앞으로의 Android 개발은 폼팩터와 에이전트라는 두 축으로 넓어질 것으로 보입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/26gsobowozGM9umBi/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

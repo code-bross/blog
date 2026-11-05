@@ -1,0 +1,91 @@
+---
+slug: intellij-idea-2026-3
+title: "IntelliJ IDEA 2026.3 살펴보기: Kotlin 개발자를 위한 수정 사항 정리"
+authors: [way]
+tags: [intellij, kotlin, ide, android-studio]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+최근 공개된 [IntelliJ IDEA 2026.3](https://blog.jetbrains.com/idea/2026/11/whats-fixed-in-intellij-idea-2026-3/)의 주요 수정 사항을 정리해드리겠습니다.<br/>
+
+### 배경
+이번 릴리스는 1,000개가 넘는 버그 수정과 300개가 넘는 성능 수정을 담았습니다.<br/>
+성능과 Java, Kotlin 코드 인텔리전스, 그리고 매일 쓰는 핵심 워크플로에 집중한 릴리스입니다.<br/>
+수정 대부분은 사용자의 오류 보고와 UI 멈춤 보고를 바탕으로 우선순위가 정해졌습니다.<br/>
+Android Studio를 매일 쓰는 개발자에게도 IDE 기반이 되는 IntelliJ 플랫폼의 변화는 바로 체감되는 부분입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/L1R1tvI9svkIWwpVYr/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Kotlin 살펴보기
+
+#### CancellationException 검사
+새로운 검사는 suspend 코드에서 `CancellationException`을 잡고 다시 던지지 않는 경우를 경고합니다.<br/>
+빠른 수정도 함께 제공됩니다.<br/>
+코루틴 취소는 예외를 다시 던져야 전파되는 구조라, 잡아서 삼키면 취소가 조용히 사라집니다.<br/>
+특히 네트워크 재시도나 리소스 정리 로직에서 흔히 만나는 실수입니다.<br/>
+
+```kotlin
+suspend fun loadQuotes() {
+    try {
+        quoteRepository.refresh()
+    } catch (e: CancellationException) {
+        throw e
+    }
+}
+```
+
+위처럼 취소 예외는 반드시 다시 던져야 합니다.<br/>
+잡아서 로그만 남기고 끝내면 코루틴 취소가 전파되지 않습니다.<br/>
+
+#### suspend 람다의 블로킹 호출 표시
+suspend 람다 안에서 블로킹 호출이 일어나면 이제 에디터에서 강조 표시됩니다.<br/>
+suspend 함수 안에서 블로킹 I/O를 직접 호출하면 스레드를 점유한 채 멈추게 됩니다.<br/>
+컴파일은 되지만 런타임에 성능 문제로 이어지는 유형이라, 에디터 단계에서 잡아주는 것이 도움이 됩니다.<br/>
+
+```kotlin
+suspend fun readCache(): String {
+    return withContext(Dispatchers.IO) {
+        fileReader.read()
+    }
+}
+```
+
+블로킹 작업은 위처럼 `Dispatchers.IO`로 전환해서 실행하는 것이 원칙입니다.<br/>
+
+#### Java를 Kotlin으로 변환할 때 Lombok 처리
+Java를 Kotlin으로 변환할 때 `@lombok.Data` 클래스가 이제 data class로 변환됩니다.<br/>
+기존에는 변환 뒤에 data class 정리를 손으로 다시 해야 하는 경우가 있었습니다.<br/>
+서버 코드나 공유 모듈을 Kotlin으로 옮기는 팀이라면 변환 품질이 조금씩 나아지는 변화입니다.<br/>
+
+### 프로젝트 가져오기 살펴보기
+대규모 Maven과 Gradle 프로젝트 가져오기가 최적화되었습니다.<br/>
+Kotlin 저장소를 Gradle 9.7로 가져올 때 5분이 걸리던 과정이 대부분 오류 처리 시간이었다는 문제가 수정되었습니다.<br/>
+원격 개발 호스트에서 가져오기 중 발생하던 데드락도 사라졌습니다.<br/>
+IDE를 실행할 때 필요하지 않은 상황에서는 WSL이 더 이상 자동으로 시작되지 않습니다.<br/>
+대형 멀티모듈 프로젝트를 여는 일이 잦은 팀일수록 체감 폭이 큰 수정입니다.<br/>
+
+### IDE 전반의 개선 살펴보기
+JaCoCo가 새로운 Java 실행 설정의 기본 커버리지 러너가 되었습니다.<br/>
+Gradle과 Maven, CI 시스템, SonarQube가 이미 쓰는 러너라 IDE와 파이프라인의 커버리지 수치가 일치합니다.<br/>
+Git worktree는 이제 멀티 루트 프로젝트에서도 동작하고, 별도의 worktree에서 머지 요청을 열 수 있습니다.<br/>
+GitLab 계정은 개인 액세스 토큰을 붙여넣지 않고 브라우저 로그인으로 연결할 수 있게 되었습니다.<br/>
+터미널은 ghostty 에뮬레이터를 도입했고 40개가 넘는 수정이 함께 들어갔습니다.<br/>
+플러그인 관리 화면은 설치됨과 마켓플레이스 탭이 하나로 합쳐져 한 번의 검색으로 찾을 수 있게 되었습니다.<br/>
+MCP 서버 포트도 설정에서 직접 바꿀 수 있게 되었습니다.<br/>
+
+### 실무 관점
+MTS 앱에 적용한다면, CancellationException 검사가 가장 먼저 눈에 들어옵니다.<br/>
+코루틴 취소 전파는 시세 갱신이나 주문 조회처럼 반복 호출되는 코드에서 조용히 틀어지기 쉬운 부분입니다.<br/>
+이번 릴리스로 업데이트한 뒤에는 기존 suspend 코드에서 경고가 뜨는지 먼저 확인해 보는 것이 좋습니다.<br/>
+JaCoCo 기본값 변경은 IDE와 CI의 커버리지 수치를 맞추는 데 도움이 됩니다.<br/>
+Gradle 가져오기 개선은 멀티모듈 프로젝트를 매일 여닫는 팀이라면 업데이트할 이유가 됩니다.<br/>
+
+### 마치며
+이번 릴리스는 새 기능보다 멈춤과 가져오기 속도, Kotlin 검사를 다듬는 데 무게가 실렸습니다.<br/>
+IDE 업데이트를 미뤄 왔다면, 이번 2026.3은 부담 없이 올릴 만한 릴리스입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
