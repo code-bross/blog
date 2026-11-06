@@ -1,0 +1,98 @@
+---
+slug: mts-compose-113-rc01
+title: Compose 1.13.0-rc01 살펴보기 — API가 확정된 1.13과 Slider 변경점
+authors: [way]
+tags: [android, compose, material3, slider, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 4일에 공개된 [Compose](https://developer.android.com/jetpack/androidx/releases/compose-ui) 1.13.0-rc01과 [Material3](https://developer.android.com/jetpack/androidx/releases/compose-material3) 1.5.0-rc01에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+현재 stable 버전은 Compose 1.12.1과 Material3 1.4.0입니다.<br/>
+1.13 라인은 10월 7일 beta01, 10월 21일 beta02를 거쳐 11월 4일 RC 단계에 들어갔습니다.<br/>
+RC는 API 표면이 확정된 예비 stable 릴리스입니다.<br/>
+이 글은 10월 8일 beta01 글과 10월 26일 beta02 글의 후속으로, RC에서 확정된 변경점을 중심으로 정리했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Compose 1.13.0-rc01 살펴보기
+
+#### Kotlin 2.2가 필요합니다
+
+Compose 1.13 라이브러리는 Kotlin 2.2를 대상으로 빌드되며, 컴파일러도 2.2가 필요합니다.<br/>
+업데이트 전에 `libs.versions.toml`의 Kotlin 버전을 먼저 확인합니다.<br/>
+
+```toml
+[versions]
+kotlin = "2.2"
+```
+
+#### Slider에서 onValueChange이 필수가 되었습니다
+
+`Slider`, `VerticalSlider`, `RangeSlider`에서 `onValueChange`이 필수 파라미터가 되었습니다.<br/>
+기존에 숨겨져 있던 deprecated API와 `SliderState`의 `DraggableState` 구현, 구형 `Saver` 오버로드가 제거되었습니다.<br/>
+`SliderState`의 `isVertical`도 제거되었고, `SliderDefaults.Thumb`의 `SliderState` 오버로드는 `isVertical` 오버로드로 대체되었습니다.<br/>
+
+```kotlin
+var value by remember { mutableFloatStateOf(0.5f) }
+
+Slider(
+    value = value,
+    onValueChange = { value = it },
+)
+```
+
+기존 코드에서 `onValueChange`을 생략한 Slider가 있다면 컴파일 단계에서 바로 드러납니다.<br/>
+값 변경을 받지 않는 표시 전용 슬라이더는 `onValueChange`에 빈 람다를 넘기는 대신, 읽기 전용 표시 방식을 검토하는 편이 낫습니다.<br/>
+
+#### MediaQuery의 Posture가 WindowPosture로 바뀌었습니다
+
+`MediaQuery`의 `Posture` 클래스가 `WindowPosture`로 대체되었습니다.<br/>
+`WindowPosture`는 물리적인 `WindowFold`를 `FoldState`와 `FoldOrientation`으로 노출합니다.<br/>
+`isTabletop`과 `isFlat` 편의 프로퍼티가 추가되었고, 기존의 Book 자세 구분은 제거되었습니다.<br/>
+
+```kotlin
+if (posture.isTabletop) {
+    // 접은 상태에서는 하단 화면에 컨트롤을 배치합니다.
+} else if (posture.isFlat) {
+    // 펼친 상태에서는 전체 화면 레이아웃을 사용합니다.
+}
+```
+
+폴더블 대응 화면에서는 자세 판정 로직을 `WindowPosture` 기준으로 다시 확인합니다.<br/>
+
+#### Progressive Blur API가 정리되었습니다
+
+1.13 alpha03에서 추가된 `Modifier.blur { ... }` API가 RC에서 정리되었습니다.<br/>
+`Modifier.blur`의 `radius` 파라미터가 `blurRadiusSpec`으로 개명되었고, `BlurScope.radius`도 `blurRadiusSpec`으로 바뀌었습니다.<br/>
+`BlurStop.fraction`에는 `@FloatRange`가 추가되었고, `BlurRadiusSpec.radialGradient`의 기본 `fallOffRadius`는 `Dp.Unspecified`로 변경되었습니다.<br/>
+
+#### 그 외 변경점
+
+`VectorPainter`가 같은 `ImageVector`를 여러 컴포저블에서 그릴 때 내부 그래픽 리소스를 공유합니다.<br/>
+반복 아이콘을 쓰는 리스트에서 텍스처 업로드와 메모리 사용이 줄어듭니다.<br/>
+이 최적화는 `ComposeUiFlags.isVectorDrawCacheSharingEnabled` 플래그로 끌 수 있습니다.<br/>
+`Modifier.border`는 이제 아웃라인 크기를 기준으로 테두리를 그립니다.<br/>
+문제가 생기면 `ComposeFoundationFlags.isBorderMatchesOutlineBoundsFixEnabled` 플래그로 이전 동작을 되돌릴 수 있습니다.<br/>
+Material3 1.5.0-rc01에서는 `ToggleButton`의 눌림 상태 모양이 디자인 토큰을 따르도록 수정되었고, `RangeSlider`의 탭 시 값 미반영, 가로 스크롤 컨테이너 안에서의 스크롤 간섭, 이산 값 스냅 시 정밀도 손실이 수정되었습니다.<br/>
+한편 1.13 alpha03부터 Compose 라이브러리의 `compileSdk`가 37.1로 올라갔습니다.<br/>
+앱과 라이브러리의 `compileSdk`도 함께 올려야 합니다.<br/>
+
+### 실무 관점
+
+RC 단계에서는 프로덕션 적용보다 검증이 먼저입니다.<br/>
+Slider를 쓰는 화면이 있다면 `onValueChange` 누락 여부를 컴파일로 확인하고, Kotlin 2.2와 `compileSdk` 37.1 변경은 별도 브랜치에서 빌드를 검증합니다.<br/>
+MTS에서는 주문 수량이나 조건 설정처럼 Slider를 쓰는 화면이 있어, 변경점이 적용되는 화면을 목록으로 정리해 두는 편이 좋습니다.<br/>
+
+### 마치며
+
+Compose 1.13은 API가 확정된 RC 단계에 들어섰고, Slider 필수 파라미터화와 Kotlin 2.2 요구가 가장 큰 변경점입니다.<br/>
+stable 릴리스가 나오면 적용 범위를 정해 단계적으로 올리는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/3o7abK7fD6NgYjK8u8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
