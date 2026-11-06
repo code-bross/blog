@@ -1,0 +1,71 @@
+---
+slug: leveraged-etf-volatility-decay
+title: 레버리지 ETF의 변동성 감쇠를 읽는 방법
+authors: [way]
+tags: [finance, ETF, 레버리지, 변동성]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+코스피가 이틀 연속 5% 넘게 하락한 지금, 레버리지 ETF의 구조를 다시 확인할 필요가 있습니다.<br/>
+레버리지 ETF는 지수 움직임의 2배를 매일 추종하는 상품입니다.<br/>
+이 구조가 변동성이 큰 장에서 어떤 결과를 만드는지 계산 예시로 설명했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHcyMTQwcWZnbXFxNGJuNzBjZHBueGNjMzg3cGRkN2Rpc2lkdXF6YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3osxYjUlclXlkf1bQk/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 레버리지 ETF의 기본 구조
+
+레버리지 ETF는 기초지수의 일일 수익률을 2배로 추종하도록 설계된 상장지수펀드입니다.<br/>
+지수가 하루에 1% 오르면 레버리지 ETF는 2% 오르는 것을 목표로 합니다.<br/>
+지수가 하루에 1% 내리면 레버리지 ETF는 2% 내리는 것을 목표로 합니다.<br/>
+핵심은 추종 대상이 일일 수익률이라는 점입니다.<br/>
+여러 날에 걸친 누적 수익률의 2배를 보장하는 상품이 아닙니다.<br/>
+매일 포트폴리오를 재조정해 레버리지 비율을 유지하기 때문에 복리 효과가 발생합니다.<br/>
+
+#### 변동성 감쇠의 계산 예시
+
+지수가 100에서 시작해 첫날 10% 오르고, 둘째 날 10% 내리는 경우를 보겠습니다.<br/>
+지수는 100에서 110으로 오른 뒤 99로 돌아옵니다.<br/>
+이틀 누적 수익률은 마이너스 1%입니다.<br/>
+2배 레버리지 ETF는 첫날 20% 올라 120이 되고, 둘째 날 20% 내려 96이 됩니다.<br/>
+이틀 누적 수익률은 마이너스 4%입니다.<br/>
+지수의 2배인 마이너스 2%가 아니라 마이너스 4%가 됩니다.<br/>
+차이인 2%포인트가 변동성 감쇠입니다.<br/>
+오르내림이 반복될수록 감쇠는 커집니다.<br/>
+
+| 구분 | 첫날 | 둘째 날 | 이틀 누적 |
+| --- | --- | --- | --- |
+| 지수 | 100 → 110 (+10%) | 110 → 99 (-10%) | -1% |
+| 2배 레버리지 ETF | 100 → 120 (+20%) | 120 → 96 (-20%) | -4% |
+
+### 급락장에서 나타나는 특징
+
+급락장에서는 레버리지 ETF의 하락 폭이 지수보다 큽니다.<br/>
+코스피가 11월 5일 5.28%, 11월 6일 6.02% 하락했으므로, 2배 레버리지 상품의 하락 폭은 이보다 컸습니다.<br/>
+반등이 나와도 기준 가격이 낮아진 상태에서는 회복에 더 큰 상승률이 필요합니다.<br/>
+100에서 50으로 떨어진 상품이 100으로 돌아오려면 100% 상승이 필요합니다.<br/>
+같은 이유로 레버리지 ETF는 단기 방향성 거래에 맞는 구조입니다.<br/>
+장기 보유를 전제로 설계된 상품이 아닙니다.<br/>
+
+### 투자에서 확인할 점
+
+레버리지 ETF를 볼 때는 세 가지를 확인하는 것이 좋습니다.<br/>
+첫째, 추종 지수와 배율입니다.<br/>
+2배 상품인지, 인버스 상품인지, 기초지수가 무엇인지를 먼저 확인합니다.<br/>
+둘째, 괴리율입니다.<br/>
+시장 가격과 순자산가치의 차이가 크면 원하는 가격에 거래하기 어렵습니다.<br/>
+셋째, 운용보수입니다.<br/>
+레버리지 상품은 일반 ETF보다 보수가 높은 경우가 많아 장기 보유 비용이 커집니다.<br/>
+개인은 10월 6일부터 11월 5일까지 한 달간 KODEX 레버리지 ETF를 약 1조 2,199억원 순매수했습니다.<br/>
+급락 구간에서 레버리지 상품의 매수 규모가 컸다는 점은 구조를 이해하고 보유하는 것이 중요함을 보여줍니다.<br/>
+
+### 마치며
+
+레버리지 ETF는 일일 2배 추종이라는 구조 때문에 변동성이 큰 장에서 감쇠가 발생합니다.<br/>
+상품의 성격을 이해하고 보유 기간과 규모를 점검하는 것이 먼저입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGF4M3V1M3NjdHA1N2JmOHY0eng3dnJ3NTY0cThkb2Q4ODhjYjZseiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohs7U04OERhUtefja/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
