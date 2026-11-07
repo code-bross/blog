@@ -1,0 +1,98 @@
+---
+slug: mts-kotlin-250-beta2
+title: Kotlin 2.5.0-Beta2 살펴보기 — 이름 기반 구조 분해와 JDK 17 요구 사항
+authors: [way]
+tags: [android, kotlin, kotlin-2-5, destructuring, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 10월 21일에 공개된 [Kotlin 2.5.0-Beta2](https://kotlinlang.org/docs/whatsnew-eap.html)에 대해 설명해드리겠습니다.<br/>
+안정 버전은 12월 공개가 목표입니다.<br/>
+
+### 배경
+
+구조 분해는 data class의 프로퍼티를 순서대로 꺼내는 문법입니다.<br/>
+프로퍼티 순서가 바뀌면 같은 타입의 값이 서로 뒤바뀌는 실수가 생깁니다.<br/>
+이름으로 꺼내는 방식이 2.3.20부터 실험 기능으로 제공됐고, Beta2에서 안정화됐습니다.<br/>
+컴파일러 실행에 JDK 17 이상이 필요해진 점도 함께 정리했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/xNBcChLQt7s9a/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Kotlin 2.5.0-Beta2 살펴보기
+
+#### 이름 기반 구조 분해가 안정화됐습니다
+
+`only-syntax` 모드에서 새 문법이 기본값이 됐습니다.<br/>
+기존 문법은 위치 기준으로 동작합니다.<br/>
+새 문법은 괄호 안에 `val`을 넣어 이름을 기준으로 꺼냅니다.<br/>
+변수 이름은 프로퍼티 이름과 일치해야 하며, 순서는 달라도 됩니다.<br/>
+
+```kotlin
+data class Account(val owner: String, val balance: Long)
+
+fun printAccount(account: Account) {
+    // 기존 문법: 위치 기준으로 꺼냅니다
+    val (owner, balance) = account
+    println("$owner: $balance")
+}
+
+fun printAccountByName(account: Account) {
+    // 새 문법: 이름 기준으로 꺼냅니다
+    // 순서를 바꿔도 같은 프로퍼티가 들어갑니다
+    (val balance, val owner) = account
+    println("$owner: $balance")
+}
+```
+
+향후 버전에서는 기존 괄호 문법도 이름 기준으로 동작할 예정입니다.<br/>
+자세한 전환 계획은 [The Road to Name-Based Destructuring](https://blog.jetbrains.com/kotlin/2026/05/the-road-to-name-based-destructuring/)에서 확인할 수 있습니다.<br/>
+
+#### 사용하지 않은 반환값 검사가 추가됐습니다
+
+반환값을 무시하고 함수를 호출하면 컴파일러가 이를 알려주는 검사가 들어갔습니다.<br/>
+결과를 확인하지 않고 넘어가는 실수를 줄이는 목적입니다.<br/>
+Beta 단계에서는 검사가 동작하는 범위를 확인하면서 적용하는 것이 좋습니다.<br/>
+
+#### 컴파일러 실행에 JDK 17이 필요합니다
+
+Beta1에서는 JDK 17보다 오래된 JDK로 컴파일러를 실행하면 경고가 나왔습니다.<br/>
+Beta2부터는 오류가 발생합니다.<br/>
+이전 JDK를 임시로 계속 쓰는 플래그가 제공됩니다.<br/>
+MTS 빌드 환경의 JDK 버전을 먼저 확인합니다.<br/>
+
+```toml
+[versions]
+kotlin = "2.5.0-Beta2"
+```
+
+```kotlin
+kotlin {
+    jvmToolchain(17)
+}
+```
+
+#### 그 밖의 변경점
+
+Java 28을 지원합니다.<br/>
+Swift export가 새로운 DSL과 함께 Beta 단계에 들어갔습니다.<br/>
+Kotlin/Native 증분 컴파일이 Apple 대상에서 기본으로 켜졌습니다.<br/>
+컴파일 타임 상수가 개선됐고, companion 확장과 full value class가 실험 기능으로 들어왔습니다.<br/>
+자세한 목록은 [Kodee's Kotlin Roundup](https://blog.jetbrains.com/kotlin/2026/10/kodee-s-kotlin-roundup-shipaton-2026-winners-kotlin-2-5-0-beta2-and-kotlinconf-2027/)에서 확인할 수 있습니다.<br/>
+
+### 실무 관점
+
+Beta 버전이므로 운영 코드에 바로 적용하지 않습니다.<br/>
+이름 기반 구조 분해는 새 코드부터 적용해보고, 기존 구조 분해는 순서를 바꿀 때만 확인합니다.<br/>
+CI의 JDK 버전을 17 이상으로 맞추지 않으면 빌드가 실패합니다.<br/>
+안정 버전은 12월 공개가 목표이므로, 그때 다시 정리하겠습니다.<br/>
+
+### 마치며
+
+이름 기반 구조 분해가 안정화돼 순서 실수를 줄일 수 있게 됐습니다.<br/>
+JDK 17 요구 사항만 미리 확인하면 12월 안정 버전 전환이 수월해집니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/KEVNWkmWm6dm8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
