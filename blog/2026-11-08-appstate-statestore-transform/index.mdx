@@ -1,0 +1,140 @@
+---
+slug: mts-appstate-statestore-transform
+title: Appstate Statestore와 Transform 살펴보기 — UI 밖에서 Compose 상태를 다루는 새 라이브러리
+authors: [way]
+tags: [android, appstate, statestore, transform, compose, jetpack, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 4일에 공개된 [Appstate Statestore](https://developer.android.com/jetpack/androidx/releases/appstate-statestore)와 [Appstate Transform](https://developer.android.com/jetpack/androidx/releases/appstate-transform) 1.0.0-alpha02에 대해 설명해드리겠습니다.<br/>
+두 라이브러리 모두 Compose 런타임을 기반으로 하며, UI 밖에서 상태를 다루기 위한 기능을 제공합니다.<br/>
+
+### 배경
+
+Compose의 상태는 지금까지 화면과 강하게 묶여 있었습니다.<br/>
+`mutableStateOf`로 만든 상태는 컴포저블 안에서 읽고 쓰는 것이 자연스러웠고, 화면을 벗어난 앱 레이어에서 같은 상태를 다루려면 별도의 장치가 필요했습니다.<br/>
+앱 전역 설정이나 백그라운드에서 갱신되는 값을 Compose 상태로 유지하면서 영속화까지 하려면 `ViewModel`과 `DataStore`를 직접 엮어야 했습니다.<br/>
+[Appstate](https://developer.android.com/jetpack/androidx/releases/appstate-statestore)는 이 지점을 겨냥한 새 Jetpack 라이브러리입니다.<br/>
+스냅샷 상태를 앱 레이어로 끌어올리는 `StateStore`와, UI 밖에서 컴포지션을 실행하는 `Transform`으로 구성됩니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Appstate 살펴보기
+
+#### `StateStore`로 상태를 앱 레이어에 두기
+
+`StateStore`는 Compose 스냅샷 상태를 감싸는 래퍼입니다.<br/>
+상태를 `Application` 같은 앱 레이어로 호이스팅하면 화면 생명주기와 무관하게 값을 유지할 수 있습니다.<br/>
+`statestore-datastore` 아티팩트를 함께 쓰면 `syncToDataStore`로 상태를 `DataStore`에 영속화할 수 있습니다.<br/>
+
+```kotlin
+class MyApplication : Application() {
+    val stateStore = StateStore()
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    override fun onCreate() {
+        super.onCreate()
+        scope.launch {
+            launch {
+                try {
+                    stateStore.syncToDataStore(
+                        dataStoreFile("settings").absolutePath,
+                        this
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+}
+```
+
+동기화는 자식 코루틴에서 실행해 바깥 스코프를 막지 않는 구조입니다.<br/>
+예외가 발생해도 앱 시작이 중단되지 않도록 `try catch`로 감싸는 형태가 공식 예시에 포함되어 있습니다.<br/>
+
+#### `Transform`으로 UI 밖에서 컴포지션 실행하기
+
+`Transform`은 컴포지션을 UI 밖에서 실행할 수 있게 합니다.<br/>
+`transform` 헬퍼 함수에 초기값과 스코프를 넘기면, 소스 상태가 바뀔 때마다 람다가 다시 실행되어 결과를 갱신합니다.<br/>
+
+```kotlin
+val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+var sourceState by mutableStateOf(0)
+
+val state = transform(initialValue = 0, scope = scope) {
+    sourceState
+}
+```
+
+`TransformScope`를 직접 다루는 방식도 있습니다.<br/>
+`launchTransform`으로 변환을 시작하고 `run`으로 실행하며, 사용이 끝나면 `dispose`로 정리합니다.<br/>
+
+```kotlin
+val transformScope = TransformScope()
+var sourceState by mutableStateOf(0)
+
+val state = transformScope.launchTransform(initialValue = 0) {
+    sourceState
+}
+
+scope.launch {
+    try {
+        transformScope.run()
+    } finally {
+        state.dispose()
+    }
+}
+```
+
+테스트를 위한 `transformTest` API도 함께 제공됩니다.<br/>
+`transform-testing` 아티팩트를 쓰면 테스트 디스패처와 백그라운드 스코프를 지정해 상태 변화를 단계별로 검증할 수 있습니다.<br/>
+
+```kotlin
+@Test
+fun testStateUpdate() = transformTest {
+    var sourceState by mutableStateOf(0)
+    val state = transform(
+        initialValue = 0, scope = backgroundScope, dispatcher = testDispatcher
+    ) {
+        sourceState
+    }
+
+    assertThat(state.value).isEqualTo(0)
+    sourceState = 1
+    advance()
+    assertThat(state.value).isEqualTo(1)
+}
+```
+
+#### 의존성 추가하기
+
+두 라이브러리는 멀티플랫폼 아티팩트로 제공됩니다.<br/>
+Android, 데스크톱, iOS, JS, Wasm 등 각 플랫폼용 아티팩트가 나뉘어 있습니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.appstate.statestore:statestore:1.0.0-alpha02")
+    implementation("androidx.appstate.statestore:statestore-datastore:1.0.0-alpha02")
+    implementation("androidx.appstate.transform:transform:1.0.0-alpha02")
+}
+```
+
+### 실무 관점
+
+아직 알파 단계라 API가 바뀌거나 사라질 수 있습니다.<br/>
+운영 중인 MTS 앱에 바로 도입하기보다는, 상태 영속화와 백그라운드 상태 갱신이 필요한 화면부터 작은 범위로 검증하는 것이 안전합니다.<br/>
+`syncToDataStore`는 코루틴 스코프와 예외 처리를 함께 설계해야 하며, 앱 시작 경로에서 동기화 실패가 전체 시작을 막지 않는지 확인이 필요합니다.<br/>
+`Transform`은 컴포지션을 UI 밖으로 꺼내는 만큼, 변환 람다가 무거운 작업을 하지 않는지, 정리 시점이 명확한지 살펴야 합니다.<br/>
+
+### 마치며
+
+Appstate는 Compose 상태를 화면 밖으로 꺼내는 방향을 제시합니다.<br/>
+상태를 앱 레이어에 두고 영속화까지 연결하는 구조가 정식 버전에서 어떻게 다듬어지는지 지켜볼 만합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/Ssk1BvPxn79tUBOo5X/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

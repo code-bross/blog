@@ -1,0 +1,94 @@
+---
+slug: mts-camerax-170-rc02
+title: CameraX 1.7.0-rc02 살펴보기 — Kotlin DSL 빌더와 미러 모드
+authors: [way]
+tags: [android, camerax, camera, kotlin-dsl, jetpack, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 4일에 공개된 [CameraX](https://developer.android.com/jetpack/androidx/releases/camera) 1.7.0-rc02에 대해 설명해드리겠습니다.<br/>
+1.7.0은 릴리스 후보 단계에 들어섰으며, Kotlin DSL 빌더와 Camera2Interop 정리가 포함되어 있습니다.<br/>
+
+### 배경
+
+CameraX는 지금까지 빌더 패턴으로 유스케이스를 만들었습니다.<br/>
+`Preview.Builder`와 `ImageCapture.Builder`에 설정을 하나씩 쌓는 방식은 익숙했지만, 코드가 길어지고 설정 위치를 찾기 어려웠습니다.<br/>
+Camera2의 세부 설정을 직접 다뤄야 할 때는 레거시 Interop API를 거쳐야 했고, 미러 모드는 실험적 애너테이션이 붙은 상태였습니다.<br/>
+1.7.0은 이 세 지점을 함께 정리합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/NMBqdKUKQ3aLe/giphy.gif" alt="Camera" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### CameraX 1.7.0 살펴보기
+
+#### Kotlin DSL 빌더로 유스케이스 만들기
+
+1.7.0-alpha03부터 `preview`, `imageCapture`, `imageAnalysis`, `videoCapture` DSL 빌더가 추가되었습니다.<br/>
+빌더 객체를 직접 다루지 않고, 람다 안에서 설정을 모아 유스케이스를 만들 수 있습니다.<br/>
+
+```kotlin
+val preview = preview {
+    // Preview 설정을 여기에 작성합니다.
+}
+
+val imageCapture = imageCapture {
+    // ImageCapture 설정을 여기에 작성합니다.
+}
+
+cameraProvider.bindToLifecycle(
+    lifecycleOwner, cameraSelector, preview, imageCapture
+)
+```
+
+기존 빌더 방식과 비교하면 설정 코드가 한곳에 모이고, 유스케이스 생성 의도가 더 분명해집니다.<br/>
+
+#### Camera2Interop 정리하기
+
+레거시 Camera2Interop API가 정리되었습니다.<br/>
+`Camera2Interop.Extender`와 `Camera2CameraControl`, `Camera2CameraInfo`, `CaptureRequestOptions`는 deprecated 되었고, 대신 설정자 팩토리 메서드와 Kotlin 확장 함수를 사용합니다.<br/>
+`camera2Interop` 확장 블록을 DSL 빌더 안에서 직접 쓸 수 있습니다.<br/>
+
+```kotlin
+val preview = preview {
+    camera2Interop {
+        // Camera2 설정을 직접 지정합니다.
+    }
+}
+```
+
+`Camera2Interop`에는 `forUseCase`와 `forImageCapture`, `forSessionConfig`, `forCameraControl` 팩토리 메서드가 추가되었습니다.<br/>
+`CameraInfo.cameraId`와 `CameraInfo.cameraCharacteristics` 확장 프로퍼티로 Camera2의 카메라 ID와 특성을 바로 조회할 수 있으며, `String.toCameraSelector()`로 문자열에서 셀렉터를 만들 수 있습니다.<br/>
+`CameraControl.applyCamera2InteropAsync` 확장 함수도 함께 제공됩니다.<br/>
+
+#### 미러 모드와 물리 카메라
+
+`Preview.setMirrorMode`와 `VideoCapture.setMirrorMode`가 정식 API가 되었습니다.<br/>
+기존에 붙어 있던 `ExperimentalMirrorMode` 애너테이션은 제거되었습니다.<br/>
+물리 카메라 지원도 넓어졌습니다.<br/>
+`CameraInfo.getPhysicalCameraInfos()`로 물리 카메라 정보를 얻고, 물리 카메라용 `CameraSelector`로 유스케이스를 바인딩할 수 있습니다.<br/>
+물리 카메라의 `CameraInfo`로 조회하면 논리 카메라가 아니라 물리 카메라 정보가 반환됩니다.<br/>
+
+#### rc02에서 수정된 내용
+
+1.7.0-rc02 자체는 기능 추가가 아니라 버그 수정 릴리스입니다.<br/>
+API 30에서 `SYSTEM_ALERT_WINDOW` 권한을 가진 앱이 카메라 유스케이스를 반복 바인딩할 때 발생하던 `UnsupportedOperationException`이 수정되었습니다.<br/>
+`VideoCapture`를 언바인드할 때 미디어 프레임워크 스레드 하나가 남던 네이티브 스레드 누수도 수정되었습니다.<br/>
+저조도 부스트 동작도 개선되었습니다.<br/>
+저조도 부스트와 토치는 마지막 설정이 이기는 방식으로 동작하며, 저조도 부스트가 켜진 상태에서도 이미지 캡처 시 플래시가 동작합니다.<br/>
+
+### 실무 관점
+
+RC 단계라 API 표면은 사실상 확정된 상태입니다.<br/>
+정식 릴리스 전에 레거시 Camera2Interop 사용처가 있는지 점검하고, DSL 빌더로의 전환 범위를 정해 두는 것이 좋습니다.<br/>
+미러 모드를 이미 실험적 API로 쓰고 있다면 애너테이션 제거에 맞춰 정식 API로 교체해야 합니다.<br/>
+저조도 부스트와 토치의 동작이 바뀐 만큼, 야간 촬영이나 QR 인식처럼 두 기능을 함께 쓰는 화면이 있다면 동작을 다시 확인해야 합니다.<br/>
+
+### 마치며
+
+CameraX 1.7.0은 카메라 코드를 짧게 쓰는 방향으로 정리되고 있습니다.<br/>
+정식 릴리스가 나오면 DSL 빌더와 Interop 정리를 실제 화면에 적용해 볼 만합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/McbMxF8Rs3ZzrMvd8C/giphy.gif" alt="Camera" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
