@@ -1,0 +1,92 @@
+---
+slug: android-canary-2611
+title: Android Canary 2611 살펴보기 — App Lock 복귀와 버블·카메라 단축키
+authors: [way]
+tags: [android, android-canary, app-lock, pixel, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 4일에 공개된 [Android Canary 2611](https://mobile.androidauthority.com/android-canary-2611-3731794/)에 대해 설명해드리겠습니다.<br/>
+이번 빌드는 App Lock 복귀와 작은 단축키 추가가 중심입니다.<br/>
+
+### 배경
+
+Android Canary는 Google이 매달 내놓는 가장 실험적인 테스트 트랙입니다.<br/>
+정식 베타보다 한 단계 앞에 있고, 새로운 작업이 가장 먼저 도착합니다.<br/>
+지난달 Canary 2610은 10월 중순을 넘겨서 나왔고, 2611은 11월 초에 나왔습니다.<br/>
+월간 리듬이 다시 빨라진 셈입니다.<br/>
+이번 변경점 가운데 일부는 10월 29일에 나온 Android 17 QPR3 Beta 3에도 들어 있습니다.<br/>
+Canary와 베타 트랙이 같은 작업을 서로 다른 단계에서 나르는 경우입니다.<br/>
+QPR3 Beta 3은 11월 1일 글에서 이미 다뤘으니, 이번 글은 Canary 트랙 자체에 초점을 맞춥니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/a0h7sAqON67nO/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Android Canary 2611 살펴보기
+
+#### Canary 트랙의 위치 이해하기
+
+Canary는 베타보다 앞서 가는 월간 트랙입니다.<br/>
+베타에 오르기 전의 작업이 먼저 들어오고, 거친 부분이 남아 있을 수 있습니다.<br/>
+Canary에서 본 기능이 그대로 정식 릴리스에 이른다는 보장은 없습니다.<br/>
+기능이 바뀌거나 미뤄지거나 아예 나오지 않을 수도 있습니다.<br/>
+그래서 Canary는 일상 기기가 아니라 테스트 기기에서 쓰는 트랙입니다.<br/>
+설치는 [Android Flash Tool](https://flash.android.com/)에서 할 수 있습니다.<br/>
+
+#### App Lock 다시 살펴보기
+
+App Lock이 Canary 2611에 돌아왔습니다.<br/>
+앱마다 잠금을 걸어 기기 인증 뒤에만 열리게 하는 기능입니다.<br/>
+빌린 기기나 잠금 해제된 기기에서 민감한 앱이 그대로 열리는 일을 막습니다.<br/>
+App Lock은 QPR2 베타에서 잠시 빠졌다가 다듬는 과정을 거쳤습니다.<br/>
+10월 29일 QPR3 Beta 3에서 복귀했고, Canary 트랙에서도 같은 작업이 이어지고 있습니다.<br/>
+12월 Pixel Feature Drop은 QPR2 기반이라, App Lock이 정식에 이를지는 그때 확인할 수 있습니다.<br/>
+
+#### Recents 화면에서 버블로 실행하기
+
+Recents 화면에 앱을 버블로 여는 단축키가 새로 생겼습니다.<br/>
+버블은 대화를 작은 떠 있는 창으로 유지하는 Android의 멀티태스킹 방식입니다.<br/>
+Recents 드롭다운 메뉴에서 Bubble을 고르면 앱이 바로 버블에 들어갑니다.<br/>
+설정을 뒤지거나 전체 앱 목록을 거치지 않아도 됩니다.<br/>
+다른 앱을 쓰면서 대화를 곁에 두는 흐름이 짧아집니다.<br/>
+
+#### Quick Settings 카메라 타일과 At a Glance 알람 표기
+
+Quick Settings에 카메라를 여는 전용 타일이 추가되었습니다.<br/>
+화면을 쓸어내리고 타일 하나만 누르면 카메라가 열립니다.<br/>
+앱 아이콘을 찾거나 잠금 화면 단축키를 거치는 일을 줄입니다.<br/>
+잠금 화면의 At a Glance 위젯도 바뀌었습니다.<br/>
+다가오는 알람 시간에 오전과 오후를 구분하는 접미사가 표시됩니다.<br/>
+작은 표기지만, 알람 시간을 잘못 읽는 실수를 줄이는 변경입니다.<br/>
+
+#### 빌드 정보와 설치 방법 확인하기
+
+Canary 2611의 빌드 번호는 `ZP11.261016.008`입니다.<br/>
+업데이트 크기는 약 1GB로 안내되었습니다.<br/>
+설치 이미지는 Pixel 6a 이상 기기에 제공됩니다.<br/>
+Pixel 11 시리즈까지 포함하고, Pixel Fold와 Pixel Tablet도 대상입니다.<br/>
+업데이트 전에는 배터리를 50% 이상 충전하는 것이 좋습니다.<br/>
+Canary에 올린 Pixel은 이후 매달 새 Canary 빌드로 자동 업데이트됩니다.<br/>
+
+```bash
+# Android Flash Tool에서 Canary 이미지를 설치합니다
+# https://flash.android.com/ 에서 기기를 연결하고 안내를 따릅니다
+```
+
+### 실무 관점
+
+Canary는 정식 릴리스가 아니니 실무 기기에 바로 올리지 않는 것이 좋습니다.<br/>
+테스트용 Pixel이 있다면 그 기기에서 먼저 확인하는 흐름이 맞습니다.<br/>
+App Lock처럼 사용자에게 보이는 기능은 정식 일정이 정해지기 전까지 기획에 반영하지 않는 것이 좋습니다.<br/>
+QPR3 Beta 3과 겹치는 변경은 베타 트랙의 동작을 Canary에서 미리 보는 용도로 이해하면 됩니다.<br/>
+다음 안정적인 이정표는 12월 Pixel Feature Drop이며, QPR2 기반입니다.<br/>
+
+### 마치며
+
+Canary 2611은 App Lock 복귀와 작은 단축키 추가로 월간 트랙의 리듬을 이어갑니다.<br/>
+테스트 기기에서 먼저 확인하고, 정식 릴리스에 맞춰 대응을 정리해 두는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/vOaA4ZjqIVm29DLYr1/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
