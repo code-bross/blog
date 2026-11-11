@@ -1,0 +1,120 @@
+---
+slug: core-telecom-110
+title: Core-telecom 1.1.0으로 VoIP 통화 안정화하기
+authors: [way]
+tags: [android, core-telecom, voip, jetpack, androidx, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+2026년 11월 4일에 안정화 버전으로 공개된 [Core-telecom 1.1.0](https://developer.android.com/jetpack/androidx/releases/core#core-telecom-1.1.0)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+VoIP 통화를 앱에 넣으려면 플랫폼 Telecom 프레임워크와 직접 연동해야 합니다.<br/>
+Android 14부터는 트랜잭션 기반의 새 API가 기본이 되었고, 그 이전에는 `ConnectionService` 기반의 기존 API를 써야 했습니다.<br/>
+두 가지 구현을 함께 지원하려다 보면 버전별 분기가 늘어나고, 오디오 라우팅 같은 기기별 동작 차이까지 직접 처리해야 합니다.<br/>
+[Core-telecom](https://developer.android.com/jetpack/androidx/releases/core#core-telecom-1.1.0)은 이 두 가지 구현을 하나의 API로 묶어 주는 Jetpack 라이브러리입니다.<br/>
+1.1.0은 마이그레이션을 단계적으로 진행할 수 있는 장치를 추가하고, 통화 확장 기능을 안정화 API로 승격했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/ktRsPr21YnJyEUMyB8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Core-telecom 1.1.0 살펴보기
+
+#### 단계적 전환을 위한 롤아웃 제어
+
+`CallsManager#registerAppWithTelecom`에 선택 매개변수 `backwardsCompatSdkLevel`이 추가되었습니다.<br/>
+기본값은 SDK 33이며, 이 값까지는 `ConnectionService` 기반 구현을 쓰고 그 위에서는 트랜잭션 API를 사용합니다.<br/>
+기존에 플랫폼 `ConnectionService`를 직접 쓰던 앱은 익숙한 구현을 유지한 채 라이브러리를 먼저 도입할 수 있습니다.<br/>
+이후 상한 값을 단계적으로 낮추면서 새 API로 전환하면 됩니다.<br/>
+호출 관리 코드는 바꾸지 않아도 됩니다.<br/>
+
+```kotlin
+val callsManager = CallsManager(context)
+
+// SDK 34까지는 ConnectionService 기반으로 유지하고,
+// SDK 35부터 트랜잭션 API를 사용합니다.
+callsManager.registerAppWithTelecom(
+    capabilities = CallsManager.CAPABILITY_SUPPORTS_VIDEO_CALLING,
+    backwardsCompatSdkLevel = 34
+)
+```
+
+#### 통화 확장 기능 안정화
+
+`addCallWithExtensions`와 `InCallServiceCompat#connectExtensions`, `LocalCallSilenceExtension`, `ParticipantExtension`, `MeetingSummaryRemote`가 안정화 API가 되었습니다.<br/>
+기존에 필요했던 `@ExperimentalAppActions` 옵트인이 제거되었습니다.<br/>
+통화 상태를 Android Auto나 Wear OS 같은 원격 화면과 동기화하는 기능을 정식 API로 쓸 수 있습니다.<br/>
+`LocalCallSilenceExtension`에는 원격 음소거 제어 여부를 동적으로 바꾸는 `updateCanUserUpdateSilence`와 콜백 `onCanUserUpdateSilence`가 추가되었습니다.<br/>
+수동적 참관자나 진행자에게 음소거된 회의 참가자처럼, 원격 화면에서 마이크 제어를 막아야 하는 경우에 사용합니다.<br/>
+
+#### 통화별 통화 기록 제외
+
+`CallAttributesCompat`에 선택 속성 `isLogExcluded`가 추가되었습니다.<br/>
+시스템 통화 기록에 참여하도록 설정한 앱이 특정 통화만 기록에서 제외할 수 있습니다.<br/>
+Android 16 QPR 이상에서 동작합니다.<br/>
+VoIP 통화는 기본적으로 시스템 통화 기록에 남지 않으므로, 먼저 기록 참여를 설정한 앱에만 해당합니다.<br/>
+
+```kotlin
+val attributes = baseAttributes.copy(isLogExcluded = true)
+```
+
+#### 프리미엄 네트워크 슬라이싱 제외
+
+`CallsManager.CAPABILITY_OPT_OUT_OF_PREMIUM_NETWORK`가 추가되었습니다.<br/>
+음성·영상 통화 중에 플랫폼이 자동으로 프리미엄 네트워크 슬라이스를 요청하는 동작을 거부할 수 있습니다.<br/>
+`registerAppWithTelecom`에 플래그를 전달해 설정합니다.<br/>
+
+```kotlin
+callsManager.registerAppWithTelecom(
+    CallsManager.CAPABILITY_OPT_OUT_OF_PREMIUM_NETWORK
+)
+```
+
+#### 통화 중 음성·영상 전환 관찰
+
+`CallControlScope#callTypeFlow`와 `CallControlScope#requestCallType`이 추가되었습니다.<br/>
+통화 중 오디오와 비디오 상태 변화를 흐름으로 관찰할 수 있습니다.<br/>
+통화 종류를 세션 중간에 올리거나 내릴 수도 있습니다.<br/>
+
+```kotlin
+// 음성에서 영상으로 바뀌는 과정을 관찰합니다.
+callControlScope.callTypeFlow()
+    .onEach { callType ->
+        // 바뀐 통화 종류에 맞게 화면을 갱신합니다.
+    }
+    .launchIn(scope)
+
+// 영상 통화로 전환을 요청합니다.
+callControlScope.requestCallType(CallAttributesCompat.CALL_TYPE_VIDEO_CALL)
+```
+
+#### 끊김 없는 통화 설정과 오디오 라우팅
+
+통화 설정 경로가 빨라졌습니다.<br/>
+오디오 엔드포인트 확인과 블루투스 안정화 과정이 `addCall`의 동기 경로에서 분리되어, `CallControlScope` 진입까지 최대 2초의 지연이 사라졌습니다.<br/>
+겹치는 통화 설정 요청은 `CallException`으로 즉시 거부되어, 플랫폼 `TransactionManager`의 5초 타임아웃과 직렬 큐 교착을 막습니다.<br/>
+오디오 라우팅 문제도 여러 건이 수정되었습니다.<br/>
+SDK 34부터 36에서 음성 전용 수신 통화가 영상 통화로 잘못 인식되어 스피커폰으로 나가는 문제, 영상 통화 시작 시 유선 헤드셋이 연결되어 있는데도 스피커로 바뀌는 문제 등이 포함됩니다.<br/>
+사용자가 미리 고른 오디오 엔드포인트도 통화 시작 시 기본값에 덮어쓰이지 않습니다.<br/>
+`BLUETOOTH_CONNECT` 권한이 없어도 웨어러블 기기를 식별하는 대체 방법도 들어갔습니다.<br/>
+SDK 38부터는 `DisconnectCause.ERROR`로 통화를 끊을 수 있고, 이전 버전에서는 자동으로 `DisconnectCause.LOCAL`로 바뀌어 버전 검사가 필요 없습니다.<br/>
+
+### 실무 관점
+
+VoIP 기능이 있는 MTS 앱이라면 1.1.0은 바로 검토할 만한 버전입니다.<br/>
+기존 `ConnectionService` 연동이 있다면 `backwardsCompatSdkLevel`로 상한을 높게 잡고 라이브러리를 먼저 도입하는 것이 안전합니다.<br/>
+통화 설정 지연과 오디오 라우팅 수정은 사용자 체감과 직결되므로, 실기기에서 수신·발신·블루투스 전환을 직접 확인하는 것이 좋습니다.<br/>
+`isLogExcluded`는 Android 16 QPR 이상에서만 동작하므로, 구형 단말에서는 아무런 효과가 없다는 점을 알아두어야 합니다.<br/>
+네트워크 슬라이싱 제외는 통신사 과금과 연결될 수 있으니, 적용 전에 정책을 먼저 확인하는 것이 좋습니다.<br/>
+
+### 마치며
+
+1.1.0은 단계적 전환 장치와 안정화된 통화 확장 기능으로 마이그레이션 부담을 낮췄습니다.<br/>
+통화 설정과 오디오 라우팅의 고질적인 문제도 함께 정리되어, VoIP 품질이 한층 안정되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/7DUstM8kprFWQpm8Zs/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
