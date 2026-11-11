@@ -1,0 +1,84 @@
+---
+slug: webkit-1180
+title: AndroidX WebKit 1.18.0 살펴보기 — 교차 출처 격리와 프리페치 제어
+authors: [way]
+tags: [android, webkit, webview, androidx, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+2026년 10월 21일에 안정화 버전으로 공개된 [WebKit 1.18.0](https://developer.android.com/jetpack/androidx/releases/webkit)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+MTS 앱 안에는 공지, 차트, 웹 기반 화면 등 WebView로 보여 주는 영역이 많습니다.<br/>
+WebView는 플랫폼에 내장된 렌더러를 쓰기 때문에, 새 기능을 쓰려면 단말의 WebView 버전에 의존해야 합니다.<br/>
+[AndroidX WebKit](https://developer.android.com/jetpack/androidx/releases/webkit)은 새 WebView API를 Android 5 이상에서 쓸 수 있게 해 주는 Jetpack 라이브러리입니다.<br/>
+1.18.0은 교차 출처 격리 관리와 프리페치 제어를 중심으로, 프로파일 단위 설정 API를 추가했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/8NDruwqKXXvc4/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### WebKit 1.18.0 살펴보기
+
+#### 교차 출처 격리 허용 목록
+
+`Profile#setCrossOriginIsolatedAllowlist`와 `Profile#getCrossOriginIsolatedAllowlist`가 추가되었습니다.<br/>
+`SharedArrayBuffer`처럼 교차 출처 격리가 필요한 API를 쓸 수 있게 해 줍니다.<br/>
+웹 페이지는 원래 교차 출처 격리를 완전히 갖춰야 하지만, 허용 목록에 오른 출처는 격리가 덜 되어 있어도 해당 API를 쓸 수 있습니다.<br/>
+페이지 쪽에서도 `Document-Isolation-Policy` 헤더를 적절히 설정해야 합니다.<br/>
+허용 목록에는 신뢰할 수 있는 출처만 넣어야 합니다.<br/>
+
+```kotlin
+val profile = Profile.getOrCreateProfile("mts-profile", context)
+profile.setCrossOriginIsolatedAllowlist(
+    setOf("https://trusted.example.com")
+)
+```
+
+#### 프리페치 큐 비우기 제어
+
+`WebViewFeature`에 `WEBVIEW_NAVIGATE_DRAIN_PREFETCH` 상수가 추가되었습니다.<br/>
+`Navigation#navigate`를 호출할 때 프리페치 큐를 비우고 이동할지 여부를 확인할 수 있습니다.<br/>
+미리 가져온 페이지가 남아 있으면 이동이 예상과 달라질 수 있어, 명시적으로 제어할 수 있는 장치가 생겼습니다.<br/>
+
+```kotlin
+if (WebViewFeature.isFeatureSupported(WebViewFeature.WEBVIEW_NAVIGATE_DRAIN_PREFETCH)) {
+    // Navigation#navigate 호출 시 프리페치 큐를 비웁니다.
+}
+```
+
+#### API 정리와 이름 변경
+
+`PrefetchParameters#isJavaScriptEnabled`가 `includeClientHints`로 이름이 바뀌었습니다.<br/>
+기존 메서드는 deprecated 처리되었습니다.<br/>
+`Profile#addQuicHints`도 `preferQuicFor`로 이름이 바뀌었습니다.<br/>
+이름이 실제 동작을 더 잘 드러내도록 정리된 변경입니다.<br/>
+기존 메서드를 쓰고 있다면 마이그레이션 시점에 함께 바꾸는 것이 좋습니다.<br/>
+
+#### 1.19.0-alpha01에서 미리 보는 변경
+
+11월 4일에는 1.19.0-alpha01도 함께 공개되었습니다.<br/>
+`WebViewCompat#startUpWebView`에 `Executor`를 받는 오버로드가 추가되어, 시작 완료 콜백을 백그라운드 스레드에서 받을 수 있습니다.<br/>
+`NavigationState`와 `PageState`가 추가되어 특정 시점의 탐색 상태를 불변 복사본으로 받을 수 있습니다.<br/>
+응답 헤더를 확인할 수 있는 `NavigationState#getResponseHeaders`와 리디렉션 콜백도 들어왔습니다.<br/>
+QUIC 힌트 지정에는 와일드카드 URL을 쓸 수 있게 되었습니다.<br/>
+WebView 152 이상에서는 Attribution Reporting을 더 이상 지원하지 않아 관련 API가 deprecated 처리되었습니다.<br/>
+
+### 실무 관점
+
+MTS 앱에서 WebView를 쓴다면 허용 목록은 자사 도메인으로만 한정하는 것이 안전합니다.<br/>
+신뢰하지 않는 출처를 허용 목록에 넣으면 교차 출처 격리의 보호가 약해집니다.<br/>
+프리페치 제어나 QUIC 설정은 체감 성능과 연결되지만, 단말의 WebView 버전에 따라 동작이 달라질 수 있습니다.<br/>
+`WebViewFeature.isFeatureSupported`로 지원 여부를 먼저 확인하고, 지원하지 않는 단말에서는 기존 동작을 유지하는 것이 좋습니다.<br/>
+1.17.0에서 들어온 `WebViewCompat#navigate`와 렌더러 종료 처리 린트도 함께 확인하면 WebView 주변 정리가 한 번에 됩니다.<br/>
+
+### 마치며
+
+1.18.0은 교차 출처 격리 허용 목록과 프리페치 제어로 WebView 프로파일 설정을 한층 세밀하게 만들었습니다.<br/>
+이름 변경과 함께 1.19.0-alpha01의 탐색 상태 API까지 이어지는 흐름이라, WebView를 쓰는 앱이라면 지금 확인해 두는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
