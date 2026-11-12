@@ -1,0 +1,97 @@
+---
+slug: kotlin-250-rc
+title: "Kotlin 2.5.0-RC 살펴보기: 이름 기반 구조 분해와 정식 출시 전 점검 사항"
+authors: [way]
+tags: [android, kotlin, kotlin250, rc, jetbrains, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+11월 11일에 공개된 [Kotlin 2.5.0-RC](https://github.com/JetBrains/kotlin/releases/tag/v2.5.0-RC)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+Kotlin 2.5.0은 12월 정식 출시를 앞두고 있습니다.<br/>
+10월 21일에 나온 Beta2에 이어 11월 11일에 RC가 공개되었습니다.<br/>
+RC는 정식 출시 직전 단계로, 새 기능이 동결되고 안정화 작업이 중심이 됩니다.<br/>
+이번 RC에서 가장 주목할 변화는 이름 기반 구조 분해의 안정화입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/a0h7sAqON67nO/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Kotlin 2.5.0-RC 살펴보기
+
+#### 이름 기반 구조 분해
+
+기존 구조 분해는 위치 기반으로 동작했습니다.<br/>
+데이터 클래스의 프로퍼티 순서가 바뀌면 변수에 들어가는 값이 함께 바뀌었습니다.<br/>
+이름 기반 구조 분해에서는 변수 이름이 프로퍼티 이름과 일치해야 합니다.<br/>
+순서가 바뀌어도 이름이 같으면 올바른 값이 들어갑니다.<br/>
+
+```kotlin
+data class Person(val name: String, val age: Int)
+
+val person = Person("way", 33)
+val (name, age) = person
+val (age, name) = person // 순서가 달라도 이름으로 매칭됩니다
+```
+
+2.5.0에서는 새 문법을 추가 설정 없이 사용할 수 있습니다.<br/>
+컴파일러는 기존 위치 기반 코드에 대해 마이그레이션 힌트도 함께 제공합니다.<br/>
+위치 기반이 꼭 필요한 경우에는 대괄호 문법을 사용합니다.<br/>
+
+```kotlin
+val pair = "way" to 33
+val [first, second] = pair
+```
+
+#### 미사용 반환값 검사
+
+반환값을 무시한 호출을 찾아주는 검사가 추가되었습니다.<br/>
+실수로 결과를 확인하지 않은 호출을 컴파일 단계에서 발견할 수 있습니다.<br/>
+`Json.encodeToString` 같은 호출의 결과를 쓰지 않고 넘기는 경우에 경고를 받을 수 있습니다.<br/>
+
+#### JDK 17 요구 사항
+
+Beta2부터 JDK 17보다 낮은 버전으로 컴파일러를 실행하면 오류가 발생합니다.<br/>
+Android Studio는 이미 JDK 17을 내장하고 있어 대부분은 영향이 없습니다.<br/>
+CI 환경에서 별도 JDK를 지정하고 있다면 버전을 확인해야 합니다.<br/>
+
+#### 그 외 변경 사항
+
+Java 28을 지원합니다.<br/>
+Swift Export가 새로운 DSL과 함께 베타 단계에 들어갔습니다.<br/>
+Kotlin/Native 증분 컴파일이 Apple 타겟에서 기본으로 활성화되었습니다.<br/>
+멀티 필드 값 클래스가 알파 단계로 추가되었습니다.<br/>
+Lombok의 `@Builder` 애너테이션은 Kotlin 코드에서 비활성화되었습니다.<br/>
+Android 프로젝트의 `kotlin` 블록 안에서 `sourceSets`를 쓰는 기존 방식이 deprecation 대상으로 지정되었습니다.<br/>
+
+#### RC 적용하기
+
+Version Catalog에서 Kotlin 버전을 교체하면 RC를 적용할 수 있습니다.<br/>
+
+```toml
+[versions]
+kotlin = "2.5.0-RC"
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+```
+
+### 실무 관점
+
+RC는 프로덕션 적용 대상이 아닙니다.<br/>
+별도 브랜치에서 빌드와 테스트를 먼저 확인하는 것이 좋습니다.<br/>
+JDK 버전과 KAPT 사용 여부를 함께 점검해야 합니다.<br/>
+KAPT를 사용하는 프로젝트라면 릴리스 노트에 정리된 변경 사항을 함께 확인하는 것이 좋습니다.<br/>
+정식 출시는 12월로 예정되어 있습니다.<br/>
+
+### 마치며
+
+Kotlin 2.5.0-RC는 이름 기반 구조 분해를 안정화하고, 정식 출시를 위한 마지막 점검 단계에 들어갔습니다.<br/>
+12월 정식 출시 전에 미리 적용해 보고, JDK 17 요구 사항과 마이그레이션 힌트를 확인해 두는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/nXxOjZrbnbRxS/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

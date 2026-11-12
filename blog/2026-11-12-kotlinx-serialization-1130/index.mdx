@@ -1,0 +1,96 @@
+---
+slug: kotlinx-serialization-1130
+title: "kotlinx.serialization 1.13.0 살펴보기: 1.12.0 예외 처리 변경 철회와 JsonElement 성능 개선"
+authors: [way]
+tags: [android, kotlin, serialization, json, kotlinx, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+11월 10일에 공개된 [kotlinx.serialization 1.13.0](https://github.com/Kotlin/kotlinx.serialization/blob/master/CHANGELOG.md)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+kotlinx.serialization은 Kotlin 공식 직렬화 라이브러리입니다.<br/>
+10월 19일에 나온 1.12.0에서는 Json의 예외 처리 방식이 크게 바뀌었습니다.<br/>
+1.13.0은 그 변경을 철회하고 성능을 개선하는 릴리스입니다.<br/>
+Kotlin 2.4.10을 기반으로 합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/4xpB3eE00FfBm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### kotlinx.serialization 1.13.0 살펴보기
+
+#### 1.12.0 예외 처리 변경 철회
+
+1.12.0에서는 Json 포맷이 직렬화와 역직렬화 도중에 발생하는 거의 모든 예외를 가로챘습니다.<br/>
+가로챈 예외는 JSON 경로와 입력 정보를 담은 `JsonException`으로 감싸졌습니다.<br/>
+예외를 한 가지 형태로 통일하면 `catch` 작성이 예측 가능해진다는 취지였습니다.<br/>
+그러나 변경의 영향이 과소평가되었고, 1.13.0에서는 이 변경이 철회되었습니다.<br/>
+1.12.0에서 새 동작에 의존한 코드가 있다면 1.13.0에서는 이전 동작으로 돌아갑니다.<br/>
+
+```kotlin
+@Serializable
+data class Account(val id: String, val balance: Long)
+
+try {
+    val account = Json.decodeFromString<Account>("""{"id": "A001"}""")
+} catch (e: JsonException) {
+    // 1.12.0에서는 대부분의 예외가 JsonException으로 감싸졌지만
+    // 1.13.0에서는 이 변경이 철회되어 이전 동작으로 돌아갑니다
+}
+```
+
+#### JsonElement.toString 성능 개선
+
+`JsonElement.toString` 구현이 새로 작성되었습니다.<br/>
+일부 벤치마크에서는 기존보다 약 2배 빨라졌습니다.<br/>
+서버 응답을 로그로 남기거나 디버깅용 문자열을 자주 만드는 코드에서 효과가 있습니다.<br/>
+
+#### 1.12.0에서 함께 안정화된 API
+
+1.13.0은 작은 릴리스이지만, 직전 버전인 1.12.0에서 안정화된 API를 함께 정리합니다.<br/>
+`JsonNamingStrategy`와 `ContextualSerializer`, `@KeepGeneratedSerializer`와 `@SerialInfo`가 안정 API가 되었습니다.<br/>
+`kotlin.time.Instant`와 `kotlin.uuid.Uuid` 직렬화도 실험 애너테이션이 제거되었습니다.<br/>
+CBOR 포맷은 메모리 사용량이 줄었고, Protobuf 포맷은 알 수 없는 필드를 보관했다가 다시 전송하는 기능을 받았습니다.<br/>
+
+#### 1.13.0 적용하기
+
+Version Catalog에서 버전을 교체하면 1.13.0을 적용할 수 있습니다.<br/>
+
+```toml
+[versions]
+kotlinx-serialization = "1.13.0"
+
+[libraries]
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+[plugins]
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+```
+
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.serialization)
+}
+
+dependencies {
+    implementation(libs.kotlinx.serialization.json)
+}
+```
+
+### 실무 관점
+
+1.12.0에서 예외 처리 동작에 의존한 코드가 있다면 1.13.0으로 올릴 때 `catch` 로직을 다시 확인해야 합니다.<br/>
+`JsonDecodingException`의 경로 정보를 활용하던 코드라면 동작 변경 여부를 테스트로 확인하는 것이 좋습니다.<br/>
+성능 개선은 별도 설정 없이 버전만 올려도 적용됩니다.<br/>
+
+### 마치며
+
+1.13.0은 1.12.0의 예외 처리 변경을 철회하고, `JsonElement.toString` 성능을 끌어올린 릴리스입니다.<br/>
+버전만 올리면 되지만, 예외 처리 동작이 되돌아간 만큼 `catch` 로직은 한 번 확인하는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/AgrfqPt5AyiTm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
