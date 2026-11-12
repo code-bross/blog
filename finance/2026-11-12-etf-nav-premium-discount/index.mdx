@@ -1,0 +1,72 @@
+---
+slug: etf-nav-premium-discount
+title: ETF 가격과 순자산가치의 차이, 괴리율을 읽는 방법
+authors: [way]
+tags: [finance, ETF, 괴리율, 투자기초]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+오늘은 ETF 시장가격과 순자산가치 사이의 차이, 괴리율을 읽는 방법을 정리합니다.<br/>
+
+### 배경
+ETF는 거래소에 상장돼 주식처럼 사고파는 펀드입니다.<br/>
+시장가격은 실시간으로 변하고, 순자산가치(NAV)는 하루 한 번 장 마감 뒤에 산정됩니다.<br/>
+두 값이 항상 같지는 않습니다.<br/>
+이 차이를 괴리율이라 부릅니다.<br/>
+괴리율을 읽는 방법을 알면 ETF를 제값에 사고파는지 판단할 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzIwbmpwNjQ2a3BnbHV0ZG03d3cwbHQ4MGRtMXRlYzAyODY5cDBsMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/RG6fDS2O5AKno8lKH0/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+#### 순자산가치는 펀드의 실제 가치입니다
+순자산가치(NAV)는 펀드가 보유한 자산에서 부채를 빼고 좌수로 나눈 값입니다.<br/>
+ETF 한 좌당 순자산이 얼마인지를 보여줍니다.<br/>
+NAV는 장 마감 뒤 하루 한 번 공시됩니다.<br/>
+장중에는 NAV 대신 추정치인 iNAV가 10초 단위로 제공됩니다.<br/>
+iNAV는 실시간 순자산가치 추정치로, 시장가격과 비교하는 기준이 됩니다.<br/>
+
+#### 괴리율은 시장가격과 NAV의 차이입니다
+괴리율은 시장가격에서 NAV를 빼고 NAV로 나눈 뒤 100을 곱한 값입니다.<br/>
+시장가격이 NAV보다 높으면 플러스 괴리율, 즉 프리미엄 상태입니다.<br/>
+시장가격이 NAV보다 낮으면 마이너스 괴리율, 즉 디스카운트 상태입니다.<br/>
+예를 들어 NAV가 10,000원이고 시장가격이 10,150원이면 괴리율은 1.5%입니다.<br/>
+괴리율이 0%에 가까울수록 시장가격이 순자산가치에 가깝다는 뜻입니다.<br/>
+
+#### 괴리는 왜 생깁니까
+첫째, 수급 불균형입니다.<br/>
+매수 주문이 몰리면 시장가격이 NAV 위로 올라갈 수 있습니다.<br/>
+둘째, 기초자산의 거래 시간 차이입니다.<br/>
+해외 주식이나 채권 ETF는 기초자산 시장이 닫힌 시간에도 국내에서 거래됩니다.<br/>
+이 경우 iNAV 추정치와 실제 가치 사이에 오차가 생깁니다.<br/>
+셋째, 유동성 부족입니다.<br/>
+거래량이 적은 ETF는 호가 간격이 넓어져 괴리율이 커지기 쉽습니다.<br/>
+넷째, 지정참가회사(AP)의 차익거래가 원활하지 않을 때입니다.<br/>
+AP는 ETF와 실물을 교환하며 괴리를 좁히는 역할을 합니다.<br/>
+시장이 급변하면 이 차익거래가 늦어지며 괴리가 벌어집니다.<br/>
+
+#### 괴리율이 클 때의 의미를 따집니다
+프리미엄이 크면 순자산보다 비싸게 사는 것입니다.<br/>
+디스카운트가 크면 순자산보다 싸게 사는 것처럼 보입니다.<br/>
+다만 디스카운트가 크다고 무조건 유리한 것은 아닙니다.<br/>
+괴리가 큰 ETF는 변동성이 크거나 유동성이 부족한 경우가 많습니다.<br/>
+괴리율이 장기간 크게 유지되는 ETF는 구조적인 원인이 있는지 확인할 필요가 있습니다.<br/>
+거래소와 운용사 홈페이지에서 ETF별 괴리율과 iNAV를 확인할 수 있습니다.<br/>
+
+### 실무에서 확인할 점
+첫째, 매수 전 괴리율을 확인하는 습관입니다.<br/>
+특히 해외 자산 ETF와 레버리지 ETF는 장중 괴리율을 함께 보는 것이 좋습니다.<br/>
+둘째, 괴리율의 평소 수준을 아는 것입니다.<br/>
+같은 ETF라도 평소 괴리율이 0.1% 수준인지, 1% 수준인지가 다릅니다.<br/>
+셋째, 급락장에서는 괴리가 벌어질 수 있다는 점입니다.<br/>
+시장이 급변할 때는 iNAV 추정치 자체의 오차도 커집니다.<br/>
+넷째, 거래량과 호가 간격도 함께 보는 것입니다.<br/>
+괴리율이 작아도 호가 간격이 넓으면 실제 체결 비용이 커집니다.<br/>
+
+### 마치며
+괴리율은 ETF의 시장가격이 순자산에서 얼마나 벗어났는지를 보여주는 지표입니다.<br/>
+괴리율을 확인하는 습관은 ETF를 제값에 거래하는 가장 기본적인 점검입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWpucDZxZDQxZDB4andsMjE5amQzbXc5eTN2c3ZxdGZocWI2NWZsbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/FJcm8sN3t2WVyBATK7/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
