@@ -1,0 +1,115 @@
+---
+slug: mts-media3-1120-beta01
+title: "Media3 1.12.0-beta01 살펴보기 — CodecDB와 메모리 절감, JSpecify 마이그레이션"
+authors: [way]
+tags: [android, media3, exoplayer, transformer, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+11월 11일에 공개된 [Media3 1.12.0-beta01](https://developer.android.com/jetpack/androidx/releases/media3)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+Media3 1.12.0은 10월 21일 alpha01, 10월 26일 alpha02를 거쳐 11월 11일 beta01에 도달했습니다.<br/>
+alpha01에서는 플래그 레지스트리와 Display P3 지원이 들어왔고, alpha02에서는 Play services 이펙트 모듈이 추가되었습니다.<br/>
+지난달 27일 글에서 이 두 알파 버전을 다룬 바 있습니다.<br/>
+beta는 API 표면이 확정되는 단계입니다.<br/>
+이번 beta01에서는 인코더 설정을 추천하는 CodecDB가 새로 들어왔고, 메모리 사용량을 줄이는 변경과 JSpecify 마이그레이션이 함께 포함되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/12aW6JtfvUdcdO/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Media3 1.12.0-beta01 살펴보기
+
+#### Transformer에 들어온 CodecDB
+
+Transformer에 `androidx.media3.transformer.codecdb` 패키지의 CodecDB가 추가되었습니다.<br/>
+단말에서 측정된 인코더 품질 데이터를 바탕으로 비디오 인코더 설정을 추천합니다.<br/>
+추천 대상은 코덱과 인코더 설정, 비트레이트입니다.<br/>
+트랜스코딩 품질을 단말마다 일일이 튜닝하지 않아도 됩니다.<br/>
+단말별 인코더 성능 편차가 큰 환경에서 유용합니다.<br/>
+
+#### 샘플 버퍼 메모리 사용량 절감
+
+`C.DEFAULT_BUFFER_SEGMENT_SIZE`가 65536에서 65520으로 줄었습니다.<br/>
+버퍼 할당 하나가 바이트 배열 객체 헤더까지 포함해 OS 페이지 단위에 딱 맞게 들어갑니다.<br/>
+4 KiB 페이지 단말에서는 샘플 버퍼 메모리가 약 6% 줄어듭니다.<br/>
+16 KiB 페이지 단말에서는 약 20% 줄어듭니다.<br/>
+재생 동작을 바꾸지 않고 메모리만 줄이는 변경입니다.<br/>
+
+#### JSpecify 마이그레이션과 Kotlin 코드에 미치는 영향
+
+`androidx.media3.common.util.NullableType`이 JSpecify의 `org.jspecify.annotations.Nullable`로 교체되었습니다.<br/>
+`UnknownNull`도 JSpecify 널니스 어노테이션으로 대체되어 제거되었습니다.<br/>
+이 변경은 Kotlin 코드에도 직접 영향을 줍니다.<br/>
+`RunnableFutureTask`를 상속받는 Kotlin 서브클래스는 결과 타입이 널 가능하면 타입 인자도 널 가능으로 명시해야 합니다.<br/>
+예를 들어 `RunnableFutureTask<Void?, Exception>`처럼 씁니다.<br/>
+`CompositeMediaSource`도 마찬가지이며, 널 가능한 자식 소스 ID를 쓰는 경우 `CompositeMediaSource<Void?>`처럼 명시합니다.<br/>
+Media3 클래스를 상속해 쓰는 코드가 있다면 빌드 시점에 확인이 필요합니다.<br/>
+
+#### Player.listen 스레드 문제 수정
+
+`Player.listen`이나 `Player.listenTo`를 플레이어의 애플리케이션 스레드가 아닌 스레드에서 취소하면 `IllegalStateException`이 발생했습니다.<br/>
+오류 메시지는 "Player is accessed on the wrong thread."입니다.<br/>
+Compose UI 테스트 종료 시점에 자주 마주치는 상황이었습니다.<br/>
+이번 beta01에서 이 문제가 수정되었습니다.<br/>
+
+#### Compose UI에 들어온 자막 슬롯
+
+`ContentFrame`과 `Player`에 `subtitles` 컴포저블 슬롯이 추가되었습니다.<br/>
+`media3-ui-compose-material3`에서는 비트맵 자막과 가로 텍스트 자막 큐를 기본으로 렌더링합니다.<br/>
+`SubtitleView.setTextDirectionHeuristic`도 추가되어 양방향 자막 텍스트의 줄 바꿈 기준을 바꿀 수 있습니다.<br/>
+한편 `Player`의 모든 컨트롤 슬롯에 애니메이션이 적용되면서 `PlayerDefaults.TopControls`와 `CenterControls`, `BottomControls`에서 `visible` 파라미터가 제거되었습니다.<br/>
+불안정한 API에 대한 변경이라 커스텀 컨트롤을 쓰는 화면은 빌드 확인이 필요합니다.<br/>
+
+#### 광고와 캐스트 변경점
+
+IMA 확장에서는 인터랙티브 광고가 재생 중 비디오 플레이어 뷰를 리사이즈할 수 있게 되었습니다.<br/>
+`AdViewProvider.getAdVideoView()`가 광고 재생 중 크기를 바꿀 수 있는 비디오 컨테이너 뷰를 제공합니다.<br/>
+`ImaAdsLoader.requestAds`에는 `AdViewProvider`를 받는 오버로드가 추가되었고, `ViewGroup`을 받는 기존 오버로드는 Deprecated 처리되었습니다.<br/>
+
+```kotlin
+// 변경 전: ViewGroup을 받는 오버로드 (Deprecated)
+// ImaAdsLoader.requestAds(DataSpec, Object, ViewGroup)
+
+// 변경 후: AdViewProvider를 받는 오버로드
+// ImaAdsLoader.requestAds(DataSpec, Object, AdViewProvider)
+```
+
+Cast 확장에서는 시스템 출력 전환기 설정이 추가되었습니다.<br/>
+`CastParams.Builder.setSystemOutputSwitcherEnabled`로 선언 없이 출력 전환기에 Cast 기기를 표시할지 정할 수 있습니다.<br/>
+API 37 이상을 타깃으로 하고 API 37 이상 단말에서 실행되는 앱은 기본적으로 활성화됩니다.<br/>
+`play-services-cast-framework` 의존성은 23.0.0으로 업데이트되었습니다.<br/>
+
+#### 의존성 선언
+
+beta01을 적용하는 의존성 선언은 다음과 같습니다.<br/>
+
+```kotlin
+dependencies {
+    val media3Version = "1.12.0-beta01"
+    implementation("androidx.media3:media3-exoplayer:$media3Version")
+    implementation("androidx.media3:media3-transformer:$media3Version")
+    implementation("androidx.media3:media3-ui-compose-material3:$media3Version")
+}
+```
+
+### 실무 관점
+
+beta는 API가 확정되는 단계지만 정식 릴리스가 아닙니다.<br/>
+운영 앱에는 1.11.1 stable을 유지하고, beta01은 별도 브랜치에서 검증하는 것이 좋습니다.<br/>
+JSpecify 마이그레이션은 Media3 클래스를 상속해 쓰는 코드를 건드릴 수 있습니다.<br/>
+적용 전에 해당 코드의 컴파일을 먼저 확인하는 것이 좋습니다.<br/>
+CodecDB는 단말별 인코더 편차를 직접 다뤄야 하는 트랜스코딩 기능에서 검토합니다.<br/>
+자막 슬롯과 컨트롤 애니메이션 변경은 커스텀 플레이어 UI를 쓰는 화면부터 빌드 확인이 필요합니다.<br/>
+
+### 마치며
+
+Media3 1.12.0-beta01은 CodecDB라는 새 기능과 함께 메모리 절감, JSpecify 정리, 스레드 문제 수정을 한 번에 담았습니다.<br/>
+beta 단계인 만큼 별도 환경에서 검증한 뒤, 정식 릴리스 시점에 적용 여부를 결정하는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/bOXnd3kig533u93OND/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

@@ -1,0 +1,114 @@
+---
+slug: mts-compose-113-grid-named-areas
+title: "Compose 1.13의 Grid와 이름 있는 영역 살펴보기 — 커스텀 Layout 코드를 줄이는 방법"
+authors: [way]
+tags: [android, compose, grid, layout, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+11월 4일에 공개된 [Compose 1.13.0-rc01](https://developer.android.com/jetpack/androidx/releases/compose-foundation)에 안정화된 상태로 들어 있는 [Grid](https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/Grid.composable)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+헤더와 사이드바, 본문, 푸터로 이뤄진 화면은 흔한 구조입니다.<br/>
+문제는 이 구조가 2차원이라는 점입니다.<br/>
+`Column`과 `Row`는 한 방향으로만 쌓는 1차원 레이아웃입니다.<br/>
+두 방향을 함께 다루려면 `Layout` 블록을 직접 작성하거나 중첩을 쌓아야 했습니다.<br/>
+측정과 배치 로직이 한 파일에 모이면서 나중에 손대기 어려운 코드가 되기 쉽습니다.<br/>
+`Grid`는 행과 열을 선언만으로 정의하는 2차원 레이아웃입니다.<br/>
+Grid API는 1.11.0에서 들어온 뒤 1.13.0-alpha02에서 stable로 승격되었습니다.<br/>
+이름 있는 영역 기능은 1.12.0-beta01에서 추가되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/3oz8xKdOUnAB08YeRi/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Compose 1.13의 Grid 살펴보기
+
+#### 트랙 정의하기
+
+`Grid`는 `config` 블록에서 열과 행을 정의합니다.<br/>
+트랙 크기는 `Fixed`와 `Flex`, `Auto`, `Percentage`, `MinMax`로 지정합니다.<br/>
+`1.fr`처럼 비율 단위를 쓰면 남은 공간을 비율대로 나눕니다.<br/>
+`gap`으로 트랙 사이의 간격을 한 번에 정합니다.<br/>
+
+```kotlin
+Grid(
+    config = {
+        // 열 2개: 고정 200dp 사이드바, 남은 공간을 차지하는 본문
+        columns(200.dp, 1.fr)
+        // 행 3개: 내용 크기 헤더, 남은 공간 본문, 고정 60dp 푸터
+        rows(Auto, 1.fr, 60.dp)
+        gap(8.dp)
+    },
+    modifier = Modifier.fillMaxSize()
+) {
+    // ...
+}
+```
+
+#### 아이템 배치하기
+
+자식은 `Modifier.gridItem`으로 위치와 크기를 정합니다.<br/>
+행과 열 인덱스는 1부터 시작합니다.<br/>
+`rowSpan`과 `columnSpan`으로 여러 셀에 걸치게 둘 수 있습니다.<br/>
+`gridItem`을 붙이지 않은 자식은 `GridFlow`에 따라 다음 빈 셀에 자동 배치됩니다.<br/>
+
+```kotlin
+Box(
+    modifier = Modifier
+        .gridItem(row = 1, column = 1, columnSpan = 2)
+        .background(Color.Blue)
+        .fillMaxSize(),
+    contentAlignment = Alignment.Center
+) {
+    Text("Header")
+}
+```
+
+#### 이름 있는 영역으로 의미 분리하기
+
+`area`로 영역에 이름을 붙이면 좌표 대신 이름으로 배치할 수 있습니다.<br/>
+`config` 블록에서 `area`로 영역을 정의하고, 자식에서는 `gridItem`에 영역 이름을 넘깁니다.<br/>
+레이아웃 구조가 바뀌어도 자식 코드는 그대로 둘 수 있습니다.<br/>
+영역 식별자는 `String`이나 enum처럼 안정적인 `equals`와 `hashCode`를 가진 값을 써야 합니다.<br/>
+
+```kotlin
+Grid(
+    config = {
+        columns(200.dp, 1.fr)
+        rows(Auto, 1.fr, 60.dp)
+        gap(8.dp)
+        area("header", row = 1, column = 1, columnSpan = 2)
+        area("sidebar", row = 2, column = 1)
+        area("content", row = 2, column = 2)
+        area("footer", row = 3, column = 1, columnSpan = 2)
+    },
+    modifier = Modifier.fillMaxSize()
+) {
+    Header(Modifier.gridItem("header"))
+    Sidebar(Modifier.gridItem("sidebar"))
+    Content(Modifier.gridItem("content"))
+    Footer(Modifier.gridItem("footer"))
+}
+```
+
+### 실무 관점
+
+행과 열 인덱스가 1부터 시작한다는 점을 먼저 확인하는 것이 좋습니다.<br/>
+0부터 시작한다고 착각하면 배치가 어긋나거나 `IllegalArgumentException`이 발생합니다.<br/>
+`config` 블록은 측정 패스에서 실행되므로 부수 효과를 넣지 않는 것이 좋습니다.<br/>
+`Grid`는 개수가 정해진 레이아웃용입니다.<br/>
+스크롤되는 긴 목록에는 `LazyGrid`를 쓰는 것이 맞습니다.<br/>
+1.13은 아직 RC 단계이므로 운영 앱의 Compose 버전은 1.12.1 stable을 유지하고, Grid는 별도 브랜치에서 검증하는 것이 좋습니다.<br/>
+폴더블처럼 화면 너비가 바뀌는 환경에서는 트랙 구성을 바꾸는 것만으로 레이아웃을 갈아탈 수 있습니다.<br/>
+
+### 마치며
+
+Grid는 2차원 화면을 선언만으로 그리는 방법입니다.<br/>
+이름 있는 영역까지 쓰면 배치 의도가 코드에 그대로 남아 유지보수가 수월해집니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/26gsobowozGM9umBi/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
