@@ -1,0 +1,89 @@
+---
+slug: mika-android-ai-agent
+title: "GitHub Trending 1위 Mika 살펴보기: 온디바이스 AI 에이전트의 앱 조작 방식"
+authors: [way]
+tags: [android, kotlin, mika, ai-agent, github-trending, accessibility, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+10월 29일에 공개된 [Mika](https://github.com/wangzan101/Mika)에 대해 설명해드리겠습니다.<br/>
+Mika는 11월 초 [GitHub Trending](https://github.com/trending/kotlin) Kotlin 부문 1위에 오른 온디바이스 AI 에이전트입니다.<br/>
+
+### 배경
+
+기존 AI 어시스턴트는 대부분 채팅 안에서 답변을 돌려주는 데 머물렀습니다.<br/>
+앱을 직접 조작하려면 앱마다 API를 연동해야 했고, API가 없는 앱은 자동화 대상에서 제외되었습니다.<br/>
+Mika는 이 지점을 다르게 접근합니다.<br/>
+앱의 API를 쓰지 않고 화면을 사람처럼 읽고 버튼을 직접 누릅니다.<br/>
+공개된 지 2주 남짓 만에 스타 8천 개를 넘겼습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzE2dWJocTI2N25sZ3l5bW5hYmEwbmhzZ2F2OHBrNGl3MGZpMjEyYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ZjXRWVP0NQRDCLoel5/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Mika 살펴보기
+
+#### 백그라운드 화면
+
+Mika는 앱을 보이지 않는 백그라운드 화면에서 실행합니다.<br/>
+사용자는 자기 화면을 그대로 쓰면서 에이전트에게 일을 맡길 수 있습니다.<br/>
+작업을 지켜보고 싶을 때는 작은 실시간 화면을 눌러 확인합니다.<br/>
+대화 도중 말을 걸면 작업에 추가 지시를 하거나 중단할 수 있습니다.<br/>
+
+#### 무선 디버깅과 접근성 서비스
+
+백그라운드 화면을 쓰려면 두 가지 준비가 필요합니다.<br/>
+먼저 안드로이드에 내장된 무선 디버깅을 이용해 작은 헬퍼를 실행합니다.<br/>
+다음으로 접근성 서비스를 켜서 화면을 읽고 탭과 입력을 수행합니다.<br/>
+설정은 한 번만 하면 되고 3분에서 5분 정도 걸립니다.<br/>
+앱 조작에는 안드로이드 12 이상이 필요하고, 안드로이드 14 이상을 권장합니다.<br/>
+채팅과 웹, 파일 작업만 쓴다면 안드로이드 11에서도 동작합니다.<br/>
+
+#### Ask 모드와 안전장치
+
+기본값은 Ask 모드입니다.<br/>
+돈이 드는 일은 실행 전에 사용자에게 확인을 받습니다.<br/>
+장바구니에는 담지만 결제 직전에는 멈춥니다.<br/>
+로그인과 인증 코드, 결제는 사용자에게 넘깁니다.<br/>
+자율 실행을 원하면 Autonomous 모드로 바꿀 수 있습니다.<br/>
+
+#### 스킬과 컴퓨터 연동
+
+완료한 작업은 스킬로 저장되어 다음에는 더 빠르고 안정적으로 처리됩니다.<br/>
+컴퓨터에서도 CLI와 MCP로 Mika에 작업을 넘길 수 있습니다.<br/>
+CLI는 HTTP 작업 API를 호출하며, 전화기 쪽에서 실제 실행을 담당합니다.<br/>
+
+```bash
+mika devices --json
+mika connect --device SERIAL --json
+mika doctor --device SERIAL --json
+```
+
+연결에는 ADB가 필요하고, 패키지 이름은 `com.wangzan101.mika`입니다.<br/>
+
+#### 프라이버시 구조
+
+Mika 서버는 없습니다.<br/>
+화면 내용과 대화는 설정한 모델 제공자에게만 전달됩니다.<br/>
+API 키와 기억은 전화기 안에서 암호화되어 저장됩니다.<br/>
+대화와 실행 기록은 기기에 남고, 업데이트 확인만 GitHub에 연결합니다.<br/>
+모델은 DeepSeek과 OpenAI, Gemini, Anthropic 등을 고를 수 있습니다.<br/>
+
+### 실무 관점
+
+금융 앱에서 접근성 서비스 기반 자동화를 검토할 때는 두 가지를 주의해야 합니다.<br/>
+먼저 타사 앱과 웹사이트를 자동으로 조작하면 해당 서비스의 이용 약관에 어긋날 수 있습니다.<br/>
+다음으로 결제와 인증 같은 민감한 단계는 자동화 대상에서 빼는 것이 안전합니다.<br/>
+Mika가 기본값으로 Ask 모드를 쓰고 결제 직전에 멈추는 설계는 이 점에서 참고할 만합니다.<br/>
+MTS 개발 관점에서는 에이전트의 실행 방식을 이해해 두는 것이 도움이 됩니다.<br/>
+향후 앱이 에이전트와 만나는 지점을 설계할 때 같은 기준을 적용할 수 있습니다.<br/>
+
+### 마치며
+
+Mika는 앱 API 없이 화면을 읽는 방식으로 AI 에이전트의 적용 범위를 넓혔습니다.<br/>
+백그라운드 화면과 Ask 모드의 조합은 실용성과 안전장치를 함께 갖춘 사례입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzE2dWJocTI2N25sZ3l5bW5hYmEwbmhzZ2F2OHBrNGl3MGZpMjEyYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bCCnBFuk2JCkJcGwif/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
