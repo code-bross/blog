@@ -1,0 +1,115 @@
+---
+slug: kotlin-250-full-value-classes
+title: "Kotlin 2.5.0-RC 살펴보기: 여러 프로퍼티를 갖는 전체 값 클래스"
+authors: [way]
+tags: [android, kotlin, kotlin250, value-class, jetbrains, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+11월 11일에 공개된 [Kotlin 2.5.0-RC](https://github.com/JetBrains/kotlin/releases/tag/v2.5.0-RC)의 전체 값 클래스에 대해 설명해드리겠습니다.<br/>
+전체 값 클래스는 실험적 기능으로, 여러 프로퍼티를 하나의 값으로 묶는 방식을 제공합니다.<br/>
+
+### 배경
+
+기존 [인라인 값 클래스](https://kotlinlang.org/docs/inline-classes.html)는 하나의 프로퍼티만 가질 수 있었습니다.<br/>
+여러 값을 묶어야 할 때는 일반 클래스나 데이터 클래스를 사용해야 했습니다.<br/>
+데이터 클래스는 같은 데이터를 가진 인스턴스라도 참조가 다르면 별개로 구분될 수 있습니다.<br/>
+값 자체가 본질인 타입에서는 이 참조 구분이 불필요한 제약이 됩니다.<br/>
+전체 값 클래스는 이런 경우를 위해 프로퍼티 전체가 값이 되는 타입을 제공합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/m5gJsxxaHbmPRqXFNY/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 전체 값 클래스 살펴보기
+
+#### 기본 선언
+
+전체 값 클래스는 `value class` 키워드로 선언합니다.<br/>
+프로퍼티를 여러 개 가질 수 있고, 컴파일러가 `equals`와 `hashCode`, `toString`을 자동으로 생성합니다.<br/>
+이 점은 데이터 클래스와 비슷합니다.<br/>
+다만 `componentN` 함수는 생성되지 않습니다.<br/>
+대신 이름 기반 구조 분해를 사용합니다.<br/>
+`copy` 함수는 제공되지 않으며, 향후 복사 변수 기능으로 대체될 예정입니다.<br/>
+
+```kotlin
+value class Complex(val real: Double, val imaginary: Double)
+
+fun main() {
+    val complex = Complex(1.0, 2.0)
+    val (val real, val imaginary) = complex
+    println(real)
+    println(imaginary)
+}
+```
+
+이름 기반 구조 분해에서는 변수 이름이 프로퍼티 이름과 일치해야 합니다.<br/>
+순서가 바뀌어도 이름이 같으면 올바른 값이 들어갑니다.<br/>
+이 문법은 2.5.0-RC에서 기본 동작이 되었습니다.<br/>
+
+#### 추상 값 클래스
+
+전체 값 클래스는 추상 클래스로 선언할 수도 있습니다.<br/>
+인터페이스와 달리 모든 하위 클래스가 실행하는 초기화 로직을 정의할 수 있습니다.<br/>
+다음 예시에서는 시작 값이 끝 값보다 크지 않은지 생성 단계에서 검증합니다.<br/>
+
+```kotlin
+sealed value class OrderedInterval<T : Comparable<T>> protected constructor(
+    start: T,
+    end: T,
+) {
+    init {
+        require(start <= end)
+    }
+}
+
+value class IntInterval(
+    val start: Int,
+    val end: Int
+) : OrderedInterval<Int>(start, end)
+```
+
+#### 값 객체
+
+프로퍼티가 없는 전체 값 클래스는 값 객체라고 부릅니다.<br/>
+하나의 값만 가질 수 있는 상태를 표현할 때 사용합니다.<br/>
+다음 예시에서는 조회 결과를 찾음과 찾지 못함으로 나눕니다.<br/>
+
+```kotlin
+sealed interface UserResponse
+
+value class UserFound(val userName: String) : UserResponse
+value object UserUnknown : UserResponse
+```
+
+#### 사용 설정
+
+전체 값 클래스는 실험적 기능이므로 컴파일러 옵션을 추가해야 합니다.<br/>
+`build.gradle.kts`에 다음과 같이 작성합니다.<br/>
+
+```kotlin
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xfull-value-classes")
+    }
+}
+```
+
+자세한 내용은 [Kotlin 2.5.0-RC의 새로운 기능](https://kotlinlang.org/docs/whatsnew-eap.html)에서 확인할 수 있습니다.<br/>
+
+### 실무 관점
+
+MTS에서는 금액과 통화를 함께 다루는 타입이 많습니다.<br/>
+이런 복합 값을 전체 값 클래스로 표현하면 참조 구분에 의존하는 실수를 줄일 수 있습니다.<br/>
+다만 아직 실험적 기능이고 RC 단계이므로, 프로덕션 모듈에 바로 적용하기보다는 별도 브랜치에서 검증하는 것이 좋습니다.<br/>
+정식 출시 이후 안정화 여부를 다시 확인해야 합니다.<br/>
+
+### 마치며
+
+전체 값 클래스는 여러 프로퍼티를 하나의 값으로 묶는 방식을 제공합니다.<br/>
+데이터 클래스와 비슷하지만 참조 구분이 없는 점이 다릅니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
