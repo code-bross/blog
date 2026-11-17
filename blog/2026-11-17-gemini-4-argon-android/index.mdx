@@ -1,0 +1,99 @@
+---
+slug: gemini-4-argon-android
+title: "Gemini 4 Argon 살펴보기: Android 개발을 위한 에이전트 모델"
+authors: [way]
+tags: [android, gemini, gemini-4-argon, antigravity, android-cli, ai, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+10월에 공개된 [Gemini 4 Argon](https://developer.android.com/blog/posts/bringing-gemini-4-argon-to-android-agentic-engineering-antigravity-cli)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+기존 AI 코딩 도구는 코드 완성과 짧은 편집 제안이 중심이었습니다.<br/>
+에이전트 방식의 개발에서는 모델이 빌드와 테스트까지 직접 실행하며 긴 작업을 끝까지 수행합니다.<br/>
+Gemini 4 Argon은 이런 장시간 자율 실행에 맞춰 나온 구글의 최신 프론티어 모델입니다.<br/>
+Android 개발자는 Antigravity와 Android Studio, Gemini API를 통해 Argon을 쓸 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/m5gJsxxaHbmPRqXFNY/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Gemini 4 Argon 살펴보기
+
+#### 스스로 고치는 빌드 루프
+
+로컬 빌드가 실패하면 Antigravity 실행 하네스가 Gradle 데몬과 Kotlin 컴파일러 로그의 오류를 그대로 수집합니다.<br/>
+Argon은 이 피드백을 바탕으로 빌드 오류를 반복 진단해 원인을 찾아가며 수정안을 만듭니다.<br/>
+여러 번의 편집을 거치면서도 가설을 유지해 표면적인 오류가 아니라 실제 근본 원인을 다루는 점이 특징입니다.<br/>
+
+#### AGSL 셰이더와 Jetpack Compose
+
+Argon은 Jetpack Compose 코드를 바로 쓸 수 있는 수준으로 생성합니다.<br/>
+`AGSL`(Android Graphics Shading Language)을 `Modifier.graphicsLayer` 블록 안에 직접 작성해 프로스트 글라스나 조명, 잔물결 같은 효과를 만듭니다.<br/>
+복잡한 벡터와 렌더링 계산을 GPU 셰이더로 처리해 120 FPS Compose 애니메이션과 함께 동작합니다.<br/>
+AGSL 셰이더를 Compose에 연결하는 기본 형태는 다음과 같습니다.<br/>
+
+```kotlin
+private const val TINT_SHADER = """
+    uniform shader composable;
+    half4 main(float2 fragCoord) {
+        half4 color = composable.eval(fragCoord);
+        return half4(color.r * 0.9, color.g * 0.95, color.b, color.a);
+    }
+"""
+
+@Composable
+fun TintedCard() {
+    val shader = remember { RuntimeShader(TINT_SHADER) }
+    Box(
+        modifier = Modifier
+            .size(200.dp)
+            .background(Color.Blue)
+            .graphicsLayer {
+                renderEffect = RenderEffect
+                    .createRuntimeShaderEffect(shader, "composable")
+            }
+    )
+}
+```
+
+#### Android CLI와 연결하기
+
+Antigravity는 데스크톱 앱과 IDE 확장, 명령줄에서 동작합니다.<br/>
+공식 Android CLI 플러그인은 에이전트와 로컬 Android 도구를 연결하는 엔진 역할을 합니다.<br/>
+설정은 Antigravity 데스크톱 앱의 설정에서 플러그인을 켜거나, 터미널에서 다음 명령으로 설치합니다.<br/>
+
+```bash
+agy plugin install android-cli-plugin
+```
+
+터미널 에이전트에서는 다음 명령으로 Android CLI 환경을 초기화합니다.<br/>
+
+```bash
+android init
+```
+
+#### 어디서 쓸 수 있는지
+
+Argon은 Google AI Ultra 구독자에게 Antigravity 데스크톱 앱과 Android Studio Canary에서 제공됩니다.<br/>
+Gemini API 유료 등급을 쓰는 개발자는 Android Studio와 Google AI Studio에서 Argon을 쓸 수 있습니다.<br/>
+[Firebase AI Logic](https://firebase.google.com/docs/ai-logic)을 통하면 클라이언트 앱 안에서도 Argon 기반 기능을 만들 수 있습니다.<br/>
+Gemini API 입문 가격은 2026년 11월 30일까지 적용됩니다.<br/>
+빠른 시작은 [gemini-4-antigravity-quickstart](https://github.com/android-samples/gemini-4-antigravity-quickstart) 저장소에서 확인할 수 있습니다.<br/>
+
+### 실무 관점
+
+MTS 앱에 적용한다면, 에이전트에게 빌드와 테스트를 맡기기 전에 범위를 정하는 것이 먼저입니다.<br/>
+빌드 실패를 스스로 고치는 루프는 내부 빌드에서 먼저 검증하고, 프로덕션 코드 변경은 사람이 검토한 뒤에 반영하는 것이 안전합니다.<br/>
+Argon을 쓰려면 Google AI Ultra 구독이나 Gemini API 유료 등급이 필요하므로, 팀 단위 도입 전에 비용과 접근 방식을 함께 확인해야 합니다.<br/>
+Android CLI 플러그인은 에이전트가 로컬 도구를 직접 다루게 하므로, CI 환경과 로컬 환경에서 쓸 명령을 구분해 두는 것이 좋습니다.<br/>
+
+### 마치며
+
+Gemini 4 Argon은 긴 작업을 끝까지 수행하는 에이전트 개발에 맞춰 나온 모델입니다.<br/>
+빌드 자기 복원과 Compose 코드 생성, Android CLI 연동을 함께 살펴보면 도입 범위를 정하는 데 도움이 됩니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/HCAV5bnQXDYAKYcQp8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

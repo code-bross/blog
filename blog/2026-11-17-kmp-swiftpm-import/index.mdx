@@ -1,0 +1,187 @@
+---
+slug: kmp-swiftpm-import
+title: KMP 모듈에 Swift 패키지 의존성 추가하기
+authors: [way]
+tags: [android, kotlin, kmp, swiftpm, multiplatform, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+[Kotlin 2.5.0-RC](https://github.com/JetBrains/kotlin/releases/tag/v2.5.0-RC)에서 시도해 볼 수 있는 KMP 모듈의 SwiftPM import 기능에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+KMP 프로젝트에서 iOS 쪽 네이티브 SDK를 쓰려면 지금까지 CocoaPods 의존성을 연결하거나 `cinterop` 정의를 직접 작성해야 했습니다.<br/>
+CocoaPods 방식은 별도 설정이 많고, Swift 패키지를 그대로 가져오는 방법이 마땅하지 않았습니다.<br/>
+Kotlin 2.5.0-RC부터는 [SwiftPM import](https://kotlinlang.org/docs/multiplatform/multiplatform-spm-import.html) 기능을 이용해 Swift 패키지를 Gradle 빌드 스크립트에서 직접 선언할 수 있습니다.<br/>
+SwiftPM 의존성의 Objective-C API를 Kotlin 코드에서 바로 호출할 수 있게 됩니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### SwiftPM import 살펴보기
+
+#### 플러그인 버전 설정하기
+
+SwiftPM import를 쓰려면 Kotlin Multiplatform Gradle 플러그인 2.5.0-RC가 필요합니다.<br/>
+Version Catalog에서는 다음과 같이 버전을 지정합니다.<br/>
+
+```toml
+[versions]
+kotlin = "2.5.0-RC"
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+```
+
+#### Swift 패키지 선언하기
+
+SwiftPM 의존성은 Apple 타겟을 선언한 `build.gradle.kts` 안의 `swiftPMDependencies` 블록에 추가합니다.<br/>
+예시로 FirebaseAnalytics를 가져오는 설정은 다음과 같습니다.<br/>
+
+```kotlin
+kotlin {
+    iosArm64()
+    iosSimulatorArm64()
+    swiftPMDependencies {
+        // FirebaseAnalytics를 Kotlin 코드로 가져옵니다
+        swiftPackage(
+            url = url("https://github.com/firebase/firebase-ios-sdk.git"),
+            version = from("12.5.0"),
+            products = listOf(product("FirebaseAnalytics")),
+        )
+    }
+}
+```
+
+버전은 `from`으로 시작 버전을 지정하거나, `exact`로 정확한 버전을 지정할 수 있습니다.<br/>
+브랜치나 특정 리비전을 지정하는 방식도 함께 제공됩니다.<br/>
+
+#### Clang 모듈 가져오기
+
+SwiftPM import는 Clang 모듈을 가져오는 방식으로 동작합니다.<br/>
+기본값으로는 지정한 Swift 패키지 안의 Clang 모듈을 자동으로 찾아 Kotlin 코드에서 쓸 수 있게 합니다.<br/>
+자동 탐색을 끄려면 `discoverClangModulesImplicitly`를 `false`로 바꾸고, 제품 이름을 Clang 모듈 이름으로 씁니다.<br/>
+모듈 이름이 제품 이름과 다르면 `importedClangModules`로 직접 지정합니다.<br/>
+예를 들어 FirebaseFirestore의 Objective-C API는 `FirebaseFirestoreInternal` 모듈에 들어 있습니다.<br/>
+
+```kotlin
+kotlin {
+    swiftPMDependencies {
+        discoverClangModulesImplicitly = false
+        swiftPackage(
+            url = url("https://github.com/firebase/firebase-ios-sdk.git"),
+            version = from("12.5.0"),
+            products = listOf(
+                product("FirebaseAnalytics"),
+                product("FirebaseFirestore"),
+            ),
+            importedClangModules = listOf(
+                "FirebaseAnalytics",
+                "FirebaseFirestoreInternal",
+            ),
+        )
+    }
+}
+```
+
+#### 플랫폼 제한 두기
+
+일부 SwiftPM 의존성은 모든 타겟에서 빌드되지 않습니다.<br/>
+예를 들어 Google Maps SDK는 현재 iOS 타겟만 지원합니다.<br/>
+iOS만 타겟으로 한다면 따로 지정할 필요가 없지만, macOS 같은 타겟을 추가하면 제품마다 플랫폼을 지정해야 합니다.<br/>
+
+```kotlin
+kotlin {
+    iosArm64()
+    iosSimulatorArm64()
+    macosArm64()
+    swiftPMDependencies {
+        swiftPackage(
+            url = url("https://github.com/googlemaps/ios-maps-sdk.git"),
+            version = exact("10.3.0"),
+            products = listOf(
+                product(
+                    "GoogleMaps",
+                    platforms = setOf(iOS()),
+                ),
+            ),
+        )
+    }
+}
+```
+
+#### Xcode 프로젝트와 연결하기
+
+SwiftPM 의존성을 처음 추가하면 Xcode 프로젝트와 생성된 패키지를 연결해야 합니다.<br/>
+다음 Gradle 태스크를 실행하면 SwiftPM 패키지가 생성되고 Xcode 프로젝트가 함께 변경됩니다.<br/>
+
+```bash
+XCODEPROJ_PATH='/path/to/project/iosApp/iosApp.xcodeproj' ./gradlew :kotlin-library:integrateLinkagePackage
+```
+
+생성된 패키지와 변경된 Xcode 프로젝트는 저장소에 함께 커밋합니다.<br/>
+그 뒤로는 의존성 목록이나 버전이 바뀔 때마다 합성 패키지가 자동으로 갱신됩니다.<br/>
+
+#### Kotlin 코드에서 호출하기
+
+가져온 Objective-C API는 `swiftPMImport`로 시작하는 네임스페이스에 들어 있습니다.<br/>
+네임스페이스는 Gradle 그룹 이름과 프로젝트 이름을 이어서 만듭니다.<br/>
+`iosMain` 소스 세트에서 Firebase API를 쓰는 예시는 다음과 같습니다.<br/>
+
+```kotlin
+import swiftPMImport.groupName.subproject.FIRAnalytics
+import swiftPMImport.groupName.subproject.FIRApp
+
+fun logAppOpen() {
+    FIRApp.configure()
+    FIRAnalytics.logEventWithName("app_open", parameters = null)
+}
+```
+
+#### 버전 잠금 파일 관리하기
+
+SwiftPM import 도구는 의존성 버전을 고정하기 위해 `Package.resolved` 파일을 만듭니다.<br/>
+기본값으로는 모든 서브프로젝트의 잠금 파일이 `.swiftpm-locks/default/swiftImport` 안의 하나의 파일로 합쳐집니다.<br/>
+잠금 파일은 저장소에 커밋해 모든 빌드가 같은 버전을 쓰게 합니다.<br/>
+서브프로젝트별로 잠금 파일을 나누려면 `packageResolvedSynchronization`에 그룹 식별자를 지정합니다.<br/>
+잠금 파일을 강제로 갱신하려면 빌드 디렉터리와 기존 `Package.resolved` 파일을 지운 뒤 다음 태스크를 실행합니다.<br/>
+
+```bash
+./gradlew :yourModuleName:fetchSyntheticImportProjectPackages
+```
+
+#### 알고 있어야 할 제한 사항
+
+동적 Kotlin/Native 프레임워크를 만들 때는 SwiftPM import가 모든 경우를 지원하지 않습니다.<br/>
+빌드 오류나 런타임 경고가 나오면 프레임워크 연결 방식을 정적으로 바꾸는 것이 일반적인 해결 방법입니다.<br/>
+
+```kotlin
+kotlin {
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Shared"
+            isStatic = true
+        }
+    }
+}
+```
+
+### 실무 관점
+
+MTS 앱에 적용한다면, iOS 쪽에서만 쓰는 SDK부터 SwiftPM import로 옮겨 보는 것이 안전합니다.<br/>
+CocoaPods 의존성을 함께 쓰고 있다면, 두 방식이 같은 SDK를 중복으로 가져오지 않는지 먼저 확인해야 합니다.<br/>
+`Package.resolved` 잠금 파일과 생성된 패키지는 저장소에 커밋해 팀 빌드와 CI 빌드가 같은 버전을 쓰게 합니다.<br/>
+Kotlin 2.5.0-RC는 정식 출시 전 단계이므로, 프로덕션 적용보다 별도 브랜치에서의 검증이 먼저입니다.<br/>
+
+### 마치며
+
+SwiftPM import를 쓰면 Swift 패키지를 Gradle 빌드 스크립트에서 직접 선언해 KMP 모듈에서 쓸 수 있습니다.<br/>
+CocoaPods 설정과 `cinterop` 정의를 줄이고, 버전 잠금까지 Gradle 안에서 관리할 수 있게 됩니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/3o7abK7fD6NgYjK8u8/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
