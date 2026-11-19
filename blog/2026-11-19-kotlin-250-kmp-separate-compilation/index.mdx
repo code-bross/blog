@@ -1,0 +1,161 @@
+---
+slug: mts-kotlin-250-kmp-separate-compilation
+title: "Kotlin 2.5.0-RC의 KMP 분리 컴파일과 새 발행 형식 살펴보기"
+authors: [way]
+tags: [android, kotlin, kmp, multiplatform, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+11월 11일에 공개된 [Kotlin 2.5.0-RC](https://kotlinlang.org/docs/whatsnew-eap.html)의 KMP 변경 사항에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+Kotlin Multiplatform 프로젝트에서는 IDE 분석과 컴파일러의 판단이 어긋나는 경우가 있습니다.<br/>
+IDE에서는 빨간 줄이 그어지는 코드가 컴파일은 통과하거나, 반대로 IDE에서는 문제가 없어 보이는데 JVM 컴파일이 실패하기도 합니다.<br/>
+원인은 컴파일 방식에 있습니다.<br/>
+공통 코드가 컴파일될 때 의존성의 플랫폼 아티팩트를 함께 보기 때문입니다.<br/>
+Kotlin 2.5.0-RC는 이 문제를 해결하는 실험적인 분리 컴파일 방식을 도입했습니다.<br/>
+아울러 멀티플랫폼 라이브러리의 발행 형식을 새로 바꿔, 발행물 크기를 크게 줄였습니다.<br/>
+두 변경 사항 모두 아직 실험 단계이며, 기본값은 꺼져 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/yIQOWS8hWXeuVb1BsJ/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### KMP 분리 컴파일 살펴보기
+
+#### 기존 컴파일 방식의 문제
+
+KMP 모듈은 보통 `commonMain` 같은 공통 소스셋과 `jvmMain` 같은 플랫폼 소스셋으로 구성됩니다.<br/>
+컴파일러는 각 플랫폼 소스셋에 대한 플랫폼 아티팩트를 만들고, 공통 소스셋에 대한 메타데이터 KLIB를 만듭니다.<br/>
+메타데이터 KLIB에는 선언만 들어 있고 구현 본문은 들어 있지 않습니다.<br/>
+문제는 플랫폼 소스셋을 컴파일할 때 공통 코드까지 의존성의 플랫폼 아티팩트에 대해 함께 컴파일된다는 점입니다.<br/>
+그래서 `commonMain` 코드가 의존성 라이브러리의 플랫폼 전용 선언을 암묵적으로 참조할 수 있습니다.<br/>
+IntelliJ IDEA는 메타데이터 KLIB만 본다고 가정하므로, 같은 코드를 미해결 참조로 표시합니다.<br/>
+IDE에서는 빨간 줄인데 컴파일은 통과하는 어긋남이 여기서 생깁니다.<br/>
+`commonTest`도 같은 문제를 겪습니다.<br/>
+테스트 코드가 `jvmMain`의 플랫폼 선언을 호출하는데, IDE는 이를 미해결 참조로 표시합니다.<br/>
+
+```kotlin
+// lib/jvmMain
+class Foo
+
+// app/commonMain
+fun main() {
+    Foo() // IDE에서는 미해결 참조, 컴파일은 통과
+}
+```
+
+#### 오버로드와 타입 추론의 어긋남
+
+오버로드 선택에서도 IDE와 컴파일러가 다른 결론에 도달합니다.<br/>
+라이브러리의 `commonMain`과 `jvmMain`에 같은 이름의 함수가 여러 개 선언된 경우를 예로 들 수 있습니다.<br/>
+
+```kotlin
+// lib/commonMain
+fun foo(x: Any) = "common"
+
+// lib/jvmMain
+fun foo(x: String) = "platform"
+
+// app/commonMain
+fun main() {
+    println(foo(""))
+}
+```
+
+IDE는 `foo("")` 호출을 `lib/commonMain`의 `fun foo(x: Any)`로 해석합니다.<br/>
+공통 코드는 공통 선언에만 의존할 수 있다고 가정하기 때문입니다.<br/>
+그러나 실제 컴파일에서는 두 선언이 모두 보이고, 더 구체적인 `fun foo(x: String)`이 선택됩니다.<br/>
+실행 결과로 "platform"이 출력됩니다.<br/>
+타입 추론에서도 비슷한 문제가 생깁니다.<br/>
+`actual` 클래스가 `expect` 클래스와 다른 상위 타입을 선언하면, IDE는 `Event`로 추론하는데 JVM 컴파일은 `Any`로 추론해 `.name` 참조에서 실패할 수 있습니다.<br/>
+
+#### 분리 컴파일이 바꾸는 것
+
+분리 컴파일은 공통 소스셋을 컴파일할 때 메타데이터 KLIB의 선언만으로 엄격하게 해석합니다.<br/>
+IDE가 가정하던 방식과 컴파일러의 동작이 일치합니다.<br/>
+앞의 예제 코드는 분리 컴파일을 켜면 컴파일 오류가 됩니다.<br/>
+해결 방법은 명시적인 연결을 만드는 것입니다.<br/>
+라이브러리의 `commonMain`에 `expect class`를 선언하고, 플랫폼 쪽을 `actual class`로 만듭니다.<br/>
+
+```kotlin
+// lib/commonMain
+expect class Foo()
+
+// lib/jvmMain
+actual class Foo
+
+// app/commonMain
+fun main() {
+    Foo() // 정상 동작
+}
+```
+
+오버로드 예제에서는 호출이 `lib/commonMain`의 `fun foo(x: Any)`로 해석되어 실행 결과로 "common"이 출력됩니다.<br/>
+타입 추론 예제에서는 공통 코드가 이미 `Event` 반환 타입으로 추론된 상태로 JVM 컴파일이 별도로 진행되므로, 컴파일이 정상적으로 끝납니다.<br/>
+기존 코드 중에는 엄격해진 검사에 걸려 수정이 필요한 부분이 생길 수 있습니다.<br/>
+대신 공통 소스셋에 대한 증분 컴파일이 가능해진다는 부수적인 이득도 있습니다.<br/>
+
+#### 분리 컴파일 켜기
+
+분리 컴파일은 실험 기능이며 기본값은 꺼져 있습니다.<br/>
+`gradle.properties` 파일에 다음 속성을 추가하면 켤 수 있습니다.<br/>
+
+```properties
+kotlin.kmp.separateCompilation=true
+```
+
+알려진 문제도 있습니다.<br/>
+분리 컴파일이 제대로 동작하려면 멀티플랫폼 라이브러리가 메타데이터 KLIB을 발행해야 합니다.<br/>
+KMP Gradle 플러그인의 기본 발행 동작이므로 대부분은 해당하지 않지만, 이 조건이 이제는 필수입니다.<br/>
+C 상호 운용을 쓰는 프로젝트에서는 cinterop 공통화 관련 문제에 주의해야 합니다.<br/>
+공통 소스셋이 있고 선언된 타겟이 하나뿐인 모듈은 현재 분리 컴파일의 영향을 받지 않습니다.<br/>
+
+#### 새 발행 형식 `.kar`
+
+Kotlin 2.5.0-RC는 멀티플랫폼 라이브러리의 새 발행 형식도 도입했습니다.<br/>
+JVM과 Android을 제외한 플랫폼 아티팩트를 하나의 `.kar` 아카이브로 발행합니다.<br/>
+`.kar` 파일은 ZIP 아카이브를 XZ로 한 번 더 압축한 형태입니다.<br/>
+이 변경의 배경은 Maven Central에 최근 도입된 발행 크기 제한입니다.<br/>
+새 형식에서는 타겟을 추가해도 새 파일이 생기지 않으므로, 발행물 크기가 크게 늘지 않습니다.<br/>
+경우에 따라서는 기존의 단일 타겟 발행물보다 전체 크기가 작아지기도 합니다.<br/>
+공식 문서의 예시에서는 [cryptography-kotlin](https://github.com/KotlinCrypto/cryptography-kotlin) 라이브러리의 발행물이 7,539개 파일, 91MB에서 1,036개 파일, 23MB로 줄었습니다.<br/>
+모듈별로 켜려면 빌드 스크립트에 다음과 같이 설정합니다.<br/>
+
+```kotlin
+kotlin {
+    publishing {
+        publicationFormat.set(KotlinPublicationFormat.KOTLIN_ARCHIVE)
+    }
+}
+```
+
+프로젝트 전체에 적용하려면 `gradle.properties` 파일에 다음 속성을 추가합니다.<br/>
+
+```properties
+kotlin.publicationFormat=KOTLIN_ARCHIVE
+```
+
+새 형식으로 발행하는 기능은 아직 실험 단계입니다.<br/>
+다만 `.kar` 형식의 아티팩트를 소비하는 기능은 모든 프로젝트에서 이미 사용할 수 있습니다.<br/>
+이 변경 사항은 라이브러리 작성자에게만 해당하며, 최종 애플리케이션 개발자에게는 영향을 주지 않습니다.<br/>
+
+### 실무 관점
+
+국내 MTS 프로젝트에 적용한다면, 분리 컴파일은 먼저 켜서 컴파일해 보는 것부터 시작하는 것이 좋습니다.<br/>
+기존 코드가 플랫폼 선언에 암묵적으로 의존하고 있었다면, 켜는 즉시 컴파일 오류로 드러납니다.<br/>
+이 오류는 숨어 있던 의존성을 명시적인 `expect`와 `actual` 선언으로 바꾸라는 신호입니다.<br/>
+KMP 라이브러리를 직접 발행한다면 `.kar` 형식도 검토할 만합니다.<br/>
+타겟이 늘어날수록 발행물 크기가 커지는 부담이 줄기 때문입니다.<br/>
+다만 발행 기능이 실험 단계이므로, 발행 파이프라인은 별도로 검증한 뒤에 적용하는 것이 안전합니다.<br/>
+두 기능 모두 실험 단계라는 점을 감안해, 정식 출시 전까지는 운영 빌드에 바로 적용하기보다 평가용으로 써 보는 것이 좋습니다.<br/>
+
+### 마치며
+
+분리 컴파일은 IDE와 컴파일러의 판단을 일치시켜 KMP 개발을 예측 가능하게 만듭니다.<br/>
+새 발행 형식은 라이브러리 발행물의 크기를 크게 줄여줍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/QbLprdtvsXPKjF0Ctd/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

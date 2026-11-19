@@ -1,0 +1,197 @@
+---
+slug: mts-compose-113-stable-migration
+title: "Compose 1.13 정식 출시 살펴보기 — Material 2 종료와 상태 기반 텍스트 필드로의 이전"
+authors: [way]
+tags: [android, compose, material3, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+11월 18일에 정식 출시된 [Compose 1.13](https://developer.android.com/blog/posts/jetpack-compose-november-2026-release)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+[Compose 1.13](https://developer.android.com/jetpack/androidx/releases/compose-ui)은 핵심 Compose 모듈 전체를 1.13.0으로 올리는 정식 릴리스입니다.<br/>
+업데이트는 [Compose BOM 2026.11.01](https://developer.android.com/jetpack/compose/bom/bom-mapping)로 적용합니다.<br/>
+이번 업그레이드에는 Kotlin 2.2 이상과 `compileSdk 37.1`이 필요합니다.<br/>
+새 기능도 많지만, 이번 릴리스에서 더 중요한 부분은 종료되는 API입니다.<br/>
+[Material 2](https://developer.android.com/jetpack/androidx/releases/compose-material)와 값 기반 텍스트 필드, Compose용 [ConstraintLayout](https://developer.android.com/jetpack/androidx/releases/constraintlayout)이 공식적으로 deprecated 되었습니다.<br/>
+버전만 올리는 업데이트가 아니라, 마이그레이션 계획을 세워야 하는 릴리스입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/m5gJsxxaHbmPRqXFNY/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Compose 1.13 살펴보기
+
+#### 프로그레시브 블러
+
+Compose 1.13에는 선명함에서 흐림으로 서서히 전환되는 프로그레시브 블러가 들어왔습니다.<br/>
+`Modifier.blur`의 람다 형태와 `BlurRadiusSpec`을 사용합니다.<br/>
+선형 그라데이션과 방사형 그라데이션, 커스텀 AGSL 셰이더를 이용한 블러 맵을 지정할 수 있습니다.<br/>
+헤더 이미지 하단을 배경에 녹이거나, 터치 위치를 따라 초점을 이동시키는 효과를 구현할 수 있습니다.<br/>
+
+```kotlin
+Modifier.blur {
+    blurRadiusSpec = BlurRadiusSpec.linearGradient(
+        start = DpOffset.Zero,
+        end = DpOffset(size.width, size.height),
+        stops = listOf(
+            BlurStop(fraction = 0f, radius = 0.dp),
+            BlurStop(fraction = 0.5f, radius = 0.dp),
+            BlurStop(fraction = 0.75f, radius = 14.dp),
+            BlurStop(fraction = 1f, radius = 28.dp),
+        ),
+    )
+}
+```
+
+`DialogProperties`와 `PopupProperties`에는 배경 블러 반경과 스크림 투명도를 직접 지정할 수 있게 되었습니다.<br/>
+시스템의 창 간 블러 활성화 여부는 `WindowInfo.isCrossWindowBlurEnabled`로 조회합니다.<br/>
+
+#### 폴리곤 셰이프와 모핑
+
+`PolygonShape`과 `MorphPolygonShape`이 `androidx.compose.foundation`에 추가되었습니다.<br/>
+기존에는 별이나 둥근 다각형을 쓰려면 `graphics-shapes` 의존성을 직접 추가하고 `RoundedPolygon`을 `Path`로 변환한 뒤 `Shape`을 직접 구현해야 했습니다.<br/>
+`PolygonShape`은 일반 Compose `Shape`이라 `Modifier.clip`이나 컴포넌트의 shape 파라미터에 그대로 쓸 수 있습니다.<br/>
+`MorphPolygonShape`은 리컴포지션 없이 진행률 람다를 읽어 두 도형 사이를 애니메이션합니다.<br/>
+
+```kotlin
+var recording by remember { mutableStateOf(false) }
+val progress by animateFloatAsState(if (recording) 1f else 0f)
+val shape = remember {
+    MorphPolygonShape(
+        start = PolygonShape.circle(),
+        end = PolygonShape.star(
+            numPoints = 9,
+            innerRadiusRatio = 0.8f,
+            outerRounding = CornerRounding.fraction(0.5f),
+        ),
+        progress = { progress },
+    )
+}
+
+Box(
+    Modifier
+        .size(96.dp)
+        .clip(shape)
+        .background(MaterialTheme.colorScheme.primary)
+        .clickable { recording = !recording }
+)
+```
+
+#### Material 3 1.5.0과 Material 2 종료
+
+[Material 3 1.5.0](https://developer.android.com/jetpack/androidx/releases/compose-material3)도 함께 정식 출시되었습니다.<br/>
+`Slider`와 `RangeSlider`가 `SliderState` 기반의 상태 모델로 바뀌었습니다.<br/>
+`ToggleButtons`와 물결 모양 프로그레스 인디케이터, 타임 피커 같은 익스프레시브 컴포넌트가 추가되었습니다.<br/>
+실험 API 표기는 120개에서 58개로 줄었고, 대부분의 익스프레시브 컴포넌트가 정식으로 승격되었습니다.<br/>
+Material 3가 나온 지 6년째가 되는 이번 릴리스에서 Compose Material 2는 deprecated 되었고, 더 이상 적극적으로 유지보수되지 않습니다.<br/>
+Material 2를 쓰고 있다면 Material 3로의 이전을 계획해야 합니다.<br/>
+
+#### 상태 기반 텍스트 필드로의 이전
+
+값 기반 `BasicTextField`와 Material 2 `TextField`가 공식적으로 deprecated 되었습니다.<br/>
+대신 `TextFieldState` 기반의 상태 기반 `BasicTextField`를 사용합니다.<br/>
+Material 3의 값 기반 `TextField` 오버로드는 1.5.0에서 아직 deprecated 되지 않았지만, 공식 문서는 상태 기반 오버로드로의 이전을 권장합니다.<br/>
+`TextFieldState`는 서식이 적용된 스타일의 저장과 복원을 기본으로 지원합니다.<br/>
+동기식 상태 모델과 성능 개선이 장점입니다.<br/>
+`VisualTransformation`도 이번 릴리스에서 deprecated 되었고, `InputTransformation`과 `OutputTransformation`이 그 자리를 대신합니다.<br/>
+
+```kotlin
+val textFieldState = rememberTextFieldState()
+
+BasicTextField(
+    state = textFieldState,
+    modifier = Modifier.fillMaxWidth(),
+)
+```
+
+#### `computedStateOf`
+
+런타임 1.13.0에는 `computedStateOf`라는 새로운 상태 계산 API가 들어왔습니다.<br/>
+`derivedStateOf`의 가벼운 대안으로, 스크롤 위치나 애니메이션 임계값처럼 자주 바뀌는 상태에서 조건 검사나 필터링 결과를 계산할 때 사용합니다.<br/>
+`DerivedState`는 계산 결과를 캐시하지만, `ComputedState`는 값을 읽을 때마다 계산을 다시 수행합니다.<br/>
+계산이 무겁지 않다면 `derivedStateOf`보다 오버헤드가 적습니다.<br/>
+두 API 모두 입력 상태가 바뀔 때가 아니라 계산 결과가 바뀔 때만 컴포지션을 무효화합니다.<br/>
+무거운 계산이나 캐시가 필요한 경우에만 `derivedStateOf`를 쓰고, 그 외에는 `computedStateOf`를 쓰는 것이 권장됩니다.<br/>
+
+```kotlin
+val listState = rememberLazyListState()
+val showTopBar by remember {
+    computedStateOf { listState.firstVisibleItemIndex > 0 }
+}
+```
+
+#### `CapturedAnimatedVisibility`
+
+`AnimatedVisibility`는 종료 애니메이션이 끝날 때까지 나가는 콘텐츠와 상태를 유지해야 합니다.<br/>
+상세 화면을 닫으면서 선택 항목을 `null`로 지우면, 보여줄 내용이 없어 깜빡이거나 빈 화면이 나타납니다.<br/>
+Compose 1.13의 `CapturedAnimatedVisibility`는 `visible`이 `false`가 되는 순간의 마지막 프레임을 스냅샷으로 캡처해 애니메이션합니다.<br/>
+호출하는 쪽에서 상태를 즉시 지워도 종료 애니메이션은 화면에 남아 있던 모습 그대로 진행됩니다.<br/>
+공식 벤치마크에서는 종료 시 프레임 시간이 `AnimatedVisibility`보다 7~8% 빠릅니다.<br/>
+나가는 콘텐츠가 계속 살아 있어야 하거나 자식에 `Modifier.animateEnterExit`을 써야 할 때는 기존 `AnimatedVisibility`를 씁니다.<br/>
+
+```kotlin
+@Composable
+fun TrackDetails(track: Track?) {
+    CapturedAnimatedVisibility(
+        visible = track != null,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut(tween(800)) + shrinkVertically(tween(800)),
+    ) {
+        if (track != null) {
+            TrackCard(track)
+        }
+    }
+}
+```
+
+#### 테스트 실패 진단
+
+UI 테스트가 실패한 순간의 화면 상태와 시맨틱 계층을 확인하는 기능이 Compose 1.13에 들어왔습니다.<br/>
+`ComposeUiTestConfig`의 `TestFailurePolicy`로 실패 시 스크린샷과 UI 계층 구조를 자동으로 저장할 수 있습니다.<br/>
+`TestFailureHandler`를 등록하면 실패 맥락과 생성된 아티팩트를 받아 외부 리포팅 도구로 전달할 수도 있습니다.<br/>
+`build.gradle.kts`의 `testInstrumentationRunnerArguments`로 테스트 스위트 전체에 캡처를 켤 수도 있습니다.<br/>
+
+```kotlin
+val customConfig = ComposeUiTestConfig(
+    failurePolicy = TestFailurePolicy(
+        screenshotCaptureMode = TestFailurePolicy.CaptureMode.Enabled,
+        uiHierarchyCaptureMode = TestFailurePolicy.CaptureMode.Enabled,
+    )
+)
+
+@Test
+fun myTest() = runComposeUiTest(config = customConfig) {
+    // 테스트 내용
+}
+```
+
+#### 레이아웃과 동작 변경
+
+1.11.0에서 실험 API로 들어온 `FlexBox`와 `Grid`가 정식으로 승격되었습니다.<br/>
+`FlexBox`에는 한 줄에 들어가는 항목 수를 제한하는 `maxItemsInEachLine` 설정이 추가되었습니다.<br/>
+`FlowRow`와 `FlowColumn` 대신 새 코드에는 `FlexBox`를 쓰는 것이 권장됩니다.<br/>
+반대로 Compose용 `ConstraintLayout`과 `MotionLayout`은 deprecated 되었습니다.<br/>
+공유 요소 API 등 새로운 대안이 마련되었기 때문입니다.<br/>
+`Modifier.onFocusedBoundsChanged`는 1.12에서 deprecated 된 뒤 1.13에서 구현이 제거되어 더 이상 동작하지 않습니다.<br/>
+포커스된 요소의 영역이 필요하다면 `FocusTargetModifierNode.getFocusedRect()`를 사용합니다.<br/>
+`Modifier.clickable`로 만든 클릭 요소는 이제 시스템 사운드 설정에 따라 표준 상호작용 효과음을 자동으로 재생합니다.<br/>
+
+### 실무 관점
+
+국내 MTS 프로젝트에 적용한다면, 버전 업데이트와 마이그레이션을 분리해서 계획하는 것이 좋습니다.<br/>
+BOM을 2026.11.01로 올리고 빌드가 통과하는지 먼저 확인합니다.<br/>
+그 다음 Material 2 사용처와 값 기반 텍스트 필드, Compose용 `ConstraintLayout` 사용처를 목록으로 뽑습니다.<br/>
+`TextFieldState` 기반 필드는 입력 처리와 서식 저장 방식이 달라지므로, 입력 화면부터 단계적으로 옮기는 것이 안전합니다.<br/>
+`computedStateOf`는 스크롤 위치에 따라 앱바를 보이거나 숨기는 것처럼 자주 바뀌는 상태를 다루는 곳부터 적용해 볼 수 있습니다.<br/>
+`TestFailurePolicy`는 CI에서 실패 원인을 찾는 시간을 줄여주므로, UI 테스트가 있는 모듈에 먼저 적용하는 것이 좋습니다.<br/>
+
+### 마치며
+
+Compose 1.13은 새 기능보다 종료되는 API가 더 중요한 릴리스입니다.<br/>
+프로그레시브 블러와 상태 기반 텍스트 필드, `computedStateOf` 같은 새 기능은 단계적으로 적용하면 됩니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
