@@ -1,0 +1,92 @@
+---
+slug: kotlin-toolchain-014
+title: Kotlin Toolchain 0.14 살펴보기 — TestFlight 게시와 에이전트 스킬
+authors: [way]
+tags: [kotlin, kmp, kotlin-toolchain, testflight, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 18일에 공개된 [Kotlin Toolchain 0.14](https://blog.jetbrains.com/kotlin/2026/11/kotlin-toolchain-0-14-agentic-development-and-ios-publishing/)에 대해 설명해드리겠습니다.<br/>
+이번 릴리스는 TestFlight 게시와 에이전트 워크플로 개선이 중심입니다.<br/>
+
+### 배경
+
+Kotlin Multiplatform으로 iOS 앱을 만들면, 게시 단계에서 Xcode와 서명 설정을 따로 다뤄야 합니다.<br/>
+Android 개발자가 iOS 게시를 처음 맡으면 App Store Connect와 서명 절차에서 시간을 쓰게 됩니다.<br/>
+Kotlin Toolchain은 환경 설정부터 빌드와 테스트, 발행까지 한 곳에서 처리하는 단일 CLI입니다.<br/>
+0.14에서는 TestFlight 게시 흐름이 쉬워졌고, 에이전트 워크플로와 Android desugaring, 의존성 해석도 함께 개선됐습니다.<br/>
+최신 기능을 IDE에서 쓰려면 IntelliJ IDEA 2026.2.4 이후 버전이나 Android Studio Rabbit 1 | 2026.2.1 이후 버전에 최신 Kotlin Toolchain 플러그인을 설치해야 합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/m5gJsxxaHbmPRqXFNY/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Kotlin Toolchain 0.14 살펴보기
+
+#### `kotlin publish testflight`로 TestFlight 게시하기
+
+0.14에는 TestFlight 게시를 안내하는 쉬운 게시 흐름이 들어왔습니다.<br/>
+다음 명령 하나가 게시를 위해 필요한 대부분의 설정과 단계를 안내합니다.<br/>
+
+```bash
+kotlin publish testflight
+```
+
+명령은 App Store Connect 액세스 토큰을 요청합니다.<br/>
+토큰을 만들려면 Apple Developer Program 멤버십이 필요합니다.<br/>
+Xcode 프로젝트에 접근해 수동 서명으로 게시를 설정하는 방법도 그대로 남아 있습니다.<br/>
+자세한 게시 절차는 [iOS 애플리케이션 게시 문서](https://kotlin-toolchain.org/0.14/user-guide/publishing/ios-application/)에서 확인할 수 있습니다.<br/>
+
+#### 에이전트 스킬로 토큰 사용량 줄이기
+
+Kotlin Toolchain 스킬이 Kotlin 에이전트 스킬 컬렉션의 일부로 추가됐습니다.<br/>
+CLI 마법사가 프로젝트에 `AGENTS.md` 같은 관련 파일을 만들어 에이전트를 구성하도록 돕습니다.<br/>
+이 파일들은 프로젝트 구조와 빌드, 테스트, 일반적인 문제 해결에 대한 권장 사항을 담고 있습니다.<br/>
+스킬은 다음 명령으로 추가합니다.<br/>
+
+```bash
+npx skills add kotlin/kotlin-agent-skills
+```
+
+JetBrains의 AI 평가에서는 이 스킬을 쓰면 Kotlin Toolchain 기반 프로젝트를 다루는 토큰 사용량이 줄어드는 것으로 나타났습니다.<br/>
+에이전트에게 프로젝트 규칙을 매번 설명하지 않아도 되는 점이 실무에서 가장 크게 체감됩니다.<br/>
+
+#### Android Java 8+ API desugaring 네이티브 지원
+
+Android의 core library desugaring이 이제 Toolchain에서 네이티브로 지원됩니다.<br/>
+`module.yaml`에 다음 한 줄을 추가하면 켜집니다.<br/>
+
+```yaml
+desugaring: enabled
+```
+
+desugaring 라이브러리 자체는 `library` 옵션으로 재정의할 수 있습니다.<br/>
+Gradle 프로젝트에서 쓰던 core library desugaring 설정을 Toolchain에서도 한 줄로 옮길 수 있게 됐습니다.<br/>
+자세한 설정 항목은 공식 문서의 settings reference에서 확인할 수 있습니다.<br/>
+
+#### 의존성 해석 속도와 IDE 개선
+
+캐시 없이 Kotlin Toolchain 프로젝트를 처음 가져오는 import가 벤치마크 기준 3배 이상 빨라졌습니다.<br/>
+업데이트된 해석기는 저장소에 대한 불필요한 요청을 줄이고, 더 많은 의존성을 병렬로 내려받습니다.<br/>
+내려받은 파일이 모두 유효한지 확인하는 절차는 그대로 유지됩니다.<br/>
+모듈에 템플릿을 적용하는 과정에서 생긴 오류나 경고는 이제 IDE가 모듈의 일부로 표시합니다.<br/>
+템플릿 문제는 적용 시에만 드러나는 경우도 있는데, 이때는 템플릿에 오류 아이콘이 표시되고 아이콘을 클릭하면 별도 대화 상자에서 세부 내용을 볼 수 있습니다.<br/>
+Toolchain이 내려받는 외부 도구의 다운로드 위치는 모두 문서화됐고, 환경 변수로 재정의할 수 있습니다.<br/>
+내부 미러나 프록시로 다운로드를 라우팅하거나, Maven Central 속도 제한을 피하거나, 다운로드를 특정 신뢰 소스에 고정할 때 유용합니다.<br/>
+
+### 실무 관점
+
+MTS는 Android 중심 프로젝트라 TestFlight 게시가 당장 쓰이는 흐름은 아닙니다.<br/>
+다만 KMP로 iOS를 함께 다루는 팀이라면, 게시 단계가 CLI 하나로 줄어드는 점이 도입을 검토할 만한 변화입니다.<br/>
+에이전트 스킬은 기존 프로젝트에도 바로 붙일 수 있어, 에이전트와 함께 작업하는 팀이라면 먼저 시도해 볼 만합니다.<br/>
+desugaring 한 줄 설정은 Android 모듈을 Toolchain으로 옮길 때 Gradle 설정을 그대로 가져오는 부담을 줄여줍니다.<br/>
+아직 0.x 버전이라, 기존 Gradle 프로젝트의 이주는 서두르지 않고 새 프로젝트나 실험용 모듈에서 먼저 확인하는 편이 안전합니다.<br/>
+
+### 마치며
+
+Kotlin Toolchain 0.14는 iOS 게시와 에이전트 워크플로를 한 단계 실무에 가깝게 만들었습니다.<br/>
+새 KMP 프로젝트를 시작한다면 TestFlight 게시와 에이전트 스킬부터 먼저 확인해 보시길 권합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/A1UrCmBz9AQbA2SvNG/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

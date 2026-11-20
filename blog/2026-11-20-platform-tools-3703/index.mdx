@@ -1,0 +1,98 @@
+---
+slug: platform-tools-3703
+title: SDK Platform Tools 37.0.3 살펴보기 — QR 무선 페어링과 adb install 변경
+authors: [way]
+tags: [android, adb, platform-tools, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월에 공개된 [SDK Platform Tools 37.0.3](https://developer.android.com/tools/releases/platform-tools)에 대해 설명해드리겠습니다.<br/>
+이번 릴리스는 무선 페어링 개선과 adb 설치 명령 변경이 중심입니다.<br/>
+
+### 배경
+
+adb와 fastboot은 매일 쓰는 도구지만, Platform Tools 업데이트는 조용히 지나가기 쉽습니다.<br/>
+SDK Manager가 자동으로 올려주는 경우도 많아, 무엇이 바뀌었는지 모르고 넘어가는 일이 잦습니다.<br/>
+37.0.3은 무선 디버깅 페어링과 앱 설치 명령, USB 백엔드에서 실무에 바로 닿는 변화가 있습니다.<br/>
+버전 번호는 작아 보여도, 스크립트와 디버깅 습관에 영향을 주는 항목이 들어 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/QbLprdtvsXPKjF0Ctd/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### SDK Platform Tools 37.0.3 살펴보기
+
+#### 터미널 QR 코드로 무선 페어링하기
+
+무선 디버깅 페어링이 터미널에서 QR 코드로 할 수 있게 됐습니다.<br/>
+다음 명령을 실행하면 터미널에 QR 코드가 표시됩니다.<br/>
+
+```bash
+adb pair --qr
+```
+
+기존에는 단말에 표시되는 페어링 코드를 터미널에 직접 입력해야 했습니다.<br/>
+QR 코드 방식은 공용 테스트 단말이나 여러 명이 함께 쓰는 단말을 연결할 때 특히 편합니다.<br/>
+코드를 외워서 입력하는 과정이 사라져 페어링 실수도 줄어듭니다.<br/>
+
+#### `adb install --fastdeploy` 폐기와 `android install`
+
+`adb install --fastdeploy` 옵션이 폐기됐습니다.<br/>
+대신 `android install` 명령을 쓰도록 안내하고 있습니다.<br/>
+
+```bash
+android install app-debug.apk
+```
+
+Fast Deploy는 당분간 다음 플래그로 계속 쓸 수 있습니다.<br/>
+
+```bash
+adb install --deprecated-fastdeploy app-debug.apk
+```
+
+다만 이후 릴리스에서는 제거될 예정입니다.<br/>
+빠른 설치를 스크립트나 별칭에 넣어 쓰고 있다면, 지금부터 `android install`로 바꿔 두는 편이 안전합니다.<br/>
+
+#### `libadbusb`로 바뀌는 USB 백엔드
+
+Linux와 macOS에서 `libadbusb` 라이브러리가 기존 USB 백엔드를 대체합니다.<br/>
+Linux에서는 USB 버스를 주기적으로 폴링하는 방식으로 바뀌었고, 기본 간격은 1000밀리초입니다.<br/>
+간격은 다음 환경 변수로 바꿀 수 있습니다.<br/>
+
+```bash
+export ADB_USB_LINUX_POLL_INTERVAL_MS=500
+```
+
+이 변경은 제자리 USB 리셋 뒤나 `start-server` 명령이 동시에 실행될 때 단말을 놓치는 문제를 피하기 위한 것입니다.<br/>
+기존 백엔드로 되돌리려면 다음 환경 변수를 1로 설정하면 됩니다.<br/>
+
+```bash
+export ADB_USB_LEGACY=1
+```
+
+macOS에서도 같은 환경 변수로 `libadbusb`를 끌 수 있습니다.<br/>
+참고로 Linux에서는 36.0.2부터 불안정 보고 때문에 기존 백엔드가 기본값이었던 만큼, 이번 교체가 실제 단말 연결에서 어떻게 동작하는지는 업데이트 뒤에 직접 확인하는 편이 좋습니다.<br/>
+
+#### 로그 스팸 축소와 `adb sync` 확장
+
+고빈도 데이터 플레인 로그가 verbose 수준으로 내려가 디버그 로그 양이 줄었습니다.<br/>
+예를 들어 `usb:v, transport:v` 수준의 읽기와 쓰기 로그가 대상입니다.<br/>
+로그 파일이 커져서 디버깅이 불편했던 환경에서는 체감이 될 수 있습니다.<br/>
+`adb sync` 명령은 `system_dlkm`과 `vendor_dlkm`, `odm_dlkm` 파티션 동기화를 지원하게 됐습니다.<br/>
+macOS에서는 Apple Silicon M6에서 발생한 adb 서버 충돌과, AMFI를 끈 상태에서 USB 단말을 연결할 때 생기던 충돌도 수정됐습니다.<br/>
+
+### 실무 관점
+
+Platform Tools는 Android Studio의 SDK Manager나 `sdkmanager` 명령으로 업데이트하면 됩니다.<br/>
+업데이트 뒤에는 CI나 로컬 스크립트에서 `--fastdeploy`를 쓰고 있는지 먼저 확인하는 편이 좋습니다.<br/>
+무선 페어링은 QR 코드 방식으로 바뀌어도 기존 페어링 코드 방식이 사라진 것은 아니니, 단말이 QR을 표시하지 못하면 기존 방법을 쓰면 됩니다.<br/>
+Linux 개발 머신에서 단말이 간헐적으로 사라지던 팀이라면, `libadbusb` 전환 뒤에 연결이 안정적인지 며칠 지켜보는 편이 좋습니다.<br/>
+
+### 마치며
+
+SDK Platform Tools 37.0.3은 작은 버전 올림이지만 매일 쓰는 adb 습관을 직접 바꿉니다.<br/>
+업데이트 뒤에는 빠른 설치 스크립트와 무선 페어링 방법부터 먼저 점검해 보시길 권합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/B4QrtaR2ysnNEOvqPr/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
