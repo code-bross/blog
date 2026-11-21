@@ -1,0 +1,1412 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="rss.xsl"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Way Tech Blog Blog</title>
+        <link>https://code-bross.github.io/blog/en/finance</link>
+        <description>Way Tech Blog Blog</description>
+        <lastBuildDate>Sat, 21 Nov 2026 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[ISA 계좌, 연 2,000만 원 한도와 비과세 200만 원을 정리합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide</guid>
+            <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+연말이 다가오면서 세금 혜택이 있는 계좌를 점검하는 분들이 늘고 있습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>ISA는 개인종합자산관리계좌의 줄임말로, 예금과 펀드, 상장지수펀드(ETF), 국내 주식 등을 한 계좌에 담고 이익에 세금 혜택을 받는 계좌입니다.<br>
+계좌를 닫을 때 계좌 안에서 생긴 이자와 배당 등 이익에서 손실을 뺀 순이익을 한꺼번에 따져 세금을 깎아줍니다.<br>
+납입 한도는 연 2,000만 원, 가입 기간 전체 1억 원입니다.<br>
+3년 이상 유지하면 순이익 200만 원까지 비과세 혜택을 받을 수 있습니다.<br>
+서민형과 농어민형은 비과세 한도가 400만 원으로 두 배입니다.<br>
+연말 절세 계좌를 정리할 때 ISA는 연금저축과 함께 먼저 확인하는 계좌입니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWRvazM3NTZ0M2FrNzVzaWJ1MHc1dHZ3bjRrcjBlNGVjNW82dGhmNCZlcD12MV9jaGFubmVsc19zZWFyY2gmY3Q9Zw/sbcReb1vKHfqmFOdzR/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="누가-가입할-수-있고-얼마까지-넣을-수-있습니까">누가 가입할 수 있고, 얼마까지 넣을 수 있습니까<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide#%EB%88%84%EA%B0%80-%EA%B0%80%EC%9E%85%ED%95%A0-%EC%88%98-%EC%9E%88%EA%B3%A0-%EC%96%BC%EB%A7%88%EA%B9%8C%EC%A7%80-%EB%84%A3%EC%9D%84-%EC%88%98-%EC%9E%88%EC%8A%B5%EB%8B%88%EA%B9%8C" class="hash-link" aria-label="Direct link to 누가 가입할 수 있고, 얼마까지 넣을 수 있습니까" title="Direct link to 누가 가입할 수 있고, 얼마까지 넣을 수 있습니까" translate="no">​</a></h4>
+<p>ISA는 가입일 기준 19세 이상인 거주자가 1인 1계좌로 만들 수 있습니다.<br>
+근로소득이 있으면 15세 이상도 가입할 수 있습니다.<br>
+직전 3년 중 금융소득종합과세 대상이었던 사람은 가입할 수 없습니다.<br>
+금융소득종합과세 대상은 한 해 이자·배당소득 합계가 2,000만 원을 넘은 사람입니다.<br>
+납입 한도는 연 2,000만 원, 총 1억 원입니다.<br>
+그해 못 넣은 한도는 다음 해로 넘어가 가입 후 최대 4년 치까지 합산할 수 있습니다.<br>
+연간 납입 한도는 2,000만 원에 가입 후 지난 햇수를 곱한 뒤 누적 납입액을 빼는 방식으로 계산합니다.<br>
+예를 들어 가입 3년 차에 아직 한 푼도 넣지 않았다면, 그해에는 최대 8,000만 원까지 넣을 수 있습니다.<br>
+단, 총한도 1억 원을 넘는 납입은 할 수 없습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="비과세-한도와-세금-계산">비과세 한도와 세금 계산<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide#%EB%B9%84%EA%B3%BC%EC%84%B8-%ED%95%9C%EB%8F%84%EC%99%80-%EC%84%B8%EA%B8%88-%EA%B3%84%EC%82%B0" class="hash-link" aria-label="Direct link to 비과세 한도와 세금 계산" title="Direct link to 비과세 한도와 세금 계산" translate="no">​</a></h4>
+<table><thead><tr><th>구분</th><th>조건</th><th>비과세 한도</th></tr></thead><tbody><tr><td>일반형</td><td>가입 자격만 충족</td><td>200만 원</td></tr><tr><td>서민형</td><td>총급여 5,000만 원 이하 등</td><td>400만 원</td></tr><tr><td>농어민형</td><td>종합소득금액 3,800만 원 이하</td><td>400만 원</td></tr></tbody></table>
+<p>서민형은 직전 과세기간 총급여가 5,000만 원 이하이거나, 종합소득금액이 3,800만 원 이하이면서 총급여가 5,000만 원 이하인 사람입니다.<br>
+비과세 한도를 넘는 순이익에는 9%가 매겨지고, 지방소득세까지 더하면 9.9%입니다.<br>
+일반 계좌의 이자·배당소득 원천징수 세율 15.4%보다 낮고, 금융소득종합과세에도 들어가지 않습니다.<br>
+계산 예시를 들어보겠습니다.<br>
+3년간 배당과 이자로 순이익 600만 원을 벌었다고 가정합니다.<br></p>
+<table><thead><tr><th>구분</th><th>과세 대상</th><th>세금</th></tr></thead><tbody><tr><td>일반 계좌</td><td>600만 원</td><td>600만 원 × 15.4% = 약 92만 원</td></tr><tr><td>일반형 ISA</td><td>600만 원 - 200만 원 = 400만 원</td><td>400만 원 × 9.9% = 약 40만 원</td></tr><tr><td>서민형 ISA</td><td>600만 원 - 400만 원 = 200만 원</td><td>200만 원 × 9.9% = 약 20만 원</td></tr></tbody></table>
+<p>같은 순이익 600만 원이라도 일반형 ISA는 일반 계좌보다 약 52만 원, 서민형 ISA는 약 72만 원 세금을 덜 냅니다.<br>
+단, 이 계산은 이자·배당소득을 가정한 것이며, 국내 주식 매매차익은 원래 비과세이므로 ISA의 손익통산 구조 안에서 함께 계산됩니다.<br>
+손실이 나면 이익에서 차감해 순이익을 줄이는 손익통산이 적용됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="세-가지-유형과-만기-이후의-선택">세 가지 유형과 만기 이후의 선택<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide#%EC%84%B8-%EA%B0%80%EC%A7%80-%EC%9C%A0%ED%98%95%EA%B3%BC-%EB%A7%8C%EA%B8%B0-%EC%9D%B4%ED%9B%84%EC%9D%98-%EC%84%A0%ED%83%9D" class="hash-link" aria-label="Direct link to 세 가지 유형과 만기 이후의 선택" title="Direct link to 세 가지 유형과 만기 이후의 선택" translate="no">​</a></h4>
+<p>ISA는 운용 방식에 따라 중개형, 신탁형, 일임형으로 나뉩니다.<br>
+중개형은 가입자가 직접 국내 주식과 ETF, 펀드 등을 고르는 방식입니다.<br>
+신탁형은 가입자가 상품을 지시하고 금융회사가 신탁으로 운용하는 방식입니다.<br>
+일임형은 금융회사가 정해진 모델 포트폴리오 안에서 운용하는 방식입니다.<br>
+세 유형 모두 연간 납입 한도와 비과세 한도는 같습니다.<br>
+세제 혜택을 받으려면 3년 이상 유지해야 합니다.<br>
+3년이 지나기 전에 해지하면 비과세 혜택을 받지 못하고 일반 과세가 적용될 수 있습니다.<br>
+만기가 되면 자금을 연금계좌로 옮기는 선택도 있습니다.<br>
+만기 자금을 60일 안에 연금계좌로 이전하면 추가 세액공제를 받을 수 있습니다.<br>
+자세한 제도 내용은 <a href="https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EC%A1%B0%EC%84%B8%ED%8A%B9%EB%A1%80%EC%A0%9C%ED%95%9C%EB%B2%95" target="_blank" rel="noopener noreferrer" class="">조세특례제한법 제91조의18</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>ISA는 절세 계좌이지 수익을 보장하는 상품이 아닙니다.<br>
+계좌 안에서 어떤 상품을 담느냐에 따라 수익과 손실이 모두 달라집니다.<br>
+3년 의무 유지 기간이 있으므로, 단기간에 쓸 돈은 넣지 않는 것이 좋습니다.<br>
+비과세 한도는 계좌 전체 순이익 기준이므로, 계좌를 닫기 전에 손익을 합산해 보는 것이 도움이 됩니다.<br>
+2026년 8월 정부가 발표한 세제개편안의 생산적 금융 ISA는 아직 국회에서 확정되지 않은 정부안입니다.<br>
+현행 한도와 비과세 금액은 바뀌지 않았으니, 개편 소식은 법 통과 여부를 확인한 뒤에 반영하는 것이 바람직합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-isa-account-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>ISA는 연 2,000만 원까지 넣고 3년 이상 유지하면 순이익 200만 원까지 비과세되는 계좌입니다.<br>
+가입 조건과 한도, 세금 계산 방식을 먼저 확인하면 연말 절세 계좌를 정리하는 기준이 됩니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzB1NzVlMjU3bDlvbHExMmNuN3Flc2xnZnE3NG9sYms0cDl1M2trNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1ppudqsvJAWPa63iLU/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>ISA</category>
+            <category>절세</category>
+            <category>개인재무</category>
+            <category>연금</category>
+        </item>
+        <item>
+            <title><![CDATA[검은 금요일로 끝난 한 주, 코스피 주간 7.9% 하락을 정리합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21</guid>
+            <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+2026년 11월 셋째 주 국내 증시는 금요일 5%대 급락으로 한 주를 마쳤습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>11월 20일 코스피는 전일 대비 267.93포인트, 5.21% 하락한 4,869.96으로 마감했습니다.<br>
+코스닥은 39.13포인트, 5.71% 하락한 645.68으로 마감했습니다.<br>
+코스피가 5,000선을 내준 것은 3거래일 만이며, 종가는 1월 이후 약 10개월 만에 가장 낮은 수준입니다.<br>
+한 주를 통틀어 코스피는 5,290.53에서 4,869.96으로 420.57포인트, 7.95% 하락했습니다.<br>
+미국 증시도 동반 급락했습니다.<br>
+나스닥은 5.28% 내린 22,617.73, S&amp;P 500은 3.70% 내린 6,910.39, 다우는 1.93% 내린 48,147.33으로 마감했습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXR1aTk4NWpxaHhqanhmZDhoMWsyZ3FhODM2eWI5eHl0dTNkdGN6YSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/dvZSDOywoCM4Sro65Q/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="한-주간의-지수-흐름">한 주간의 지수 흐름<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21#%ED%95%9C-%EC%A3%BC%EA%B0%84%EC%9D%98-%EC%A7%80%EC%88%98-%ED%9D%90%EB%A6%84" class="hash-link" aria-label="Direct link to 한 주간의 지수 흐름" title="Direct link to 한 주간의 지수 흐름" translate="no">​</a></h4>
+<table><thead><tr><th>날짜</th><th>코스피 종가</th><th>전일 대비</th></tr></thead><tbody><tr><td>11월 16일 월요일</td><td>5,100.50</td><td>-3.59%</td></tr><tr><td>11월 17일 화요일</td><td>4,968.48</td><td>-2.59%</td></tr><tr><td>11월 18일 수요일</td><td>5,067.44</td><td>+1.99%</td></tr><tr><td>11월 19일 목요일</td><td>5,137.89</td><td>+1.39%</td></tr><tr><td>11월 20일 금요일</td><td>4,869.96</td><td>-5.21%</td></tr></tbody></table>
+<p>주 초반 이틀 연속 하락 뒤 수요일과 목요일에 5,000선을 회복했지만, 금요일 하루 만에 그 반등을 모두 되돌렸습니다.<br>
+금요일 지수는 4.08% 내린 4,928.51로 출발한 뒤 장중 한때 4,831.69까지 내려가며 낙폭을 5.96%까지 키웠습니다.<br>
+자세한 지수 흐름은 <a href="https://finance.naver.com/sise/sise_index.naver?code=KOSPI" target="_blank" rel="noopener noreferrer" class="">코스피</a>와 <a href="https://finance.naver.com/sise/sise_index.naver?code=KOSDAQ" target="_blank" rel="noopener noreferrer" class="">코스닥</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="급락의-배경">급락의 배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21#%EA%B8%89%EB%9D%BD%EC%9D%98-%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 급락의 배경" title="Direct link to 급락의 배경" translate="no">​</a></h4>
+<p>첫째, 간밤 미국 기술주 약세가 아시아 증시 전반으로 번졌습니다.<br>
+엔비디아는 실적 발표 이후에도 14.01% 하락했고, AMD는 7.72% 급락했습니다.<br>
+둘째, 인공지능 기업 앤트로픽의 나스닥 상장이 자금 순환 논쟁을 키웠습니다.<br>
+앤트로픽은 공모가 83달러 대비 17.07% 오른 97.17달러로 상장 첫날을 마쳤지만, 다음 날 8.50% 하락한 88.91달러로 마감했습니다.<br>
+기존 인공지능·반도체주에서 빠져나간 자금이 신규 상장주로 이동했다는 분석이 나왔습니다.<br>
+셋째, 미국의 대중 반도체 규제 강화 우려가 더해졌습니다.<br>
+공매도 리서치 업체가 AMD의 중국 제재 대상 업체 관련 의혹을 제기했고, 삼성전자와 TSMC가 미국의 신규 수출통제에 따라 중국 고객사에 대한 일부 칩 출하를 중단했다는 보도도 나왔습니다.<br>
+넷째, 외국인 매도가 여섯 거래일째 이어지며 수급 부담이 커졌습니다.<br>
+금요일 외국인은 1조 1,335억 원, 기관은 9,508억 원을 순매도했습니다.<br>
+개인은 1조 5,956억 원을 순매수했지만 지수 하락을 막지는 못했습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수급과-시장-장치">수급과 시장 장치<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21#%EC%88%98%EA%B8%89%EA%B3%BC-%EC%8B%9C%EC%9E%A5-%EC%9E%A5%EC%B9%98" class="hash-link" aria-label="Direct link to 수급과 시장 장치" title="Direct link to 수급과 시장 장치" translate="no">​</a></h4>
+<p>삼성전자는 7.01% 하락한 183,100원, SK하이닉스는 5.92% 하락한 1,113,000원으로 마감했습니다.<br>
+장중에는 유가증권시장과 코스닥시장에서 매도 사이드카가 잇달아 발동됐습니다.<br>
+코스피 매도 사이드카는 오전 11시 54분에 발동됐고, 발동 당시 코스피200 선물지수는 전일 대비 5.04% 하락한 755.84였습니다.<br>
+코스닥 매도 사이드카는 오후 1시 28분에 발동됐습니다.<br>
+양 시장에서 매도 사이드카가 발동된 것은 11월 6일 이후 10거래일 만입니다.<br>
+서킷브레이커 발동 기준인 전일 대비 8% 하락에는 도달하지 않았습니다.<br>
+원·달러 환율은 1,346.0원으로 전일 대비 11.9원 올랐습니다.<br>
+S&amp;P 500은 7거래일 연속 하락하며 사상 최고치 대비 10% 넘게 밀려 기술적 조정 국면에 들어갔습니다.<br>
+나스닥은 올해 상승분을 모두 되돌렸습니다.<br>
+공포지수 VIX는 35.89로 26.20% 급등했고, 장중에는 40.03까지 치솟았습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>급락이 끝난 주말에는 하락의 성격부터 구분하는 것이 도움이 됩니다.<br>
+이번 주 하락은 특정 업종의 개별 재료보다 미국 기술주 약세, 규제 우려, 외국인 수급이 겹친 시장 전체의 흐름이었습니다.<br>
+월요일에 확인할 지표는 간밤 미국 증시의 흐름, 원·달러 환율의 방향, 외국인의 순매매 지속 여부입니다.<br>
+AMD 관련 의혹에 대한 후속 보도와 미국의 수출통제 관련 움직임도 함께 봐야 합니다.<br>
+한편 한국의 연간 수출은 11월 19일 사상 처음으로 1조 달러를 넘어섰습니다.<br>
+당일 시장에서는 인공지능 우려와 외국인 매도세가 수출 호재를 압도했지만, 수출 기록 자체는 경제 체력에 대한 중기적인 평가 요인으로 남아 있습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-kospi-weekly-review-nov21#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>코스피는 한 주 동안 7.95% 하락하며 4,869.96으로 마감했습니다.<br>
+하락의 원인과 수급, 시장 장치를 구분해서 정리해 두면 다음 주를 판단하는 기준이 됩니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXFhZjJ6ZDIxMnh6MWY5cXFuM3d1cXoxemUwZGh0dXBvY3lkaXQxMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/F4xep9RHMfao9uA6z3/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>코스피</category>
+            <category>코스닥</category>
+            <category>시장정리</category>
+            <category>주간정리</category>
+        </item>
+        <item>
+            <title><![CDATA[AI 데이터센터의 병목은 이제 전기입니다, 전력기기의 구조를 정리합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter</guid>
+            <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+인공지능 인프라 경쟁의 병목이 반도체에서 전력으로 옮겨가고 있습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>인공지능 데이터센터가 늘어나면서 전기를 만들고, 보내고, 나누는 설비의 수요가 함께 커지고 있습니다.<br>
+국제에너지기구(IEA)가 2025년 4월에 발표한 보고서에 따르면, 전 세계 데이터센터 전력 소비는 2024년 약 415TWh에서 2030년 약 945TWh로 두 배 이상 늘어납니다.<br>
+미국에서는 발전·에너지 프로젝트 2,285GW가 계통 접속 대기열에 쌓여 있습니다.<br>
+대형 변압기의 납품까지 걸리는 시간은 2022년 약 100주에서 128주에서 144주 수준으로 길어졌습니다.<br>
+반도체는 돈으로 살 수 있지만, 전기는 시간으로만 살 수 있다는 말이 나오는 이유입니다.<br>
+한국 전력기기 기업들은 북미를 중심으로 대규모 수주를 쌓으며 이 흐름에 올라타고 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDNua3p1enA2cDh4aHByb2JxNDJxbGJxNjg1MHYycmVheGVmYnNhbyZlcD12MV9jaGFubmVsc19zZWFyY2gmY3Q9Zw/3XKrDQgVSIGUGM8dBj/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="전력기기의-가치-사슬">전력기기의 가치 사슬<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter#%EC%A0%84%EB%A0%A5%EA%B8%B0%EA%B8%B0%EC%9D%98-%EA%B0%80%EC%B9%98-%EC%82%AC%EC%8A%AC" class="hash-link" aria-label="Direct link to 전력기기의 가치 사슬" title="Direct link to 전력기기의 가치 사슬" translate="no">​</a></h4>
+<p>전력기기는 전기가 흐르는 경로를 따라 크게 세 단계로 나뉩니다.<br>
+첫째, 발전소에서 나온 전기를 높은 전압으로 바꾸는 승압 변압기입니다.<br>
+둘째, 먼 거리로 전기를 보내는 초고압 송전망과 이를 보호하는 차단기입니다.<br>
+셋째, 데이터센터 내부에서 전기를 나누고 제어하는 배전반과 전력관리 시스템입니다.<br>
+인공지능 학습 클러스터는 수많은 그래픽처리장치(GPU)가 동시에 돌고 멈추는 패턴을 만듭니다.<br>
+전력회사 입장에서는 얼마나 많이 쓰는지만큼 어떤 패턴으로 쓰는지도 중요해졌고, 변압기와 차단기, 무효전력 보상장치 같은 계통 설비의 수요를 함께 끌어올리고 있습니다.<br>
+송전망과 변압기, 배전반이 모두 갖춰져야 데이터센터 랙에 전기가 닿습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="국내-전력기기-3사의-수주-현황">국내 전력기기 3사의 수주 현황<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter#%EA%B5%AD%EB%82%B4-%EC%A0%84%EB%A0%A5%EA%B8%B0%EA%B8%B0-3%EC%82%AC%EC%9D%98-%EC%88%98%EC%A3%BC-%ED%98%84%ED%99%A9" class="hash-link" aria-label="Direct link to 국내 전력기기 3사의 수주 현황" title="Direct link to 국내 전력기기 3사의 수주 현황" translate="no">​</a></h4>
+<table><thead><tr><th>기업</th><th>수주잔고</th><th>특징</th></tr></thead><tbody><tr><td>HD현대일렉트릭</td><td>69억 달러(2026년 2분기 말, 사상 최대)</td><td>북미 초고압 변압기, 앨라배마 공장 증설</td></tr><tr><td>효성중공업</td><td>약 15조 1,000억 원(2026년 1분기 말)</td><td>미국 765kV 송전망, 멤피스 공장</td></tr><tr><td>LS일렉트릭</td><td>약 5조 6,000억 원(2026년 1분기 말)</td><td>초고압 변압기 3조 1,000억 원, 배전반 강점</td></tr></tbody></table>
+<p>HD현대일렉트릭은 2026년 2분기 매출 1조 1,470억 원, 영업이익 3,372억 원을 기록했습니다.<br>
+전년 동기 대비 매출은 18.9%, 영업이익은 47.2% 늘었고, 영업이익률은 29.4%였습니다.<br>
+연간 수주 목표는 기존 42억 2,200만 달러에서 51억 8,500만 달러로 22.8% 상향됐습니다.<br>
+미국 앨라배마주 몽고메리 북미 생산법인에 약 2억 달러를 투자해 제2공장을 짓고 있으며, 2027년 4월 준공이 목표입니다.<br>
+공장이 완성되면 미국 현지 초고압 변압기 생산능력이 기존보다 50% 확대됩니다.<br>
+효성중공업은 2026년 1분기 매출 1조 3,582억 원, 영업이익 1,523억 원을 기록했습니다.<br>
+1분기 신규 수주는 4조 1,745억 원으로, 약 7,870억 원 규모의 미국 765kV 송전망 전력기기 프로젝트가 크게 기여했습니다.<br>
+765kV는 대규모 전력을 장거리로 전달하는 초고압 송전망입니다.<br>
+효성중공업의 미국 멤피스 공장은 미국 내에서 765kV 초고압 변압기를 직접 설계하고 생산할 수 있는 시설로 알려져 있습니다.<br>
+멤피스 공장에 1억 5,700만 달러를 추가 투자해 2028년까지 초고압 변압기 생산능력을 50% 이상 확대할 계획입니다.<br>
+LS일렉트릭은 2026년 1분기 매출 1조 3,766억 원, 영업이익 1,266억 원을 기록했습니다.<br>
+부산 초고압 변압기 제2생산동이 본격 가동되면서 1분기 초고압 변압기 매출은 전년 동기 대비 83% 증가했습니다.<br>
+LS일렉트릭은 미국 유타주 배전반 제조 자회사에 총 1억 6,800만 달러를 투자하고, 2030년까지 배전반 생산능력을 3배로 확대한다는 계획입니다.<br>
+자세한 산업 전망은 <a href="https://www.iea.org/reports/energy-and-ai" target="_blank" rel="noopener noreferrer" class="">IEA Energy and AI 보고서</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>전력기기 업종을 볼 때는 수주잔고보다 생산능력과 납기, 수익성의 지속성을 함께 봐야 합니다.<br>
+수주잔고가 수년 치로 쌓여 있어도 공장이 받쳐주지 못하면 매출로 이어지는 속도가 느려집니다.<br>
+반대로 생산능력이 빠르게 늘어나는 만큼 신규 설비의 가동률과 수익성 안정화 속도도 지켜봐야 합니다.<br>
+인공지능 데이터센터 투자 속도가 꺾이면 변압기 수요 전망도 함께 조정될 수 있습니다.<br>
+미국의 관세와 수출통제, 환율 방향도 북미 매출 비중이 높은 기업들의 실적에 영향을 줍니다.<br>
+수주잔고의 통화 구성도 확인 대상입니다.<br>
+달러로 계약된 물량이 많으면 원화 환산 금액은 적용 환율에 따라 달라집니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-power-equipment-ai-datacenter#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>인공지능 경쟁의 다음 병목은 전력이며, 변압기 납기가 프로젝트 전체 일정의 기준이 되고 있습니다.<br>
+수주잔고와 생산능력, 납기 구조를 함께 읽으면 전력기기 업종의 흐름을 이해하는 데 도움이 됩니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Q0N24zZDM2ZWN6cnZ6aHA1NXRmd3htMHBvZDF4bzBqbnFhN2wwMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/1dYaJWj27zOyA/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>전력기기</category>
+            <category>AI데이터센터</category>
+            <category>섹터</category>
+            <category>변압기</category>
+        </item>
+        <item>
+            <title><![CDATA[사이드카와 서킷브레이커, 그리고 VI의 차이를 정리합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi</guid>
+            <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+11월 20일 유가증권시장과 코스닥시장에서 매도 사이드카가 잇달아 발동됐습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>사이드카와 서킷브레이커, 변동성완화장치(VI)는 주가가 짧은 시간에 급변할 때 매매를 조절하는 안전장치입니다.<br>
+세 제도는 멈추는 대상과 발동 기준, 정지 시간이 모두 다릅니다.<br>
+11월 20일 코스피 매도 사이드카는 오전 11시 54분에 발동됐고, 발동 당시 코스피200 선물지수는 전일 대비 5.04% 하락한 755.84였습니다.<br>
+코스닥 매도 사이드카는 오후 1시 28분에 발동됐습니다.<br>
+양 시장에서 매도 사이드카가 발동된 것은 11월 6일 이후 10거래일 만입니다.<br>
+서킷브레이커 발동 기준인 전일 대비 8% 하락에는 도달하지 않았습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN25qanZiYWRob3pwOWFjaHVwajZ4cm56M3RxNHZpcXdmOTdlaGpicyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohzdFP7hiXm7JgTQs/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="사이드카-프로그램매매만-5분간-멈춥니다">사이드카, 프로그램매매만 5분간 멈춥니다<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#%EC%82%AC%EC%9D%B4%EB%93%9C%EC%B9%B4-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8%EB%A7%A4%EB%A7%A4%EB%A7%8C-5%EB%B6%84%EA%B0%84-%EB%A9%88%EC%B6%A5%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to 사이드카, 프로그램매매만 5분간 멈춥니다" title="Direct link to 사이드카, 프로그램매매만 5분간 멈춥니다" translate="no">​</a></h4>
+<p>사이드카는 선물시장의 급변동이 현물시장으로 그대로 전이되는 것을 막기 위해 프로그램매매 호가만 잠깐 정지시키는 제도입니다.<br>
+코스피200 선물이 전일 종가 대비 5% 이상 오르거나 내린 상태가 1분 이상 이어지면 발동됩니다.<br>
+코스닥은 기준이 더 까다롭습니다.<br>
+코스닥 선물이 6% 이상 움직이고 동시에 현물 지수가 3% 이상 움직인 상태가 1분 이어져야 합니다.<br>
+발동되면 해당 방향의 프로그램매매 호가 효력이 5분간 정지됩니다.<br>
+일반 투자자가 직접 넣는 주문은 평소와 똑같이 접수되고 체결됩니다.<br>
+5분이 지나면 별도 절차 없이 자동으로 해제됩니다.<br>
+기준이 되는 것은 코스피 지수 자체가 아니라 코스피200 선물 가격입니다.<br>
+지수가 4.9% 하락한 날에도 선물이 5%를 넘으면 사이드카가 발동할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="서킷브레이커-시장-전체를-20분간-멈춥니다">서킷브레이커, 시장 전체를 20분간 멈춥니다<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#%EC%84%9C%ED%82%B7%EB%B8%8C%EB%A0%88%EC%9D%B4%EC%BB%A4-%EC%8B%9C%EC%9E%A5-%EC%A0%84%EC%B2%B4%EB%A5%BC-20%EB%B6%84%EA%B0%84-%EB%A9%88%EC%B6%A5%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to 서킷브레이커, 시장 전체를 20분간 멈춥니다" title="Direct link to 서킷브레이커, 시장 전체를 20분간 멈춥니다" translate="no">​</a></h4>
+<p>서킷브레이커는 지수가 크게 하락했을 때 시장 전체의 매매를 멈추는 제도입니다.<br>
+코스피 지수가 전일 종가 대비 8% 이상 하락한 상태가 1분 이어지면 1단계가 발동됩니다.<br>
+발동되면 20분 동안 매매가 멈추고, 재개할 때는 10분간 단일가매매를 거칩니다.<br>
+2단계는 15% 이상 하락이면서 1단계가 걸린 시점보다 1% 더 빠진 상태가 1분 이어져야 합니다.<br>
+3단계는 20% 하락에 2단계 시점 대비 1% 추가 하락이 겹쳐야 하며, 발동되면 당일 거래가 종료됩니다.<br>
+서킷브레이커가 발동되는 동안에는 신규 주문이 들어가지 않고 기존 주문의 취소만 가능합니다.<br>
+2026년 들어서는 10월 15일 코스닥에서 1단계가 발동되는 등 변동성이 큰 날에 발동 사례가 이어지고 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="vi-개별-종목-하나만-단일가로-전환합니다">VI, 개별 종목 하나만 단일가로 전환합니다<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#vi-%EA%B0%9C%EB%B3%84-%EC%A2%85%EB%AA%A9-%ED%95%98%EB%82%98%EB%A7%8C-%EB%8B%A8%EC%9D%BC%EA%B0%80%EB%A1%9C-%EC%A0%84%ED%99%98%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to VI, 개별 종목 하나만 단일가로 전환합니다" title="Direct link to VI, 개별 종목 하나만 단일가로 전환합니다" translate="no">​</a></h4>
+<p>변동성완화장치(VI)는 특정 종목 하나가 단기간에 급등락할 때 그 종목만 단일가매매로 바꾸는 장치입니다.<br>
+동적 VI는 직전 체결가 대비 코스피200 종목은 3%, 그 외 종목과 코스닥 종목은 6% 이상 변동하면 발동됩니다.<br>
+정적 VI는 전일 종가 대비 10% 이상 변동할 때 발동됩니다.<br>
+발동되면 2분간 단일가매매로 전환됩니다.<br>
+단일가매매는 주문을 모았다가 한 번에 체결하는 방식으로, 가격을 잠깐 식히는 역할을 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="세-제도를-한눈에-비교합니다">세 제도를 한눈에 비교합니다<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#%EC%84%B8-%EC%A0%9C%EB%8F%84%EB%A5%BC-%ED%95%9C%EB%88%88%EC%97%90-%EB%B9%84%EA%B5%90%ED%95%A9%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to 세 제도를 한눈에 비교합니다" title="Direct link to 세 제도를 한눈에 비교합니다" translate="no">​</a></h4>
+<table><thead><tr><th>구분</th><th>사이드카</th><th>서킷브레이커</th><th>VI</th></tr></thead><tbody><tr><td>대상</td><td>프로그램매매</td><td>시장 전체</td><td>개별 종목</td></tr><tr><td>발동 기준</td><td>선물 5%(코스피), 선물 6%+현물 3%(코스닥), 1분 지속</td><td>지수 8%, 15%, 20% 하락, 1분 지속</td><td>동적 3% 또는 6%, 정적 10%</td></tr><tr><td>방향</td><td>상승 또는 하락</td><td>하락만</td><td>상승 또는 하락</td></tr><tr><td>정지 시간</td><td>5분</td><td>20분(3단계는 당일 종료)</td><td>2분 단일가</td></tr><tr><td>내 직접 주문</td><td>정상 체결</td><td>정지 중 신규 불가</td><td>해당 종목만 단일가</td></tr></tbody></table>
+<p>사이드카와 서킷브레이커는 장 종료 40분 전인 오후 2시 50분 이후에는 새로 발동되지 않습니다.<br>
+같은 날 같은 시장에서 사이드카와 서킷브레이커는 각각 1회씩만 발동됩니다.<br>
+종목별로는 하루 가격제한폭인 전일 대비 30% 상하한이 가장 아래에서 작동합니다.<br>
+자세한 제도는 <a href="https://www.krx.co.kr/main/main.jsp" target="_blank" rel="noopener noreferrer" class="">한국거래소 시장감시 규정 안내</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>사이드카가 발동됐다고 해서 곧바로 서킷브레이커로 이어지는 것은 아닙니다.<br>
+사이드카는 프로그램매매만 멈추고, 직접 주문은 계속 체결됩니다.<br>
+서킷브레이커가 발동되면 20분 동안 신규 주문이 막히므로, 급락장에서 주문을 넣기 전에 발동 여부를 먼저 확인하는 것이 도움이 됩니다.<br>
+VI는 보유 종목 하나의 가격 급변에 대한 신호로 읽을 수 있습니다.<br>
+발동 기준과 정지 시간은 한국거래소 업무규정 개정에 따라 달라질 수 있으니, 투자 판단 전에는 반드시 한국거래소 공시나 증권사 공지로 최신 기준을 다시 확인하시기 바랍니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-sidecar-circuit-breaker-vi#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>사이드카는 프로그램매매를, 서킷브레이커는 시장 전체를, VI는 개별 종목을 멈춥니다.<br>
+세 제도의 기준과 정지 시간을 구분해 두면 급락장에서 뉴스를 읽는 기준이 됩니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3l5MXg4aWpoNHoyN2x2Y2F1NnJwbndwYnVlenN4ajN0cnJtbnVsMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/11tRBTlIlmb10k/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>사이드카</category>
+            <category>서킷브레이커</category>
+            <category>VI</category>
+            <category>시장제도</category>
+        </item>
+        <item>
+            <title><![CDATA[VIX 공포지수 35.89, 숫자를 읽는 법을 정리합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide</guid>
+            <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+11월 20일 공포지수 VIX는 장중 40을 넘기며 2025년 4월 이후 가장 높은 수준까지 올랐습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>현지시간 11월 20일 VIX 지수는 전일 종가 28.44 대비 7.45포인트, 26.20% 급등한 35.89로 마감했습니다.<br>
+장중에는 한때 40.03까지 치솟으며 52주 최고치를 경신했습니다.<br>
+VIX가 40을 넘긴 것은 2025년 4월 무역전쟁 충격 이후 처음입니다.<br>
+같은 날 S&amp;P 500은 3.70% 하락한 6,910.39, 나스닥은 5.28% 하락한 22,617.73으로 마감했습니다.<br>
+S&amp;P 500은 7거래일 연속 하락하며 사상 최고치 대비 10% 넘게 밀려 기술적 조정 국면에 들어갔습니다.<br>
+VIX는 일주일 전만 해도 20대 초반에서 23선 부근을 오갔습니다.<br>
+11월 17일 25.46, 11월 19일 28.44를 거쳐 단 하루 만에 35.89까지 수직 상승했습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmNvN21rOWo3OGE4MWR2b2UydWVlZ2tyZmlkcnJsamE5anAyNGhpdCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohhwF34cGDoFFhRfy/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="vix는-무엇을-재는-지표입니까">VIX는 무엇을 재는 지표입니까<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide#vix%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%84-%EC%9E%AC%EB%8A%94-%EC%A7%80%ED%91%9C%EC%9E%85%EB%8B%88%EA%B9%8C" class="hash-link" aria-label="Direct link to VIX는 무엇을 재는 지표입니까" title="Direct link to VIX는 무엇을 재는 지표입니까" translate="no">​</a></h4>
+<p>VIX는 시카고옵션거래소(CBOE)가 산출하는 S&amp;P 500 변동성 지수입니다.<br>
+만기 23일에서 37일 사이의 S&amp;P 500 지수 옵션 가격을 바탕으로 향후 30일간 시장이 예상하는 S&amp;P 500 지수의 변동폭을 연율화한 수치입니다.<br>
+쉽게 말해 VIX 35.89는 옵션 시장이 향후 30일 동안 S&amp;P 500 지수가 연간으로 환산해 약 35.89% 수준으로 움직일 수 있다고 가격을 매기고 있다는 뜻입니다.<br>
+VIX는 주가의 방향을 예측하는 지표가 아닙니다.<br>
+오를지 내릴지를 말해주는 것이 아니라, 얼마나 크게 움직일 것으로 예상하는지를 보여줍니다.<br>
+공포지수라는 별명은 주가가 급락할 때 VIX가 함께 오르는 경향에서 붙었습니다.<br>
+VIX의 산출 방식은 <a href="https://www.cboe.com/tradable_products/vix/" target="_blank" rel="noopener noreferrer" class="">CBOE VIX 지수 설명 페이지</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="구간별로-시장-국면을-읽는-법">구간별로 시장 국면을 읽는 법<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide#%EA%B5%AC%EA%B0%84%EB%B3%84%EB%A1%9C-%EC%8B%9C%EC%9E%A5-%EA%B5%AD%EB%A9%B4%EC%9D%84-%EC%9D%BD%EB%8A%94-%EB%B2%95" class="hash-link" aria-label="Direct link to 구간별로 시장 국면을 읽는 법" title="Direct link to 구간별로 시장 국면을 읽는 법" translate="no">​</a></h4>
+<table><thead><tr><th>VIX 구간</th><th>시장 국면</th><th>특징</th></tr></thead><tbody><tr><td>12 미만</td><td>극단적 낙관</td><td>변동성 실종, 헤지 수요 급감, 충격에 취약</td></tr><tr><td>12에서 20</td><td>정상 및 안정</td><td>완만한 강세장 또는 건전한 횡보장</td></tr><tr><td>20에서 30</td><td>경계 및 조정</td><td>불확실성 확대, 방어적 풋옵션 매수 유입</td></tr><tr><td>30에서 40</td><td>고위험 공포</td><td>투매 가속화, 강제 청산 우려</td></tr><tr><td>40 초과</td><td>극단적 패닉</td><td>시스템 리스크 경계, 공포 헤지 수요 정점 가능</td></tr></tbody></table>
+<p>11월 20일 종가 35.89는 고위험 공포 구간에 해당하고, 장중 40.03은 극단적 패닉 구간을 건드렸습니다.<br>
+VIX가 30을 넘는 국면은 보통 매년 몇 차례 나타나고, 며칠 이상 지속되는 경우는 드뭅니다.<br>
+옵션 프리미엄이 극단적으로 비싸졌다는 것은 단기적인 공포 헤지 수요가 정점에 근접했을 가능성도 함께 내포합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="vix가-오르면-시스템-펀드도-움직입니다">VIX가 오르면 시스템 펀드도 움직입니다<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide#vix%EA%B0%80-%EC%98%A4%EB%A5%B4%EB%A9%B4-%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%8E%80%EB%93%9C%EB%8F%84-%EC%9B%80%EC%A7%81%EC%9E%85%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to VIX가 오르면 시스템 펀드도 움직입니다" title="Direct link to VIX가 오르면 시스템 펀드도 움직입니다" translate="no">​</a></h4>
+<p>VIX가 일정 임계치를 넘어서면 사람의 감정이 아니라 알고리즘과 시스템 펀드가 주식을 기계적으로 내다 팔기 시작합니다.<br>
+추세를 따라 매매하는 상품거래자문(CTA) 등 모멘텀 거래자는 지난 한 달 동안 약 570억 달러 규모의 주식을 순매도했고, 미국 주식 포지션은 약 190억 달러 순매도로 돌아섰습니다.<br>
+이런 시스템 매도는 지수 하락을 키우고, 커진 변동성은 다시 VIX를 끌어올리는 순환을 만들 수 있습니다.<br>
+다만 VIX 상승 자체가 추가 하락을 보장하는 것은 아닙니다.<br>
+과거에도 VIX가 30을 넘긴 뒤 단기 반등이 나타난 사례가 적지 않습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>VIX를 볼 때는 숫자 하나보다 방향과 속도를 함께 봐야 합니다.<br>
+서서히 오르는 VIX와 하루 만에 7포인트 넘게 치솟는 VIX는 시장의 성격이 다릅니다.<br>
+VIX가 높은 날에는 풋옵션 가격이 비싸지므로, 헤지 비용이 얼마나 올랐는지도 함께 확인하는 것이 도움이 됩니다.<br>
+VIX를 추종하는 상품은 선물 롤오버 비용이 있어 장기 보유에 불리한 구조입니다.<br>
+VIX 자체를 매수하는 것이 아니라, VIX가 말해주는 변동성 국면을 참고해 자신의 포트폴리오 위험을 점검하는 용도로 쓰는 것이 바람직합니다.<br>
+VIX가 20 아래로 내려앉고 안정되는지, 30 위에서 머무르는지가 다음 주 시장의 첫 번째 확인 지표입니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-21-vix-fear-index-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>VIX 35.89는 옵션 시장이 향후 30일의 변동성을 매우 크게 가격 매기고 있다는 신호입니다.<br>
+방향이 아니라 변동성의 크기를 읽는 지표라는 점을 기억해 두면 공포지수 뉴스를 판단하는 기준이 됩니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjVxZ3c3czYxOHFyajNzZGd5bWlqYW12czVmbmhyeTc1MjB6eTlmMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/J4yF0FV16mSjwlGunf/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>VIX</category>
+            <category>공포지수</category>
+            <category>변동성</category>
+            <category>미국증시</category>
+        </item>
+        <item>
+            <title><![CDATA[앤트로픽 IPO 이후, 인공지능 자금은 어디로 움직이는가]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation</guid>
+            <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+인공지능 기업 앤트로픽의 역대 최대 규모 상장이 끝난 뒤, 글로벌 자금의 움직임이 시장의 화두가 됐습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>앤트로픽은 11월 19일 미국 나스닥에 상장했습니다.<br>
+공모가는 주당 83달러로 확정됐고, 상장 첫날 종가는 97.17달러로 공모가 대비 17.07% 올랐습니다.<br>
+장중에는 111.50달러까지 올라 공모가 대비 34.3% 상승하기도 했습니다.<br>
+이번 상장을 통한 조달액은 총 1,073억 달러, 한화 약 143조 원으로 역대 최대 규모입니다.<br>
+지난 6월 스페이스X의 862억 달러를 넘어선 기록입니다.<br>
+상장 흥행에도 불구하고 같은 날 나스닥은 2.25% 하락했고, 국내 증시도 다음 날 5% 넘게 급락했습니다.<br>
+인공지능에 대한 기대와 인공지능 주가의 하락이 동시에 나타난 하루였습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2RpODRtdWlpZW5nZ28zZWdzZDV1YWZlNWRqN3VyOGZsOGN0anFlYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohnEqJ1XOfvWaSk7e/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="역대-최대-ipo의-규모">역대 최대 IPO의 규모<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation#%EC%97%AD%EB%8C%80-%EC%B5%9C%EB%8C%80-ipo%EC%9D%98-%EA%B7%9C%EB%AA%A8" class="hash-link" aria-label="Direct link to 역대 최대 IPO의 규모" title="Direct link to 역대 최대 IPO의 규모" translate="no">​</a></h4>
+<p>기업공개는 기업이 주식을 처음 공개 시장에 파는 절차입니다.<br>
+공모가는 기관투자자 수요예측을 거쳐 정해지고, 상장 첫날 주가는 시장의 평가를 받습니다.<br>
+앤트로픽의 조달액 1,073억 달러는 단일 기업공개로는 역대 최대 규모입니다.<br>
+상장 첫날 종가 기준 시가총액은 공모가 기준보다 크게 불어났습니다.<br>
+공모가 대비 17.07% 상승한 첫날 성적은 흥행으로 평가됐습니다.<br>
+그러나 장중 고점 대비로는 상승 폭이 절반으로 줄었고, 차익실현 매물이 나왔다는 분석이 이어졌습니다.<br>
+대규모 기업공개에서는 상장 자체가 호재인 동시에, 청약을 위해 묶였던 자금이 풀리며 다른 주식에서 자금이 이동할 수 있다는 점도 함께 봐야 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="자금-순환이-일어나는-구조">자금 순환이 일어나는 구조<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation#%EC%9E%90%EA%B8%88-%EC%88%9C%ED%99%98%EC%9D%B4-%EC%9D%BC%EC%96%B4%EB%82%98%EB%8A%94-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="Direct link to 자금 순환이 일어나는 구조" title="Direct link to 자금 순환이 일어나는 구조" translate="no">​</a></h4>
+<p>주식은 한정된 자금 안에서 사고팔립니다.<br>
+새로운 대형주가 시장에 들어오면 투자자는 기존 보유 주식을 팔아 새 주식을 사는 선택을 할 수 있습니다.<br>
+이를 자금 순환이라고 부릅니다.<br>
+앤트로픽 상장 이후 인공지능 반도체주에서 자금 이탈이 감지됐다는 분석이 나왔습니다.<br>
+엔비디아는 실적 발표에서 예상을 웃도는 결과를 냈음에도 주가가 3.30% 하락했습니다.<br>
+AMD는 공매도 리서치 업체의 중국 수출통제 위반 의혹 제기 이후 7.7% 급락했습니다.<br>
+필라델피아 반도체 지수는 2.42% 하락했습니다.<br>
+자금 순환은 기업의 가치 변화와 다릅니다.<br>
+주가가 내렸다고 해서 기업의 실적 전망이 그만큼 나빠진 것은 아닙니다.<br>
+다만 자금이 한쪽으로 쏠리는 국면에서는 개별 기업의 재료보다 자금 흐름 자체가 주가를 좌우하기도 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수익성-논쟁의-본질">수익성 논쟁의 본질<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation#%EC%88%98%EC%9D%B5%EC%84%B1-%EB%85%BC%EC%9F%81%EC%9D%98-%EB%B3%B8%EC%A7%88" class="hash-link" aria-label="Direct link to 수익성 논쟁의 본질" title="Direct link to 수익성 논쟁의 본질" translate="no">​</a></h4>
+<p>이번 상장을 계기로 시장의 관심은 인공지능 모델 자체보다 투자금 회수 시기로 옮겨가고 있습니다.<br>
+인공지능 인프라에 막대한 투자가 이어지는 가운데, 수익성이 투자 규모에 미치지 못할 수 있다는 우려가 확산됐습니다.<br>
+데이터센터 규제와 자금조달 부담에 대한 우려도 함께 거론됐습니다.<br>
+일본 소프트뱅크 주가는 장중 16% 넘게 폭락하며 아시아 기술주 약세를 이끌었습니다.<br>
+실적 호조에도 주가가 내리는 구도는 인공지능 사이클의 기대치가 이미 매우 높게 형성돼 있음을 보여줍니다.<br>
+2027년 데이터센터 매출 전망이 시장의 기대에 못 미치고, 신제품 양산에 따른 마진 압박 우려가 제기됐다는 분석도 나왔습니다.<br>
+기대가 높을수록 실적이 기대를 웃돌아야 주가가 유지되는 구조입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>대형 기업공개 이후에는 자금 순환과 기업 가치 변화를 구분해서 보는 것이 도움이 됩니다.<br>
+상장 첫날 상승은 기업의 장기 가치를 확정하는 신호가 아닙니다.<br>
+공모가 대비 상승률은 첫날 수급과 기대를 반영할 뿐입니다.<br>
+인공지능 투자에서는 세 가지 지표를 함께 확인하는 것이 좋습니다.<br>
+첫째, 데이터센터 투자 계획과 실제 매출의 간격입니다.<br>
+둘째, 주요 기업의 실적 가이던스가 시장의 기대와 어떻게 다른지입니다.<br>
+셋째, 수출통제와 같은 규제 변수가 공급망에 미치는 영향입니다.<br>
+국내 반도체주는 미국 반도체주와 직접 연결돼 있기 때문에, 미국 시장의 자금 흐름이 국내 주가에도 영향을 줍니다.<br>
+단기 자금 이동과 중기 실적 흐름을 같은 잣대로 판단하지 않는 것이 중요합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-anthropic-ipo-ai-capital-rotation#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>앤트로픽 상장은 역대 최대 규모로 흥행했지만, 인공지능 자금의 순환과 수익성 논쟁도 함께 키웠습니다.<br>
+자금의 이동과 기업의 실적을 구분해서 보면 시장의 움직임을 더 차분하게 읽을 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTA4NmhlcHF5YzVkN3M0YnBxaXYwbDdxanNsZDJtbjJkamI0ZTZweCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/12QCczVAjPAfvi/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>인공지능</category>
+            <category>IPO</category>
+            <category>앤트로픽</category>
+            <category>자금순환</category>
+        </item>
+        <item>
+            <title><![CDATA[급락장에서 다시 보는 현금성 자산, CMA·MMF·파킹통장]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking</guid>
+            <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+주가가 크게 흔들리는 날에는 현금성 자산의 역할이 다시 주목받습니다.<br>
+CMA, MMF, 파킹통장의 구조를 정리합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>11월 20일 코스피는 5.21% 급락하며 4,869.96으로 마감했습니다.<br>
+코스닥도 5.71% 하락했습니다.<br>
+급락장에서는 주식 비중을 줄이고 현금성 자산으로 옮기는 투자자가 늘어납니다.<br>
+현금성 자산은 수익을 내는 수단이 아니라, 자금을 안전하게 보관하면서 필요할 때 바로 쓸 수 있게 해주는 수단입니다.<br>
+대표적인 현금성 자산은 CMA, MMF, 파킹통장입니다.<br>
+세 가지는 비슷해 보이지만 구조와 보호 범위가 다릅니다.<br>
+예금자보호 한도는 2025년 9월 1일부터 5,000만 원에서 1억 원으로 상향됐습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExczgwMjQ0NWN4MWZmb25qenNqczk2eDFvaWZ5dWpndmtydW14aHZtZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Rc6wCsawwZ61i/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="세-가지-현금성-자산의-구조">세 가지 현금성 자산의 구조<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking#%EC%84%B8-%EA%B0%80%EC%A7%80-%ED%98%84%EA%B8%88%EC%84%B1-%EC%9E%90%EC%82%B0%EC%9D%98-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="Direct link to 세 가지 현금성 자산의 구조" title="Direct link to 세 가지 현금성 자산의 구조" translate="no">​</a></h4>
+<table><thead><tr><th>상품</th><th>운용 주체</th><th>자금 운용처</th><th>예금자보호</th><th>특징</th></tr></thead><tbody><tr><td>CMA</td><td>증권사</td><td>단기 금융상품</td><td>예수금 1억 원까지 보호</td><td>주식 매수 자금과 연결</td></tr><tr><td>MMF</td><td>자산운용사</td><td>단기 채권·어음</td><td>보호 대상 아님</td><td>펀드라 원금 보장 없음</td></tr><tr><td>파킹통장</td><td>은행·저축은행</td><td>은행 예금</td><td>1억 원까지 보호</td><td>입출금 자유, 금리 조건 확인 필요</td></tr></tbody></table>
+<p>CMA는 종합자산관리계좌입니다.<br>
+증권사에 맡긴 예수금이 단기 금융상품으로 운용되며, 이자가 붙습니다.<br>
+주식 매수 자금과 같은 계좌에서 관리되기 때문에 주식 투자자에게 편리합니다.<br>
+MMF는 머니마켓펀드입니다.<br>
+단기 채권과 기업어음에 투자하는 펀드로, 매일 기준가가 계산됩니다.<br>
+원금이 보장되지 않고 실적에 따라 수익률이 달라지며, 예금자보호 대상이 아닙니다.<br>
+파킹통장은 은행의 입출금 자유 예금입니다.<br>
+주차를 하듯 잠시 자금을 넣어두는 통장이라는 뜻에서 붙은 이름입니다.<br>
+은행 예금이라 예금자보호 대상이며, 금리는 은행과 상품 조건에 따라 다릅니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="예금자보호-1억-원-상향의-의미">예금자보호 1억 원 상향의 의미<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking#%EC%98%88%EA%B8%88%EC%9E%90%EB%B3%B4%ED%98%B8-1%EC%96%B5-%EC%9B%90-%EC%83%81%ED%96%A5%EC%9D%98-%EC%9D%98%EB%AF%B8" class="hash-link" aria-label="Direct link to 예금자보호 1억 원 상향의 의미" title="Direct link to 예금자보호 1억 원 상향의 의미" translate="no">​</a></h4>
+<p>예금자보호 한도는 2025년 9월 1일부터 5,000만 원에서 1억 원으로 상향됐습니다.<br>
+2001년 이후 24년 만의 상향입니다.<br>
+은행과 저축은행, 보험, 금융투자 업권이 모두 적용 대상입니다.<br>
+상호금융인 신협과 농협, 수협, 산림조합, 새마을금고도 함께 1억 원으로 상향됐습니다.<br>
+보호 대상은 예금과 적금 같은 원금보장형 상품입니다.<br>
+펀드처럼 지급액이 운용실적에 따라 달라지는 상품은 보호되지 않습니다.<br>
+퇴직연금과 연금저축, 사고보험금은 일반 예금과 별도로 각각 1억 원까지 보호됩니다.<br>
+자세한 내용은 <a href="https://www.fsc.go.kr/po010101/84974?srchCtgry=1&amp;curPage=21&amp;srchKey=&amp;srchText=&amp;srchBeginDt=&amp;srchEndDt=" target="_blank" rel="noopener noreferrer" class="">금융위원회 발표</a>에서 확인할 수 있습니다.<br>
+현금성 자산을 나눠 맡길 때는 같은 금융회사 안에서의 합산 한도를 확인하는 것이 중요합니다.<br>
+보호 한도는 금융회사별로 적용됩니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="급락장에서-현금의-역할">급락장에서 현금의 역할<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking#%EA%B8%89%EB%9D%BD%EC%9E%A5%EC%97%90%EC%84%9C-%ED%98%84%EA%B8%88%EC%9D%98-%EC%97%AD%ED%95%A0" class="hash-link" aria-label="Direct link to 급락장에서 현금의 역할" title="Direct link to 급락장에서 현금의 역할" translate="no">​</a></h4>
+<p>현금은 변동성을 줄이는 역할을 합니다.<br>
+주식 비중이 높은 포트폴리오는 지수가 5% 내리면 자산 가치도 크게 줄어듭니다.<br>
+현금성 자산 비중이 있으면 하락 폭이 상대적으로 완만해집니다.<br>
+현금은 기회를 기다리는 자금이기도 합니다.<br>
+급락 이후 주식을 살 여력이 있어야 매수 기회를 활용할 수 있습니다.<br>
+다만 현금 비중이 지나치게 높으면 기회비용이 생깁니다.<br>
+주가가 오르는 국면에서는 현금의 수익률이 주식 수익률에 미치지 못합니다.<br>
+그래서 현금 비중은 시장의 방향을 맞추는 수단이 아니라, 감당할 수 있는 변동성 수준에 맞춰 정하는 것이 일반적입니다.<br>
+비상금과 투자 대기 자금은 성격이 다릅니다.<br>
+비상금은 생활비 3개월에서 6개월 수준을 별도로 보관하는 것이 일반적이며, 투자 자금과 섞지 않는 것이 좋습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="선택-전-확인할-점">선택 전 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking#%EC%84%A0%ED%83%9D-%EC%A0%84-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 선택 전 확인할 점" title="Direct link to 선택 전 확인할 점" translate="no">​</a></h4>
+<p>현금성 자산을 고를 때는 네 가지를 확인하는 것이 좋습니다.<br>
+첫째, 예금자보호 대상인지입니다.<br>
+CMA 예수금과 파킹통장은 보호 대상이지만, MMF는 펀드라 보호 대상이 아닙니다.<br>
+둘째, 금리의 조건입니다.<br>
+파킹통장 금리는 일정 금액까지만 높은 금리가 적용되는 경우가 많습니다.<br>
+CMA 금리도 증권사와 상품 유형에 따라 다릅니다.<br>
+셋째, 출금의 자유로움입니다.<br>
+필요할 때 바로 출금할 수 있는지, 출금 한도나 조건이 있는지 확인합니다.<br>
+넷째, 세금입니다.<br>
+이자소득에는 15.4%의 원천징수 세율이 적용됩니다.<br>
+계산 예시를 들어보겠습니다.<br>
+1,000만 원을 연 3% 상품에 1년 맡기면 세전 이자는 30만 원입니다.<br>
+세후 이자는 30만 원에서 15.4%를 뺀 약 25만 3,800원입니다.<br>
+금리는 변동될 수 있으므로 예시일 뿐이며, 실제 금리는 상품 안내를 확인해야 합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-cash-equivalents-cma-mmf-parking#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>CMA와 MMF, 파킹통장은 구조와 보호 범위가 다르며, 예금자보호 한도는 2025년 9월부터 1억 원으로 상향됐습니다.<br>
+현금성 자산의 구조를 알면 급락장에서도 자금을 차분하게 관리할 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjB4NjNmeXJuZGt5eGZnajZibmxwMmRyY21jejh3ZzJ5aTRybTRtOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/whhCAcuxtAXcrQhHTk/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>CMA</category>
+            <category>MMF</category>
+            <category>파킹통장</category>
+            <category>현금관리</category>
+            <category>개인재무</category>
+        </item>
+        <item>
+            <title><![CDATA[검은 금요일, 코스피 5.21% 급락을 정리합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20</guid>
+            <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+2026년 11월 20일 국내 증시는 코스피와 코스닥이 나란히 5% 넘게 급락하며 한 주를 마쳤습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>11월 20일 코스피는 전일 대비 267.93포인트, 5.21% 하락한 4,869.96으로 마감했습니다.<br>
+코스닥은 39.13포인트, 5.71% 하락한 645.68으로 마감했습니다.<br>
+코스피가 5,000선을 내준 것은 3거래일 만이며, 종가는 1월 16일 이후 약 10개월 만에 가장 낮은 수준입니다.<br>
+이번 주 코스피는 총 7.9% 하락했습니다.<br>
+지수는 4.08% 내린 4,928.51로 출발한 뒤 장중 한때 4,831.69까지 내려가며 낙폭을 5.96%까지 키웠습니다.<br>
+미국 증시 급락이 전해진 뒤 투자심리가 빠르게 위축된 하루였습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzA5ODBlZWIxbDY4MmR3eGNneHFqengzcWJndWFzazFxcHRnYmZlMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/EyUsWrBqOjeRvgp2wJ/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="지수-움직임">지수 움직임<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20#%EC%A7%80%EC%88%98-%EC%9B%80%EC%A7%81%EC%9E%84" class="hash-link" aria-label="Direct link to 지수 움직임" title="Direct link to 지수 움직임" translate="no">​</a></h4>
+<table><thead><tr><th>지수</th><th>종가</th><th>전일 대비</th><th>등락률</th><th>시가</th><th>고가</th><th>저가</th></tr></thead><tbody><tr><td>코스피</td><td>4,869.96</td><td>-267.93</td><td>-5.21%</td><td>4,928.51</td><td>4,971.31</td><td>4,831.69</td></tr><tr><td>코스닥</td><td>645.68</td><td>-39.13</td><td>-5.71%</td><td>660.98</td><td>665.15</td><td>642.13</td></tr></tbody></table>
+<p>전일 종가는 코스피 5,137.89, 코스닥 684.81입니다.<br>
+원·달러 환율은 주간 거래 종가 기준 1,336.2원으로 전일 대비 6.2원 올랐고, 장중에는 1,340.3원까지 상승했습니다.<br>
+자세한 지수 흐름은 <a href="https://finance.naver.com/sise/sise_index.naver?code=KOSPI" target="_blank" rel="noopener noreferrer" class="">코스피</a>와 <a href="https://finance.naver.com/sise/sise_index.naver?code=KOSDAQ" target="_blank" rel="noopener noreferrer" class="">코스닥</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="급락의-배경">급락의 배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20#%EA%B8%89%EB%9D%BD%EC%9D%98-%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 급락의 배경" title="Direct link to 급락의 배경" translate="no">​</a></h4>
+<p>첫째, 간밤 미국 증시가 일제히 2% 넘게 하락했습니다.<br>
+나스닥은 2.25% 내린 23,879.20, 다우는 2.19%, S&amp;P 500은 2.02% 하락했습니다.<br>
+필라델피아 반도체 지수도 2.42% 내리며 반도체주를 중심으로 약세가 나타났습니다.<br>
+둘째, 인공지능 기업 앤트로픽의 나스닥 상장이 자금 순환 논쟁을 키웠습니다.<br>
+앤트로픽은 공모가 83달러 대비 17.07% 오른 97.17달러로 상장 첫날을 마쳤지만, 상장을 위해 조달한 1,073억 달러 규모의 자금이 기존 인공지능·반도체주에서 빠져나갔을 수 있다는 분석이 나왔습니다.<br>
+셋째, 미국의 대중 반도체 규제 강화 우려가 더해졌습니다.<br>
+공매도 리서치 업체가 AMD의 중국 제재 대상 업체 관련 의혹을 제기했고, AMD는 7.7% 급락했습니다.<br>
+삼성전자와 TSMC가 미국의 신규 수출통제에 따라 중국 고객사에 대한 일부 칩 출하를 중단했다는 보도도 나왔습니다.<br>
+넷째, 외국인 매도와 환율 상승이 서로를 자극하는 구도가 나타났습니다.<br>
+달러 강세와 위험회피 심리가 외국인 매도를 자극했고, 외국인 매도는 다시 환율 상승 압력으로 이어졌습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수급과-시장-장치">수급과 시장 장치<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20#%EC%88%98%EA%B8%89%EA%B3%BC-%EC%8B%9C%EC%9E%A5-%EC%9E%A5%EC%B9%98" class="hash-link" aria-label="Direct link to 수급과 시장 장치" title="Direct link to 수급과 시장 장치" translate="no">​</a></h4>
+<p>유가증권시장에서 외국인은 1조 1,335억 원, 기관은 9,508억 원을 순매도했습니다.<br>
+개인은 1조 5,956억 원을 순매수하며 물량을 받아냈지만, 지수 하락을 막지는 못했습니다.<br>
+기관 내부에서는 연기금만 845억 원을 순매수했고, 금융투자·투신·사모펀드가 모두 순매도에 나섰습니다.<br>
+장중에는 유가증권시장과 코스닥시장에서 매도 사이드카가 잇달아 발동됐습니다.<br>
+코스피 매도 사이드카는 오전 11시 54분에 발동됐고, 발동 당시 코스피200 선물지수는 전일 대비 5.04% 하락한 755.84였습니다.<br>
+코스닥 매도 사이드카는 오후 1시 28분에 발동됐습니다.<br>
+양 시장에서 매도 사이드카가 발동된 것은 11월 6일 이후 10거래일 만입니다.<br>
+서킷브레이커 발동 기준인 전일 대비 8% 하락에는 도달하지 않았습니다.<br>
+삼성전자는 180,900원으로 8.13% 하락했고, SK하이닉스는 1,100,000원으로 7.02% 하락했습니다.<br>
+반면 중국발 개방 기대가 있는 여행·엔터테인먼트·뷰티 테마는 상대적으로 강세를 보였습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>급락일에는 종가 숫자보다 하락의 성격부터 구분하는 것이 도움이 됩니다.<br>
+이날 하락은 특정 업종의 개별 재료보다 미국 기술주 약세, 규제 우려, 외국인 수급이 겹친 시장 전체의 흐름이었습니다.<br>
+외국인과 기관이 동반 순매도하는 국면에서는 단기 반등의 동력이 약해질 수 있습니다.<br>
+환율 방향도 함께 봐야 합니다.<br>
+원·달러 환율이 오르는 국면에서는 외국인 자금의 이탈 압력이 커질 수 있습니다.<br>
+다음에 확인할 지표는 간밤 미국 증시의 흐름, 원·달러 환율의 방향, 외국인의 순매매 지속 여부입니다.<br>
+한편 한국의 연간 수출은 11월 19일 사상 처음으로 1조 달러를 넘어섰습니다.<br>
+당일 시장에서는 인공지능 우려와 외국인 매도세가 수출 호재를 압도했지만, 수출 기록 자체는 경제 체력에 대한 중기적인 평가 요인으로 남아 있습니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-kospi-plunge-521-nov20#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>코스피는 5.21% 급락하며 4,869.96으로 마감했고, 코스닥도 5.71% 하락했습니다.<br>
+하락의 원인과 수급, 시장 장치를 구분해서 정리해 두면 다음 장을 판단하는 기준이 됩니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHhoaW9kZjk2cXRwOXJkbmczbTZld213a3N0bmJscWl2dmduYWdweiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o8dFn38rcJuYAoX4s/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>코스피</category>
+            <category>코스닥</category>
+            <category>시장정리</category>
+            <category>급락</category>
+        </item>
+        <item>
+            <title><![CDATA[원·달러 환율 1,336원, 환율과 주가의 관계를 읽는 법]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide</guid>
+            <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+11월 20일 원·달러 환율은 장중 1,340원을 넘어서며 주식시장 급락과 함께 움직였습니다.<br>
+환율과 주가의 관계를 정리합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>11월 20일 원·달러 환율은 주간 거래 종가 기준 1,336.2원으로 전일 대비 6.2원 올랐습니다.<br>
+장중에는 1,340.3원까지 상승했습니다.<br>
+환율이 오른다는 것은 원화 가치가 떨어지고 달러 가치가 오른다는 뜻입니다.<br>
+같은 날 코스피는 5.21% 급락했고, 외국인은 유가증권시장에서 1조 1,335억 원을 순매도했습니다.<br>
+환율 상승과 외국인 매도, 주가 하락이 같은 방향으로 나타난 하루였습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExczI0NWNxb3QwdG9xanE3NXFpNW4wZzFsdDZ0dXhvcWl5ZDR4NTBtMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5zoxhCaYbdVHoJkmpf/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율이-오르면-무슨-일이-생기는가">환율이 오르면 무슨 일이 생기는가<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide#%ED%99%98%EC%9C%A8%EC%9D%B4-%EC%98%A4%EB%A5%B4%EB%A9%B4-%EB%AC%B4%EC%8A%A8-%EC%9D%BC%EC%9D%B4-%EC%83%9D%EA%B8%B0%EB%8A%94%EA%B0%80" class="hash-link" aria-label="Direct link to 환율이 오르면 무슨 일이 생기는가" title="Direct link to 환율이 오르면 무슨 일이 생기는가" translate="no">​</a></h4>
+<p>환율 상승은 수출기업과 수입기업에 정반대의 영향을 줍니다.<br>
+수출기업은 달러로 받은 대금을 원화로 바꿀 때 더 많은 원화를 얻습니다.<br>
+수입기업은 원자재와 부품을 사는 데 더 많은 원화를 써야 합니다.<br>
+가계에도 영향이 있습니다.<br>
+해외여행과 해외 직구 비용이 늘어나고, 수입 물가가 오르면 소비자물가에도 압력이 생깁니다.<br>
+환율 상승이 곧 주가 하락을 뜻하지는 않습니다.<br>
+수출 비중이 높은 기업에는 오히려 우호적인 요인이 될 수 있습니다.<br>
+다만 환율 상승이 외국인 자금 이탈과 함께 나타나면 주가에 부담이 됩니다.<br>
+외국인 투자자는 원화 자산을 달러로 환산해서 평가합니다.<br>
+원화가 약해지면 달러 기준 수익률이 낮아지므로 매도 압력이 커질 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율과-주가의-순환-구조">환율과 주가의 순환 구조<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide#%ED%99%98%EC%9C%A8%EA%B3%BC-%EC%A3%BC%EA%B0%80%EC%9D%98-%EC%88%9C%ED%99%98-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="Direct link to 환율과 주가의 순환 구조" title="Direct link to 환율과 주가의 순환 구조" translate="no">​</a></h4>
+<p>환율과 주가는 서로 영향을 주고받는 관계입니다.<br>
+달러가 강해지면 외국인은 원화 자산을 팔고 달러로 돌아가려는 유인이 커집니다.<br>
+외국인 매도는 주가를 끌어내리고, 주가 하락은 다시 위험회피 심리를 자극합니다.<br>
+위험회피 심리가 커지면 원화는 더 약해지고 환율은 더 오릅니다.<br>
+11월 20일에는 이 순환이 그대로 나타났습니다.<br>
+미국 기술주 약세로 위험회피 심리가 커졌고, 외국인 매도가 이어지며 환율이 올랐습니다.<br>
+환율 상승은 다시 외국인 매도 압력을 높이는 방향으로 작용했습니다.<br>
+반대로 환율이 안정되면 외국인 매도 압력도 줄어들 수 있습니다.<br>
+순환이 어느 방향으로 도는지 보는 것이 환율을 읽는 출발점입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="환율을-움직이는-요인">환율을 움직이는 요인<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide#%ED%99%98%EC%9C%A8%EC%9D%84-%EC%9B%80%EC%A7%81%EC%9D%B4%EB%8A%94-%EC%9A%94%EC%9D%B8" class="hash-link" aria-label="Direct link to 환율을 움직이는 요인" title="Direct link to 환율을 움직이는 요인" translate="no">​</a></h4>
+<p>환율은 여러 요인이 함께 결정합니다.<br>
+첫째, 한미 금리차입니다.<br>
+미국 금리가 한국 금리보다 높으면 달러 자산의 매력도가 커지고, 달러 수요가 늘어납니다.<br>
+둘째, 달러 자체의 강세입니다.<br>
+미국 경제 지표와 연방준비제도의 통화정책 방향이 달러 가치를 좌우합니다.<br>
+셋째, 무역수지와 경상수지입니다.<br>
+수출이 늘면 달러가 들어오고 원화 수요가 늘어납니다.<br>
+한국의 연간 수출은 11월 19일 사상 처음으로 1조 달러를 넘어섰습니다.<br>
+넷째, 외국인 증권자금의 흐름입니다.<br>
+외국인이 주식을 사면 원화를 사야 하고, 팔면 원화를 팔아야 합니다.<br>
+다섯째, 지정학적 리스크와 시장 심리입니다.<br>
+불확실성이 커지면 안전자산인 달러로 자금이 몰립니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>환율을 볼 때는 종가 숫자 하나보다 방향과 속도를 함께 보는 것이 좋습니다.<br>
+짧은 기간에 빠르게 오르는 환율은 외국인 수급에 부담이 됩니다.<br>
+천천히 오르는 환율은 수출기업 실적에 반영되는 속도와 다를 수 있습니다.<br>
+확인할 지표는 네 가지입니다.<br>
+첫째, 원·달러 환율의 주간 거래 종가와 장중 고점입니다.<br>
+둘째, 외국인의 주식 순매매 규모입니다.<br>
+셋째, 미국 금리와 달러 인덱스의 방향입니다.<br>
+넷째, 한국은행의 외환시장 개입 여부와 관련 발언입니다.<br>
+환율은 예측의 대상이 아니라 확인의 대상입니다.<br>
+환율이 어느 수준에서 안정되는지, 외국인 매도가 잦아드는지를 지켜보는 것이 중요합니다.<br>
+환율 계산 예시를 들어보겠습니다.<br>
+100달러짜리 해외 주식을 살 때 환율이 1,300원이면 13만 원이 필요합니다.<br>
+환율이 1,400원이면 14만 원이 필요합니다.<br>
+같은 주식이라도 환율에 따라 원화 기준 매수 금액이 달라집니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-krw-usd-exchange-rate-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>11월 20일 원·달러 환율은 1,336.2원으로 올랐고, 외국인 매도와 주가 하락이 함께 나타났습니다.<br>
+환율의 방향과 외국인 수급을 함께 보면 시장의 흐름을 더 정확하게 읽을 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2cxZTFxbmFiNW5nbDl5dHFxMmlycmdrYmJnZHh6MG00eThhODNqcyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cdCLRVp5iaJWfrJD4f/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>환율</category>
+            <category>원달러</category>
+            <category>경제지표</category>
+        </item>
+        <item>
+            <title><![CDATA[공매도 제도를 이해합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide</guid>
+            <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+주가가 급락하는 날이면 공매도가 자주 거론됩니다.<br>
+공매도의 구조와 제도를 정리합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h2>
+<p>공매도는 보유하지 않은 주식을 빌려서 파는 거래입니다.<br>
+주가가 내리면 싼 가격에 되사서 갚고 차익을 얻는 구조입니다.<br>
+반대로 주가가 오르면 비싼 가격에 되사야 하므로 손실이 발생합니다.<br>
+국내 증시에서 공매도는 2025년 3월 31일 전면 재개됐습니다.<br>
+코스피200과 코스닥150 종목은 약 17개월 만, 그 외 종목은 약 5년 만의 재개였습니다.<br>
+재개 이후에도 무차입공매도를 막는 장치가 함께 시행되고 있습니다.<br>
+공매도는 주가 하락의 원인이 아니라, 하락을 예상하는 투자자의 포지션을 표현하는 수단입니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExemI4ZDUwbXo3ZHhxNHQwYms4amd6OGRwbjF1c2syaWtkeXl3dzU0eCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7DKnSCGOdKziKURvs4/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="공매도의-기본-구조">공매도의 기본 구조<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide#%EA%B3%B5%EB%A7%A4%EB%8F%84%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%A1%B0" class="hash-link" aria-label="Direct link to 공매도의 기본 구조" title="Direct link to 공매도의 기본 구조" translate="no">​</a></h4>
+<p>공매도는 세 단계로 이뤄집니다.<br>
+첫째, 증권을 빌립니다.<br>
+기관투자자는 대차거래를 통해 주식을 빌리고, 개인투자자는 증권사의 대주 서비스를 이용합니다.<br>
+둘째, 빌린 주식을 시장에서 팝니다.<br>
+셋째, 주가가 내린 뒤 시장에서 되사서 갚습니다.<br>
+계산 예시를 들어보겠습니다.<br>
+주가가 10만 원인 주식 100주를 빌려 팔았다고 가정합니다.<br>
+매도 금액은 1,000만 원입니다.<br>
+주가가 8만 원으로 내리면 800만 원에 되사서 갚습니다.<br>
+차익은 200만 원이며, 여기에 대차 수수료와 이자가 별도로 발생합니다.<br>
+주가가 12만 원으로 오르면 1,200만 원에 되사야 하므로 200만 원의 손실이 발생합니다.<br>
+손실은 이론적으로 제한이 없습니다.<br>
+주가가 오를수록 되사는 가격이 높아지기 때문입니다.<br>
+그래서 공매도 투자자는 손실이 커지기 전에 주식을 되사는 숏커버링에 나서기도 합니다.<br>
+많은 공매도 포지션이 동시에 되사기에 나서면 주가가 급등하는 숏스퀴즈가 발생하기도 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="2025년-전면-재개와-제도-개선">2025년 전면 재개와 제도 개선<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide#2025%EB%85%84-%EC%A0%84%EB%A9%B4-%EC%9E%AC%EA%B0%9C%EC%99%80-%EC%A0%9C%EB%8F%84-%EA%B0%9C%EC%84%A0" class="hash-link" aria-label="Direct link to 2025년 전면 재개와 제도 개선" title="Direct link to 2025년 전면 재개와 제도 개선" translate="no">​</a></h4>
+<p>국내 공매도는 2023년 11월 6일부터 금지됐습니다.<br>
+무차입공매도 위반이 반복 적발되면서 시장의 공정한 가격형성을 저해할 우려가 제기됐기 때문입니다.<br>
+금융위원회는 2024년 6월 13일 공매도 제도개선 방안을 발표했고, 후속 법령 개정을 마친 뒤 2025년 3월 31일 공매도를 전면 재개했습니다.<br>
+재개와 함께 무차입공매도를 막는 전산 시스템이 도입됐습니다.<br>
+한국거래소는 중앙점검 시스템인 NSDS를 구축했고, 기관투자자는 자체 공매도 전산시스템을 갖추거나 빌린 주식을 계좌에 미리 입고하는 사전입고 방식을 택해야 공매도가 가능합니다.<br>
+공매도 목적 대차거래의 상환기간은 90일 이내로 정해졌고, 연장하더라도 총 12개월을 넘을 수 없습니다.<br>
+증권사 대주의 담보비율은 120%에서 105%로 인하됐고, 상환기간은 대차와 통일됐습니다.<br>
+고의적 무차입공매도에 대한 형사처벌도 강화됐습니다.<br>
+자세한 내용은 <a href="https://www.fsc.go.kr/po010105/84216?srchCtgry=&amp;curPage=102&amp;srchKey=&amp;srchText=&amp;srchBeginDt=&amp;srchEndDt=" target="_blank" rel="noopener noreferrer" class="">금융위원회 발표</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="급락장에서-공매도를-읽는-법">급락장에서 공매도를 읽는 법<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide#%EA%B8%89%EB%9D%BD%EC%9E%A5%EC%97%90%EC%84%9C-%EA%B3%B5%EB%A7%A4%EB%8F%84%EB%A5%BC-%EC%9D%BD%EB%8A%94-%EB%B2%95" class="hash-link" aria-label="Direct link to 급락장에서 공매도를 읽는 법" title="Direct link to 급락장에서 공매도를 읽는 법" translate="no">​</a></h4>
+<p>공매도는 가격 발견 기능을 합니다.<br>
+고평가된 주식에 매도 압력을 가해 가격을 적정 수준으로 되돌리는 역할을 합니다.<br>
+반대로 공매도가 급증한 종목은 다음 날 공매도를 제한하는 과열종목 지정제도의 대상이 될 수 있습니다.<br>
+공매도 주문에는 가격 제한도 적용됩니다.<br>
+직전 체결가보다 낮은 가격으로 공매도 호가를 낼 수 없는 업틱룰이 적용됩니다.<br>
+일정 비율 이상의 공매도 잔고는 공시되며, 잔고 비중을 통해 시장의 매도 포지션 규모를 가늠할 수 있습니다.<br>
+공매도 리서치도 주가에 영향을 줍니다.<br>
+11월 20일에는 공매도 리서치 업체가 AMD의 중국 수출통제 위반 의혹을 제기했고, AMD 주가는 7.7% 급락했습니다.<br>
+리서치의 주장이 사실인지는 규제 당국의 판단이 나올 때까지 확정할 수 없습니다.<br>
+그래서 공매도 리포트는 의혹 제기 자체와 사실 확인을 구분해서 읽는 것이 중요합니다.<br>
+공매도 잔고가 많다고 해서 주가가 반드시 내리는 것은 아닙니다.<br>
+숏커버링이 몰리면 오히려 주가가 급등할 수 있기 때문입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h4>
+<p>공매도 관련 정보는 세 가지로 나눠 확인하는 것이 좋습니다.<br>
+첫째, 일별 공매도 거래량과 거래대금입니다.<br>
+거래소 자료에서 종목별 공매도 비중을 확인할 수 있습니다.<br>
+둘째, 공매도 잔고 비중입니다.<br>
+잔고가 쌓인 종목은 숏커버링 가능성과 하락 압력을 함께 안고 있습니다.<br>
+셋째, 대차 잔고와 대주 잔고의 변화입니다.<br>
+빌린 주식의 규모가 늘면 공매도 포지션이 쌓이고 있다는 신호로 읽을 수 있습니다.<br>
+다만 공매도 지표만으로 주가의 방향을 단정할 수는 없습니다.<br>
+공매도는 수급의 한 요소일 뿐이며, 실적과 밸류에이션, 시장 전체의 흐름과 함께 봐야 합니다.<br></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/2026-11-20-short-selling-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h2>
+<p>공매도는 주식을 빌려 팔고 되사는 구조이며, 2025년 3월 재개 이후 무차입공매도 방지 장치가 함께 운영되고 있습니다.<br>
+제도의 구조를 알면 급락장에서 공매도를 둘러싼 해석을 더 차분하게 가려낼 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTMybnVqbTdrYXRnemZvZXlucjI5YTBzeGR1OTdxajEwMmk4MjBqdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oKIPl97G9KsnxS3XG/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>공매도</category>
+            <category>제도해설</category>
+            <category>시장구조</category>
+        </item>
+        <item>
+            <title><![CDATA[코스피 5,137.89, 수출 1조 달러 소식에 반등]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19</link>
+            <guid>https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19</guid>
+            <pubDate>Thu, 19 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 장중 5,000선을 내줬다가 수출 1조 달러 소식에 반등한 11월 19일 시장을 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>11월 19일 코스피는 전 거래일보다 70.45포인트(1.39%) 오른 5,137.89에 마감했습니다.<br>
+코스닥도 22.00포인트(3.32%) 오른 684.81에 마감했습니다.<br>
+수능 시행으로 거래 시간이 한 시간 늦춰져 오전 10시에 장이 열렸습니다.<br>
+지수는 5,090.04로 상승 출발했지만 장 초반 하락세로 돌아섰습니다.<br>
+장중 저점은 4,963.61까지 내려가 5,000선을 내줬습니다.<br>
+오후 들어 반등에 성공했고, 종가는 그날 최고치와 같았습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjZ1MGxzZTFjZmVubmF2ODJjeWJxcm85ampxcG9iOWk5emtjbGI4NyZlcD12MV9jaGFubmVsc19zZWFyY2gmY3Q9cw/B4amykjTzM9kqS80ZO/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="지수-마감-요약">지수 마감 요약<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EC%A7%80%EC%88%98-%EB%A7%88%EA%B0%90-%EC%9A%94%EC%95%BD" class="hash-link" aria-label="Direct link to 지수 마감 요약" title="Direct link to 지수 마감 요약" translate="no">​</a></h4>
+<table><thead><tr><th>지수</th><th>종가</th><th>전일 대비</th><th>등락률</th></tr></thead><tbody><tr><td>코스피</td><td>5,137.89</td><td>+70.45</td><td>+1.39%</td></tr><tr><td>코스닥</td><td>684.81</td><td>+22.00</td><td>+3.32%</td></tr><tr><td>코스피200</td><td>799.57</td><td>+11.86</td><td>+1.51%</td></tr><tr><td>원/달러 환율</td><td>1,328.50원</td><td>-</td><td>-0.39%</td></tr></tbody></table>
+<p>전 거래일 미국 증시는 혼조로 마감했습니다.<br>
+11월 18일 미국 증시 종가는 나스닥 종합 24,429.89(+0.42%), S&amp;P 500 7,323.63(-0.23%)였습니다.<br>
+다우존스30산업평균지수는 1.11% 하락했습니다.<br>
+수치는 <a href="https://mts.kis.finance/v1/home/domestic" target="_blank" rel="noopener noreferrer" class="">한국투자증권 MTS 시장 데이터</a>와 네이버 실시간 지수를 기준으로 확인했습니다.<br>
+지난주 금요일 종가 5,290.53과 비교하면 코스피는 이번 주 들어 2.89% 낮은 수준입니다.<br>
+이틀 연속 반등에도 주간 기준으로는 여전히 하락 구간에 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="장-초반을-누른-재료-엔비디아와-fomc-의사록">장 초반을 누른 재료: 엔비디아와 FOMC 의사록<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EC%9E%A5-%EC%B4%88%EB%B0%98%EC%9D%84-%EB%88%84%EB%A5%B8-%EC%9E%AC%EB%A3%8C-%EC%97%94%EB%B9%84%EB%94%94%EC%95%84%EC%99%80-fomc-%EC%9D%98%EC%82%AC%EB%A1%9D" class="hash-link" aria-label="Direct link to 장 초반을 누른 재료: 엔비디아와 FOMC 의사록" title="Direct link to 장 초반을 누른 재료: 엔비디아와 FOMC 의사록" translate="no">​</a></h4>
+<p>장 초반 투자 심리를 위축시킨 재료는 두 가지였습니다.<br>
+첫째, 엔비디아는 호실적을 발표했음에도 주가가 2.89% 하락했습니다.<br>
+3분기 매출 1,158억 달러, 전년 동기 대비 103% 증가라는 실적에도 주가는 되돌림을 보였습니다.<br>
+젠슨 황 전 최고경영자 사임 이후의 경영 불확실성이 부담으로 거론됐습니다.<br>
+둘째, 미국 연방공개시장위원회 의사록에서 추가 긴축 가능성이 부각됐습니다.<br>
+크리스토퍼 월러 연준 이사가 12월 0.5%포인트 인상 가능성을 언급한 점도 부담이 됐습니다.<br>
+자세한 마감 흐름은 <a href="https://www.hankyung.com/article/2026111980426" target="_blank" rel="noopener noreferrer" class="">한국경제 마감 기사</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="반등의-촉매-수출-1조-달러-돌파">반등의 촉매: 수출 1조 달러 돌파<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EB%B0%98%EB%93%B1%EC%9D%98-%EC%B4%89%EB%A7%A4-%EC%88%98%EC%B6%9C-1%EC%A1%B0-%EB%8B%AC%EB%9F%AC-%EB%8F%8C%ED%8C%8C" class="hash-link" aria-label="Direct link to 반등의 촉매: 수출 1조 달러 돌파" title="Direct link to 반등의 촉매: 수출 1조 달러 돌파" translate="no">​</a></h4>
+<p>오후 들어 분위기를 바꾼 소식은 한국의 연간 수출 1조 달러 돌파였습니다.<br>
+산업통상부는 11월 19일 오후 2시 9분 38초를 기준으로 올해 누적 수출액이 1조 달러를 넘어섰다고 밝혔습니다.<br>
+연간 수출액이 1조 달러를 돌파한 것은 이번이 처음입니다.<br>
+올해 1월부터 10월까지 반도체 수출은 3,968억 달러로 전년 동기보다 193.1% 늘었습니다.<br>
+인공지능 투자 확대에 따른 반도체 수요가 수출 호조를 이끌었습니다.<br>
+한중 자유무역협정 후속 협상 타결 소식도 중국 소비 관련주의 강세를 뒷받침했습니다.<br>
+수출과 한중 협상 소식은 <a href="https://it.chosun.com/news/articleView.html?idxno=3000000001449" target="_blank" rel="noopener noreferrer" class="">조선일보 마감 기사</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수급-외국인은-매도-기관과-기타법인은-매수">수급: 외국인은 매도, 기관과 기타법인은 매수<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EC%88%98%EA%B8%89-%EC%99%B8%EA%B5%AD%EC%9D%B8%EC%9D%80-%EB%A7%A4%EB%8F%84-%EA%B8%B0%EA%B4%80%EA%B3%BC-%EA%B8%B0%ED%83%80%EB%B2%95%EC%9D%B8%EC%9D%80-%EB%A7%A4%EC%88%98" class="hash-link" aria-label="Direct link to 수급: 외국인은 매도, 기관과 기타법인은 매수" title="Direct link to 수급: 외국인은 매도, 기관과 기타법인은 매수" translate="no">​</a></h4>
+<p>코스피에서 외국인은 4,054억 원 순매도를 기록했습니다.<br>
+개인은 560억 원 순매도를 기록했습니다.<br>
+기관은 120억 원 순매수를 기록했습니다.<br>
+기타법인은 4,526억 원 순매수를 기록하며 외국인 매도 물량을 흡수했습니다.<br>
+코스닥에서도 외국인은 2,167억 원 순매도를 기록했습니다.<br>
+코스닥 개인은 64억 원 순매도를 기록했습니다.<br>
+코스닥 기관은 2,257억 원 순매수를 기록했습니다.<br>
+수급 수치는 네이버 시장동향 API를 기준으로 정리했습니다.<br>
+외국인 순매도가 이어지는 가운데 지수가 오른 하루였습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="업종과-종목-반도체-장비와-여행주가-강했습니다">업종과 종목: 반도체 장비와 여행주가 강했습니다<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EC%97%85%EC%A2%85%EA%B3%BC-%EC%A2%85%EB%AA%A9-%EB%B0%98%EB%8F%84%EC%B2%B4-%EC%9E%A5%EB%B9%84%EC%99%80-%EC%97%AC%ED%96%89%EC%A3%BC%EA%B0%80-%EA%B0%95%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to 업종과 종목: 반도체 장비와 여행주가 강했습니다" title="Direct link to 업종과 종목: 반도체 장비와 여행주가 강했습니다" translate="no">​</a></h4>
+<p>삼성전자는 1.13% 오른 196,900원에 마감했습니다.<br>
+SK하이닉스는 3.41% 오른 1,183,000원에 마감했습니다.<br>
+삼성전기는 9.26% 오른 885,000원에 마감했습니다.<br>
+엔비디아 콘퍼런스콜에서 삼성전기와의 기판 협력 확대 기대가 거론됐습니다.<br>
+코스닥에서는 반도체 장비주가 강했습니다.<br>
+HPSP는 11.76%, 리노공업은 10.56%, 원익IPS는 8.33%, ISC는 8.17% 올랐습니다.<br>
+여행주도 한한령 완화 기대에 급등했습니다.<br>
+노랑풍선은 29.98% 올라 상한가를 기록했고, 하나투어는 18.70% 올랐습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>앞으로 확인할 일정이 이어집니다.<br>
+11월 19일 밤에는 미국 인공지능 기업 앤트로픽이 나스닥에 상장합니다.<br>
+공모가는 83달러로 정해졌고, 조달 규모는 약 813억 달러입니다.<br>
+상장 이후 주가 흐름이 국내 인공지능 관련주 투자 심리에 영향을 줄 수 있습니다.<br>
+연준의 12월 금리 결정도 시장의 관심사입니다.<br>
+의사록 이후 추가 인상 가능성이 거론되면서 금리 경로에 대한 확인이 필요합니다.<br>
+외국인 순매도가 이어지는지와 기관 매수의 지속 여부도 함께 확인할 필요가 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/kospi-5137-export-1trillion-nov19#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>수출 1조 달러 소식과 반도체 수요 기대가 장중 5,000선 이탈을 되돌렸습니다.<br>
+다만 외국인 매도가 이어지는 만큼, 반등의 지속 여부는 수급과 미국 금리 경로에 달려 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXBxc29oMjZndWplODZ3bWdvcGttcjdtZXF6bXpqem16cTRwYjJkOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/doPrWYzSG1Vao/giphy.gif" alt="Celebration" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>코스피</category>
+            <category>시장정리</category>
+            <category>수출</category>
+            <category>엔비디아</category>
+        </item>
+        <item>
+            <title><![CDATA[연금저축·IRP 세액공제, 연말까지 남은 한도 확인합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end</link>
+            <guid>https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end</guid>
+            <pubDate>Thu, 19 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 연말정산을 앞두고 연금저축과 IRP 세액공제 한도를 확인하는 방법을 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>연금계좌 세액공제는 연말에 챙겨야 하는 대표적인 절세 항목입니다.<br>
+2026년 귀속 기준으로 연금저축 단독 공제 한도는 연 600만 원입니다.<br>
+연금저축과 IRP를 합치면 연 900만 원까지 공제 대상이 됩니다.<br>
+12월 31일까지 납입한 금액만 올해 공제 대상으로 인정됩니다.<br>
+한 달여 남은 지금, 올해 납입액을 확인하고 남은 한도를 채울지를 점검할 시점입니다.<br>
+이 글은 세무 자문이 아니며, 개인 상황에 따라 공제액은 달라질 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Z1dTQxbWIxenNzMnplNWI2bTVienliaWxwbTM3cHoyMmlzczZmOCZlcD12MV9jaGFubmVsc19zZWFyY2gmY3Q9Zw/sbcReb1vKHfqmFOdzR/giphy.gif" alt="Savings" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="한도-구조-600만-원과-900만-원">한도 구조: 600만 원과 900만 원<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%ED%95%9C%EB%8F%84-%EA%B5%AC%EC%A1%B0-600%EB%A7%8C-%EC%9B%90%EA%B3%BC-900%EB%A7%8C-%EC%9B%90" class="hash-link" aria-label="Direct link to 한도 구조: 600만 원과 900만 원" title="Direct link to 한도 구조: 600만 원과 900만 원" translate="no">​</a></h4>
+<p>연금계좌 세액공제 한도는 두 겹으로 되어 있습니다.<br>
+연금저축만 납입하면 연 600만 원까지 공제 대상이 됩니다.<br>
+IRP를 함께 납입하면 둘을 합쳐 연 900만 원까지 공제 대상이 됩니다.<br>
+IRP만으로 900만 원을 납입해도 한도를 다 채울 수 있습니다.<br>
+반대로 연금저축에만 900만 원을 넣으면 600만 원까지만 인정됩니다.<br>
+남은 한도는 <code>900만 원 − min(연금저축 납입액, 600만 원) − IRP 납입액</code> 으로 계산합니다.<br>
+연금계좌의 연간 납입한도는 1,800만 원입니다.<br>
+900만 원을 넘겨 넣은 부분은 세액공제가 붙지 않습니다.<br>
+근거는 소득세법 제59조의3이며, 국세청과 금융감독원 안내에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="공제율-165와-132">공제율: 16.5%와 13.2%<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%EA%B3%B5%EC%A0%9C%EC%9C%A8-165%EC%99%80-132" class="hash-link" aria-label="Direct link to 공제율: 16.5%와 13.2%" title="Direct link to 공제율: 16.5%와 13.2%" translate="no">​</a></h4>
+<p>세액공제율은 총급여 기준으로 갈립니다.<br>
+총급여 5,500만 원 이하(종합소득금액 4,500만 원 이하)는 16.5%입니다.<br>
+총급여 5,500만 원을 초과하면 13.2%입니다.<br>
+두 수치 모두 지방소득세를 포함한 실제 체감 공제율입니다.<br>
+법정 공제율은 15%와 12%이며, 여기에 지방소득세 10%가 더해집니다.<br></p>
+<table><thead><tr><th>연 납입액</th><th>16.5% 적용 시</th><th>13.2% 적용 시</th></tr></thead><tbody><tr><td>300만 원</td><td>49만 5,000원</td><td>39만 6,000원</td></tr><tr><td>600만 원</td><td>99만 원</td><td>79만 2,000원</td></tr><tr><td>900만 원</td><td>148만 5,000원</td><td>118만 8,000원</td></tr></tbody></table>
+<p>900만 원을 채우면 최대 148만 5,000원을 돌려받습니다.<br>
+계산 과정은 900만 원 × 16.5% = 148만 5,000원입니다.<br>
+공제액은 산출세액을 초과할 수 없습니다.<br>
+낼 세금보다 공제액이 크면 초과분은 돌려받지 못합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="연금저축과-irp의-차이">연금저축과 IRP의 차이<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%EC%97%B0%EA%B8%88%EC%A0%80%EC%B6%95%EA%B3%BC-irp%EC%9D%98-%EC%B0%A8%EC%9D%B4" class="hash-link" aria-label="Direct link to 연금저축과 IRP의 차이" title="Direct link to 연금저축과 IRP의 차이" translate="no">​</a></h4>
+<p>두 계좌는 세액공제 한도를 공유하지만 성격이 다릅니다.<br>
+연금저축은 납입과 운용이 비교적 자유롭습니다.<br>
+IRP는 안전자산 30% 이상을 의무적으로 보유해야 합니다.<br>
+IRP는 법정 사유 외에는 중도 인출이 제한됩니다.<br>
+연금저축은 중도 해지가 가능하지만, 해지 시 세액공제받은 납입 원금과 수익에 기타소득세 16.5%가 부과됩니다.<br>
+만 55세 이후 10년 이상 연금 형태로 수령하면 연금소득세 3.3%에서 5.5%의 낮은 세율이 적용됩니다.<br>
+계좌를 고를 때는 공제 한도뿐 아니라 인출 제한과 운용 제약을 함께 봅니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="연말-납입-순서">연말 납입 순서<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%EC%97%B0%EB%A7%90-%EB%82%A9%EC%9E%85-%EC%88%9C%EC%84%9C" class="hash-link" aria-label="Direct link to 연말 납입 순서" title="Direct link to 연말 납입 순서" translate="no">​</a></h4>
+<p>연말 납입은 네 단계로 확인합니다.<br>
+첫째, 올해 연금저축과 IRP에 넣은 금액을 합산합니다.<br>
+둘째, 남은 공제 한도를 계산합니다.<br>
+셋째, 자신의 총급여 구간에 맞는 공제율을 확인합니다.<br>
+넷째, 12월 31일까지 남은 한도만큼 납입할지를 결정합니다.<br>
+납입일이 12월 31일을 넘기면 해당 금액은 다음 해 공제 대상이 됩니다.<br>
+연말에 몰아서 넣는 경우 이체 처리 시간을 미리 확인하는 것이 안전합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="실무에서-확인할-점">실무에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%EC%8B%A4%EB%AC%B4%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 실무에서 확인할 점" title="Direct link to 실무에서 확인할 점" translate="no">​</a></h3>
+<p>연금계좌 세액공제는 매년 반복되는 항목이지만, 한도와 공제율은 해마다 바뀔 수 있습니다.<br>
+올해 기준은 연금저축 600만 원, 합산 900만 원, 공제율 16.5%와 13.2%입니다.<br>
+이미 납입한 금액은 연금계좌 조회 서비스에서 확인할 수 있습니다.<br>
+중도 해지 시 세금 부담이 크므로, 단기 자금은 연금계좌가 아닌 비상금 통장에 두는 것이 좋습니다.<br>
+이 글은 일반적인 안내이며, 개인의 세무 판단은 전문가 상담으로 확인하는 것이 안전합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/pension-tax-credit-year-end#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>연금 세액공제는 한도와 마감일을 알면 연말에 챙기기 어렵지 않습니다.<br>
+12월 31일이 지나기 전에 올해 납입액과 남은 한도를 한 번 확인해 보시길 바랍니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWRxMjkzNjg4dnp1aDdkcGZwbGtya2tlc29qM3I5eDhibWd3N3U5ayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohuPnkMjrjE5if5Xq/giphy.gif" alt="Retirement" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>연금저축</category>
+            <category>IRP</category>
+            <category>세액공제</category>
+            <category>연말정산</category>
+        </item>
+        <item>
+            <title><![CDATA[수출 1조 달러 시대, 무역수지와 경상수지 읽는 법]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide</guid>
+            <pubDate>Thu, 19 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 한국 수출이 사상 처음 연간 1조 달러를 돌파한 것을 계기로 무역수지와 경상수지를 읽는 법을 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>11월 19일 한국의 연간 누적 수출액이 1조 달러를 넘어섰습니다.<br>
+산업통상부는 오후 2시 9분 38초를 기준으로 올해 누적 수출액이 1조 달러를 돌파했다고 밝혔습니다.<br>
+연간 수출액이 1조 달러를 돌파한 것은 이번이 처음입니다.<br>
+세계에서 연간 수출 1조 달러를 달성한 국가는 독일, 미국, 중국에 이어 한국이 네 번째입니다.<br>
+올해 1월부터 10월까지 반도체 수출은 3,968억 달러로 전년 동기보다 193.1% 늘었습니다.<br>
+수출 호조를 이끈 주역은 반도체입니다.<br>
+수출 규모 자체보다 중요한 것은 이 숫자가 무엇을 의미하는지입니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDNzN2l3NHphYjlhb29iYXFlMnB3c3RqZnVkMW8xaHM5Njlra3pteSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/BqK5K4OD1X3RdlfJxH/giphy.gif" alt="Globe" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="무역수지-상품-수출에서-상품-수입을-뺀-값">무역수지: 상품 수출에서 상품 수입을 뺀 값<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%EB%AC%B4%EC%97%AD%EC%88%98%EC%A7%80-%EC%83%81%ED%92%88-%EC%88%98%EC%B6%9C%EC%97%90%EC%84%9C-%EC%83%81%ED%92%88-%EC%88%98%EC%9E%85%EC%9D%84-%EB%BA%80-%EA%B0%92" class="hash-link" aria-label="Direct link to 무역수지: 상품 수출에서 상품 수입을 뺀 값" title="Direct link to 무역수지: 상품 수출에서 상품 수입을 뺀 값" translate="no">​</a></h4>
+<p>무역수지는 상품의 수출액에서 상품의 수입액을 뺀 값입니다.<br>
+수출이 수입보다 많으면 흑자, 적으면 적자입니다.<br>
+무역수지는 관세청과 산업통상부가 발표하는 수출입 동향에서 확인합니다.<br>
+수출입 동향은 매월 1일에 전월 실적이 발표됩니다.<br>
+무역수지 흑자는 외화가 들어오는 규모가 나가는 규모보다 크다는 뜻입니다.<br>
+다만 수출액이 늘어도 수입액이 함께 늘면 흑자 폭은 커지지 않습니다.<br>
+에너지 수입이 많은 달에는 무역수지가 축소되는 경우도 있습니다.<br>
+품목별로는 반도체와 자동차, 석유화학의 수출 추이를 함께 봅니다.<br>
+수출 증가율이 높다고 해서 무역수지가 자동으로 개선되는 것은 아닙니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="경상수지-나라의-대외-거래-성적표">경상수지: 나라의 대외 거래 성적표<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%EA%B2%BD%EC%83%81%EC%88%98%EC%A7%80-%EB%82%98%EB%9D%BC%EC%9D%98-%EB%8C%80%EC%99%B8-%EA%B1%B0%EB%9E%98-%EC%84%B1%EC%A0%81%ED%91%9C" class="hash-link" aria-label="Direct link to 경상수지: 나라의 대외 거래 성적표" title="Direct link to 경상수지: 나라의 대외 거래 성적표" translate="no">​</a></h4>
+<p>경상수지는 무역수지보다 넓은 개념입니다.<br>
+상품수지에 서비스수지, 본원소득수지, 이전소득수지를 합한 값입니다.<br>
+서비스수지는 여행과 운송, 지식재산권 사용료 등의 수지를 담습니다.<br>
+본원소득수지는 해외 투자에서 받는 배당과 이자, 급여 등의 수지입니다.<br>
+이전소득수지는 무상으로 주고받는 자금의 수지입니다.<br>
+경상수지는 한국은행이 매월 발표합니다.<br>
+발표 시점은 해당 월이 끝난 뒤 약 한 달 뒤입니다.<br>
+한국은 상품수지 흑자가 커서 경상수지 흑자를 유지하는 구조입니다.<br>
+서비스수지는 여행수지 적자 등으로 적자인 경우가 많습니다.<br>
+경상수지 흑자는 나라 전체로 외화가 순유입되고 있다는 의미입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수출이-증시에-미치는-경로">수출이 증시에 미치는 경로<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%EC%88%98%EC%B6%9C%EC%9D%B4-%EC%A6%9D%EC%8B%9C%EC%97%90-%EB%AF%B8%EC%B9%98%EB%8A%94-%EA%B2%BD%EB%A1%9C" class="hash-link" aria-label="Direct link to 수출이 증시에 미치는 경로" title="Direct link to 수출이 증시에 미치는 경로" translate="no">​</a></h4>
+<p>수출 지표는 증시에 세 가지 경로로 영향을 줍니다.<br>
+첫째, 기업 실적입니다.<br>
+수출이 늘면 수출 기업의 매출과 이익이 늘어날 가능성이 커집니다.<br>
+둘째, 환율입니다.<br>
+경상수지 흑자가 이어지면 원화의 하방 압력이 완화되는 경향이 있습니다.<br>
+셋째, 경기 신뢰입니다.<br>
+수출 호조는 제조업 경기가 버티고 있다는 신호로 읽힙니다.<br>
+다만 수출 증가가 특정 품목에 쏠려 있으면 해석에 주의가 필요합니다.<br>
+반도체 한 품목의 증가가 전체 수출을 끌어올리는 경우도 있기 때문입니다.<br>
+품목별 분산과 지역별 분산을 함께 보는 것이 중요합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="확인할-지표와-발표-일정">확인할 지표와 발표 일정<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A7%80%ED%91%9C%EC%99%80-%EB%B0%9C%ED%91%9C-%EC%9D%BC%EC%A0%95" class="hash-link" aria-label="Direct link to 확인할 지표와 발표 일정" title="Direct link to 확인할 지표와 발표 일정" translate="no">​</a></h4>
+<p>월간 수출입 동향은 매월 1일에 산업통상부가 발표합니다.<br>
+품목별·지역별 수출 증감률과 무역수지를 함께 확인합니다.<br>
+경상수지는 한국은행이 매월 초에 발표합니다.<br>
+발표 자료는 <a href="https://ecos.bok.or.kr/" target="_blank" rel="noopener noreferrer" class="">한국은행 경제통계시스템</a>에서 확인할 수 있습니다.<br>
+월별 수치보다 분기 추세로 보는 것이 흐름 파악에 도움이 됩니다.<br>
+계절 요인이 있는 달은 전년 동기 대비 증감률로 비교하는 것이 정확합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>수출 1조 달러는 상징적인 기록이지만, 투자 판단은 구조를 보고 내리는 것이 좋습니다.<br>
+어떤 품목이 수출을 이끌고 있는지, 수입은 어떻게 움직이는지를 함께 확인합니다.<br>
+경상수지 흑자가 환율에 어떤 방향으로 작용하는지도 점검합니다.<br>
+수출 기업 실적은 환율과 원자재 가격의 영향을 함께 받습니다.<br>
+지표 하나만으로 추세를 단정하지 않고, 발표 일정을 따라 추세를 확인하는 습관이 필요합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/trade-balance-current-account-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>수출 1조 달러는 한국 경제의 체력을 보여주는 기록입니다.<br>
+무역수지와 경상수지의 구조를 알면 이 기록이 시장에 주는 의미를 더 정확히 읽을 수 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3Vha28yb2p5MTNzbjRiNnpjNnc1djc2cXBjbjUxd3pvMXlqdmduaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/SvYfJTrijDP6MqvkYx/giphy.gif" alt="Chart" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>무역수지</category>
+            <category>경상수지</category>
+            <category>수출</category>
+            <category>경제지표</category>
+        </item>
+        <item>
+            <title><![CDATA[한한령 완화 기대에 여행주가 뛴 하루]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally</link>
+            <guid>https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally</guid>
+            <pubDate>Thu, 19 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 한중 협상 타결 소식에 여행주가 급등한 배경과 이 테마의 구조를 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>11월 19일 여행주는 시장을 대표하는 강세 테마였습니다.<br>
+노랑풍선은 29.98% 올라 상한가를 기록했습니다.<br>
+하나투어는 18.70%, 참좋은여행은 16.44% 올랐습니다.<br>
+롯데관광개발은 7.28%, 모두투어는 4.66% 올랐습니다.<br>
+수치는 <a href="https://mts.kis.finance/v1/home/domestic" target="_blank" rel="noopener noreferrer" class="">한국투자증권 MTS 시장 데이터</a>의 테마 순위를 기준으로 확인했습니다.<br>
+한중 자유무역협정 서비스·투자 후속 협상이 실질 타결됐다는 소식이 계기였습니다.<br>
+중국 콘텐츠 시장 재개방 기대가 커지면서 여행과 소비 관련주가 함께 움직였습니다.<br>
+한한령 완화 기대감은 화장품과 엔터테인먼트 업종으로 확산되는 모습도 나타났습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGxmb3R1cjI2MWxjbWg5cjBxNWFyNzBjMm15bzN3am1laGxqbnpveiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Btn42lfKKrOzS/giphy.gif" alt="Airplane" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="여행주는-어떻게-돈을-버는가">여행주는 어떻게 돈을 버는가<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%EC%97%AC%ED%96%89%EC%A3%BC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8F%88%EC%9D%84-%EB%B2%84%EB%8A%94%EA%B0%80" class="hash-link" aria-label="Direct link to 여행주는 어떻게 돈을 버는가" title="Direct link to 여행주는 어떻게 돈을 버는가" translate="no">​</a></h4>
+<p>여행사의 수익 구조는 크게 세 가지로 나뉩니다.<br>
+첫째, 패키지 여행 상품 판매 마진입니다.<br>
+항공권과 숙박을 묶어 판매하고 일정 비율의 마진을 남깁니다.<br>
+둘째, 항공권과 호텔 단품 판매 수수료입니다.<br>
+셋째, 현지 투어와 입장권 등 부가 상품 판매입니다.<br>
+여행 수요는 경기와 환율, 항공 공급에 민감하게 반응합니다.<br>
+원화 약세는 해외여행 비용을 높여 수요를 줄이는 요인입니다.<br>
+반대로 원화 강세는 해외여행 수요에 우호적입니다.<br>
+항공 좌석 공급이 늘면 패키지 가격 경쟁이 심해지기도 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="중국-소비-테마는-어디까지인가">중국 소비 테마는 어디까지인가<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%EC%A4%91%EA%B5%AD-%EC%86%8C%EB%B9%84-%ED%85%8C%EB%A7%88%EB%8A%94-%EC%96%B4%EB%94%94%EA%B9%8C%EC%A7%80%EC%9D%B8%EA%B0%80" class="hash-link" aria-label="Direct link to 중국 소비 테마는 어디까지인가" title="Direct link to 중국 소비 테마는 어디까지인가" translate="no">​</a></h4>
+<p>중국 소비 관련주는 여행주 하나만으로 구성되지 않습니다.<br>
+화장품, 엔터테인먼트, 면세, 카지노, 항공이 함께 묶이는 경우가 많습니다.<br>
+중국인 관광객이 늘면 면세점과 화장품 매출이 함께 늘어나는 구조이기 때문입니다.<br>
+콘텐츠 교류가 확대되면 엔터테인먼트와 방송 관련주의 기대도 함께 커집니다.<br>
+다만 업종마다 중국 매출이 차지하는 비중은 다릅니다.<br>
+여행주는 중국인 방한 관광객 수에 직접 연결됩니다.<br>
+화장품은 중국 현지 판매와 면세 채널의 비중을 함께 봐야 합니다.<br>
+엔터테인먼트는 중국 내 공연과 콘텐츠 유통의 재개 여부가 관건입니다.<br>
+같은 테마로 묶여도 실적에 반영되는 경로와 시점은 업종마다 다릅니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="기대감과-실적-사이의-간극">기대감과 실적 사이의 간극<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%EA%B8%B0%EB%8C%80%EA%B0%90%EA%B3%BC-%EC%8B%A4%EC%A0%81-%EC%82%AC%EC%9D%B4%EC%9D%98-%EA%B0%84%EA%B7%B9" class="hash-link" aria-label="Direct link to 기대감과 실적 사이의 간극" title="Direct link to 기대감과 실적 사이의 간극" translate="no">​</a></h4>
+<p>이날의 상승은 정책 기대감에 기반한 움직임입니다.<br>
+한한령 완화는 아직 기대 단계이며, 구체적인 조치와 시점은 확인이 필요합니다.<br>
+협상 타결 소식이 전해졌다고 해서 관광객 수와 매출이 바로 늘어나는 것은 아닙니다.<br>
+정책 기대가 커질 때 주가는 실적보다 먼저 움직이는 경우가 많습니다.<br>
+기대감이 실적 확인으로 이어지지 않으면 주가는 되돌림을 보이기도 합니다.<br>
+반대로 관광객 수와 예약률이 실제로 개선되면 상승의 근거가 강화됩니다.<br>
+11월 18일에도 방송·엔터테인먼트 업종이 강세를 보인 바 있습니다.<br>
+이틀 연속으로 중국 소비 기대가 시장을 움직이고 있다는 점은 흐름으로 참고할 만합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="확인할-지표-세-가지">확인할 지표 세 가지<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A7%80%ED%91%9C-%EC%84%B8-%EA%B0%80%EC%A7%80" class="hash-link" aria-label="Direct link to 확인할 지표 세 가지" title="Direct link to 확인할 지표 세 가지" translate="no">​</a></h4>
+<p>첫째, 중국인 방한 관광객 수입니다.<br>
+한국관광공사와 법무부가 발표하는 월별 입국자 통계를 확인합니다.<br>
+둘째, 여행사의 패키지 예약률과 평균 판매 단가입니다.<br>
+분기 실적 발표에서 예약 추이와 마진 변화를 확인합니다.<br>
+셋째, 원·달러 환율과 유가입니다.<br>
+환율은 여행 수요와 항공사 비용에 동시에 영향을 줍니다.<br>
+유가 상승은 항공권 가격과 여행사 원가에 부담이 됩니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>테마주는 같은 재료에도 종목별 반응이 크게 갈릴 수 있습니다.<br>
+중국 매출 비중과 재무 구조, 유동성을 종목마다 따로 확인하는 것이 필요합니다.<br>
+정책 뉴스는 하루 만에 분위기가 바뀌기도 합니다.<br>
+공식 발표와 실제 조치의 차이를 구분해서 보는 습관이 필요합니다.<br>
+실적 시즌에는 기대감이 숫자로 확인되는지를 점검하는 것이 중요합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/travel-china-consumption-rally#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>여행주 급등은 한중 협상 타결이라는 정책 기대가 만든 움직임입니다.<br>
+기대감이 실적이 되려면 관광객 수와 예약률이라는 숫자의 확인이 뒤따라야 합니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDk4ODFsNHpiY3NodXkyaTVlOW40NjZ3aWVyamw3MmdqZnh5a2VzZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/14wXMGbHjXK2k0/giphy.gif" alt="Travel" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>여행주</category>
+            <category>중국소비</category>
+            <category>테마</category>
+            <category>한한령</category>
+        </item>
+        <item>
+            <title><![CDATA[연말 배당주, 배당기준일과 배당수익률부터 확인합니다]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/year-end-dividend-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/year-end-dividend-guide</guid>
+            <pubDate>Thu, 19 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 연말 배당 시즌을 앞두고 배당기준일과 배당수익률을 확인하는 방법을 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>연말이 다가오면 배당에 대한 관심이 커집니다.<br>
+12월 결산법인의 배당은 연말을 전후해 일정이 정해집니다.<br>
+배당을 받으려면 배당기준일 전에 주식을 보유하고 있어야 합니다.<br>
+배당수익률이 높아 보이는 종목을 급하게 사는 경우도 있습니다.<br>
+하지만 배당의 구조를 모르고 사면 배당금보다 주가 하락 폭이 큰 경우도 생깁니다.<br>
+배당을 받기 전에 기준일과 수익률, 세금을 순서대로 확인하는 것이 필요합니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDZ6MHFiZDB3a3hmY2wyNXozdTZuYXo5bzA1emw5dXVreXowYmhxaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9HQRIttS5C4Za/giphy.gif" alt="Money" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당기준일과-배당락일">배당기준일과 배당락일<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%EB%B0%B0%EB%8B%B9%EA%B8%B0%EC%A4%80%EC%9D%BC%EA%B3%BC-%EB%B0%B0%EB%8B%B9%EB%9D%BD%EC%9D%BC" class="hash-link" aria-label="Direct link to 배당기준일과 배당락일" title="Direct link to 배당기준일과 배당락일" translate="no">​</a></h4>
+<p>배당기준일은 배당을 받을 주주를 정하는 날입니다.<br>
+이 날 주주명부에 올라 있는 주주에게 배당이 지급됩니다.<br>
+기준일 다음 거래일을 배당락일이라고 부릅니다.<br>
+배당락일에는 배당받을 권리가 사라지기 때문에 주가가 배당금만큼 낮아지는 경향이 있습니다.<br>
+주식은 결제일 기준으로 주주가 확정되므로, 기준일 이틀 전까지는 매수를 마쳐야 하는 경우가 많습니다.<br>
+정확한 매수 마감일은 회사 공시와 증권사 안내로 확인하는 것이 안전합니다.<br>
+배당기준일은 회사 정관과 이사회 결의로 정해집니다.<br>
+최근에는 배당 규모를 먼저 공시한 뒤 기준일을 정하는 회사도 늘고 있습니다.<br>
+배당을 받기 전에 해당 회사의 배당기준일 공시를 확인하는 것이 우선입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당수익률-계산법">배당수익률 계산법<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%EB%B0%B0%EB%8B%B9%EC%88%98%EC%9D%B5%EB%A5%A0-%EA%B3%84%EC%82%B0%EB%B2%95" class="hash-link" aria-label="Direct link to 배당수익률 계산법" title="Direct link to 배당수익률 계산법" translate="no">​</a></h4>
+<p>배당수익률은 주당 배당금을 주가로 나눈 값입니다.<br>
+계산식은 <code>주당 배당금 ÷ 주가 × 100</code> 입니다.<br>
+예를 들어 주가가 50,000원이고 주당 배당금이 2,000원이면 배당수익률은 4%입니다.<br>
+계산 과정은 2,000원 ÷ 50,000원 × 100 = 4% 입니다.<br>
+같은 배당금이라도 주가가 오르면 배당수익률은 낮아집니다.<br>
+반대로 주가가 떨어지면 배당수익률은 높아 보입니다.<br>
+주가 하락으로 높아진 배당수익률은 배당이 늘어난 것이 아닙니다.<br>
+배당수익률만 보고 종목을 고르면 이 함정에 빠질 수 있습니다.<br>
+주당 배당금의 추이와 배당성향을 함께 확인하는 것이 필요합니다.<br>
+배당성향은 순이익 중 배당으로 지급하는 비율입니다.<br>
+배당성향이 안정적인 회사는 배당의 지속 가능성을 판단하기가 쉽습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당에-붙는-세금">배당에 붙는 세금<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%EB%B0%B0%EB%8B%B9%EC%97%90-%EB%B6%99%EB%8A%94-%EC%84%B8%EA%B8%88" class="hash-link" aria-label="Direct link to 배당에 붙는 세금" title="Direct link to 배당에 붙는 세금" translate="no">​</a></h4>
+<p>배당소득에는 세금이 붙습니다.<br>
+배당소득세율은 15.4%이며, 지급 시 원천징수됩니다.<br>
+예를 들어 배당금 100만 원을 받으면 세금 15만 4,000원을 제외한 84만 6,000원을 수령합니다.<br>
+금융소득이 연간 2,000만 원을 넘으면 종합과세 대상이 됩니다.<br>
+이자소득과 배당소득을 합산한 금융소득이 기준을 넘으면 다른 소득과 합산해 세율이 정해집니다.<br>
+금융소득이 적은 경우에는 원천징수로 과세가 종결됩니다.<br>
+배당금을 재투자할 때도 세후 금액으로 계산하는 것이 정확합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="배당락-이후를-보는-법">배당락 이후를 보는 법<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%EB%B0%B0%EB%8B%B9%EB%9D%BD-%EC%9D%B4%ED%9B%84%EB%A5%BC-%EB%B3%B4%EB%8A%94-%EB%B2%95" class="hash-link" aria-label="Direct link to 배당락 이후를 보는 법" title="Direct link to 배당락 이후를 보는 법" translate="no">​</a></h4>
+<p>배당락일 이후 주가는 배당금만큼 낮아지는 경향이 있습니다.<br>
+배당을 받은 투자자는 주가 하락분을 배당금으로 메우는 구조입니다.<br>
+주가가 배당락 이전 수준을 회복하는 데 걸리는 시간을 배당락 메우기라고 부릅니다.<br>
+실적이 좋은 회사는 배당락 이후 주가가 빠르게 회복되는 경우가 있습니다.<br>
+반대로 실적이 약한 회사는 배당락 이후 주가가 회복되지 않는 경우도 있습니다.<br>
+배당만 보고 매수하면 배당금보다 큰 주가 하락을 겪을 수 있습니다.<br>
+배당의 크기와 회사의 이익 체력을 함께 보는 것이 중요합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>연말 배당을 확인할 때는 세 가지를 순서대로 봅니다.<br>
+첫째, 배당기준일 공시와 매수 마감일입니다.<br>
+둘째, 주당 배당금과 배당수익률, 배당성향입니다.<br>
+셋째, 세후 수령액과 금융소득 합산 여부입니다.<br>
+배당수익률이 높다는 이유만으로 매수 결정을 내리는 것은 위험합니다.<br>
+배당은 기업의 이익이 전제돼야 지속되는 현금 흐름입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/year-end-dividend-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>배당은 기준일을 알아야 받고, 수익률을 알아야 크기를 가늠할 수 있습니다.<br>
+연말 배당 시즌에는 배당의 구조와 세금을 먼저 확인한 뒤에 판단하는 것이 좋습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzh3YjY3N3k2OGQyc3pnNThyeDZnOWJuYnJsZHJ1bzA3Mm1xbjlpeCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ohhwwqBldJtJZxP9u/giphy.gif" alt="Piggy Bank" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>배당</category>
+            <category>배당수익률</category>
+            <category>배당기준일</category>
+            <category>연말</category>
+        </item>
+        <item>
+            <title><![CDATA[실적 가이던스 읽는 법, 엔비디아 4분기 전망을 사례로]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide</guid>
+            <pubDate>Wed, 18 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 실적 발표에서 가이던스를 읽는 방법을 엔비디아 4분기 전망을 사례로 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>엔비디아는 11월 18일 2027회계연도 3분기 실적을 발표했습니다.<br>
+분기 매출은 1,158억 달러로 전년 동기보다 103% 늘었습니다.<br>
+시장 전망치 1,091억 달러를 6% 이상 웃돌았습니다.<br>
+조정 주당순이익은 2.68달러로 시장 예상치 2.47달러를 웃돌았습니다.<br>
+시장의 관심은 이미 발표된 분기 실적보다 다음 분기 전망으로 옮겨갔습니다.<br>
+엔비디아는 4분기 매출 전망을 1,300억 달러(±3%)로 제시했습니다.<br>
+이 전망이 시장 예상치를 웃돌면서 시간외 거래에서 주가는 상승세를 나타냈습니다.<br>
+실적 발표를 읽을 때 가이던스가 왜 중요한지, 이번 사례로 살펴보겠습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3JwcmM1MHl5dTVxNmptazE4dW90eXI4azl5dHd6N2RrcGUydHR5dCZlcD12MV9jaGFubmVsc19zZWFyY2gmY3Q9Zw/26FfbwHH9Ubq4UxLq/giphy.gif" alt="Rocket" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="가이던스란-무엇인가">가이던스란 무엇인가<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80" class="hash-link" aria-label="Direct link to 가이던스란 무엇인가" title="Direct link to 가이던스란 무엇인가" translate="no">​</a></h4>
+<p>가이던스는 기업이 직접 제시하는 다음 분기나 다음 해의 실적 전망입니다.<br>
+매출과 이익, 매출총이익률 같은 항목을 대상으로 합니다.<br>
+발표된 실적이 과거의 성적표라면, 가이던스는 회사가 내다보는 앞날의 방향입니다.<br>
+주가는 과거 실적보다 앞으로의 실적 전망에 더 민감하게 반응하는 경우가 많습니다.<br>
+그래서 호실적에도 주가가 떨어지는 일이 생깁니다.<br>
+실적은 예상을 웃돌았지만 가이던스가 기대에 못 미쳤을 때가 대표적입니다.<br>
+반대로 실적이 기대에 못 미쳐도 가이던스가 좋으면 주가가 오르기도 합니다.<br>
+가이던스는 실적 발표의 뒷부분이자 콘퍼런스콜의 핵심 주제입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="범위를-읽는-법-1300억-달러-3">범위를 읽는 법: 1,300억 달러 ±3%<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%EB%B2%94%EC%9C%84%EB%A5%BC-%EC%9D%BD%EB%8A%94-%EB%B2%95-1300%EC%96%B5-%EB%8B%AC%EB%9F%AC-3" class="hash-link" aria-label="Direct link to 범위를 읽는 법: 1,300억 달러 ±3%" title="Direct link to 범위를 읽는 법: 1,300억 달러 ±3%" translate="no">​</a></h4>
+<p>엔비디아의 4분기 매출 전망은 1,300억 달러에 오차 범위 ±3%가 붙었습니다.<br>
+범위로 환산하면 1,261억 달러에서 1,339억 달러 사이입니다.<br>
+계산은 1,300억 달러에 0.97과 1.03을 각각 곱하는 방식입니다.<br>
+중간값 1,300억 달러는 시장 예상치 1,252억 5,000만 달러를 약 3.8% 웃돕니다.<br>
+범위의 하단인 1,261억 달러도 시장 예상치를 웃돕니다.<br>
+이 점이 이번 가이던스가 긍정적으로 읽힌 이유입니다.<br>
+범위가 넓으면 회사의 확신이 낮다고 해석될 수 있습니다.<br>
+범위가 좁으면 회사가 수요를 비교적 정확히 가늠하고 있다고 해석됩니다.<br>
+다만 범위의 폭만으로 확신을 단정하기는 어렵습니다.<br>
+업황의 변동성이 큰 시기에는 범위 자체가 넓어지기 때문입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="가이던스를-비교하는-세-가지-기준">가이던스를 비교하는 세 가지 기준<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%EB%A5%BC-%EB%B9%84%EA%B5%90%ED%95%98%EB%8A%94-%EC%84%B8-%EA%B0%80%EC%A7%80-%EA%B8%B0%EC%A4%80" class="hash-link" aria-label="Direct link to 가이던스를 비교하는 세 가지 기준" title="Direct link to 가이던스를 비교하는 세 가지 기준" translate="no">​</a></h4>
+<p>첫째, 시장 예상치와의 비교입니다.<br>
+가이던스 중간값이 컨센서스보다 높은지 낮은지를 먼저 봅니다.<br>
+이번 엔비디아 가이던스는 중간값 기준으로 시장 예상치를 웃돌았습니다.<br>
+둘째, 직전 분기와의 비교입니다.<br>
+4분기 전망 1,300억 달러는 3분기 매출 1,158억 달러보다 약 12% 높은 수준입니다.<br>
+성장세가 이어지는지를 가늠하는 기준이 됩니다.<br>
+셋째, 수익성 전망과의 비교입니다.<br>
+엔비디아는 4분기 매출총이익률 전망을 71.0%에서 72.0%로 제시했습니다.<br>
+3분기 매출총이익률 74.8%보다는 낮은 수준입니다.<br>
+매출은 늘어도 수익성은 낮아질 수 있다는 점을 보여줍니다.<br>
+매출 전망만 보고 수익성 전망을 놓치면 전체 그림을 오해할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="단기-가이던스와-장기-전망은-따로-본다">단기 가이던스와 장기 전망은 따로 본다<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%EB%8B%A8%EA%B8%B0-%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%EC%99%80-%EC%9E%A5%EA%B8%B0-%EC%A0%84%EB%A7%9D%EC%9D%80-%EB%94%B0%EB%A1%9C-%EB%B3%B8%EB%8B%A4" class="hash-link" aria-label="Direct link to 단기 가이던스와 장기 전망은 따로 본다" title="Direct link to 단기 가이던스와 장기 전망은 따로 본다" translate="no">​</a></h4>
+<p>엔비디아는 2028회계연도 매출 성장률 전망도 함께 높였습니다.<br>
+기존 70%에서 약 75%로 상향했습니다.<br>
+단기 가이던스와 장기 전망은 성격이 다릅니다.<br>
+단기 가이던스는 다음 분기의 수주와 생산 계획에 가깝습니다.<br>
+장기 전망은 시장 성장과 회사의 투자 계획에 대한 방향 제시입니다.<br>
+장기 전망이 상향됐다고 해서 다음 분기 실적이 보장되는 것은 아닙니다.<br>
+반대로 단기 가이던스가 좋아도 장기 전망이 그대로라면 해석은 달라집니다.<br>
+두 전망을 각각의 자리에서 읽는 편이 정확합니다.<br>
+한편 이번 4분기 매출 전망에는 중국 데이터센터 연산 매출이 포함되지 않았습니다.<br>
+전망의 전제 조건이 무엇인지도 함께 확인해야 합니다.<br>
+자세한 내용은 <a href="https://newsway.co.kr/news/view?ud=2026111807273891348" target="_blank" rel="noopener noreferrer" class="">뉴스웨이 보도</a>에서 확인할 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>실적 발표를 볼 때는 발표 실적과 가이던스를 함께 봅니다.<br>
+어느 쪽이 시장 예상을 웃돌았는지, 어느 쪽이 못 미쳤는지를 나눠서 정리합니다.<br>
+가이던스의 중간값과 시장 예상치의 차이를 숫자로 계산해봅니다.<br>
+범위의 하단이 시장 예상치를 웃도는지 여부도 함께 확인합니다.<br>
+수익성 전망이 매출 전망과 같은 방향인지도 봅니다.<br>
+가이던스가 제시되지 않은 기업도 있습니다.<br>
+이 경우에는 콘퍼런스콜에서 경영진이 밝힌 수요와 수주 관련 발언을 참고합니다.<br>
+가이던스는 회사의 전망이지 약속이 아닙니다.<br>
+실적 발표 이후의 시장 환경 변화에 따라 달라질 수 있다는 점을 함께 기억합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/earnings-guidance-reading-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>가이던스는 과거 실적보다 주가를 더 크게 움직이는 경우가 많습니다.<br>
+다음 실적 발표에서는 발표 숫자만큼이나 가이던스의 범위와 전제를 함께 확인해 보시기 바랍니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExam1sbjU3eHpvMTNyMHVqeDFqMnFtMmxmMTYzazRnZGNpODU1ZGpteSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/KaRC4U4TvXeVrhBHx6/giphy.gif" alt="Target" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>가이던스</category>
+            <category>실적발표</category>
+            <category>엔비디아</category>
+            <category>개념</category>
+        </item>
+        <item>
+            <title><![CDATA[한중 문화 교류 기대에 엔터주 강세, 콘텐츠 산업 구조를 읽는 법]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/entertainment-content-structure</link>
+            <guid>https://code-bross.github.io/blog/en/finance/entertainment-content-structure</guid>
+            <pubDate>Wed, 18 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 강세를 보인 엔터테인먼트와 콘텐츠 산업의 구조를 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/entertainment-content-structure#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>11월 18일 방송과 엔터테인먼트 업종은 6.88% 올랐습니다.<br>
+이날 업종 상승 폭으로는 가장 컸습니다.<br>
+에스엠은 1만 1,000원(14.30%) 오른 8만 7,900원에 마감했습니다.<br>
+JYP Ent.는 4만 6,750원으로 8.72% 올랐습니다.<br>
+하이브는 16만 6,600원으로 7.62% 올랐습니다.<br>
+CJ ENM은 4만 2,150원으로 7.39% 올랐습니다.<br>
+와이지엔터테인먼트도 4.92% 올랐습니다.<br>
+한중 문화 콘텐츠 교류 확대 기대가 거론됐습니다.<br>
+한국투자증권 MTS 테마 기준으로도 엔터테인먼트 테마는 12.92% 올랐습니다.<br>
+테마에 속한 13개 종목 가운데 12개 종목이 상승했습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzUxajhxNDZuMjg1ZG0ya3dhd3E5YWZwZHplYnBpNmxuZGVzcGxobSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7YkJmpAG5Y7fIQKnfQ/giphy.gif" alt="Concert" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="아티스트-ip를-중심으로-이어지는-가치사슬">아티스트 IP를 중심으로 이어지는 가치사슬<a href="https://code-bross.github.io/blog/en/finance/entertainment-content-structure#%EC%95%84%ED%8B%B0%EC%8A%A4%ED%8A%B8-ip%EB%A5%BC-%EC%A4%91%EC%8B%AC%EC%9C%BC%EB%A1%9C-%EC%9D%B4%EC%96%B4%EC%A7%80%EB%8A%94-%EA%B0%80%EC%B9%98%EC%82%AC%EC%8A%AC" class="hash-link" aria-label="Direct link to 아티스트 IP를 중심으로 이어지는 가치사슬" title="Direct link to 아티스트 IP를 중심으로 이어지는 가치사슬" translate="no">​</a></h4>
+<p>엔터테인먼트 산업은 아티스트라는 지식재산권(IP)에서 출발합니다.<br>
+기획사는 연습생을 발굴해 데뷔시키고 음반과 음원을 냅니다.<br>
+음반과 음원은 팬덤 형성의 출발점입니다.<br>
+팬덤이 커지면 공연과 월드투어로 이어집니다.<br>
+공연은 티켓 판매뿐 아니라 현장 굿즈 판매로도 연결됩니다.<br>
+아티스트 IP는 MD와 라이선싱 사업으로 확장됩니다.<br>
+캐릭터 상품과 브랜드 협업이 여기에 해당합니다.<br>
+최근에는 팬덤 플랫폼 사업도 수익 축으로 자리 잡았습니다.<br>
+팬 커뮤니티와 커머스, 콘텐츠를 한곳에 묶는 구조입니다.<br>
+즉 하나의 IP가 음반, 공연, MD, 플랫폼으로 이어지는 다단계 구조입니다.<br>
+어느 한 단계의 성과가 다른 단계의 매출로 연결되는 선순환이 핵심입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수익-구조의-특징-해외-비중과-계절성">수익 구조의 특징: 해외 비중과 계절성<a href="https://code-bross.github.io/blog/en/finance/entertainment-content-structure#%EC%88%98%EC%9D%B5-%EA%B5%AC%EC%A1%B0%EC%9D%98-%ED%8A%B9%EC%A7%95-%ED%95%B4%EC%99%B8-%EB%B9%84%EC%A4%91%EA%B3%BC-%EA%B3%84%EC%A0%88%EC%84%B1" class="hash-link" aria-label="Direct link to 수익 구조의 특징: 해외 비중과 계절성" title="Direct link to 수익 구조의 특징: 해외 비중과 계절성" translate="no">​</a></h4>
+<p>엔터테인먼트 기업의 매출은 해외 비중이 높은 편입니다.<br>
+음반 수출과 해외 투어, 해외 팬덤 플랫폼 이용이 해외 매출을 만듭니다.<br>
+그래서 원/달러 환율 움직임이 실적에 영향을 줍니다.<br>
+원화 약세는 원화 환산 매출에 우호적으로 작용할 수 있습니다.<br>
+반대로 해외 규제나 교류 환경 변화에도 민감합니다.<br>
+중국 시장의 문호 개방 여부가 거론되는 이유도 여기에 있습니다.<br>
+실적에는 계절성도 뚜렷합니다.<br>
+주요 아티스트의 컴백과 월드투어 일정에 따라 분기 실적이 크게 달라집니다.<br>
+신인 데뷔와 대형 투어의 성패가 해당 분기의 실적을 좌우하기도 합니다.<br>
+그래서 연간 실적을 볼 때는 분기보다 연간 일정 전체를 함께 보는 편이 낫습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="콘텐츠-제작사의-자리">콘텐츠 제작사의 자리<a href="https://code-bross.github.io/blog/en/finance/entertainment-content-structure#%EC%BD%98%ED%85%90%EC%B8%A0-%EC%A0%9C%EC%9E%91%EC%82%AC%EC%9D%98-%EC%9E%90%EB%A6%AC" class="hash-link" aria-label="Direct link to 콘텐츠 제작사의 자리" title="Direct link to 콘텐츠 제작사의 자리" translate="no">​</a></h4>
+<p>CJ ENM 같은 콘텐츠 제작사는 드라마와 영화 제작이 중심입니다.<br>
+제작한 콘텐츠는 방송과 OTT, 해외 판권을 통해 판매됩니다.<br>
+흥행작 한 편이 전체 실적을 바꾸기도 합니다.<br>
+반대로 제작비가 늘어나면 흥행에 실패했을 때 부담도 커집니다.<br>
+제작사는 IP를 확보해 시리즈화하는 전략을 함께 씁니다.<br>
+인기 IP는 후속 시즌과 파생 콘텐츠로 수명을 늘립니다.<br>
+엔터테인먼트 기획사와 콘텐츠 제작사는 사업 영역이 다릅니다.<br>
+다만 IP를 중심으로 수익을 다각화한다는 점에서는 같은 방향을 향합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/entertainment-content-structure#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>교류 확대 기대가 실제 계약과 매출로 이어지는지를 확인할 필요가 있습니다.<br>
+기대감만으로 오른 주가는 구체적인 성과가 뒤따르지 않으면 되돌릴 수 있습니다.<br>
+주요 아티스트의 컴백과 월드투어 일정도 함께 확인합니다.<br>
+공연 일정이 잡혀 있는지, 티켓 판매가 어떻게 진행되는지가 실적의 단서가 됩니다.<br>
+환율 움직임도 함께 봅니다.<br>
+해외 매출 비중이 높은 만큼 원/달러 환율이 실적에 미치는 영향을 따져봅니다.<br>
+콘텐츠 제작사는 라인업의 흥행 여부를 봅니다.<br>
+제작비 규모와 편성 일정, 해외 판권 계약 소식을 함께 확인합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/entertainment-content-structure#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>엔터테인먼트 산업은 하나의 IP가 음반과 공연, MD와 플랫폼으로 이어지는 구조입니다.<br>
+오늘의 강세가 기대감인지 실적의 시작인지는 앞으로의 일정과 계약 소식으로 가려질 것입니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExamE2a3BnOXNka3RrOXdlZmc2cGtwdzQycHZrNjE5enFkbGFjODRlaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/10YpWPBU7GAYwM/giphy.gif" alt="Music" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>엔터테인먼트</category>
+            <category>콘텐츠</category>
+            <category>섹터</category>
+            <category>한중</category>
+        </item>
+        <item>
+            <title><![CDATA[엔비디아 호실적에 코스피 5,000선 회복]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18</link>
+            <guid>https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18</guid>
+            <pubDate>Wed, 18 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 엔비디아 호실적에 힘입어 코스피가 5,000선을 하루 만에 되찾은 11월 18일 시장을 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>11월 18일 코스피는 전 거래일보다 98.96포인트(1.99%) 오른 5,067.44에 마감했습니다.<br>
+전일 4,968.48로 5,000선을 내준 지 하루 만에 심리적 지지선을 회복했습니다.<br>
+코스닥도 12.75포인트(1.96%) 오른 662.81에 마감했습니다.<br>
+코스피는 4거래일 연속 하락을 멈추고 반등했습니다.<br>
+지수는 5,098.82로 상승 출발한 뒤 장중 등락을 거듭했습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWUzaTV5YmZ1OTdsNGZ6M3J0c29mdjMxOGRwanQxMTMzdTFucHpscSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/KEVNWkmWm6dm8/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="지수-마감-요약">지수 마감 요약<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%EC%A7%80%EC%88%98-%EB%A7%88%EA%B0%90-%EC%9A%94%EC%95%BD" class="hash-link" aria-label="Direct link to 지수 마감 요약" title="Direct link to 지수 마감 요약" translate="no">​</a></h4>
+<table><thead><tr><th>지수</th><th>종가</th><th>전일 대비</th><th>등락률</th></tr></thead><tbody><tr><td>코스피</td><td>5,067.44</td><td>+98.96</td><td>+1.99%</td></tr><tr><td>코스닥</td><td>662.81</td><td>+12.75</td><td>+1.96%</td></tr><tr><td>코스피200</td><td>787.71</td><td>+16.97</td><td>+2.20%</td></tr><tr><td>원/달러 환율</td><td>1,332.90원</td><td>-2.50원</td><td>-0.19%</td></tr></tbody></table>
+<p>전 거래일 미국 증시는 약세로 마감했습니다.<br>
+11월 17일 미국 증시 종가는 나스닥 종합 24,328.38(-0.74%), S&amp;P 500 7,340.53(-1.03%)였습니다.<br>
+수치는 <a href="https://mts.kis.finance/v1/home/domestic" target="_blank" rel="noopener noreferrer" class="">한국투자증권 MTS 시장 데이터</a>를 기준으로 확인했습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="반등의-촉매-엔비디아-호실적">반등의 촉매: 엔비디아 호실적<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%EB%B0%98%EB%93%B1%EC%9D%98-%EC%B4%89%EB%A7%A4-%EC%97%94%EB%B9%84%EB%94%94%EC%95%84-%ED%98%B8%EC%8B%A4%EC%A0%81" class="hash-link" aria-label="Direct link to 반등의 촉매: 엔비디아 호실적" title="Direct link to 반등의 촉매: 엔비디아 호실적" translate="no">​</a></h4>
+<p>엔비디아의 2027회계연도 3분기 매출은 1,158억 달러로 전년 동기보다 103% 늘었습니다.<br>
+직전 분기보다도 20% 증가한 역대 최대 분기 매출입니다.<br>
+시장 전망치 1,091억 달러를 6% 이상 웃돌았습니다.<br>
+조정 주당순이익은 2.68달러로 시장 예상치 2.47달러를 웃돌았습니다.<br>
+데이터센터 매출은 1,076억 달러로 전년 동기보다 110% 늘며 전체 매출의 약 93%를 차지했습니다.<br>
+순이익은 653억 달러로 전년 동기보다 105% 늘었습니다.<br>
+엔비디아는 4분기 매출 전망을 1,300억 달러(±3%)로 제시했습니다.<br>
+시장 예상치 1,252억 5,000만 달러를 웃도는 수준입니다.<br>
+2028회계연도 매출 성장률 전망도 기존 70%에서 약 75%로 높였습니다.<br>
+이번 실적은 젠슨 황 전 최고경영자(CEO) 사임 이후 처음 나온 분기 실적입니다.<br>
+임시 CEO인 콜레트 크레스 최고재무책임자(CFO) 체제에서 발표됐습니다.<br>
+실적 발표 이후 엔비디아 주가는 시간외 거래에서 상승세를 나타냈습니다.<br>
+자세한 내용은 <a href="https://www.ytn.co.kr/_ln/0104_202611180808040202" target="_blank" rel="noopener noreferrer" class="">YTN 보도</a>와 <a href="https://newsway.co.kr/news/view?ud=2026111807273891348" target="_blank" rel="noopener noreferrer" class="">뉴스웨이 보도</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="수급-기관-매수가-반등을-이끌었습니다">수급: 기관 매수가 반등을 이끌었습니다<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%EC%88%98%EA%B8%89-%EA%B8%B0%EA%B4%80-%EB%A7%A4%EC%88%98%EA%B0%80-%EB%B0%98%EB%93%B1%EC%9D%84-%EC%9D%B4%EB%81%8C%EC%97%88%EC%8A%B5%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to 수급: 기관 매수가 반등을 이끌었습니다" title="Direct link to 수급: 기관 매수가 반등을 이끌었습니다" translate="no">​</a></h4>
+<p>코스피에서 기관은 4,926억 원 순매수를 기록했습니다.<br>
+외국인은 3,344억 원, 개인은 6,169억 원 순매도를 기록했습니다.<br>
+기관 매수가 지수 반등을 이끈 하루였습니다.<br>
+기관 안에서는 금융투자가 3,069억 원, 투신이 2,113억 원 순매수를 기록했습니다.<br>
+연기금도 660억 원 순매수했습니다.<br>
+코스닥에서도 외국인은 486억 원, 개인은 1,215억 원 순매도를 기록했습니다.<br>
+코스닥 기관은 1,794억 원 순매수를 기록했습니다.<br>
+수급 수치는 네이버 시장동향 API를 기준으로 정리했습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="업종과-종목-반도체와-엔터-로봇이-강했습니다">업종과 종목: 반도체와 엔터, 로봇이 강했습니다<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%EC%97%85%EC%A2%85%EA%B3%BC-%EC%A2%85%EB%AA%A9-%EB%B0%98%EB%8F%84%EC%B2%B4%EC%99%80-%EC%97%94%ED%84%B0-%EB%A1%9C%EB%B4%87%EC%9D%B4-%EA%B0%95%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4" class="hash-link" aria-label="Direct link to 업종과 종목: 반도체와 엔터, 로봇이 강했습니다" title="Direct link to 업종과 종목: 반도체와 엔터, 로봇이 강했습니다" translate="no">​</a></h4>
+<p>삼성전자는 4,400원(2.31%) 오른 194,700원에 마감했습니다.<br>
+SK하이닉스는 4만 6,000원(4.19%) 오른 114만 4,000원에 마감했습니다.<br>
+삼성전기는 7.43% 올랐습니다.<br>
+엔비디아 콘퍼런스콜에서 삼성전기와의 신규 기판 계약 소식이 전해졌습니다.<br>
+두산은 8.69% 올랐습니다.<br>
+방송과 엔터테인먼트 업종은 6.88% 올랐습니다.<br>
+에스엠은 1만 1,000원(14.30%) 오른 8만 7,900원에 마감했습니다.<br>
+JYP Ent.는 8.72%, 하이브는 7.62% 올랐습니다.<br>
+한중 문화 콘텐츠 교류 확대 기대가 거론됐습니다.<br>
+로봇주도 강했습니다.<br>
+레인보우로보틱스는 20.06%, 로보티즈는 13.24% 올랐습니다.<br>
+삼성전자와 LG전자가 내년 1월 CES 2027을 앞두고 휴머노이드 사업화 준비에 속도를 낸다는 소식이 전해졌습니다.<br>
+반면 삼성바이오로직스는 3.39%, 셀트리온은 2.58% 내렸습니다.<br>
+KB금융은 0.26% 내렸습니다.<br>
+상세한 마감 흐름은 <a href="https://www.hankyung.com/article/2026111851106" target="_blank" rel="noopener noreferrer" class="">한국경제 마감 기사</a>에서 확인할 수 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>앞으로 이틀 동안 확인할 일정이 몰려 있습니다.<br>
+11월 19일에는 앤트로픽이 나스닥에 상장합니다.<br>
+공모가는 미국시간 18일에 정해집니다.<br>
+미국 10월 소매판매는 전월보다 0.2% 늘었습니다.<br>
+자동차를 제외한 핵심 소매판매는 0.6% 늘며 예상을 웃돌았습니다.<br>
+소비는 버티고 있으나 물가 압력도 함께 커지고 있습니다.<br>
+연준의 추가 금리 인상 가능성이 거론되고 있습니다.<br>
+반등 하루만으로 추세 전환을 단정하기는 이릅니다.<br>
+외국인 순매도가 이어지는지와 기관 매수의 지속 여부를 함께 확인할 필요가 있습니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/kospi-rebound-5000-nov18#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>엔비디아 호실적이 AI 투자 둔화 우려를 일부 덜어주며 코스피는 5,000선을 되찾았습니다.<br>
+다만 반등의 지속 여부는 외국인 수급과 앤트로픽 상장 이후의 시장 반응에 달려 있습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnFpN3huZ2t6a2FlMWc4cXZ0dzJzenpoODlqc3Q0dGtxMjhnZjMzcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6JzM6pW8Sa8loWxBmt/giphy.gif" alt="Celebration" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>코스피</category>
+            <category>시장정리</category>
+            <category>엔비디아</category>
+            <category>기관</category>
+        </item>
+        <item>
+            <title><![CDATA[미국 소매판매 지표 읽는 법, 10월 0.2% 증가의 의미]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide</link>
+            <guid>https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide</guid>
+            <pubDate>Wed, 18 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 미국 10월 소매판매 지표를 읽는 방법을 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>미국 상무부는 11월 17일(현지시간) 10월 소매판매를 발표했습니다.<br>
+10월 소매판매는 7,482억 달러로 전월보다 0.2% 늘었습니다.<br>
+시장 예상치에 부합하는 수준입니다.<br>
+9월 증가율 0.8%보다는 증가세가 둔화했습니다.<br>
+전년 동월 대비로는 6.8% 늘었습니다.<br>
+자동차와 가구 판매가 줄면서 전체 증가 폭이 작아졌습니다.<br>
+반면 핵심 지표는 예상을 웃돌았습니다.<br>
+소비는 버티고 있으나 물가 압력도 함께 커지는 모습입니다.<br>
+소매판매라는 지표 하나를 제대로 읽는 방법을 정리해 보겠습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3B0ZGR2cnlmd3FweWV5dGo2M2N2d2YxOGQ0N3Z2cmVicG5tMWQzbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/43OKja0fROZxpFoQeg/giphy.gif" alt="Shopping" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="소매판매란-무엇인가">소매판매란 무엇인가<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%EC%86%8C%EB%A7%A4%ED%8C%90%EB%A7%A4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80" class="hash-link" aria-label="Direct link to 소매판매란 무엇인가" title="Direct link to 소매판매란 무엇인가" translate="no">​</a></h4>
+<p>소매판매는 소비자가 매장에서 쓴 돈을 집계한 지표입니다.<br>
+미국 상무부 산하 인구조사국이 매월 중순에 전월 수치를 발표합니다.<br>
+소매점과 음식 서비스 판매액을 합산합니다.<br>
+미국 경제에서 소비가 차지하는 비중이 크기 때문에 주목도가 높습니다.<br>
+국내총생산(GDP)의 약 70%가 개인소비지출로 구성됩니다.<br>
+소매판매는 그 소비의 흐름을 가장 먼저 보여주는 지표 가운데 하나입니다.<br>
+다만 소매판매는 대부분 상품 판매로 구성됩니다.<br>
+서비스 소비는 일부만 포함되므로 소비 전체를 대변하지는 않습니다.<br>
+물가 변동을 반영하지 않은 명목 수치라는 점도 함께 기억합니다.<br>
+가격이 올라 판매액이 늘었는지, 실제 구매량이 늘었는지는 구분해서 봐야 합니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="세부-항목을-나눠서-보는-이유">세부 항목을 나눠서 보는 이유<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%EC%84%B8%EB%B6%80-%ED%95%AD%EB%AA%A9%EC%9D%84-%EB%82%98%EB%88%A0%EC%84%9C-%EB%B3%B4%EB%8A%94-%EC%9D%B4%EC%9C%A0" class="hash-link" aria-label="Direct link to 세부 항목을 나눠서 보는 이유" title="Direct link to 세부 항목을 나눠서 보는 이유" translate="no">​</a></h4>
+<p>10월 전체 소매판매는 전월보다 0.2% 늘었습니다.<br>
+그러나 세부 항목의 방향은 엇갈렸습니다.<br>
+자동차와 부품 판매점 매출은 1.6% 줄었습니다.<br>
+가구 소매점 매출도 2.3% 줄었습니다.<br>
+반면 주유소 매출은 1.5%, 무점포 소매업 매출은 1.2% 늘었습니다.<br>
+자동차를 제외한 매출은 0.6% 늘며 시장 예상치 0.4%를 웃돌았습니다.<br>
+자동차와 주유소를 모두 제외한 매출도 0.5% 늘었습니다.<br>
+음식 서비스와 주점 매출은 0.2% 늘었습니다.<br>
+자동차는 단가가 커서 한 달 수치에 미치는 영향이 큽니다.<br>
+그래서 자동차를 제외한 수치를 함께 보는 것이 관행입니다.<br>
+휘발유 가격 변동이 큰 달에는 주유소를 제외한 수치도 함께 봅니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="컨트롤그룹이-중요한-이유">컨트롤그룹이 중요한 이유<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%EC%BB%A8%ED%8A%B8%EB%A1%A4%EA%B7%B8%EB%A3%B9%EC%9D%B4-%EC%A4%91%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0" class="hash-link" aria-label="Direct link to 컨트롤그룹이 중요한 이유" title="Direct link to 컨트롤그룹이 중요한 이유" translate="no">​</a></h4>
+<p>자동차와 휘발유, 건축자재, 음식 서비스를 제외한 수치를 컨트롤그룹이라 부릅니다.<br>
+10월 컨트롤그룹은 전월보다 0.6% 늘었습니다.<br>
+시장 예상치 0.3%를 웃돌았고, 9월 증가율 0.5%보다도 높았습니다.<br>
+컨트롤그룹은 GDP 산출에 쓰이는 지표입니다.<br>
+개인소비지출의 상품 소비를 추정하는 데 활용됩니다.<br>
+전체 소매판매보다 근원적인 소비 흐름을 보여준다고 평가받습니다.<br>
+그래서 시장에서는 전체 수치보다 컨트롤그룹에 더 주목하기도 합니다.<br>
+이번 발표에서는 전체 수치는 둔화했지만 컨트롤그룹은 오히려 개선됐습니다.<br>
+같은 발표 안에서도 읽는 위치에 따라 해석이 달라지는 사례입니다.<br>
+자세한 내용은 <a href="https://news.einfomax.co.kr/news/articleViewAmp.html?idxno=4445221" target="_blank" rel="noopener noreferrer" class="">연합인포맥스 보도</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="함께-발표된-물가와-생산-지표">함께 발표된 물가와 생산 지표<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%ED%95%A8%EA%BB%98-%EB%B0%9C%ED%91%9C%EB%90%9C-%EB%AC%BC%EA%B0%80%EC%99%80-%EC%83%9D%EC%82%B0-%EC%A7%80%ED%91%9C" class="hash-link" aria-label="Direct link to 함께 발표된 물가와 생산 지표" title="Direct link to 함께 발표된 물가와 생산 지표" translate="no">​</a></h4>
+<p>같은 날 발표된 10월 수입물가는 전월보다 1.1% 올랐습니다.<br>
+시장 예상치 0.7%를 웃돌았습니다.<br>
+10월 산업생산은 전월보다 0.4% 줄었습니다.<br>
+소비는 버티고 있으나 물가 상승 압력이 커지고 있습니다.<br>
+이런 조합에서는 연준의 추가 금리 인상 가능성이 거론됩니다.<br>
+지표 하나만으로는 경기 방향을 단정하기 어렵습니다.<br>
+소비와 물가, 생산 지표를 함께 놓고 해석하는 편이 정확합니다.<br>
+인구조사국은 표본오차를 고려하면 10월 판매액이 전월보다 실제로 늘었다고 단정하기 어렵다고 설명했습니다.<br>
+지표의 오차 범위까지 함께 읽는 태도가 필요합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="투자에서-확인할-점">투자에서 확인할 점<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%ED%88%AC%EC%9E%90%EC%97%90%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%A0-%EC%A0%90" class="hash-link" aria-label="Direct link to 투자에서 확인할 점" title="Direct link to 투자에서 확인할 점" translate="no">​</a></h3>
+<p>소매판매를 볼 때는 전체 수치와 컨트롤그룹을 함께 봅니다.<br>
+자동차와 휘발유를 제외한 수치가 전체 수치와 다른 방향이면 그 차이를 먼저 따집니다.<br>
+전월 수치가 수정됐는지도 확인합니다.<br>
+이번 발표에서는 9월 증가율이 0.8%로 유지됐습니다.<br>
+전년 동월 대비 수치도 함께 봅니다.<br>
+10월 소매판매는 전년 동월보다 6.8% 늘었습니다.<br>
+전년 대비로 환산하면 1년 전 같은 달 판매액은 약 7,006억 달러 수준입니다.<br>
+계산은 7,482억 달러를 1.068로 나눈 값입니다.<br>
+명목 수치라는 점을 잊지 않고 물가 지표와 함께 해석합니다.<br>
+다음 확인 지점은 11월 소매판매와 연말 소비 시즌의 흐름입니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/us-retail-sales-reading-guide#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>소매판매는 소비의 방향을 가장 먼저 보여주는 지표이지만, 세부 항목을 나눠 읽어야 의미가 살아납니다.<br>
+다음 발표에서는 전체 수치보다 컨트롤그룹이 어디를 향하는지를 먼저 확인해 보시기 바랍니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWUzaTV5YmZ1OTdsNGZ6M3J0c29mdjMxOGRwanQxMTMzdTFucHpscSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OHZ1gSUThmEso/giphy.gif" alt="Success" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>소매판매</category>
+            <category>미국경제</category>
+            <category>경제지표</category>
+            <category>소비</category>
+        </item>
+        <item>
+            <title><![CDATA[연말정산 신용카드 소득공제, 남은 두 달 점검법]]></title>
+            <link>https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction</link>
+            <guid>https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction</guid>
+            <pubDate>Wed, 18 Nov 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[안녕하세요, 한국투자증권에서 한투-한국투자증권 개발을 담당하고 있는 way입니다.]]></description>
+            <content:encoded><![CDATA[<p>안녕하세요, <a href="https://securities.koreainvestment.com/main/Main.jsp" target="_blank" rel="noopener noreferrer" class="">한국투자증권</a>에서 <a href="https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&amp;hl=ko" target="_blank" rel="noopener noreferrer" class="">한투-한국투자증권</a> 개발을 담당하고 있는 way입니다.<br>
+오늘은 연말이 다가오면서 점검할 만한 신용카드 소득공제를 정리해드립니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="배경">배경<a href="https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction#%EB%B0%B0%EA%B2%BD" class="hash-link" aria-label="Direct link to 배경" title="Direct link to 배경" translate="no">​</a></h3>
+<p>신용카드 소득공제는 근로자가 가장 흔하게 받는 연말정산 항목입니다.<br>
+그러나 쓴 돈 전부가 공제되는 제도가 아닙니다.<br>
+총급여의 25%를 넘는 금액부터만 공제가 시작됩니다.<br>
+결제 수단에 따라 공제율도 15%에서 40%까지 다릅니다.<br>
+11월 중순인 지금은 남은 두 달의 결제 수단을 조정할 수 있는 시기입니다.<br>
+올해 사용액을 점검하고 남은 기간의 결제 방법을 정하는 것이 공제의 핵심입니다.<br>
+2025년 귀속 연말정산 기준으로 정리했습니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHhwbGwzd3pkeDJwbGQ5Z2d2eHY5NGN4bWM2emkyenduaDM0anVneSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/LfQaJo2wbxB6radlve/giphy.gif" alt="Calculator" style="max-width:100%;border-radius:8px;max-height:250px"></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="공제의-출발점-총급여의-25">공제의 출발점: 총급여의 25%<a href="https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction#%EA%B3%B5%EC%A0%9C%EC%9D%98-%EC%B6%9C%EB%B0%9C%EC%A0%90-%EC%B4%9D%EA%B8%89%EC%97%AC%EC%9D%98-25" class="hash-link" aria-label="Direct link to 공제의 출발점: 총급여의 25%" title="Direct link to 공제의 출발점: 총급여의 25%" translate="no">​</a></h4>
+<p>신용카드 소득공제는 연간 카드와 현금영수증 사용액 가운데 총급여의 25%를 초과하는 금액에 적용됩니다.<br>
+총급여가 5,000만 원이면 문턱은 1,250만 원입니다.<br>
+총급여가 4,000만 원이면 문턱은 1,000만 원입니다.<br>
+문턱까지의 사용액에는 공제가 붙지 않습니다.<br>
+문턱을 넘긴 뒤에야 결제 수단별 공제율이 적용됩니다.<br>
+사용 기간은 해당 연도 1월 1일부터 12월 31일까지의 결제분입니다.<br>
+근무 기간 중 사용액만 인정됩니다.<br>
+먼저 국세청 홈택스의 연말정산 미리보기에서 올해 사용액을 확인합니다.<br>
+문턱을 넘겼는지, 얼마나 남았는지를 숫자로 확인하는 것이 출발점입니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="결제-수단별-공제율과-한도">결제 수단별 공제율과 한도<a href="https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction#%EA%B2%B0%EC%A0%9C-%EC%88%98%EB%8B%A8%EB%B3%84-%EA%B3%B5%EC%A0%9C%EC%9C%A8%EA%B3%BC-%ED%95%9C%EB%8F%84" class="hash-link" aria-label="Direct link to 결제 수단별 공제율과 한도" title="Direct link to 결제 수단별 공제율과 한도" translate="no">​</a></h4>
+<p>결제 수단별 공제율은 다음과 같습니다.<br></p>
+<table><thead><tr><th>결제 수단과 사용처</th><th>공제율</th><th>비고</th></tr></thead><tbody><tr><td>신용카드</td><td>15%</td><td>기본 한도 적용</td></tr><tr><td>체크카드, 현금영수증</td><td>30%</td><td>기본 한도 적용</td></tr><tr><td>전통시장, 대중교통</td><td>40%</td><td>추가 한도 적용</td></tr><tr><td>도서, 공연, 영화, 박물관, 미술관</td><td>30%</td><td>총급여 7,000만 원 이하, 추가 한도 적용</td></tr><tr><td>수영장, 체력단련장 시설이용료</td><td>30%</td><td>총급여 7,000만 원 이하, 2025년 7월 1일 이후 결제분</td></tr></tbody></table>
+<p>기본 공제 한도는 총급여 7,000만 원 이하 300만 원, 초과 250만 원입니다.<br>
+전통시장과 대중교통, 문화비 사용분은 추가로 공제됩니다.<br>
+추가 한도는 총급여 7,000만 원 이하 300만 원, 초과 200만 원입니다.<br>
+이론상 최대 공제액은 총급여 7,000만 원 이하 기준 600만 원입니다.<br>
+여기에 전년 대비 소비증가분 추가공제가 더해질 수 있습니다.<br>
+2025년 사용액이 2024년 사용액의 105%를 초과하면 초과분의 10%를 100만 원 한도로 추가 공제합니다.<br>
+세금과 공과금, 보험료, 자동차 구입비, 해외 사용액은 공제 대상이 아닙니다.<br>
+자세한 기준은 <a href="https://www.hometax.go.kr/" target="_blank" rel="noopener noreferrer" class="">국세청 홈택스</a>와 <a href="https://www.policyalarm.kr/2026/10/year-end-tax-credit-card-deduction.html" target="_blank" rel="noopener noreferrer" class="">연말정산 신용카드 공제 정리</a>에서 확인할 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="계산-예시-총급여-5000만-원인-경우">계산 예시: 총급여 5,000만 원인 경우<a href="https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction#%EA%B3%84%EC%82%B0-%EC%98%88%EC%8B%9C-%EC%B4%9D%EA%B8%89%EC%97%AC-5000%EB%A7%8C-%EC%9B%90%EC%9D%B8-%EA%B2%BD%EC%9A%B0" class="hash-link" aria-label="Direct link to 계산 예시: 총급여 5,000만 원인 경우" title="Direct link to 계산 예시: 총급여 5,000만 원인 경우" translate="no">​</a></h4>
+<p>총급여 5,000만 원인 직장인을 단순화한 예시로 계산해 보겠습니다.<br>
+연간 사용액은 2,500만 원이라 가정합니다.<br>
+신용카드 1,500만 원, 체크카드 1,000만 원을 썼다고 가정합니다.<br>
+문턱은 총급여의 25%인 1,250만 원입니다.<br>
+초과분은 2,500만 원에서 1,250만 원을 뺀 1,250만 원입니다.<br>
+신용카드 사용분 1,500만 원 가운데 문턱 1,250만 원을 먼저 채웁니다.<br>
+남은 신용카드 사용분 250만 원에 15%를 적용하면 37만 5,000원입니다.<br>
+체크카드 사용분 1,000만 원에 30%를 적용하면 300만 원입니다.<br>
+합계는 337만 5,000원이지만 기본 한도 300만 원이 적용됩니다.<br>
+이 경우 공제액은 300만 원이 됩니다.<br>
+이 계산은 이해를 돕기 위한 단순화한 예시입니다.<br>
+실제 공제액은 결제 순서와 항목별 구분에 따라 달라질 수 있습니다.<br></p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="남은-두-달의-점검-순서">남은 두 달의 점검 순서<a href="https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction#%EB%82%A8%EC%9D%80-%EB%91%90-%EB%8B%AC%EC%9D%98-%EC%A0%90%EA%B2%80-%EC%88%9C%EC%84%9C" class="hash-link" aria-label="Direct link to 남은 두 달의 점검 순서" title="Direct link to 남은 두 달의 점검 순서" translate="no">​</a></h4>
+<p>먼저 홈택스 연말정산 미리보기에서 올해 사용액을 확인합니다.<br>
+문턱인 총급여의 25%를 넘겼는지를 봅니다.<br>
+문턱을 아직 넘기지 못했다면 남은 기간은 카드사 혜택이 좋은 신용카드를 쓰는 편이 낫습니다.<br>
+문턱을 이미 넘겼다면 남은 기간은 공제율이 높은 체크카드나 현금영수증으로 바꾸는 편이 유리합니다.<br>
+전통시장과 대중교통 이용분은 40% 공제율에 추가 한도까지 적용됩니다.<br>
+도서와 공연, 영화 관람료도 총급여 7,000만 원 이하라면 30% 공제 대상입니다.<br>
+현금영수증은 번호를 등록해야 공제를 받을 수 있습니다.<br>
+공제를 받기 위해 불필요한 소비를 늘리는 일은 피해야 합니다.<br>
+공제액은 쓴 돈의 일부를 소득에서 빼주는 것일 뿐, 쓴 돈이 그대로 돌아오는 것이 아닙니다.<br>
+2027년 사용분부터 대중교통 공제율 축소 등이 검토되고 있습니다.<br>
+확정 여부는 국세청 안내로 확인이 필요합니다.<br></p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="마치며">마치며<a href="https://code-bross.github.io/blog/en/finance/year-end-credit-card-deduction#%EB%A7%88%EC%B9%98%EB%A9%B0" class="hash-link" aria-label="Direct link to 마치며" title="Direct link to 마치며" translate="no">​</a></h3>
+<p>신용카드 소득공제의 핵심은 문턱과 공제율, 한도 세 가지를 숫자로 확인하는 일입니다.<br>
+남은 두 달 동안 결제 수단을 점검해 올해 공제를 빠짐없이 챙겨 보시기 바랍니다.<br></p>
+<div style="text-align:center;margin:1.5rem 0"><img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3B0ZGR2cnlmd3FweWV5dGo2M2N2d2YxOGQ0N3Z2cmVicG5tMWQzbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9T0XjON7RPAm4/giphy.gif" alt="Shopping" style="max-width:100%;border-radius:8px;max-height:250px"></div>]]></content:encoded>
+            <category>finance</category>
+            <category>연말정산</category>
+            <category>신용카드</category>
+            <category>절세</category>
+            <category>소득공제</category>
+        </item>
+    </channel>
+</rss>
