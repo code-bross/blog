@@ -1,0 +1,104 @@
+---
+slug: mts-android-cli-111
+title: "Android CLI 1.1 살펴보기 — 델타 설치와 Compose 트레이싱"
+authors: [way]
+tags: [android, android-cli, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월에 공개된 [Android CLI 1.1.16919734](https://developer.android.com/tools/agents/android-cli/release-notes)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+[Android CLI](https://developer.android.com/tools/agents/android-cli/overview)는 터미널에서 Android 개발을 수행하는 공식 CLI입니다.<br/>
+Android Studio를 열지 않고 빌드와 설치, 프로파일링, 기기 제어를 처리할 수 있습니다.<br/>
+에이전트와 함께 쓰는 개발 흐름을 염두에 두고 만들어졌고, 스크립트와 CI에서도 그대로 쓸 수 있습니다.<br/>
+2026년 11월 릴리스는 설치 속도와 프로파일링, 스크립트 친화성이 중심입니다.<br/>
+새 명령이 추가된 릴리스가 아니라, 매일 쓰는 명령이 더 빠르고 정확해진 릴리스입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/yIQOWS8hWXeuVb1BsJ/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Android CLI 1.1 살펴보기
+
+#### 델타 설치로 재배치된 파일 재전송 방지
+
+`android install`과 `android run`은 변경되지 않은 파일을 다시 보내지 않습니다.<br/>
+이번 릴리스에서는 APK 안에서 위치만 바뀐 파일도 재전송 대상에서 제외됩니다.<br/>
+파일 내용이 그대로인데 위치만 이동한 경우, 설치 과정에서 다시 전송할 필요가 없어졌습니다.<br/>
+반복 설치가 많은 개발 과정에서 체감되는 개선입니다.<br/>
+기존 동작이 필요하면 `--use-delta-install-instructions=COPY,DATA` 옵션을 전달합니다.<br/>
+
+```bash
+android run
+android install app-debug.apk
+```
+
+#### Compose 트레이싱으로 리컴포지션 원인 찾기
+
+`android profiler systemtrace`에 Compose 트레이싱이 들어왔습니다.<br/>
+`--enable=compose.composition`을 전달하면 실행된 컴포저블 함수마다 슬라이스를 기록합니다.<br/>
+`--enable=compose.recomposition`을 전달하면 리컴포지션을 일으킨 상태 읽기와 쓰기까지 함께 기록합니다.<br/>
+앱에는 `androidx.compose.runtime:runtime-tracing` 1.13 이상이 필요합니다.<br/>
+트레이스는 ZIP 파일로 저장되며, Android Studio 프로파일러에서 열어 확인할 수 있습니다.<br/>
+
+```bash
+android profiler systemtrace --enable=compose.recomposition
+```
+
+#### Perfetto 힙 덤프로 메모리 살펴보기
+
+`android profiler heapdump capture`에 `--type=perfetto` 옵션이 추가되었습니다.<br/>
+Perfetto 트레이스 형태로 힙 덤프를 기록하며, 객체와 객체 사이의 참조를 포함합니다.<br/>
+값 자체는 포함하지 않기 때문에 `.hprof` 파일보다 크기가 작습니다.<br/>
+Android 12(API 31) 이상에서 동작하며, 프로파일이 가능하거나 디버깅이 가능한 앱이 필요합니다.<br/>
+메모리 누수나 힙 증가를 살펴볼 때 가벼운 대안이 됩니다.<br/>
+
+```bash
+android profiler heapdump capture --type=perfetto
+```
+
+#### 스크립트 친화적인 출력 형식
+
+`android analyze --format=json`의 출력 형식이 바뀌었습니다.<br/>
+라이브러리 아티팩트(AAR, JAR)의 `dexSizeBytes` 필드는 이제 64비트 정수를 문자열로 직렬화합니다.<br/>
+`d8CompileResult`와 `r8CompileResult`에 모두 적용됩니다.<br/>
+JSON을 파싱하는 스크립트에서는 숫자가 아니라 문자열로 받는 점을 반영해야 합니다.<br/>
+`android input` 하위 명령도 결과를 통일된 JSON 객체로 출력합니다.<br/>
+표준 출력에는 `results` 목록이 나오고, 일치하는 요소가 없거나 여러 개가 일치하는 실패는 각 결과의 `status` 필드에 기록됩니다.<br/>
+표준 에러의 텍스트를 파싱하지 않아도 결과를 처리할 수 있습니다.<br/>
+
+```bash
+android analyze --format=json app-debug.aab
+android input tap text=Submit
+```
+
+#### 에뮬레이터 명령의 종료 코드
+
+`android emulator create`와 `start`, `stop`, `remove`가 실패 시 0이 아닌 종료 코드를 반환합니다.<br/>
+오류는 표준 에러로 출력됩니다.<br/>
+이전에는 실패해도 스크립트에서 알아채기 어려웠던 경우가 있었습니다.<br/>
+CI에서 에뮬레이터를 만들고 지우는 단계가 있다면, 종료 코드만으로 실패를 감지할 수 있습니다.<br/>
+
+```bash
+android emulator create --name test
+android emulator start --name test
+```
+
+### 실무 관점
+
+국내 MTS 프로젝트에 적용한다면, 델타 설치 개선은 별도 설정 없이 바로 체감할 수 있습니다.<br/>
+Compose 트레이싱을 쓰려면 `runtime-tracing` 의존성을 추가하고 Compose 1.13 이상을 사용해야 합니다.<br/>
+리컴포지션 원인을 찾는 디버깅 단계에서만 켜고, 평소에는 끄는 것이 좋습니다.<br/>
+`android analyze` 결과를 파싱하는 스크립트가 있다면 `dexSizeBytes`가 문자열로 바뀐 점을 먼저 확인합니다.<br/>
+에뮬레이터를 다루는 CI 스크립트는 종료 코드 기반으로 실패 처리를 정리할 수 있습니다.<br/>
+
+### 마치며
+
+Android CLI 1.1은 눈에 띄는 새 기능보다 매일 쓰는 명령의 완성도를 높인 릴리스입니다.<br/>
+설치가 빨라지고, Compose 성능 원인을 터미널에서 바로 찾을 수 있게 되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/QbLprdtvsXPKjF0Ctd/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
