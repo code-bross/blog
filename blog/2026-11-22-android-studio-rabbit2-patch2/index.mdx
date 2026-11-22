@@ -1,0 +1,55 @@
+---
+slug: mts-android-studio-rabbit2-patch2
+title: "Android Studio Rabbit 2 Patch 2 살펴보기 — AGP 9.5.2와 함께 온 두 가지 수정"
+authors: [way]
+tags: [android, android-studio, agp, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 20일에 공개된 [Android Studio Rabbit 2 Patch 2](https://androidstudio.googleblog.com/2026/11/android-studio-rabbit-2-patch-2-now.html)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+Android Studio Rabbit 2는 현재 안정 채널 버전입니다.<br/>
+2026년 11월 20일에 Patch 2가 공개되었고, AGP 9.5.2와 함께 배포되었습니다.<br/>
+이번 패치는 기능 추가가 아니라 두 가지 빌드 문제를 수정하는 릴리스입니다.<br/>
+[수정된 이슈 목록](https://developer.android.com/studio/releases/fixed-bugs/studio/2026.2.2)에서 확인할 수 있습니다.<br/>
+이미 안정 채널을 쓰고 있다면 도움말 메뉴의 업데이트 확인으로 받을 수 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/nXxOjZrbnbRxS/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 이번 패치에서 수정된 내용
+
+#### Fat AAR의 Java 리소스 병합 실패 수정
+
+AGP 9.5부터 여러 개의 중첩된 JAR를 포함한 Fat AAR에서 Java 리소스 병합이 실패하는 문제가 있었습니다.<br/>
+이번 패치에서 해당 문제가 수정되었습니다 (Issue #581925548).<br/>
+Fat AAR는 여러 라이브러리를 하나의 AAR로 묶는 방식입니다.<br/>
+서드파티 라이브러리를 묶어 배포하는 경우에 사용합니다.<br/>
+리소스 병합이 실패하면 빌드 자체가 멈추므로, 해당 방식을 쓰는 프로젝트는 업데이트가 필요합니다.<br/>
+
+#### Isolated Projects에서 implementation(project) 실패 수정
+
+Isolated Projects 환경에서 `implementation(project(...))`를 사용하는 앱이 실패하는 문제도 수정되었습니다 (Issue #582417470).<br/>
+Isolated Projects는 Gradle이 각 프로젝트를 격리해서 구성하는 기능입니다.<br/>
+멀티 모듈 프로젝트의 구성 속도와 캐시 활용에 영향을 줍니다.<br/>
+이 기능을 켜서 쓰는 프로젝트는 이번 패치로 해당 문제를 피할 수 있습니다.<br/>
+
+### 실무 관점
+
+국내 MTS는 멀티 모듈 구조로 전환을 진행한 프로젝트입니다.<br/>
+Fat AAR 방식의 서드파티 라이브러리를 쓰고 있다면 AGP 9.5 계열에서 빌드 실패를 겪을 수 있습니다.<br/>
+이번 패치는 해당 문제를 직접 수정하므로, AGP 9.5를 쓰고 있다면 업데이트를 검토합니다.<br/>
+Isolated Projects는 아직 켜지 않은 기능이지만, 멀티 모듈 프로젝트의 빌드 속도 개선과 관련이 있습니다.<br/>
+향후 적용을 검토한다면 수정된 버전에서 테스트하는 것이 안전합니다.<br/>
+
+### 마치며
+
+이번 패치는 기능 추가가 없는 수정 릴리스입니다.<br/>
+두 가지 빌드 문제를 해결하므로, 해당 환경이라면 업데이트할 가치가 있습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/AgrfqPt5AyiTm/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
