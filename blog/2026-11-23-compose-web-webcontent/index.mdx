@@ -1,0 +1,109 @@
+---
+slug: mts-compose-web-webcontent
+title: "Compose Web 라이브러리 살펴보기 — WebView를 WebContent로 옮기기"
+authors: [way]
+tags: [android, compose, webview, web, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+11월 18일에 공개된 [Compose 1.13](https://developer.android.com/blog/posts/jetpack-compose-november-2026-release)과 함께 나온 [Compose Web 라이브러리](https://developer.android.com/jetpack/androidx/releases/web)에 대해 설명해드리겠습니다.<br/>
+
+### 배경
+
+앱 안에 웹 콘텐츠를 넣어야 하는 화면은 생각보다 많습니다.<br/>
+공지나 약관, 외부 링크로 연결되는 화면이 대표적인 예입니다.<br/>
+Compose에서는 지금까지 웹 콘텐츠를 보여주려면 `AndroidView` 안에 `WebView`를 넣는 방식을 써야 했습니다.<br/>
+이 방식은 스크롤이 끊기거나, 화면 회전과 내비게이션 과정에서 웹 상태가 사라지는 문제가 있었습니다.<br/>
+뷰와 웹 엔진의 상태가 한데 묶여 있어, 화면이 바뀌면 스크롤 위치나 입력 중인 폼, 자바스크립트 상태가 함께 사라졌습니다.<br/>
+Compose Web 라이브러리는 이런 문제를 해결하기 위해 만들어졌습니다.<br/>
+웹 엔진의 상태를 뷰 계층에서 분리해, 화면이 바뀌어도 웹 상태를 유지하는 것이 목표입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/w5sSWxvukKCYJ17LMX/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Compose Web 살펴보기
+
+[Compose Web 라이브러리](https://developer.android.com/jetpack/androidx/releases/web)는 2026년 11월 4일에 `1.0.0-alpha01` 버전으로 처음 공개되었습니다.<br/>
+아직 알파 단계이지만, 웹 콘텐츠를 Compose 화면에 붙이는 방식을 바꾸는 출발점이 됩니다.<br/>
+라이브러리는 두 가지 기본 요소를 중심으로 구성됩니다.<br/>
+
+#### WebContent
+
+`WebContent`는 웹 엔진 세션의 상태를 담는 상태 홀더입니다.<br/>
+스크롤 위치와 폼 입력, 내비게이션 기록, 자바스크립트 상태가 여기에 저장됩니다.<br/>
+뷰 계층과 분리되어 있어, 화면 회전이나 내비게이션 이후에도 상태가 유지됩니다.<br/>
+`Activity`를 참조하지 않으므로, 화면이 사라진 뒤에도 상태를 안전하게 보관할 수 있습니다.<br/>
+`WebContent`는 뷰가 아니라 상태를 들고 있는 객체입니다.<br/>
+그래서 `ViewModel`에 두거나 `retain`으로 유지하면서 화면과 독립적으로 관리할 수 있습니다.<br/>
+
+#### WebContentView와 DetachedWebContentView
+
+`WebContentView`는 `WebContent`와 함께 쓰도록 만들어진 전용 `WebView`입니다.<br/>
+`WebContent`가 특정 `Activity`에 붙어 있지 않을 때는 `DetachedWebContentView`가 대신 붙습니다.<br/>
+화면에 붙었다 떨어졌다를 반복해도 웹 엔진 세션은 `WebContent` 안에 그대로 남습니다.<br/>
+기존처럼 `WebView`를 직접 만들고 상태를 일일이 저장할 필요가 없습니다.<br/>
+
+#### 적용 방법
+
+의존성은 다음과 같이 추가합니다.<br/>
+
+```kotlin
+dependencies {
+    implementation("androidx.web:web:1.0.0-alpha01")
+}
+```
+
+화면에서는 `WebContent`를 만든 뒤 `attach`로 `WebContentView`에 연결합니다.<br/>
+공식 문서에서 소개한 사용 방법은 다음과 같습니다.<br/>
+
+```kotlin
+@Composable
+fun WebContentPage(webContent: WebContent, startUrl: String, modifier: Modifier = Modifier) {
+    key(webContent) {
+        AndroidView(
+            factory = { context ->
+                webContent.attach(context, ::WebContentView).apply {
+                    settings.javaScriptEnabled = true
+                    if (url == null) loadUrl(startUrl)
+                }
+            },
+            modifier = modifier,
+            onRelease = { view ->
+                // 뷰가 계층에서 빠져나간 뒤에 WebContent를 분리해야 합니다.
+                (view.parent as? ViewGroup)?.removeView(view)
+                webContent.detach()
+            },
+        )
+    }
+}
+```
+
+`onRelease`에서는 뷰를 부모에서 먼저 제거한 뒤 `detach`를 호출해야 합니다.<br/>
+순서를 바꾸면 뷰가 계층에 남아 있는 상태에서 분리가 시도되어 문제가 생길 수 있습니다.<br/>
+`webContent`는 컴포저블 안에서 만드는 것이 아니라, `ViewModel` 등에서 미리 만들어 전달하는 것이 권장됩니다.<br/>
+
+#### WebSurface
+
+`WebSurface`는 `WebContent` 전용 컴포저블로, 곧 알파 버전으로 공개될 예정입니다.<br/>
+`AndroidView`를 거치지 않고 `WebContent`를 바로 렌더링합니다.<br/>
+인터롭 오버헤드를 줄이는 것이 목적입니다.<br/>
+지금은 `WebContent`와 `AndroidView` 조합으로 시작하고, `WebSurface`가 나오면 교체하는 순서가 자연스럽습니다.<br/>
+
+### 실무 관점
+
+국내 MTS 프로젝트에 적용한다면, 아직 알파 단계라는 점을 먼저 고려해야 합니다.<br/>
+API가 바뀔 수 있으므로, 공지나 약관처럼 중요도가 낮은 화면부터 적용하는 것이 안전합니다.<br/>
+`WebContent`를 `ViewModel`에 두고 화면과 분리해 관리하면, 화면 회전이나 내비게이션에서도 웹 상태가 유지됩니다.<br/>
+`detach` 호출 순서를 지키지 않으면 뷰 누수가 생길 수 있으므로, 해제 로직은 코드 리뷰에서 꼭 확인해야 합니다.<br/>
+자바스크립트 설정은 화면마다 필요한 경우에만 켜는 것이 좋습니다.<br/>
+`WebSurface`가 나오면 렌더링 방식이 달라지므로, `AndroidView`에 직접 의존하는 코드를 최소화해 두는 것이 좋습니다.<br/>
+
+### 마치며
+
+Compose Web 라이브러리는 웹 콘텐츠를 Compose 화면에 붙이는 방식을 단순하게 만듭니다.<br/>
+상태와 뷰를 분리한다는 방향이 맞다면, 웹 화면이 많은 앱에서는 적용을 검토할 만합니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/M2kB3aro9gxQXxuUpC/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
