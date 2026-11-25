@@ -1,0 +1,180 @@
+---
+slug: mts-kotlin-250-rc2-companion-value-classes
+title: Kotlin 2.5.0-RC2의 companion extensions와 full value classes
+authors: [way]
+tags: [android,kotlin,kotlin-250,companion,value-class]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+2026년 11월 25일에 공개된 [Kotlin 2.5.0-RC2](https://kotlinlang.org/docs/whatsnew-eap.html)의 새로운 실험적 기능에 대해 설명해드리겠습니다.<br/>
+
+이번 릴리스에서는 이름 기반 구조 분해와 미사용 반환값 검사기가 안정화되었습니다.<br/>
+이와 함께 companion extensions와 companion blocks, full value classes가 실험적 기능으로 추가되었습니다.<br/>
+두 기능 모두 기존에 작성하던 코드를 더 간결하게 바꿀 수 있는 방향입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/1xVhhfrZNVv2AEaYF6/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 배경
+
+기존에는 타입 이름으로 접근하는 확장 함수나 프로퍼티를 선언하려면 해당 타입에 companion object가 필요했습니다.<br/>
+companion object가 없는 타입에는 타입 이름을 통한 확장을 붙일 수 없었습니다.<br/>
+또한 여러 프로퍼티를 묶은 값 타입을 만들려면 일반 클래스나 data class를 사용해야 했습니다.<br/>
+data class는 참조 식별성을 가지므로, 값 자체만으로 동등성을 다루기에는 한계가 있었습니다.<br/>
+
+### Kotlin 2.5.0-RC2 살펴보기
+
+#### companion extensions와 companion blocks
+
+companion extensions는 companion object가 없는 타입에도 타입 이름을 통한 확장을 선언할 수 있게 합니다.<br/>
+최상위 확장에 `companion` 수식어를 붙이면 됩니다.<br/>
+companion block은 클래스나 인터페이스 안에 객체 인스턴스를 만들지 않고 함수와 프로퍼티를 선언하는 블록입니다.<br/>
+JVM에서는 정적 멤버로 생성되므로 `@JvmStatic` 애너테이션을 붙일 필요가 없습니다.<br/>
+
+```kotlin
+// companion extension으로 UnitX 선언
+companion val Vector.UnitX get() = Vector(1.0, 0.0)
+
+data class Vector(val x: Double, val y: Double) {
+    companion {
+        // companion block으로 Zero 선언
+        val Zero: Vector get() = Vector(0.0, 0.0)
+    }
+}
+
+fun main() {
+    println(Vector.UnitX) // Vector(x=1.0, y=0.0)
+    println(Vector.Zero) // Vector(x=0.0, y=0.0)
+}
+```
+
+이 기능은 실험적 기능입니다.<br/>
+사용하려면 빌드 파일에 다음 컴파일러 옵션을 추가합니다.<br/>
+
+```kotlin
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcompanion-blocks-and-extensions")
+    }
+}
+```
+
+#### full value classes
+
+기존의 inline value class는 하나의 값만 감쌀 수 있었습니다.<br/>
+여러 프로퍼티가 필요한 값 타입은 일반 클래스나 data class로 만들어야 했습니다.<br/>
+full value classes는 여러 프로퍼티를 가진 값 타입을 정의할 수 있게 합니다.<br/>
+인스턴스의 식별성은 중요하지 않고, 프로퍼티들의 조합이 곧 값입니다.<br/>
+
+```kotlin
+value class Complex(val real: Double, val imaginary: Double)
+```
+
+컴파일러는 data class와 마찬가지로 `equals()`와 `hashCode()`, `toString()`을 자동 생성합니다.<br/>
+다만 `componentN()` 함수는 생성되지 않습니다.<br/>
+대신 이름 기반 구조 분해를 사용합니다.<br/>
+`copy()` 함수도 제공되지 않으며, 향후 copy vars로 대체될 예정입니다.<br/>
+
+```kotlin
+value class Complex(val real: Double, val imaginary: Double)
+
+fun main() {
+    val (val real, val imaginary) = Complex(1.0, 2.0)
+    println(real) // 1.0
+    println(imaginary) // 2.0
+}
+```
+
+이 기능도 실험적 기능입니다.<br/>
+사용하려면 빌드 파일에 다음 컴파일러 옵션을 추가합니다.<br/>
+
+```kotlin
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xfull-value-classes")
+    }
+}
+```
+
+#### value objects와 추상 value class
+
+프로퍼티가 없는 full value class는 value object라고 부릅니다.<br/>
+상태나 토큰처럼 가능한 값이 하나뿐인 타입을 표현할 때 사용합니다.<br/>
+
+```kotlin
+sealed interface UserResponse
+
+value class UserFound(val user: User) : UserResponse
+
+value object UserUnknown : UserResponse
+```
+
+full value class는 추상 클래스로도 선언할 수 있습니다.<br/>
+인터페이스와 달리 모든 하위 클래스가 실행하는 초기화 로직을 정의할 수 있습니다.<br/>
+
+```kotlin
+sealed value class OrderedInterval<T : Comparable<T>> protected constructor(
+    start: T,
+    end: T,
+) {
+    init {
+        require(start <= end)
+    }
+}
+
+value class IntInterval(
+    val start: Int,
+    val end: Int
+) : OrderedInterval<Int>(start, end)
+```
+
+#### 구조적 클래스에 대한 엄격한 동등성 검사
+
+이번 릴리스에서는 data class, data object, final value class, enum class를 구조적 클래스라고 부릅니다.<br/>
+컴파일러는 이 클래스들에 대해 엄격한 동등성 검사를 수행합니다.<br/>
+타입이 달라 항상 `false`가 되는 비교를 진단으로 알려줍니다.<br/>
+
+```kotlin
+data class Point(val x: Double, val y: Double) {
+    companion object {
+        val ZERO: Point = Point(0.0, 0.0)
+    }
+}
+
+data class Vector(val x: Double, val y: Double)
+
+fun normalize(v: Vector) {
+    if (v == Point.ZERO) {
+        // 진단: 이 비교는 항상 false입니다.
+        // Vector를 Point와 비교하고 있습니다.
+    }
+}
+```
+
+이 검사는 다음 컴파일러 옵션으로 활성화합니다.<br/>
+
+```kotlin
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xstrict-equality-for-structural-classes")
+    }
+}
+```
+
+### 실무 관점
+
+두 기능 모두 아직 실험적 기능이므로 운영 코드에 바로 적용하기는 이릅니다.<br/>
+RC 버전은 정식 릴리스 직전 단계이므로, 별도 브랜치에서 기능을 미리 확인해 보는 용도로 적합합니다.<br/>
+특히 MTS처럼 규모가 큰 프로젝트에서는 컴파일러 옵션을 전역으로 켜기 전에 영향 범위를 먼저 확인해야 합니다.<br/>
+실험적 기능은 정식 릴리스에서 문법이나 옵션이 바뀔 수 있다는 점도 함께 고려해야 합니다.<br/>
+
+### 마치며
+
+companion extensions와 full value classes는 Kotlin의 값 표현 방식을 한층 넓혀주는 기능입니다.<br/>
+정식 릴리스가 나오면 운영 코드에도 단계적으로 적용해 볼 수 있을 것으로 보입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/NC5i7lgeWOladJi3Gq/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

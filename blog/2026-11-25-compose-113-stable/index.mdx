@@ -1,0 +1,131 @@
+---
+slug: mts-compose-113-stable
+title: Jetpack Compose 1.13 안정화 버전 살펴보기
+authors: [way]
+tags: [android,compose,jetpack-compose,material3]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+2026년 11월 18일에 공개된 [Jetpack Compose November '26 릴리스](https://developer.android.com/blog/posts/jetpack-compose-november-2026-release)에 대해 설명해드리겠습니다.<br/>
+
+이번 릴리스는 코어 Compose 모듈 전반이 1.13으로 안정화되었습니다.<br/>
+그래픽, 텍스트, 레이아웃, 성능 영역에 걸쳐 새로운 기능이 추가되었고, 주의해야 할 변경 사항도 함께 포함되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/O3Xkipk2aCFu4v4uFV/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 배경
+
+기존에는 점진적 블러나 다각형 모양을 구현하려면 별도의 라이브러리를 직접 사용해야 했습니다.<br/>
+다각형 모양은 `graphics-shapes` 의존성을 추가하고, 픽셀 크기에 맞는 도형을 만든 뒤 경로로 변환하는 과정이 필요했습니다.<br/>
+또한 Flow 레이아웃과 ConstraintLayout 등 여러 레이아웃 방식이 공존하면서 선택 기준이 모호한 경우도 있었습니다.<br/>
+이번 릴리스는 이런 영역을 정리하고, 자주 쓰이는 패턴을 기본 기능으로 끌어올렸습니다.<br/>
+
+### Compose 1.13 살펴보기
+
+업데이트를 적용하려면 Compose BOM을 `2026.11.01`로 올립니다.<br/>
+이 업그레이드에는 Kotlin 2.2 이상과 `compileSdk 37.1`이 필요합니다.<br/>
+
+```kotlin
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2026.11.01"))
+}
+```
+
+#### 점진적 블러
+
+Compose 1.13에서는 요소가 선명한 상태에서 흐릿한 상태로 자연스럽게 전환되는 점진적 블러를 지원합니다.<br/>
+`Modifier.blur`의 람다 형태와 `BlurRadiusSpec`을 사용합니다.<br/>
+선형 그라데이션, 방사형 그라데이션, 커스텀 AGSL 셰이더를 이용한 블러 맵까지 표현할 수 있습니다.<br/>
+
+```kotlin
+Modifier.blur {
+    blurRadiusSpec = BlurRadiusSpec.linearGradient(
+        start = DpOffset.Zero,
+        end = DpOffset(size.width, size.height),
+        stops = listOf(
+            BlurStop(fraction = 0f, radius = 0.dp),
+            BlurStop(fraction = 0.5f, radius = 0.dp),
+            BlurStop(fraction = 0.75f, radius = 14.dp),
+            BlurStop(fraction = 1f, radius = 28.dp),
+        ),
+    )
+}
+```
+
+헤더 이미지의 하단 가장자리를 배경에 녹이는 효과나, 터치 위치를 따라가는 스포트라이트 효과에 활용할 수 있습니다.<br/>
+다이얼로그와 팝업에도 블러 관련 속성을 직접 지정할 수 있게 되었습니다.<br/>
+`DialogProperties`에서는 `blurBehindRadius`와 `backgroundBlurRadius`, `scrimAlpha`, `windowShape`을 설정할 수 있습니다.<br/>
+
+#### 다각형 모양과 모핑
+
+`PolygonShape`과 `MorphPolygonShape`이 `androidx.compose.foundation`에 추가되었습니다.<br/>
+`PolygonShape`은 일반적인 Compose `Shape`이므로 `Modifier.clip`이나 컴포넌트의 shape 파라미터에 그대로 사용할 수 있습니다.<br/>
+레이아웃 크기에 맞게 자동으로 조정되므로 별도의 크기 계산이 필요 없습니다.<br/>
+`MorphPolygonShape`은 리컴포지션 없이 진행률 람다를 읽어 두 다각형 모양 사이를 애니메이션으로 전환합니다.<br/>
+
+```kotlin
+var recording by remember { mutableStateOf(false) }
+val progress by animateFloatAsState(if (recording) 1f else 0f)
+val shape = remember {
+    MorphPolygonShape(
+        start = PolygonShape.circle(),
+        end = PolygonShape.star(
+            numPoints = 9,
+            innerRadiusRatio = 0.8f,
+            outerRounding = CornerRounding.fraction(0.5f),
+        ),
+        progress = { progress },
+    )
+}
+
+Box(
+    Modifier
+        .size(96.dp)
+        .clip(shape)
+        .background(MaterialTheme.colorScheme.primary)
+        .clickable { recording = !recording }
+)
+```
+
+#### Material 3 1.5.0
+
+Compose Material 3 버전 1.5.0이 안정화되었습니다.<br/>
+`Slider`와 `RangeSlider`는 `SliderState`를 사용하는 상태 기반 모델로 전환되었습니다.<br/>
+`ToggleButtons`와 `WavyProgressIndicators`, `TimePickers` 같은 새로운 컴포넌트가 추가되었습니다.<br/>
+실험적 애너테이션은 120개에서 58개로 52% 줄었습니다.<br/>
+이와 함께 Compose Material 2 라이브러리는 더 이상 적극적으로 유지보수되지 않으며, Material 3으로의 마이그레이션이 권장됩니다.<br/>
+
+#### 텍스트와 레이아웃
+
+값 기반 `BasicTextField`와 Material 2의 `TextField`는 공식적으로 deprecated 되었습니다.<br/>
+상태 기반 `BasicTextField`와 `TextFieldState` API로의 전환이 권장됩니다.<br/>
+`LineHeightStyle.Mode.PerLine`이 추가되어, 다국어 텍스트에서 줄마다 높이를 독립적으로 계산할 수 있게 되었습니다.<br/>
+FlexBox와 Grid 레이아웃은 Compose 1.11에서 실험적으로 도입된 뒤 이번 릴리스에서 안정화되었습니다.<br/>
+FlexBox는 Flow 레이아웃을 대체하며, 새 코드에서는 FlowRow와 FlowColumn 대신 FlexBox 사용이 권장됩니다.<br/>
+반면 Compose용 ConstraintLayout과 MotionLayout은 deprecated 되었습니다.<br/>
+
+#### 성능
+
+`computedStateOf`는 `derivedStateOf`의 가벼운 대안으로 도입되었습니다.<br/>
+계산 결과를 캐시하지 않으므로, 자주 변경되는 상태에서 조건 검사나 필터링을 수행할 때 오버헤드가 적습니다.<br/>
+무거운 계산이나 캐시가 필요한 경우에는 `derivedStateOf`를 계속 사용하는 것이 권장됩니다.<br/>
+`LazyLayoutCacheWindow`도 안정화되어, 지연 레이아웃의 윈도우 기반 프리페치가 기본 동작이 되었습니다.<br/>
+
+### 실무 관점
+
+업데이트 전에 Kotlin 버전과 `compileSdk` 요구 사항을 먼저 확인해야 합니다.<br/>
+Kotlin 2.2 이상과 `compileSdk 37.1`을 충족하지 못하면 빌드가 실패합니다.<br/>
+값 기반 텍스트 필드와 ConstraintLayout을 사용 중인 화면은 deprecated 경고를 확인하고 마이그레이션 계획을 세워야 합니다.<br/>
+특히 MTS처럼 화면이 많은 프로젝트에서는 텍스트 필드 마이그레이션을 한 번에 적용하기보다 화면 단위로 나누어 진행하는 것이 안전합니다.<br/>
+
+### 마치며
+
+Compose 1.13은 그래픽 표현력과 레이아웃 선택지를 넓히면서도, 오래된 API를 정리한 릴리스입니다.<br/>
+BOM 업데이트와 함께 deprecated 항목을 점검하면 안정적으로 적용할 수 있을 것으로 보입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/Q81NcsY6YxK7jxnr4v/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
