@@ -1,0 +1,139 @@
+---
+slug: mts-kotlin-250-rc2-stdlib
+title: Kotlin 2.5.0-RC2의 새로운 표준 라이브러리 함수 살펴보기
+authors: [way]
+tags: [android,kotlin,kotlin-250,stdlib]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+
+2026년 11월 25일에 공개된 [Kotlin 2.5.0-RC2](https://kotlinlang.org/docs/whatsnew-eap.html)의 새로운 표준 라이브러리 함수에 대해 설명해드리겠습니다.<br/>
+이번 릴리스에서는 이름 기반 구조 분해와 미사용 반환값 검사기가 안정화되었습니다.<br/>
+이 글에서는 앞선 글에서 다루지 않은 표준 라이브러리의 새 함수와 엄격한 동등성 검사, Java 28 지원을 살펴보겠습니다.<br/>
+
+### 배경
+
+`if` 표현식은 Kotlin에서 조건에 따라 값을 반환하는 가장 기본적인 방법입니다.<br/>
+기존에는 조건이 참일 때만 부수 효과를 실행하거나, 조건에 따라 널이 될 수 있는 결과를 반환하려면 `else` 분기를 직접 써야 했습니다.<br/>
+이번 릴리스에서는 이런 반복적인 패턴을 줄이는 실험적 함수가 표준 라이브러리에 추가되었습니다.<br/>
+함께 공개된 유니코드 코드 포인트 지원과 구조적 클래스에 대한 엄격한 동등성 검사도 살펴볼 만한 변경입니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/BdcxA1jST1aVPSzC7m/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### 새로운 표준 라이브러리 함수 살펴보기
+
+#### `onTrue()`와 `onFalse()`
+
+`onTrue()`는 `Boolean` 값에 대한 확장 함수입니다.<br/>
+값이 `true`일 때 지정한 코드 블록을 실행하고, 원래의 `Boolean` 값을 그대로 반환합니다.<br/>
+`onFalse()`는 값이 `false`일 때 같은 방식으로 동작합니다.<br/>
+반환값을 그대로 유지하므로, 메서드 호출 결과에 이어서 부수 효과를 붙이는 형태로 사용할 수 있습니다.<br/>
+
+```kotlin
+@OptIn(ExperimentalStdlibApi::class)
+fun main() {
+    val tags = mutableSetOf("kotlin", "jvm")
+
+    // add()가 true를 반환하면 메시지를 출력합니다.
+    val added = tags.add("wasm").onTrue {
+        println("Tag added")
+    }
+    println(added) // Tag added
+    // true
+
+    // remove()가 false를 반환하면 메시지를 출력합니다.
+    val removed = tags.remove("native").onFalse {
+        println("Tag not found")
+    }
+    println(removed) // Tag not found
+    // false
+}
+```
+
+#### `ifOrNull()`
+
+`ifOrNull()`은 조건이 `true`일 때 코드 블록을 실행해 그 결과를 반환하는 최상위 함수입니다.<br/>
+조건이 `false`이면 블록을 실행하지 않고 `null`을 반환합니다.<br/>
+`if` 표현식과 `else` 분기로 `null`을 반환하던 패턴을 한 줄로 줄일 수 있습니다.<br/>
+
+```kotlin
+@OptIn(ExperimentalStdlibApi::class)
+fun main() {
+    val tags = mutableSetOf("kotlin", "jvm", "wasm")
+
+    val message = ifOrNull("wasm" in tags) {
+        "Wasm tag is available"
+    }
+    println(message) // Wasm tag is available
+
+    val missing = ifOrNull("native" in tags) {
+        "Native tag is available"
+    }
+    println(missing) // null
+}
+```
+
+세 함수는 모두 실험적 기능입니다.<br/>
+사용하려면 `@OptIn(ExperimentalStdlibApi::class)` 애너테이션을 붙이거나, `-opt-in=kotlin.ExperimentalStdlibApi` 컴파일러 옵션을 추가해야 합니다.<br/>
+
+#### `CodePoint`와 유니코드 코드 포인트 지원
+
+`Char`는 UTF-16 코드 단위 하나를 나타냅니다.<br/>
+일부 유니코드 코드 포인트는 서로게이트 쌍이라 불리는 `Char` 두 개로 표현됩니다.<br/>
+문자열을 `Char` 단위로 순회하면 서로게이트 쌍의 절반씩을 별개의 요소로 처리하게 됩니다.<br/>
+이번 릴리스에서는 `kotlin.text.unicode` 패키지에 `CodePoint` 인라인 값 클래스와 관련 API가 실험적으로 추가되었습니다.<br/>
+`CodePoint`는 `Int`를 내부 타입으로 사용하며, 코드 포인트의 UTF-16 코드 단위 수, 유니코드 범주, 문자·숫자·공백 여부를 확인할 수 있습니다.<br/>
+코드 포인트를 세고 순회하거나, 대소문자를 변환하고, 텍스트에 추가·삽입·교체·삭제하는 API도 함께 제공됩니다.<br/>
+이 API는 실험적 기능이며, `@OptIn(ExperimentalUnicodeApi::class)` 애너테이션이나 `-opt-in=kotlin.text.unicode.ExperimentalUnicodeApi` 컴파일러 옵션을 통한 옵트인이 필요합니다.<br/>
+자세한 내용은 해당 기능의 [KEEP](https://github.com/Kotlin/KEEP/blob/main/proposals/stdlib/KEEP-0400-unicode-codepoints.md)에서 확인할 수 있습니다.<br/>
+
+### 구조적 클래스에 대한 엄격한 동등성 검사
+
+Kotlin 2.5.0-RC2에서는 데이터 클래스, 데이터 객체, final 값 클래스, enum 클래스를 묶어 구조적 클래스라고 부릅니다.<br/>
+새로운 검사 기능은 이런 클래스 사이의 동등성 비교를 분석해, 항상 `false`가 되는 `==` 비교나 항상 `true`가 되는 `!=` 비교를 진단합니다.<br/>
+프로퍼티가 같아도 타입이 다른 두 클래스를 비교하는 실수를 컴파일 시점에 잡을 수 있습니다.<br/>
+
+```kotlin
+data class Point(val x: Double, val y: Double) {
+    companion object {
+        val ZERO: Point = Point(0.0, 0.0)
+    }
+}
+
+data class Vector(val x: Double, val y: Double)
+
+fun normalize(v: Vector) {
+    if (v == Point.ZERO) {
+        // 진단: 이 비교는 항상 false입니다.
+        // Vector와 Point를 비교하고 있습니다.
+    }
+}
+```
+
+이 검사를 사용하려면 `-Xstrict-equality-for-structural-classes` 컴파일러 옵션을 추가해야 합니다.<br/>
+자세한 내용은 해당 기능의 [KEEP](https://github.com/Kotlin/KEEP/blob/main/proposals/KEEP-0456-equals.md)에서 확인할 수 있습니다.<br/>
+
+### Java 28 지원
+
+Kotlin 2.5.0-RC2부터 컴파일러는 Java 28 바이트코드를 포함하는 클래스를 생성할 수 있습니다.<br/>
+JVM 타깃 버전을 올리는 프로젝트에서는 새 바이트코드 버전을 선택할 수 있게 되었습니다.<br/>
+
+### 실무 관점
+
+새 표준 라이브러리 함수는 아직 실험적 기능입니다.<br/>
+운영 코드에 적용하기 전에는 옵트인 애너테이션이 필요하고, 정식 릴리스에서 API가 변경될 수 있다는 점을 고려해야 합니다.<br/>
+`onTrue()`와 `onFalse()`는 반환값을 그대로 돌려주므로 기존 호출 체인에 끼워 넣기 쉽습니다.<br/>
+다만 부수 효과를 체인 중간에 숨기면 코드의 흐름을 파악하기 어려워질 수 있으니, 로그 출력처럼 가벼운 용도로 사용하는 것이 좋습니다.<br/>
+엄격한 동등성 검사는 서로 다른 타입의 비교 실수를 잡아주므로, 좌표나 금액처럼 프로퍼티가 겹치는 값 타입이 많은 MTS 코드에서는 켜 두는 것이 도움이 됩니다.<br/>
+RC 버전이므로 릴리스 브랜치에는 적용하지 않고, 별도 브랜치에서 동작을 확인하는 것이 안전합니다.<br/>
+
+### 마치며
+
+Kotlin 2.5.0-RC2는 `if` 표현식의 반복 패턴을 줄이는 표준 라이브러리 함수와 유니코드 코드 포인트 지원을 추가했습니다.<br/>
+엄격한 동등성 검사는 타입이 다른 값 사이의 비교 실수를 컴파일 시점에 알려줍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/7Qfcoa7kESHRcbGjMl/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
