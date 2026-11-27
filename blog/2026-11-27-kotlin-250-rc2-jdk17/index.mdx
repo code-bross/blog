@@ -1,0 +1,82 @@
+---
+slug: mts-kotlin-250-rc2-jdk17
+title: Kotlin 2.5.0-RC2에서 컴파일러 실행에 JDK 17이 필수가 됩니다
+authors: [way]
+tags: [android, kotlin, kotlin-250, jdk17, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 25일에 공개된 [Kotlin 2.5.0-RC2](https://kotlinlang.org/docs/whatsnew-eap.html)의 JDK 17 최소 요구사항과 Java 28 바이트코드 지원에 대해 설명해드리겠습니다.<br/>
+이번 변경은 컴파일러를 실행하는 JDK 버전과 직접 관련이 있어, 빌드 환경을 먼저 점검해야 합니다.<br/>
+
+### 배경
+
+Kotlin 컴파일러는 그동안 JDK 8에서도 실행할 수 있었습니다.<br/>
+2.5.0-Beta1부터 JDK 17보다 오래된 버전으로 컴파일러를 실행하면 경고가 나왔습니다.<br/>
+2.5.0-RC2부터는 경고가 아니라 오류가 발생합니다.<br/>
+컴파일러를 실행하는 JDK의 최소 버전이 17로 올라간 것입니다.<br/>
+JetBrains는 새 Java 라이브러리를 활용하고 Gradle과 Maven과의 호환성을 유지하기 위해 최소 버전을 올렸다고 설명했습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/b4M6dJZUOn7q22ueov/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### Kotlin 2.5.0-RC2의 JDK 요구사항 살펴보기
+
+#### 컴파일러 실행에 JDK 17 이상이 필요합니다
+
+Kotlin 2.5.0-RC2부터 JDK 17보다 오래된 JDK로 Kotlin 컴파일러를 실행하면 빌드가 오류로 멈춥니다.<br/>
+대상은 앱이 실행될 때 쓰는 런타임 JDK가 아니라, 컴파일러 자체를 실행하는 JDK입니다.<br/>
+기존 프로젝트가 JDK 8이나 JDK 11로 빌드되고 있었다면, Kotlin 버전을 올리는 시점에 함께 확인해야 합니다.<br/>
+이 변경은 2.5.0 정식 릴리스에서도 그대로 이어질 예정입니다.<br/>
+
+#### 일시적으로 오류를 피하는 방법
+
+아직 JDK를 올릴 수 없는 프로젝트에서는 `-Xallow-pre-17-runtime-jdk` 컴파일러 옵션을 추가하면 오류를 피할 수 있습니다.<br/>
+이 옵션은 임시 방편이며, Kotlin 2.5.20이나 2.6.0에서는 제거될 예정입니다.<br/>
+따라서 옵션을 넣는 것으로 끝내지 말고, JDK 17 이상으로 올리는 일정을 함께 잡는 것이 좋습니다.<br/>
+
+```kotlin
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xallow-pre-17-runtime-jdk")
+    }
+}
+```
+
+#### Java 28 바이트코드 생성 지원
+
+Kotlin 2.5.0-RC2부터 컴파일러는 Java 28 바이트코드를 포함하는 클래스를 생성할 수 있습니다.<br/>
+JVM 타깃 버전을 높이는 프로젝트에서는 새로운 바이트코드 버전을 선택할 수 있게 되었습니다.<br/>
+다만 Java 28 자체는 아직 정식 출시 전이므로, 당장 운영 코드의 타깃을 올리기보다는 지원 범위가 넓어졌다는 점으로 이해하는 것이 좋습니다.<br/>
+
+#### 프로젝트의 JDK 확인하기
+
+Gradle 프로젝트에서는 Kotlin DSL의 `jvmToolchain`으로 컴파일에 쓸 JDK 버전을 지정할 수 있습니다.<br/>
+다음과 같이 지정하면 컴파일러가 JDK 17로 실행됩니다.<br/>
+
+```kotlin
+kotlin {
+    jvmToolchain(17)
+}
+```
+
+현재 빌드에 쓰이는 JDK는 `./gradlew -version` 명령으로 확인할 수 있습니다.<br/>
+출력되는 JVM 항목이 17보다 낮다면, `gradle.properties`의 `org.gradle.java.home` 설정이나 CI 에이전트에 설치된 JDK를 확인해야 합니다.<br/>
+Android Studio는 내장 JDK를 함께 제공하므로, 로컬 빌드와 CI 빌드의 JDK가 다를 수 있다는 점도 함께 점검해야 합니다.<br/>
+
+### 실무 관점
+
+MTS처럼 규모가 큰 프로젝트에서는 로컬 환경보다 CI 에이전트의 JDK 버전을 먼저 확인하는 것이 좋습니다.<br/>
+에이전트 이미지에 JDK 8이나 JDK 11만 설치되어 있다면, Kotlin 2.5.0으로 올리는 순간 빌드가 멈춥니다.<br/>
+옵트아웃 옵션은 마이그레이션 기간에만 쓰고, 정식 릴리스 전에 JDK 17 이상으로 전환하는 일정을 잡는 것이 안전합니다.<br/>
+RC 버전이므로 릴리스 브랜치에는 적용하지 않고, 별도 브랜치에서 동작을 확인하는 것이 좋습니다.<br/>
+
+### 마치며
+
+Kotlin 2.5.0-RC2부터 컴파일러 실행에는 JDK 17 이상이 필요합니다.<br/>
+빌드 환경을 먼저 점검하고, Java 28 바이트코드 지원과 함께 정식 릴리스를 준비하는 것이 좋습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/m8VNfurJvYYe9dUP6h/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>

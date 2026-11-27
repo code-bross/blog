@@ -1,0 +1,75 @@
+---
+slug: mts-kotlin-250-rc2-kmp-compilation
+title: Kotlin 2.5.0-RC2의 KMP 새 컴파일 방식과 게시 포맷 살펴보기
+authors: [way]
+tags: [android, kotlin, kotlin-250, kmp, mts, 한국투자증권, 한투]
+---
+
+안녕하세요, [한국투자증권](https://securities.koreainvestment.com/main/Main.jsp)에서 [한투-한국투자증권](https://play.google.com/store/apps/details?id=com.truefriend.neosmartarenewal&hl=ko) 개발을 담당하고 있는 way입니다.<br/>
+2026년 11월 25일에 공개된 [Kotlin 2.5.0-RC2](https://kotlinlang.org/docs/whatsnew-eap.html)의 Kotlin Multiplatform 새 컴파일 방식과 새 게시 포맷에 대해 설명해드리겠습니다.<br/>
+두 변경 모두 실험적 기능이지만, 멀티플랫폼 프로젝트의 빌드와 게시 방식을 바꿀 수 있는 내용입니다.<br/>
+
+### 배경
+
+Kotlin Multiplatform 프로젝트에서는 공통 소스셋의 코드를 컴파일러와 IDE가 다르게 해석하는 경우가 있었습니다.<br/>
+오버로드 해석이나 타입 추론에서 IDE 분석과 컴파일러 판단이 달라지면, IDE에서는 되던 코드가 빌드에서 실패하기도 합니다.<br/>
+게시 측면에서는 타깃을 추가할 때마다 게시 파일이 늘어나 Maven Central의 게시 크기 제한에 걸리는 문제도 있었습니다.<br/>
+이번 릴리스에서는 이 두 가지 문제를 다루는 실험적 기능이 함께 공개되었습니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/VW245Tbkk5mzM3jTYl/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
+
+### KMP 새 컴파일 방식과 게시 포맷 살펴보기
+
+#### 공통 소스셋을 따로 컴파일하는 새 방식
+
+Kotlin 2.5.0-RC2에서는 Kotlin Multiplatform을 위한 새로운 실험적 컴파일 방식이 추가되었습니다.<br/>
+이 방식에서는 컴파일러가 공통 소스셋을 IDE와 같은 기준으로 처리합니다.<br/>
+공통 코드가 플랫폼 전용 선언으로 잘못 해석되는 일을 막고, 오버로드 해석과 타입 추론의 일관성을 높입니다.<br/>
+공통 소스셋에 대한 증분 컴파일을 구현하는 기반도 됩니다.<br/>
+자세한 내용은 [Kotlin 2.5.0-RC2 변경 사항](https://kotlinlang.org/docs/whatsnew-eap.html)에서 확인할 수 있습니다.<br/>
+
+#### `.kar` 아카이브 게시 포맷
+
+Kotlin 2.5.0-RC2에서는 멀티플랫폼 라이브러리를 위한 새로운 실험적 게시 포맷이 추가되었습니다.<br/>
+새 포맷은 JVM과 Android을 제외한 플랫폼 아티팩트를 하나의 `.kar` 아카이브로 게시합니다.<br/>
+`.kar` 파일은 ZIP 아카이브를 XZ로 한 번 더 압축한 형태입니다.<br/>
+타깃을 추가해도 새 파일이 생기지 않으므로, 게시물 전체 크기가 크게 늘어나지 않습니다.<br/>
+JetBrains가 예시로 든 cryptography-kotlin 라이브러리에서는 게시 파일이 7,539개에서 1,036개로, 전체 크기가 91MB에서 23MB로 줄었습니다.<br/>
+
+모듈 단위로 새 포맷을 켜려면 빌드 스크립트에 다음과 같이 설정합니다.<br/>
+
+```kotlin
+kotlin {
+    publishing {
+        publicationFormat.set(KotlinPublicationFormat.KOTLIN_ARCHIVE)
+    }
+}
+```
+
+프로젝트의 모든 모듈에 적용하려면 `gradle.properties`에 다음 속성을 추가합니다.<br/>
+
+```properties
+kotlin.publicationFormat=KOTLIN_ARCHIVE
+```
+
+새 포맷으로 게시하는 기능은 아직 실험적이지만, 새 포맷으로 게시된 아티팩트를 가져다 쓰는 기능은 모든 프로젝트에서 이미 사용할 수 있습니다.<br/>
+이 변경은 라이브러리를 게시하는 쪽에만 해당하며, 최종 앱을 만드는 개발자에게는 직접적인 영향이 없습니다.<br/>
+
+### 실무 관점
+
+새 컴파일 방식은 공통 소스셋의 동작을 바꾸는 실험적 기능입니다.<br/>
+적용하기 전에는 별도 브랜치에서 기존 테스트가 그대로 통과하는지 확인하는 것이 좋습니다.<br/>
+`.kar` 게시 포맷은 MTS처럼 최종 앱을 만드는 프로젝트보다는, 내부 공용 라이브러리를 Maven에 게시하는 경우에 의미가 있습니다.<br/>
+게시 크기가 제한에 걸려 타깃 추가를 미루고 있었다면, 새 포맷을 검토해 볼 만합니다.<br/>
+두 기능 모두 실험적이므로, 정식 릴리스에서 동작이 바뀔 수 있다는 점을 고려해야 합니다.<br/>
+
+### 마치며
+
+Kotlin 2.5.0-RC2의 새 컴파일 방식은 공통 소스셋의 해석을 IDE와 일치시키는 방향으로 나아가고 있습니다.<br/>
+새 게시 포맷은 멀티플랫폼 라이브러리의 게시 크기를 크게 줄여, 타깃 확장의 부담을 덜어줍니다.<br/>
+
+<div style={{textAlign: 'center', margin: '1.5rem 0'}}>
+  <img src="https://media.giphy.com/media/q0sG9ojhWQI8COPCMs/giphy.gif" alt="Success" style={{maxWidth: '100%', borderRadius: '8px', maxHeight: '250px'}} />
+</div>
